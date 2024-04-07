@@ -1154,6 +1154,9 @@ importers:
 
   connectors/connector-twenty:
     dependencies:
+      '@opensdks/sdk-revert':
+        specifier: ^0.0.1
+        version: 0.0.1
       '@opensdks/sdk-twenty':
         specifier: ^0.0.4
         version: 0.0.4
