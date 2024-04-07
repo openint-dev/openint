@@ -6,12 +6,12 @@ import type {revertSchemas} from './def'
 import {helpers} from './def'
 
 export const revertServer = {
-  newInstance: ({settings}) =>
+  newInstance: ({settings, config}) =>
     initRevertSDK({
       headers: {
-        'x-revert-api-token': settings.api_token,
+        'x-revert-api-token': config.api_token,
+        'x-api-version': config.api_version,
         'x-revert-t-id': settings.customer_id,
-        'x-api-version': settings.api_version,
       },
     }),
   sourceSync: ({instance, streams, state}) => {

@@ -7,10 +7,12 @@ type components = RevertSDKTypes['oas']['components']
 
 export const revertSchemas = {
   name: z.literal('revert'),
+  connectorConfig: z.object({
+    api_token: z.string().describe('Revert API token'),
+    api_version: z.string().optional().describe('Revert API version'),
+  }),
   resourceSettings: z.object({
-    api_token: z.string().describe('x-revert-api-token header'),
     customer_id: z.string().describe('x-revert-t-id header'),
-    api_version: z.string().optional().describe('x-api-version header'),
   }),
   sourceOutputEntities: {
     company: zCast<components['schemas']['commonCompany']>(),
