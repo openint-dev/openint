@@ -5,7 +5,7 @@
   "sideEffects": [],
   "module": "./index.ts",
   "dependencies": {
-    "@opensdks/sdk-twenty": "^0.0.3",
+    "@opensdks/sdk-twenty": "^0.0.4",
     "@opensdks/util-zod": "^0.0.15",
     "@usevenice/cdk": "workspace:*",
     "@usevenice/util": "workspace:*"
