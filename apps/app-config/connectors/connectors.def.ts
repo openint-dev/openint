@@ -20,6 +20,7 @@ import {default as connectorPlaid} from '@usevenice/connector-plaid/def'
 import {default as connectorPostgres} from '@usevenice/connector-postgres/def'
 import {default as connectorQbo} from '@usevenice/connector-qbo/def'
 import {default as connectorRamp} from '@usevenice/connector-ramp/def'
+import {default as connectorRevert} from '@usevenice/connector-revert/def'
 import {default as connectorSalesloft} from '@usevenice/connector-salesloft/def'
 import {default as connectorSaltedge} from '@usevenice/connector-saltedge/def'
 import {default as connectorSplitwise} from '@usevenice/connector-splitwise/def'
@@ -56,6 +57,7 @@ export const defConnectors = {
   postgres: connectorPostgres,
   qbo: connectorQbo,
   ramp: connectorRamp,
+  revert: connectorRevert,
   salesloft: connectorSalesloft,
   saltedge: connectorSaltedge,
   splitwise: connectorSplitwise,

@@ -40,6 +40,8 @@ import {default as connectorQbo_def} from '@usevenice/connector-qbo/def'
 import {default as connectorQbo_server} from '@usevenice/connector-qbo/server'
 import {default as connectorRamp_def} from '@usevenice/connector-ramp/def'
 import {default as connectorRamp_server} from '@usevenice/connector-ramp/server'
+import {default as connectorRevert_def} from '@usevenice/connector-revert/def'
+import {default as connectorRevert_server} from '@usevenice/connector-revert/server'
 import {default as connectorSalesloft_def} from '@usevenice/connector-salesloft/def'
 import {default as connectorSalesloft_server} from '@usevenice/connector-salesloft/server'
 import {default as connectorSaltedge_def} from '@usevenice/connector-saltedge/def'
@@ -170,6 +172,11 @@ const connectorRamp = {
   ...connectorRamp_server,
 }
 
+const connectorRevert = {
+  ...connectorRevert_def,
+  ...connectorRevert_server,
+}
+
 const connectorSalesloft = {
   ...connectorSalesloft_def,
   ...connectorSalesloft_server,
@@ -256,6 +263,7 @@ export const mergedConnectors = {
   postgres: connectorPostgres,
   qbo: connectorQbo,
   ramp: connectorRamp,
+  revert: connectorRevert,
   salesloft: connectorSalesloft,
   saltedge: connectorSaltedge,
   splitwise: connectorSplitwise,

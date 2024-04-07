@@ -246,6 +246,9 @@ importers:
       '@usevenice/connector-ramp':
         specifier: workspace:*
         version: link:../../connectors/connector-ramp
+      '@usevenice/connector-revert':
+        specifier: workspace:*
+        version: link:../../connectors/connector-revert
       '@usevenice/connector-salesloft':
         specifier: workspace:*
         version: link:../../connectors/connector-salesloft
@@ -1037,6 +1040,21 @@ importers:
 
   connectors/connector-ramp:
     dependencies:
+      '@usevenice/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@usevenice/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+
+  connectors/connector-revert:
+    dependencies:
+      '@opensdks/sdk-revert':
+        specifier: ^0.0.1
+        version: 0.0.1
+      '@opensdks/util-zod':
+        specifier: ^0.0.15
+        version: 0.0.15
       '@usevenice/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
@@ -4780,6 +4798,10 @@ packages:
 
   /@opensdks/sdk-qbo@0.0.14:
     resolution: {integrity: sha512-zmOzVWcitonWc8uGyST4zFDjg93KZnB5vk8aPggizcB9+1xeNZ3bc7AqUqFA3uJRip8MT5SklIl5L5f8AG7PYA==}
+    dev: false
+
+  /@opensdks/sdk-revert@0.0.1:
+    resolution: {integrity: sha512-r19UD+xs4w+7ezofeYEbuPPuILLnSleVKHpw2KZ7AChtB4X6mR5KGV2LggqBHzY4bdOjp07SheS9zIY+rgar7A==}
     dev: false
 
   /@opensdks/sdk-salesloft@0.0.16:
