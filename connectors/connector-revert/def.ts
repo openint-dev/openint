@@ -25,6 +25,7 @@ export const revertDef = {
   metadata: {
     categories: ['crm'],
     logoUrl: '/_assets/logo-revert.png',
+    stage: 'beta',
   },
   name: 'revert',
   schemas: revertSchemas,
