@@ -11,7 +11,7 @@ export const revertServer = {
       headers: {
         'x-revert-api-token': config.api_token,
         'x-api-version': config.api_version,
-        'x-revert-t-id': settings.customer_id,
+        'x-revert-t-id': settings.tenant_id,
       },
     }),
   sourceSync: ({instance, streams, state}) => {
@@ -48,6 +48,12 @@ export const revertServer = {
       .from(iterateRecords())
       .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, helpers._op('commit')])))
   },
+  passthrough: (instance, input) =>
+    instance.request(input.method, input.path, {
+      params: {query: input.query},
+      headers: new Headers((input.headers ?? {}) as Record<string, string>),
+      body: input.body,
+    }),
 } satisfies ConnectorServer<typeof revertSchemas, RevertSDK>
 
 export default revertServer

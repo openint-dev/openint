@@ -1,5 +1,6 @@
 import type {RevertSDKTypes} from '@opensdks/sdk-revert'
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
+import revertOas from '@opensdks/sdk-revert/revert.oas.json'
+import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@usevenice/cdk'
 import {connHelpers} from '@usevenice/cdk'
 import {z, zCast} from '@usevenice/util'
 
@@ -12,7 +13,11 @@ export const revertSchemas = {
     api_version: z.string().optional().describe('Revert API version'),
   }),
   resourceSettings: z.object({
-    customer_id: z.string().describe('x-revert-t-id header'),
+    tenant_id: z
+      .string()
+      .describe(
+        "x-revert-t-id header. This is the end user, aka Revert's customer's customer",
+      ),
   }),
   sourceOutputEntities: {
     company: zCast<components['schemas']['commonCompany']>(),
@@ -28,6 +33,9 @@ export const revertDef = {
     categories: ['crm'],
     logoUrl: '/_assets/logo-revert.png',
     stage: 'beta',
+    openapiSpec: {
+      proxied: revertOas as OpenApiSpec,
+    },
   },
   name: 'revert',
   schemas: revertSchemas,
