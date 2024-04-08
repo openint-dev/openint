@@ -68,6 +68,7 @@ module.exports = [
     varName: 'connectorFinch',
     imports: {
       def: '@usevenice/connector-finch/def',
+      client: '@usevenice/connector-finch/client',
       server: '@usevenice/connector-finch/server',
     },
   },

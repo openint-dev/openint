@@ -6,16 +6,50 @@ import {z, zCast} from '@usevenice/util'
 
 type components = FinchSDKTypes['oas']['components']
 
+const zProduct = z.enum([
+  'company',
+  'directory',
+  'individual',
+  'ssn',
+  'employment',
+  'payment',
+  'pay_statement',
+  'benefits',
+])
+
 export const finchSchemas = {
   name: z.literal('finch'),
+  // Auth
   connectorConfig: z.object({
     client_id: z.string(),
     client_secret: z.string(),
     api_version: z.string().optional().describe('Finch API version'),
+    products: z
+      .array(zProduct)
+      .describe(
+        'Finch products to access, @see https://developer.tryfinch.com/api-reference/development-guides/Permissions',
+      ),
   }),
   resourceSettings: z.object({
     access_token: z.string(),
   }),
+
+  // Connect
+  preConnectInput: z.object({
+    // categories: z.array(zCategory),
+    // end_user_email_address: z.string().optional(),
+    // end_user_organization_name: z.string().optional(),
+    state: z.string().optional(),
+  }),
+  connectInput: z.object({
+    client_id: z.string(),
+    products: z.array(zProduct),
+  }),
+  connectOutput: z.object({
+    state: z.string().optional(),
+    code: z.string(),
+  }),
+  //
   sourceOutputEntities: {
     company: zCast<components['schemas']['Company']>(),
     // contact: zCast<components['schemas']['commonContact']>(),

@@ -789,8 +789,8 @@ importers:
   connectors/connector-finch:
     dependencies:
       '@opensdks/sdk-finch':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
@@ -800,6 +800,16 @@ importers:
       '@usevenice/util':
         specifier: workspace:*
         version: link:../../packages/util
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+    devDependencies:
+      '@tryfinch/react-connect':
+        specifier: ^3.7.0
+        version: 3.7.0(react@18.2.0)
+      '@types/react':
+        specifier: 18.0.27
+        version: 18.0.27
 
   connectors/connector-firebase:
     dependencies:
@@ -4801,8 +4811,8 @@ packages:
   /@opensdks/sdk-discord@0.0.14:
     resolution: {integrity: sha512-GvA3dEvhiy18Ddd2XTP68YJOheSwg2UFoOKb5nXr8WxWfOwW/o9RvJW+kMhZKKNM5R39oP90xMcIjtSp3GrozQ==}
 
-  /@opensdks/sdk-finch@0.0.2:
-    resolution: {integrity: sha512-ji5fesHPjBp/s+XO9i+R/8Hh5ETzm7gFz/xicGWh1hBbwXEEbJbMHErbiYWZgdTM6Zbvj4yAuDcPjX7Lu8ZYxg==}
+  /@opensdks/sdk-finch@0.0.3:
+    resolution: {integrity: sha512-fbKPSitxFIcCnb3v2kczLAeMuNTOqzT7IEY3O+vRtpRrFVwBjzs8m1ritQyX5nH4uWJiwfNOEPtz+iuTTzYlOw==}
     dev: false
 
   /@opensdks/sdk-openai@0.0.14:
@@ -7127,6 +7137,15 @@ packages:
 
   /@trpc/server@10.40.0:
     resolution: {integrity: sha512-49SUOMWzSZtu5+OdrADmJD+u+sjSE0qj1cWgYk2FY4jLkPJunLuNRuhzM7aOeBhiUjyfhg2YTfur8FN1WBmvEw==}
+
+  /@tryfinch/react-connect@3.7.0(react@18.2.0):
+    resolution: {integrity: sha512-FqhVXAlBMyoZIr991/NoaDp/eYZlqXmBi210l0KggCO/coIHBwX30sQ8l8M0Kdl0l3OKtFveImdbWtmW102FEw==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: 18.2.0
+    dependencies:
+      react: 18.2.0
+    dev: true
 
   /@tsconfig/strictest@1.0.2:
     resolution: {integrity: sha512-IRKlC8cnP7zMz1SDBjyIVyPapkEGWLZ6wkF6Z8T+xU80P9sO5uGXlIUvtzjx+7ehPJRWxkB6CeIDwUfyqNtYkQ==}
