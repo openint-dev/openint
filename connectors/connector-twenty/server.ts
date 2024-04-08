@@ -22,7 +22,8 @@ export const twentyServer = {
             await twenty.core.POST('/companies', {
               body: {
                 name: company.name ?? '',
-                // TODO: Add other fields here...
+
+                // TODO(@jatinsandilya): Add other fields here...
               },
             })
           }

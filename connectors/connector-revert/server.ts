@@ -14,26 +14,37 @@ export const revertServer = {
         'x-revert-t-id': settings.tenant_id,
       },
     }),
-  sourceSync: ({instance, streams, state}) => {
+  sourceSync: ({instance, state, settings}) => {
+    // TODO:
+    // const streamNames = Object.keys(streams ?? {}).filter(
+    //   (s) => !!streams[s as keyof typeof streams],
+    // )
+
     async function* iterateRecords() {
-      for (const stream of Object.keys(streams ?? {}).filter(
-        (s) => !!streams[s as keyof typeof streams],
+      for (const [name, stream] of Object.entries(
+        settings.temp_pipe_out_streams ?? {},
       )) {
-        const sState = (state as Record<string, unknown>)[stream] ?? {}
-        yield* iterateRecordsInStream(stream, sState)
+        if (!stream) {
+          continue
+        }
+        const sState = ((state ?? {}) as Record<string, unknown>)[name] ?? {}
+        yield* iterateRecordsInStream(name, stream.fields, sState)
       }
     }
 
     async function* iterateRecordsInStream(
       stream: string,
       /** stream state */
+      fields: string[],
       sState: {cursor?: string | null},
     ) {
       const plural = revertPluralize(stream)
       let cursor = sState.cursor
       while (true) {
+        // @jatinsandilya don't worry about making this work for incremental sync
+        // Our requirement so far is just one time import for now
         const res = await instance.GET(`/crm/${plural as 'companies'}`, {
-          params: {query: {cursor}},
+          params: {query: {cursor, fields: fields.join(',')}},
         })
         yield res.data.results.map((com) =>
           helpers._opData(stream as 'company', com.id ?? '', com),
