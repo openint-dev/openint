@@ -1,8 +1,9 @@
-import type {FinchSDK} from '@opensdks/sdk-finch'
+import type {FinchSDK, FinchSDKTypes} from '@opensdks/sdk-finch'
 import {initFinchSDK} from '@opensdks/sdk-finch'
 import type {ConnectorServer} from '@usevenice/cdk'
 import type {finchSchemas} from './def'
 
+type Finch = FinchSDKTypes['oas']['components']['schemas']
 export const finchServer = {
   // Connect
 
@@ -25,9 +26,17 @@ export const finchServer = {
         code: connectOutput.code,
       },
     })
-    console.log(res.data)
+    const companyId =
+      (res.data as Finch['GetIntrospectResponse']).company_id ??
+      (await finch.GET('/introspect').then((r) => r.data.company_id))
+    // TODO: figure out if accountId is needed for resourceExternalId
+    // Further, do not have a constraint on resourceExternalId...
+    if (!companyId) {
+      throw new Error('Missing company_id for Finch')
+    }
+    // We should really validate at the router layer.
     return {
-      resourceExternalId: '', // Need to introspect for this...
+      resourceExternalId: companyId,
       settings: {access_token: res.data.access_token},
     }
   },
@@ -43,7 +52,13 @@ export const finchServer = {
   passthrough: (instance, input) =>
     instance.request(input.method, input.path, {
       params: {query: input.query},
-      headers: new Headers((input.headers ?? {}) as Record<string, string>),
+      headers: (() => {
+        const headers = new Headers(
+          (input.headers ?? {}) as Record<string, string>,
+        )
+        headers.delete('authorization') // We are doing our own auth
+        return headers
+      })(),
       body: input.body,
     }),
 
