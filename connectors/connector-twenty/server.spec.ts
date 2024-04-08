@@ -26,9 +26,8 @@ maybeTest('destinationSync', async () => {
         connectorName: 'salesforce',
         entity: {
           name: 'sfdc',
-          website: 'sfdc.com',
         },
-        entityName: 'account',
+        entityName: 'company',
         sourceId: 'reso_123',
       },
       type: 'data',

@@ -20,6 +20,7 @@ export const twentyDef = {
   metadata: {
     categories: ['crm'],
     logoUrl: '/_assets/logo-twenty.svg',
+    stage: 'beta',
   },
   name: 'twenty',
   schemas: twentySchemas,

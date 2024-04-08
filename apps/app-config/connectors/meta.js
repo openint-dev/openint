@@ -199,6 +199,15 @@ module.exports = [
     },
   },
   {
+    name: 'revert',
+    dirName: 'connector-revert',
+    varName: 'connectorRevert',
+    imports: {
+      def: '@usevenice/connector-revert/def',
+      server: '@usevenice/connector-revert/server',
+    },
+  },
+  {
     name: 'salesloft',
     dirName: 'connector-salesloft',
     varName: 'connectorSalesloft',
