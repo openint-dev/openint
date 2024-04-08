@@ -21,6 +21,7 @@
     "@usevenice/connector-debug": "workspace:*",
     "@usevenice/connector-discord": "workspace:*",
     "@usevenice/connector-expensify": "workspace:*",
+    "@usevenice/connector-finch": "workspace:*",
     "@usevenice/connector-firebase": "workspace:*",
     "@usevenice/connector-foreceipt": "workspace:*",
     "@usevenice/connector-fs": "workspace:*",

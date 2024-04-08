@@ -11,6 +11,8 @@ import {default as connectorDebug_def} from '@usevenice/connector-debug/def'
 import {default as connectorDebug_server} from '@usevenice/connector-debug/server'
 import {default as connectorDiscord_def} from '@usevenice/connector-discord/def'
 import {default as connectorDiscord_server} from '@usevenice/connector-discord/server'
+import {default as connectorFinch_def} from '@usevenice/connector-finch/def'
+import {default as connectorFinch_server} from '@usevenice/connector-finch/server'
 import {default as connectorFirebase_def} from '@usevenice/connector-firebase/def'
 import {default as connectorFirebase_server} from '@usevenice/connector-firebase/server'
 import {default as connectorForeceipt_def} from '@usevenice/connector-foreceipt/def'
@@ -96,6 +98,11 @@ const connectorDebug = {
 const connectorDiscord = {
   ...connectorDiscord_def,
   ...connectorDiscord_server,
+}
+
+const connectorFinch = {
+  ...connectorFinch_def,
+  ...connectorFinch_server,
 }
 
 const connectorFirebase = {
@@ -248,6 +255,7 @@ export const mergedConnectors = {
   brex: connectorBrex,
   debug: connectorDebug,
   discord: connectorDiscord,
+  finch: connectorFinch,
   firebase: connectorFirebase,
   foreceipt: connectorForeceipt,
   fs: connectorFs,

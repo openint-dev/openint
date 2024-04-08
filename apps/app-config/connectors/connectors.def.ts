@@ -5,6 +5,7 @@ import {default as connectorBeancount} from '@usevenice/connector-beancount/def'
 import {default as connectorBrex} from '@usevenice/connector-brex/def'
 import {default as connectorDebug} from '@usevenice/connector-debug/def'
 import {default as connectorDiscord} from '@usevenice/connector-discord/def'
+import {default as connectorFinch} from '@usevenice/connector-finch/def'
 import {default as connectorFirebase} from '@usevenice/connector-firebase/def'
 import {default as connectorForeceipt} from '@usevenice/connector-foreceipt/def'
 import {default as connectorFs} from '@usevenice/connector-fs/def'
@@ -42,6 +43,7 @@ export const defConnectors = {
   brex: connectorBrex,
   debug: connectorDebug,
   discord: connectorDiscord,
+  finch: connectorFinch,
   firebase: connectorFirebase,
   foreceipt: connectorForeceipt,
   fs: connectorFs,
