@@ -198,6 +198,9 @@ importers:
       '@usevenice/connector-expensify':
         specifier: workspace:*
         version: link:../../connectors/connector-expensify
+      '@usevenice/connector-finch':
+        specifier: workspace:*
+        version: link:../../connectors/connector-finch
       '@usevenice/connector-firebase':
         specifier: workspace:*
         version: link:../../connectors/connector-firebase
@@ -776,6 +779,21 @@ importers:
 
   connectors/connector-expensify:
     dependencies:
+      '@usevenice/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@usevenice/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+
+  connectors/connector-finch:
+    dependencies:
+      '@opensdks/sdk-finch':
+        specifier: ^0.0.2
+        version: 0.0.2
+      '@opensdks/util-zod':
+        specifier: ^0.0.15
+        version: 0.0.15
       '@usevenice/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
@@ -4782,6 +4800,10 @@ packages:
 
   /@opensdks/sdk-discord@0.0.14:
     resolution: {integrity: sha512-GvA3dEvhiy18Ddd2XTP68YJOheSwg2UFoOKb5nXr8WxWfOwW/o9RvJW+kMhZKKNM5R39oP90xMcIjtSp3GrozQ==}
+
+  /@opensdks/sdk-finch@0.0.2:
+    resolution: {integrity: sha512-ji5fesHPjBp/s+XO9i+R/8Hh5ETzm7gFz/xicGWh1hBbwXEEbJbMHErbiYWZgdTM6Zbvj4yAuDcPjX7Lu8ZYxg==}
+    dev: false
 
   /@opensdks/sdk-openai@0.0.14:
     resolution: {integrity: sha512-QqLiT2LAZnHZc5pyGNRyhBsk87QfDYUwAi3zE3VhGQSLnT88KiZ+TOpIJIyM1zqcQIlXPIy98H/DSWSWufDDQA==}

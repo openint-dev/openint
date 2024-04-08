@@ -63,6 +63,15 @@ module.exports = [
   },
   {dirName: 'connector-expensify', varName: 'connectorExpensify', imports: {}},
   {
+    name: 'finch',
+    dirName: 'connector-finch',
+    varName: 'connectorFinch',
+    imports: {
+      def: '@usevenice/connector-finch/def',
+      server: '@usevenice/connector-finch/server',
+    },
+  },
+  {
     name: 'firebase',
     dirName: 'connector-firebase',
     varName: 'connectorFirebase',
