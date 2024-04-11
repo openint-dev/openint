@@ -25,7 +25,7 @@ export const revertSchemas = {
           z.object({
             fields: z.array(z.string()).describe('List of fields to retrieve'),
           }),
-          z.undefined().describe('Disabled'),
+          z.null().describe('Disabled'),
         ]),
       )
       .optional()
