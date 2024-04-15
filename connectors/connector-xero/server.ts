@@ -1,7 +1,7 @@
 import {initXeroSDK} from '@opensdks/sdk-xero'
 import type {ConnectorServer} from '@usevenice/cdk'
 import {nangoProxyLink} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
+import {delay, Rx, rxjs} from '@usevenice/util'
 import {XERO_ENTITY_NAME, xeroHelpers, type xeroSchemas} from './def'
 
 export const xeroServer = {
@@ -64,6 +64,9 @@ export const xeroServer = {
             // Account does not support pagination, all or nothing...
             if (type !== 'Account') {
               page++
+              // Temp fix for rate limit...
+              // https://developer.xero.com/documentation/guides/oauth2/limits/
+              await delay(1000)
               continue
             }
           }
