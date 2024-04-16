@@ -1,16 +1,12 @@
 {
   "name": "@openint/env",
   "version": "0.0.0",
-  "private": false,
-  "sideEffects": false,
+  "private": true,
   "module": "./index.ts",
-  "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist"
-  },
+  "scripts": {},
   "dependencies": {
-    "@openint/zod": "workspace:*",
-    "@t3-oss/env-core": "0.7.1"
+    "@opensdks/util-zod": "0.0.15",
+    "@t3-oss/env-nextjs": "0.7.3"
   },
   "devDependencies": {}
 }
