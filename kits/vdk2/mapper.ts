@@ -72,7 +72,7 @@ export function applyMapper<
     } else if (typeof m === 'string') {
       return getValueAtKeyPath(input, m)
     }
-    throw new Error(`Invalid mapping ${m as unknown} at ${key }`)
+    throw new Error(`Invalid mapping ${m as unknown} at ${key.toString()}`)
   })
   // TODO: Does this belong here?
   Object.assign(output, {raw_data: input})
