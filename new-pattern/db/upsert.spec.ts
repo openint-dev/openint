@@ -1,14 +1,15 @@
 import {sql} from 'drizzle-orm'
-import prettier from 'prettier'
-import prettierSql from 'prettier-plugin-sql'
 import {db} from '.'
 import {engagement_sequence} from './schema-dynamic'
 import {dbUpsert} from './upsert'
 
 async function formatSql(sqlString: string) {
-  return prettier.format(sqlString, {
+  const prettier = await import('prettier')
+  const prettierSql = await import('prettier-plugin-sql')
+
+  return prettier.default.format(sqlString, {
     parser: 'sql',
-    plugins: [prettierSql],
+    plugins: [prettierSql.default],
     // https://github.com/un-ts/prettier/tree/master/packages/sql#sql-in-js-with-prettier-plugin-embed
     ['language' as 'filepath' /* workaround type error */]: 'postgresql',
   })
