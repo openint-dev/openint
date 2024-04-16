@@ -9,6 +9,7 @@ import {default as connectorFinch} from '@openint/connector-finch/server'
 import {default as connectorFirebase} from '@openint/connector-firebase/server'
 import {default as connectorForeceipt} from '@openint/connector-foreceipt/server'
 import {default as connectorFs} from '@openint/connector-fs/server'
+import {default as connectorGoogle} from '@openint/connector-google/server'
 import {default as connectorHeron} from '@openint/connector-heron/server'
 import {default as connectorHubspot} from '@openint/connector-hubspot/server'
 import {default as connectorLunchmoney} from '@openint/connector-lunchmoney/server'
@@ -48,6 +49,7 @@ export const serverConnectors = {
   firebase: connectorFirebase,
   foreceipt: connectorForeceipt,
   fs: connectorFs,
+  google: connectorGoogle,
   heron: connectorHeron,
   hubspot: connectorHubspot,
   lunchmoney: connectorLunchmoney,

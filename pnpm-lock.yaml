@@ -213,6 +213,9 @@ importers:
       '@openint/connector-fs':
         specifier: workspace:*
         version: link:../../connectors/connector-fs
+      '@openint/connector-google':
+        specifier: workspace:*
+        version: link:../../connectors/connector-google
       '@openint/connector-heron':
         specifier: workspace:*
         version: link:../../connectors/connector-heron
@@ -863,6 +866,18 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+
+  connectors/connector-google:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/runtime':
+        specifier: ^0.0.16
+        version: 0.0.16
 
   connectors/connector-heron:
     dependencies:

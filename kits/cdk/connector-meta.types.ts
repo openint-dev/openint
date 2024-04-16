@@ -18,6 +18,7 @@ export const zConnectorVertical = z.enum([
   'enrichment',
   'database',
   'flat-files-and-spreadsheets',
+  'file-storage',
   'streaming',
   'personal-finance',
   'other',

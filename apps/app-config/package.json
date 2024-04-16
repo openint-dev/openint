@@ -24,6 +24,7 @@
     "@openint/connector-firebase": "workspace:*",
     "@openint/connector-foreceipt": "workspace:*",
     "@openint/connector-fs": "workspace:*",
+    "@openint/connector-google": "workspace:*",
     "@openint/connector-heron": "workspace:*",
     "@openint/connector-hubspot": "workspace:*",
     "@openint/connector-lunchmoney": "workspace:*",

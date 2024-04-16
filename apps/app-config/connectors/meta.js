@@ -100,6 +100,15 @@ module.exports = [
     },
   },
   {
+    name: 'google',
+    dirName: 'connector-google',
+    varName: 'connectorGoogle',
+    imports: {
+      def: '@openint/connector-google/def',
+      server: '@openint/connector-google/server',
+    },
+  },
+  {
     name: 'heron',
     dirName: 'connector-heron',
     varName: 'connectorHeron',
