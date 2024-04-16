@@ -71,7 +71,7 @@
     "ts-brand": "0.0.2",
     "tsx": "3.12.2",
     "turbo": "^1.10.16",
-    "typescript": "5.0.4"
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": "20",

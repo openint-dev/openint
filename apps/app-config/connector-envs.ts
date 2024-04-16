@@ -57,6 +57,7 @@ export function parseConnectorConfigsFromRawEnv(
             )}": ${issue.message} [${issue.code}]`,
           )
         }
+        return undefined
       }
     }),
     (configMap) => R.pickBy(configMap, (val) => val !== undefined),
