@@ -1,8 +1,8 @@
 {
-  "name": "venice",
+  "name": "openint",
   "version": "0.0.0",
   "private": true,
-  "repository": "git@github.com:usevenice/venice.git",
+  "repository": "git@github.com:openint-dev/openint.git",
   "license": "UNLICENSED",
   "scripts": {
     "web": "pnpm run --filter web dev",
