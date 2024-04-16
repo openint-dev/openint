@@ -38,5 +38,9 @@
     "keytar": "7.9.0",
     "micro": "9.3.5-canary.3",
     "ngrok": "5.0.0-beta.2"
+  },
+  "devDependencies": {
+    "@opensdks/runtime": "^0.0.19",
+    "@opensdks/sdk-venice": "^0.0.17"
   }
 }

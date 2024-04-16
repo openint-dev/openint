@@ -466,6 +466,13 @@ importers:
       ngrok:
         specifier: 5.0.0-beta.2
         version: 5.0.0-beta.2
+    devDependencies:
+      '@opensdks/runtime':
+        specifier: ^0.0.19
+        version: 0.0.19
+      '@opensdks/sdk-venice':
+        specifier: ^0.0.17
+        version: 0.0.17(@opensdks/runtime@0.0.19)
 
   apps/gondola:
     dependencies:
@@ -5297,6 +5304,14 @@ packages:
       '@opensdks/runtime': 0.0.14
     dependencies:
       '@opensdks/runtime': 0.0.16
+    dev: true
+
+  /@opensdks/sdk-venice@0.0.17(@opensdks/runtime@0.0.19):
+    resolution: {integrity: sha512-gjU8RRMMSC3e3uSI8OzaIrPT0sbOmTwKNqp8Mqhm4OFM9ug8O3QSEEHE0Bwp++ZZ+WnSaD2+u4/X5iRsuxGsBw==}
+    peerDependencies:
+      '@opensdks/runtime': 0.0.17
+    dependencies:
+      '@opensdks/runtime': 0.0.19
     dev: true
 
   /@opensdks/sdk-xero@0.0.7:
