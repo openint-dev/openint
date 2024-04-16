@@ -103,7 +103,7 @@ function generateOpenApi() {
   const {webhooks, components} = oasWebhooksEventsMap(outgoingWebhookEventMap)
   const oas = generateOpenApiDocument(appRouter, {
     openApiVersion: '3.1.0', // Want jsonschema
-    title: 'Venice OpenAPI',
+    title: 'OpenInt OpenAPI',
     version: '0.0.0',
     securitySchemes: {
       apikey: {

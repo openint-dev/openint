@@ -1,6 +1,6 @@
 import {createClient} from '@openint/openapi-client'
-import type {paths} from './venice.oas'
-import oas from './venice.oas.json'
+import type {paths} from './openint.oas'
+import oas from './openint.oas.json'
 
 export interface VeniceClientOptions {
   /** Optional because certain apis are public */

@@ -2,7 +2,7 @@ import apiPages from './api-reference/index.json'
 
 const mintConfig: MintConfig = {
   name: 'Venice',
-  openapi: './venice.oas.json',
+  openapi: './openint.oas.json',
   logo: {
     light: '/images/logo/venice-black-logo.svg',
     dark: '/images/logo/venice-white-logo.svg',
@@ -42,7 +42,7 @@ const mintConfig: MintConfig = {
     },
     {
       name: 'OpenAPI.json',
-      url: 'https://raw.githubusercontent.com/useVenice/venice/main/kits/sdk/venice.oas.json',
+      url: 'https://raw.githubusercontent.com/useVenice/venice/main/kits/sdk/openint.oas.json',
     },
   ],
   navigation: [

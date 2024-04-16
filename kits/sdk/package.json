@@ -9,8 +9,8 @@
     "build": "tsc -p ./tsconfig.json",
     "clean": "rm -rf ./dist",
     "gen": "pnpm gen:schema && pnpm gen:types",
-    "gen:schema": "NEXT_PUBLIC_SERVER_URL=https://app.venice.is npx tsx ../../apps/web/lib-server/appRouter.ts > ./venice.oas.json",
-    "gen:types": "openapi-typescript ./venice.oas.json --output ./venice.oas.d.ts",
+    "gen:schema": "NEXT_PUBLIC_SERVER_URL=https://app.openint.dev npx tsx ../../apps/web/lib-server/appRouter.ts > ./openint.oas.json",
+    "gen:types": "openapi-typescript ./openint.oas.json --output ./openint.oas.d.ts",
     "pub": "pnpm publish --no-git-checks --access public"
   },
   "dependencies": {
