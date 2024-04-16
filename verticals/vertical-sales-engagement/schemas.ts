@@ -51,4 +51,4 @@ export const contact = z
     // last_modified_at: z.string(),
     // raw_data: z.object({}).catchall(z.any()).optional(),
   })
-  .openapi({ref: 'sales-engagement.contact'})
+  .openapi({ref: 'sales-engagement-old.contact'})

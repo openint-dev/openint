@@ -537,6 +537,551 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/customers': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['mgmt-listCustomers']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/customers/{id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['mgmt-getCustomer']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/customers/{customer_id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put: operations['mgmt-upsertCustomer']
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/customers/{customer_id}/connections': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['mgmt-listConnections']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/customers/{customer_id}/connections/{provider_name}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['mgmt-getConnection']
+    put?: never
+    post?: never
+    delete: operations['mgmt-deleteConnection']
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/sync_configs': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['mgmt-listSyncConfigs']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/connection_sync_configs': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['mgmt-getConnectionSyncConfig']
+    put: operations['mgmt-upsertConnectionSyncConfig']
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/contact': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['salesEngagement-listContacts']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/sequence': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['salesEngagement-listSequences']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/sequence_state': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['salesEngagement-listSequenceStates']
+    put?: never
+    post: operations['salesEngagement-insertSequenceState']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/user': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['salesEngagement-listUsers']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/account': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['salesEngagement-listAccounts']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/mailbox': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['salesEngagement-listMailboxes']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/account/_upsert': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['salesEngagement-upsertAccount']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/engagement/v2/contact/_upsert': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['salesEngagement-upsertContact']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/{entity}/_count': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-countEntity']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/account': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-listAccounts']
+    put?: never
+    post: operations['crm-createAccount']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/account/{id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-getAccount']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch: operations['crm-updateAccount']
+    trace?: never
+  }
+  '/crm/v2/account/batch_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['crm-batchReadAccounts']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/account/_upsert': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['crm-upsertAccount']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/contact': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-listContacts']
+    put?: never
+    post: operations['crm-createContact']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/contact/{id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-getContact']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch: operations['crm-updateContact']
+    trace?: never
+  }
+  '/crm/v2/contact/_batch_read': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['crm-batchReadContacts']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/contact/_upsert': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['crm-upsertContact']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/lead': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-listLeads']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/lead/{id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-getLead']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/opportunity': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-listOpportunities']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/opportunity/{id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-getOpportunity']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/user': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-listUsers']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/user/{id}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-getUser']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/custom_objects/{object_name}': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-listCustomObjectRecords']
+    put?: never
+    post: operations['crm-createCustomObjectRecord']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/metadata/objects': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-metadataListObjects']
+    put?: never
+    /** @description Create custom object schema */
+    post: operations['crm-metadataCreateObject']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/metadata/objects/{object_name}/properties': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get: operations['crm-metadataListObjectProperties']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/crm/v2/metadata/associations': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: operations['crm-metadataCreateAssociation']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
 }
 export interface webhooks {
   'sync.completed': {
@@ -765,7 +1310,7 @@ export interface components {
        *      */
       metadata?: unknown
     }
-    'sales-engagement.contact': {
+    'sales-engagement-old.contact': {
       id: string
       first_name: string
       last_name: string
@@ -812,6 +1357,421 @@ export interface components {
           /** @enum {string} */
           role: 'system'
         }
+    customer: {
+      customer_id: string
+      name?: string | null
+      /** @description Email, but not validated as data from Supaglue has invalid emails for now */
+      email?: string | null
+    }
+    connection: {
+      id: string
+      customer_id: string
+      provider_name: string
+    }
+    sync_config: components['schemas']['connection_sync_config'] & {
+      provider_name: string
+      /** @description If true, the sync will start automatically when the connection is created. */
+      auto_start_on_connection?: boolean | null
+    }
+    connection_sync_config: {
+      destination_config?: {
+        type: string
+        schema?: string | null
+      } | null
+      unified_objects?:
+        | {
+            object: string
+          }[]
+        | null
+      standard_objects?:
+        | {
+            object: string
+          }[]
+        | null
+      custom_objects?:
+        | {
+            object: string
+          }[]
+        | null
+    }
+    'sales-engagement.contact': {
+      id: string
+      first_name: string
+      last_name: string
+      owner_id: string
+      account_id?: string
+      job_title: string
+      address: components['schemas']['sales-engagement.address']
+      email_addresses: components['schemas']['sales-engagement.email_address'][]
+      phone_numbers: components['schemas']['sales-engagement.phone_number'][]
+      open_count: number
+      click_count: number
+      reply_count: number
+      bounced_count: number
+      created_at: string
+      updated_at: string
+      is_deleted: boolean
+      last_modified_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    'sales-engagement.address': {
+      city: string
+      country: string
+      postal_code: string
+      state: string
+      street_1: string
+      street_2: string
+    }
+    'sales-engagement.email_address': {
+      email_address: string
+      /** @enum {string} */
+      email_address_type: 'primary' | 'personal' | 'work' | 'other'
+    }
+    'sales-engagement.phone_number': {
+      phone_number: string
+      /** @enum {string} */
+      phone_number_type: 'primary' | 'work' | 'home' | 'mobile' | 'other'
+    }
+    'sales-engagement.sequence': {
+      id: string
+      name?: string
+      created_at: string
+      updated_at: string
+      is_deleted: boolean
+      last_modified_at: string
+      owner_id: string
+      tags: string[]
+      num_steps: number
+      metrics?: {
+        [key: string]: unknown
+      }
+      is_enabled: boolean
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    'sales-engagement.sequenceState': {
+      id: string
+      state: string
+      created_at: string
+      updated_at: string
+      is_deleted: boolean
+      last_modified_at: string
+      sequence_id: string
+      contact_id: string
+      mailbox_id: string
+      user_id: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    'sales-engagement.user': {
+      id: string
+      first_name: string
+      last_name: string
+      email: string
+      created_at: string
+      updated_at: string
+      is_deleted: boolean
+      last_modified_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    'sales-engagement.account': {
+      id: string
+      name: string
+      created_at: string
+      updated_at: string
+      is_deleted: boolean
+      last_modified_at: string
+      domain: string
+      owner_id: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    'sales-engagement.mailbox': {
+      id: string
+      email: string
+      created_at: string
+      updated_at: string
+      is_deleted: boolean
+      last_modified_at: string
+      user_id: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    'crm.account': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      name?: string | null
+      is_deleted?: boolean | null
+      website?: string | null
+      industry?: string | null
+      number_of_employees?: number | null
+      owner_id?: string | null
+      created_at?: string | null
+      /** @example Integration API */
+      description?: string | null
+      /** @description date-time */
+      last_activity_at?: string | null
+      addresses?: components['schemas']['crm.address'][] | null
+      phone_numbers?:
+        | {
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }[]
+        | null
+      lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
+      last_modified_at?: string | null
+    }
+    'crm.address': {
+      address_type: components['schemas']['crm.address_type']
+      city: string | null
+      country: string | null
+      postal_code: string | null
+      state: string | null
+      street_1: string | null
+      street_2: string | null
+    }
+    /** @enum {string} */
+    'crm.address_type': 'primary' | 'mailing' | 'other' | 'billing' | 'shipping'
+    /** @enum {string} */
+    'crm.phone_number_type': 'primary' | 'mobile' | 'fax' | 'other'
+    /** @enum {string} */
+    'crm.lifecycle_stage':
+      | 'subscriber'
+      | 'lead'
+      | 'marketingqualifiedlead'
+      | 'salesqualifiedlead'
+      | 'opportunity'
+      | 'customer'
+      | 'evangelist'
+      | 'other'
+    'crm.account_input': {
+      /** @example Integration API */
+      description?: string | null
+      industry?: string | null
+      name?: string | null
+      number_of_employees?: number | null
+      website?: string | null
+      addresses?: components['schemas']['crm.address'][] | null
+      phone_numbers?:
+        | {
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }[]
+        | null
+      owner_id?: string | null
+      lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
+      passthrough_fields?: {
+        [key: string]: unknown
+      } | null
+    }
+    'crm.contact': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      first_name?: string | null
+      last_name?: string | null
+      /** @description Primary email address */
+      email?: string | null
+      /** @description Primary phone number */
+      phone?: string | null
+    }
+    'crm.contact_input': {
+      first_name?: string | null
+      last_name?: string | null
+      /** @description Primary email address */
+      email?: string | null
+      /** @description Primary phone number */
+      phone?: string | null
+      passthrough_fields?: {
+        [key: string]: unknown
+      } | null
+    }
+    'crm.lead': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      name?: string | null
+      first_name?: string | null
+      last_name?: string | null
+      owner_id?: string | null
+      title?: string | null
+      company?: string | null
+      converted_date?: string | null
+      lead_source?: string | null
+      converted_account_id?: string | null
+      converted_contact_id?: string | null
+      addresses?: components['schemas']['crm.address'][] | null
+      email_addresses?: components['schemas']['crm.email_address'][] | null
+      phone_numbers?:
+        | {
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }[]
+        | null
+      created_at?: string | null
+      is_deleted?: boolean | null
+      last_modified_at?: string | null
+    }
+    'crm.email_address': {
+      email_address: string
+      email_address_type: components['schemas']['crm.email_address_type']
+    }
+    /** @enum {string} */
+    'crm.email_address_type': 'primary' | 'work' | 'other'
+    'crm.opportunity': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      name?: string | null
+      description?: string | null
+      owner_id?: string | null
+      status?: components['schemas']['crm.opportunity_status'] | null
+      stage?: string | null
+      close_date?: string | null
+      account_id?: string | null
+      pipeline?: string | null
+      amount?: number | null
+      last_activity_at?: string | null
+      created_at?: string | null
+      is_deleted?: boolean | null
+      last_modified_at?: string | null
+    }
+    /** @enum {string} */
+    'crm.opportunity_status': 'OPEN' | 'WON' | 'LOST'
+    'crm.user': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      name?: string | null
+      email?: string | null
+      is_active?: boolean | null
+      created_at?: string | null
+      is_deleted?: boolean | null
+      last_modified_at?: string | null
+    }
+    warning: {
+      title?: string
+      problem_type?: string
+      detail?: string
+    }
+    'crm.meta.object': {
+      id: string
+      name: string
+    }
+    'crm.meta.custom_object_field': {
+      /** @description The machine name of the property as it appears in the third-party Provider. In Salesforce, this must end with `__c`. */
+      id: string
+      /** @description The human-readable name of the property as provided by the third-party Provider. */
+      label: string
+      /** @description A description of the field. */
+      description?: string
+      /** @description Whether or not this field is required. Must be false for Salesforce boolean fields. */
+      is_required?: boolean
+      /** @description The default value for the property. Only supported for Salesforce. */
+      default_value?: string | number | boolean
+      /**
+       * @description Only applicable for Hubspot. If specified, Supaglue will attempt to attach the field to this group if it exists, or create it if it doesn't.
+       * @example my group
+       */
+      group_name?: string
+      type: components['schemas']['crm.meta.property_type']
+      /** @description Only applicable in Salesforce. If not given, will default to 18. */
+      precision?: number
+      /** @description Only applicable in Salesforce. If not given, will default to 0. */
+      scale?: number
+      /** @description The list of options for a picklist/multipicklist field. */
+      options?: components['schemas']['crm.meta.pick_list_option'][]
+      /** @description The raw details of the property as provided by the third-party Provider, if available. */
+      raw_details?: {
+        [key: string]: unknown
+      }
+    }
+    /**
+     * @description :::note
+     *     `picklist` and `multipicklist` property types are currently only supported in Salesforce and Hubspot
+     *     :::
+     *
+     *     :::note
+     *     `url` property type currently is only natively supported in Salesforce.
+     *     :::
+     * @enum {string}
+     */
+    'crm.meta.property_type':
+      | 'text'
+      | 'textarea'
+      | 'number'
+      | 'picklist'
+      | 'multipicklist'
+      | 'date'
+      | 'datetime'
+      | 'boolean'
+      | 'url'
+      | 'other'
+    'crm.meta.pick_list_option': {
+      /** @example Option 1 */
+      label: string
+      /** @example option_1 */
+      value: string
+      description?: string
+      /** @description Defaults to false. */
+      hidden?: boolean
+    }
+    'crm.meta.property': {
+      /**
+       * @description The machine name of the property as it appears in the third-party Provider
+       * @example FirstName
+       */
+      id: string
+      /**
+       * @description The human-readable name of the property as provided by the third-party Provider.
+       * @example First Name
+       */
+      label: string
+      /**
+       * @description The type of the property as provided by the third-party Provider. These types are not unified by Supaglue. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.
+       * @example string
+       */
+      type?: string
+      /**
+       * @description The raw details of the property as provided by the third-party Provider, if available.
+       * @example {}
+       */
+      raw_details?: {
+        [key: string]: unknown
+      }
+    }
+    'crm.meta.association_schema': {
+      id: string
+      /** @example contact */
+      source_object: string
+      /** @example my_custom_object */
+      target_object: string
+      display_name: string
+    }
   }
   responses: never
   parameters: never
@@ -2773,7 +3733,7 @@ export interface operations {
         content: {
           'application/json': {
             hasNextPage: boolean
-            items: components['schemas']['sales-engagement.contact'][]
+            items: components['schemas']['sales-engagement-old.contact'][]
           }
         }
       }
@@ -2906,6 +3866,2263 @@ export interface operations {
         }
         content: {
           'application/json': unknown
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-listCustomers': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['customer'][]
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-getCustomer': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['customer']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-upsertCustomer': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        customer_id: string
+      }
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          name?: string | null
+          /** @description Email, but not validated as data from Supaglue has invalid emails for now */
+          email?: string | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['customer']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-listConnections': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        customer_id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['connection'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-getConnection': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        customer_id: string
+        provider_name: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['connection']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-deleteConnection': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        customer_id: string
+        provider_name: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-listSyncConfigs': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['sync_config'][]
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-getConnectionSyncConfig': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['connection_sync_config']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'mgmt-upsertConnectionSyncConfig': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          destination_config?: {
+            type: string
+            schema?: string | null
+          } | null
+          unified_objects?:
+            | {
+                object: string
+              }[]
+            | null
+          standard_objects?:
+            | {
+                object: string
+              }[]
+            | null
+          custom_objects?:
+            | {
+                object: string
+              }[]
+            | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['connection_sync_config']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-listContacts': {
+    parameters: {
+      query?: {
+        cursor?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_page_cursor?: string | null
+            items: components['schemas']['sales-engagement.contact'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-listSequences': {
+    parameters: {
+      query?: {
+        cursor?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_page_cursor?: string | null
+            items: components['schemas']['sales-engagement.sequence'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-listSequenceStates': {
+    parameters: {
+      query?: {
+        cursor?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_page_cursor?: string | null
+            items: components['schemas']['sales-engagement.sequenceState'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-insertSequenceState': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: {
+            /** @example 9f3e97fd-4d5d-4efc-959d-bbebfac079f5 */
+            contact_id: string
+            /** @example ae4be028-9078-4850-a0bf-d2112b7c4d11 */
+            mailbox_id: string
+            /** @example b854e510-1c40-4ef6-ade4-8eb35f49d331 */
+            sequence_id: string
+            /** @example c590dc63-8e43-48a4-8154-1fbb00ac936b */
+            user_id?: string | null
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record?: {
+              id: string
+            }
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-listUsers': {
+    parameters: {
+      query?: {
+        cursor?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_page_cursor?: string | null
+            items: components['schemas']['sales-engagement.user'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-listAccounts': {
+    parameters: {
+      query?: {
+        cursor?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_page_cursor?: string | null
+            items: components['schemas']['sales-engagement.account'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-listMailboxes': {
+    parameters: {
+      query?: {
+        cursor?: string | null
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_page_cursor?: string | null
+            items: components['schemas']['sales-engagement.mailbox'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-upsertAccount': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: {
+            /** @example My Company */
+            name?: string | null
+            /** @example mycompany.com */
+            domain?: string | null
+            /** @example 9f3e97fd-4d5d-4efc-959d-bbebfac079f5 */
+            owner_id?: string | null
+            /** @example ae4be028-9078-4850-a0bf-d2112b7c4d11 */
+            account_id?: string | null
+            custom_fields?: {
+              [key: string]: unknown
+            } | null
+          }
+          upsert_on: {
+            /** @description The name of the account to upsert on. Supported for Outreach, Salesloft, and Apollo. */
+            name?: string
+            /** @description The domain of the account to upsert on. Only supported for Outreach and Salesloft. */
+            domain?: string
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record?: {
+              id: string
+            }
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'salesEngagement-upsertContact': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: {
+            /** @example James */
+            first_name?: string | null
+            /** @example Smith */
+            last_name?: string | null
+            /** @example CEO */
+            job_title?: string | null
+            /** @example {
+             *       "city": "San Francisco",
+             *       "country": "US",
+             *       "postal_code": "94107",
+             *       "state": "CA",
+             *       "street_1": "525 Brannan",
+             *       "street_2": null
+             *     } */
+            address: {
+              city?: string | null
+              country?: string | null
+              postal_code?: string | null
+              state?: string | null
+              street_1?: string | null
+              street_2?: string | null
+            }
+            /** @example [
+             *       {
+             *         "email_address": "hello@revtron.ai",
+             *         "email_address_type": "work"
+             *       }
+             *     ] */
+            email_addresses: {
+              email_address: string
+              /** @enum {string|null} */
+              email_address_type?: 'primary' | 'personal' | 'work'
+            }[]
+            /** @example [
+             *       {
+             *         "phone_number": "+14151234567",
+             *         "phone_number_type": "work"
+             *       }
+             *     ] */
+            phone_numbers: {
+              phone_number: string
+              /** @enum {string} */
+              phone_number_type:
+                | 'primary'
+                | 'work'
+                | 'home'
+                | 'mobile'
+                | 'other'
+            }[]
+            /** @example 9f3e97fd-4d5d-4efc-959d-bbebfac079f5 */
+            owner_id?: string | null
+            /** @example ae4be028-9078-4850-a0bf-d2112b7c4d11 */
+            account_id?: string | null
+            custom_fields?: {
+              [key: string]: unknown
+            } | null
+          }
+          upsert_on: {
+            /** @description Contact email to upsert on. Supported for Outreach, Salesloft, and Apollo. */
+            email?: string
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record?: {
+              id: string
+            }
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-countEntity': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        entity: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            count: number
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listAccounts': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['crm.account'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-createAccount': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: components['schemas']['crm.account_input']
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.account']
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-getAccount': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.account']
+            raw?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-updateAccount': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: components['schemas']['crm.account_input']
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.account']
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-batchReadAccounts': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          ids: string[]
+          properties: string[]
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['crm.account'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-upsertAccount': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          upsert_on: {
+            /**
+             * @description The key to upsert on. Only `website` is supported for Salesforce, while both `domain` and `website` are supported for Hubspot.
+             * @enum {string}
+             */
+            key: 'domain' | 'website'
+            /** @description The values to upsert on. If more than one value is provided, it will act as a logical OR. If more than one account is found that matches, then an error will be thrown. */
+            values: string[]
+          }
+          record: components['schemas']['crm.account_input']
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.account']
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listContacts': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['crm.contact'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-createContact': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: components['schemas']['crm.contact_input']
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.contact']
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-getContact': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.contact']
+            raw?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-updateContact': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: components['schemas']['crm.contact_input']
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.contact']
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-batchReadContacts': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          ids: string[]
+          properties: string[]
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['crm.contact'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-upsertContact': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          upsert_on: {
+            /**
+             * @description The key to upsert on. Only `email` is supported for all providers.
+             * @enum {string}
+             */
+            key: 'email'
+            /** @description The values to upsert on. If more than one value is provided, it will act as a logical OR. If more than one record is found that matches, then an error will be thrown. */
+            values: string[]
+          }
+          record: components['schemas']['crm.contact_input']
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.contact']
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listLeads': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['crm.lead'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-getLead': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.lead']
+            raw?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listOpportunities': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['crm.opportunity'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-getOpportunity': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.opportunity']
+            raw?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listUsers': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['crm.user'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-getUser': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record: components['schemas']['crm.user']
+            raw?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listCustomObjectRecords': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path: {
+        object_name: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: unknown[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-createCustomObjectRecord': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        object_name: string
+      }
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          record: {
+            [key: string]: unknown
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            record?: unknown
+            warnings?: components['schemas']['warning'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-metadataListObjects': {
+    parameters: {
+      query?: {
+        type?: 'standard' | 'custom'
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['crm.meta.object'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-metadataCreateObject': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          name: string
+          description: string | null
+          labels: {
+            singular: string
+            plural: string
+          }
+          primary_field_id: string
+          fields: components['schemas']['crm.meta.custom_object_field'][]
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['crm.meta.object']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-metadataListObjectProperties': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        object_name: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['crm.meta.property'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-metadataCreateAssociation': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          source_object: string
+          target_object: string
+          /** @description The underlying provider may change this (e.g. adding `__c` for Salesforce). */
+          suggested_key_name: string
+          display_name: string
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            association_schema: components['schemas']['crm.meta.association_schema']
+            warnings?: components['schemas']['warning'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
         }
       }
       /** @description Internal server error */

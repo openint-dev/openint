@@ -5,6 +5,7 @@ import type {
   ZodOpenApiPathsObject,
 } from '@lilyrose2798/trpc-openapi/dist/generator'
 import {TRPCError} from '@trpc/server'
+import {appRouter as _appRouter} from '@openint/api'
 import {getServerUrl} from '@openint/app-config/constants'
 import type {Viewer} from '@openint/cdk'
 import {zViewer} from '@openint/cdk'
@@ -57,7 +58,7 @@ const customRouter = trpc.router({
     .query((): unknown => generateOpenApi()),
 })
 
-export const appRouter = trpc.mergeRouters(flatRouter, customRouter)
+export const appRouter = trpc.mergeRouters(flatRouter, customRouter, _appRouter)
 
 function assertNoSlash(name: string) {
   if (name.includes('/')) {

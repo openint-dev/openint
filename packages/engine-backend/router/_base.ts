@@ -29,7 +29,11 @@ export const trpc = initTRPC
       if (!(error.cause instanceof HTTPError)) {
         return shape
       }
+      // We cannot use the errorFormatter to modify here because trpc-openapi does not respect data.httpStatus field
+      // so we need to catch it further upstream. But we can add some fields... Maybe we need an explicit className field?
       return {
+        // This doesn't seem to work so well in prod as name can be mangled...
+        class: error.constructor.name,
         ...shape,
         data: error.cause.response
           ? {
@@ -41,6 +45,31 @@ export const trpc = initTRPC
           : shape.data,
       }
     },
+    // if (error instanceof NoLongerAuthenticatedError) {
+    //   return {code: ''}
+    // }
+    // // TODO: We need better logic around this... 500 from BYOS is very different from
+    // // 500 from our platform. This is likely not a good heuristic at the moement...
+    // if (err instanceof HTTPError && err.code >= 500) {
+    //   return 'REMOTE_ERROR'
+    // }
+    // // Anything else non-null would be considered internal error.
+    // if (err != null) {
+    //   return 'INTERNAL_ERROR'
+    // }
+    // console.log('errorFormatter', opts)
+    // shape.data.httpStatus = 401
+
+    //   return {
+    //     ...shape,
+    //     code: -32600,
+    //     data: {
+    //       ...shape.data,
+    //       code: 'BAD_REQUEST',
+    //       httpStatus: 409,
+    //     },
+    //   }
+    // },
   })
 
 export const publicProcedure = trpc.procedure
