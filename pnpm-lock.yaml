@@ -1854,6 +1854,15 @@ importers:
         specifier: 0.7.3
         version: 0.7.3(typescript@5.4.5)(zod@3.22.4)
 
+  utils/events:
+    dependencies:
+      '@opensdks/util-zod':
+        specifier: 0.0.15
+        version: 0.0.15
+      inngest:
+        specifier: ^3.16.0
+        version: 3.16.0(typescript@5.4.5)
+
   utils/openapi-client:
     dependencies:
       openapi-fetch:
