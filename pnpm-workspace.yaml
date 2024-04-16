@@ -1,6 +1,7 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+  - 'new-pattern/*'
   - 'connectors/*'
   - 'verticals/*'
   - 'kits/*'

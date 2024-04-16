@@ -1,4 +1,4 @@
-import type {RouterContext} from '@openint/vdk'
+import type {RouterContext} from '@openint/vdk2'
 import {
   hubspotProvider,
   msDynamics365SalesProvider,

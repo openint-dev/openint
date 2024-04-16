@@ -1,11 +1,11 @@
 import {db as _db, dbUpsert, eq, schema, sql} from '@openint/db'
-import type {PathsWithMethod, ResponseFrom} from '@openint/vdk'
-import {NotAuthenticatedError, NotFoundError} from '@openint/vdk'
+import type {PathsWithMethod, ResponseFrom} from '@openint/vdk2'
+import {NotAuthenticatedError, NotFoundError} from '@openint/vdk2'
 import {
   fromNangoConnectionId,
   toNangoConnectionId,
   toNangoProviderConfigKey,
-} from '@openint/vdk/nangoProxyLink'
+} from '@openint/vdk2/nangoProxyLink'
 import type {NangoSDK, NangoSDKTypes} from '@opensdks/sdk-nango'
 import {initNangoSDK} from '@opensdks/sdk-nango'
 import type {unified} from '../router'

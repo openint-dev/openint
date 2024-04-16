@@ -1,4 +1,4 @@
-import {z} from '@openint/vdk'
+import {z} from '@openint/vdk2'
 
 /** workaround the issue that we get back date from db... need to figure out how to just get string */
 // const zTimestamp = z

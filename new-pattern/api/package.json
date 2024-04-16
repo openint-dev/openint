@@ -17,7 +17,7 @@
     "@openint/env": "workspace:*",
     "@openint/vdk2": "workspace:*",
     "@openint/vertical-crm": "workspace:*",
-    "@openint/vertical-sales-engagement": "workspace:*",
+    "@openint/vertical-sales-engagement2": "workspace:*",
     "remeda": "^1.46.0"
   },
   "devDependencies": {}

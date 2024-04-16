@@ -1,6 +1,6 @@
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
 import {env} from '@openint/env'
-import {isHttpError} from '@openint/vdk'
+import {isHttpError} from '@openint/vdk2'
 import {appRouter} from './appRouter'
 import {createContext} from './createContext'
 
@@ -58,4 +58,4 @@ export function createAppHandler({
     })
 }
 
-export {zByosHeaders, type ByosHeaders} from '@openint/vdk'
+export {zByosHeaders, type ByosHeaders} from '@openint/vdk2'

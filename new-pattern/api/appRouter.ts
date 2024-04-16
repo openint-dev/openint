@@ -6,9 +6,9 @@ import type {
 import {env} from '@openint/env'
 import {eventsMap} from '@openint/events'
 import {mgmtRouter} from '@openint/mgmt'
-import {publicProcedure, trpc, zByosHeaders} from '@openint/vdk'
+import {publicProcedure, trpc, zByosHeaders} from '@openint/vdk2'
 import {crmRouter} from '@openint/vertical-crm'
-import {salesEngagementRouter} from '@openint/vertical-sales-engagement'
+import {salesEngagementRouter} from '@openint/vertical-sales-engagement2'
 import {mapKeys, mapValues} from 'remeda'
 // not sure about directly depending on vdk from api, but anyways
 import {z} from '@opensdks/util-zod'

@@ -19,7 +19,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@openint/vdk": "workspace:*",
+    "@openint/vdk2": "workspace:*",
     "drizzle-kit": "^0.20.12"
   }
 }

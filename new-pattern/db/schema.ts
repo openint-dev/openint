@@ -1,5 +1,5 @@
 import {env} from '@openint/env'
-import type {ErrorType} from '@openint/vdk'
+import type {ErrorType} from '@openint/vdk2'
 import {sql} from 'drizzle-orm'
 import {
   customType,
