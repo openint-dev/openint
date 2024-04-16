@@ -17,9 +17,7 @@ import {
 } from '@tanstack/react-table'
 import {ChevronDown} from 'lucide-react'
 import React from 'react'
-
-import {R, titleCase} from '@usevenice/util'
-
+import {R, titleCase} from '@openint/util'
 import {
   Button,
   Checkbox,

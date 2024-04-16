@@ -1,10 +1,6 @@
 // /* eslint-disable jest/no-standalone-expect */
-import type {
-  EndUserId,
-  EntityPayloadWithRaw,
-  SyncOperation,
-} from '@usevenice/cdk'
-import {rxjs, toCompletion} from '@usevenice/util'
+import type {EndUserId, EntityPayloadWithRaw, SyncOperation} from '@openint/cdk'
+import {rxjs, toCompletion} from '@openint/util'
 import twentyServer from './server'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

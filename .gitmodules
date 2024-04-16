@@ -1,3 +1,0 @@
-[submodule "apps/tests"]
-	path = apps/tests
-	url = git@github.com:alkafinance/ledger-sync-tests.git

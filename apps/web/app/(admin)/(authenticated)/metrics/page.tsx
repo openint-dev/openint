@@ -1,11 +1,6 @@
 'use client'
 
-import {
-  ComboboxDemo,
-  CommandInline,
-  CommandPopover
-} from '@usevenice/ui'
-
+import {ComboboxDemo, CommandInline, CommandPopover} from '@openint/ui'
 import {GlobalCommandBar} from '@/vcommands/GlobalCommandBar'
 import {useCommandContextValue} from '@/vcommands/vcommand-context'
 import {vDefinitions} from '@/vcommands/vcommand-definitions'

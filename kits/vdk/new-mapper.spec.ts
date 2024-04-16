@@ -1,4 +1,4 @@
-import {z} from '@usevenice/zod'
+import {z} from '@openint/zod'
 import {literal, mapper} from './new-mapper'
 
 const Vendor = z.object({

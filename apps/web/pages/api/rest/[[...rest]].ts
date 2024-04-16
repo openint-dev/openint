@@ -1,11 +1,9 @@
-import '@usevenice/app-config/register.node'
-
-import converter from 'swagger2openapi'
-
-import {getRestEndpoint} from '@usevenice/app-config/constants'
-import {joinPath, R} from '@usevenice/util'
+import '@openint/app-config/register.node'
 import type {NextApiHandler} from 'next'
 import modifyResponse from 'node-http-proxy-json'
+import converter from 'swagger2openapi'
+import {getRestEndpoint} from '@openint/app-config/constants'
+import {joinPath, R} from '@openint/util'
 import {serverAnalytics} from '../../../lib-server/analytics-server'
 import {proxySupabase} from '../../../lib-server/supabase-proxy'
 

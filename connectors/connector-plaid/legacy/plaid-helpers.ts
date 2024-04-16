@@ -1,8 +1,7 @@
 import type plaid from 'plaid'
 import type {PlaidAccount as PlaidLinkAccount} from 'react-plaid-link'
-
-import type {Pta} from '@usevenice/cdk'
-import {A, normalizeError} from '@usevenice/util'
+import type {Pta} from '@openint/cdk'
+import {A, normalizeError} from '@openint/util'
 
 // This should be consolidated except two different plaid versions are used
 // So we should copy for now until we are ready...

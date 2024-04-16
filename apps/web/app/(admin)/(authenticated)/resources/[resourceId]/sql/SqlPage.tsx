@@ -3,13 +3,12 @@
 import {useQuery} from '@tanstack/react-query'
 import {ChevronDown, Loader2} from 'lucide-react'
 import React from 'react'
-
 import {
   getServerUrl,
   kAcceptUrlParam,
   kApikeyUrlParam,
-} from '@usevenice/app-config/constants'
-import type {Id} from '@usevenice/cdk'
+} from '@openint/app-config/constants'
+import type {Id} from '@openint/cdk'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,11 +22,10 @@ import {
   Resizable,
   ScrollArea,
   useWithToast,
-} from '@usevenice/ui'
-import type {Editor} from '@usevenice/ui/components/CodeEditor'
-import {CodeEditor} from '@usevenice/ui/components/CodeEditor'
-import {DataGrid} from '@usevenice/ui/components/DataGrid'
-
+} from '@openint/ui'
+import type {Editor} from '@openint/ui/components/CodeEditor'
+import {CodeEditor} from '@openint/ui/components/CodeEditor'
+import {DataGrid} from '@openint/ui/components/DataGrid'
 import {NoSSR} from '@/components/NoSSR'
 
 const qListTable = `

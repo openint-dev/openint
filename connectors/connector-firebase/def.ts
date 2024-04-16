@@ -2,10 +2,9 @@ import type {
   AnyEntityPayload,
   ConnectorDef,
   ConnectorSchemas,
-} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
-
+} from '@openint/cdk'
+import {connHelpers} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 import type {AnyQuery} from './firebase-types'
 import type {WrappedFirebase} from './server'
 

@@ -1,8 +1,7 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import type {UnionToIntersection} from '@usevenice/util'
-import {z} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers} from '@openint/cdk'
+import type {UnionToIntersection} from '@openint/util'
+import {z} from '@openint/util'
 import {
   formatAlliantCreditUnion,
   formatAppleCard,

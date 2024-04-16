@@ -1,6 +1,5 @@
 import './global.css'
-
-import {env} from '@usevenice/app-config/env'
+import {env} from '@openint/app-config/env'
 
 export const metadata = {
   title: `${

@@ -1,34 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import {parseConnectorConfigsFromRawEnv} from '@usevenice/app-config/connector-envs'
-import type {defConnectors} from '@usevenice/app-config/connectors/connectors.def'
-import '@usevenice/app-config/register.node'
-import {makeJwtClient, makeNangoClient} from '@usevenice/cdk'
-import {makeAlphavantageClient} from '@usevenice/connector-alphavantage'
-import {makeHeronClient} from '@usevenice/connector-heron'
-import {makeLunchmoneyClient} from '@usevenice/connector-lunchmoney'
-import {makeMergeClient} from '@usevenice/connector-merge'
-import {makeMootaClient} from '@usevenice/connector-moota'
-import {makeOneBrickClient} from '@usevenice/connector-onebrick'
+import {parseConnectorConfigsFromRawEnv} from '@openint/app-config/connector-envs'
+import type {defConnectors} from '@openint/app-config/connectors/connectors.def'
+import '@openint/app-config/register.node'
+import {makeJwtClient, makeNangoClient} from '@openint/cdk'
+import {makeAlphavantageClient} from '@openint/connector-alphavantage'
+import {makeHeronClient} from '@openint/connector-heron'
+import {makeLunchmoneyClient} from '@openint/connector-lunchmoney'
+import {makeMergeClient} from '@openint/connector-merge'
+import {makeMootaClient} from '@openint/connector-moota'
+import {makeOneBrickClient} from '@openint/connector-onebrick'
 // Make this import dynamic at runtime, so we can do
 // dynamic-cli plaid ......  or
 // OBJ=$pathToPlaid dynamic-cli whatever...
 // Or perhaps we can make it into a register and/or loader for nodejs
 // much like tsx and others
-import {makePlaidClient} from '@usevenice/connector-plaid'
-import {makePostgresClient} from '@usevenice/connector-postgres'
-import {makeRampClient} from '@usevenice/connector-ramp'
-import {makeSaltedgeClient} from '@usevenice/connector-saltedge'
-import {makeStripeClient} from '@usevenice/connector-stripe'
-import {makeTellerClient} from '@usevenice/connector-teller'
-import {makeTogglClient} from '@usevenice/connector-toggl'
-import {makeWiseClient} from '@usevenice/connector-wise'
-import {makeYodleeClient} from '@usevenice/connector-yodlee'
-import {getEnv} from '@usevenice/env'
-import {AirbytePublicSDK} from '@usevenice/meta-service-airbyte/airbyte-sdk'
-import {makePostgresMetaService} from '@usevenice/meta-service-postgres'
-import {createVeniceClient} from '@usevenice/sdk'
-import type {ZFunctionMap} from '@usevenice/util'
-import {getEnvVar, R, z, zodInsecureDebug} from '@usevenice/util'
+import {makePlaidClient} from '@openint/connector-plaid'
+import {makePostgresClient} from '@openint/connector-postgres'
+import {makeRampClient} from '@openint/connector-ramp'
+import {makeSaltedgeClient} from '@openint/connector-saltedge'
+import {makeStripeClient} from '@openint/connector-stripe'
+import {makeTellerClient} from '@openint/connector-teller'
+import {makeTogglClient} from '@openint/connector-toggl'
+import {makeWiseClient} from '@openint/connector-wise'
+import {makeYodleeClient} from '@openint/connector-yodlee'
+import {getEnv} from '@openint/env'
+import {AirbytePublicSDK} from '@openint/meta-service-airbyte/airbyte-sdk'
+import {makePostgresMetaService} from '@openint/meta-service-postgres'
+import {createVeniceClient} from '@openint/sdk'
+import type {ZFunctionMap} from '@openint/util'
+import {getEnvVar, R, z, zodInsecureDebug} from '@openint/util'
 import type {CliOpts} from './cli-utils'
 import {cliFromZFunctionMap} from './cli-utils'
 
@@ -39,8 +39,8 @@ if (getEnvVar('DEBUG_ZOD')) {
 function env() {
   process.env['_SKIP_ENV_VALIDATION'] = 'true'
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return require('@usevenice/app-config/env')
-    .env as (typeof import('@usevenice/app-config/env'))['env']
+  return require('@openint/app-config/env')
+    .env as (typeof import('@openint/app-config/env'))['env']
 }
 
 function intConfig<T extends keyof typeof defConnectors>(name: T) {

@@ -1,9 +1,7 @@
 import {formatDistanceToNowStrict} from 'date-fns'
 import {Landmark} from 'lucide-react'
-
-import type {ZStandard} from '@usevenice/cdk'
-import type {RouterOutput} from '@usevenice/engine-backend'
-
+import type {ZStandard} from '@openint/cdk'
+import type {RouterOutput} from '@openint/engine-backend'
 import {LoadingText} from '../components/LoadingText'
 import {Badge, Card} from '../shadcn'
 import {cn} from '../utils'

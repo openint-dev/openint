@@ -1,4 +1,4 @@
-import {createVeniceClient} from '@usevenice/sdk'
+import {createVeniceClient} from '@openint/sdk'
 
 const venice = createVeniceClient({
   apiKey: process.env['_VENICE_API_KEY'],

@@ -1,5 +1,5 @@
-import type {HTTPError} from '@usevenice/util'
-import {createHTTPClient, z, zFunction} from '@usevenice/util'
+import type {HTTPError} from '@openint/util'
+import {createHTTPClient, z, zFunction} from '@openint/util'
 
 export const zConfig = z.object({
   baseURL: z.string().nullish(),

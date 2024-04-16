@@ -1,8 +1,6 @@
 import React from 'react'
-
-import type {Id} from '@usevenice/cdk'
-import type {RouterOutput} from '@usevenice/engine-backend'
-
+import type {Id} from '@openint/cdk'
+import type {RouterOutput} from '@openint/engine-backend'
 import {Badge, Card} from '../shadcn'
 import {cn} from '../utils'
 

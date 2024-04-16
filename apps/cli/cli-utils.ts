@@ -7,11 +7,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import fs from 'node:fs'
 import path from 'node:path'
-
 import type {AnyRouter} from '@trpc/server'
 import cac from 'cac'
-
-import type {AnyZFunction, MaybePromise, z} from '@usevenice/util'
+import type {AnyZFunction, MaybePromise, z} from '@openint/util'
 import {
   deepMerge,
   isAsyncIterable,
@@ -22,7 +20,7 @@ import {
   routerFromZFunctionMap,
   rxjs,
   safeJSONParse,
-} from '@usevenice/util'
+} from '@openint/util'
 
 function printLine(line: unknown, opts?: {json?: boolean}) {
   if (opts?.json) {

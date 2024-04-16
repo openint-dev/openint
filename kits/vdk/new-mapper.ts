@@ -10,8 +10,8 @@ import type {
 } from '@trpc/server'
 import {TRPCError} from '@trpc/server'
 import * as R from 'remeda'
-import type {PathsOf, StrictObj} from '@usevenice/types'
-import {z} from '@usevenice/zod'
+import type {PathsOf, StrictObj} from '@openint/types'
+import {z} from '@openint/zod'
 // FIXME: This is explicitly bypassing the package system because we have a circular
 // dependency here which is not great but ....
 import type {

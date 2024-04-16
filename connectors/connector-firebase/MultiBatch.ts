@@ -1,14 +1,6 @@
 import type firebase from 'firebase/compat'
-
-import type {NoInfer, ObjectPartialDeep, PathsOf} from '@usevenice/util'
-import {
-  deepOmitUndefined,
-  getAt,
-  operateForEach,
-  R,
-  rxjs,
-} from '@usevenice/util'
-
+import type {NoInfer, ObjectPartialDeep, PathsOf} from '@openint/util'
+import {deepOmitUndefined, getAt, operateForEach, R, rxjs} from '@openint/util'
 import type {
   AnyDocumentReference,
   AnyFieldPath,

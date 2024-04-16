@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable unicorn/prefer-top-level-await */
-import '@usevenice/app-config/register.node'
-import {logLink, mapStandardEntityLink, sync} from '@usevenice/cdk'
-import {plaidProvider} from '@usevenice/connector-plaid'
-import {postgresProvider} from '@usevenice/connector-postgres'
-import type {rxjs} from '@usevenice/util'
-import {R, Rx} from '@usevenice/util'
+import '@openint/app-config/register.node'
+import {logLink, mapStandardEntityLink, sync} from '@openint/cdk'
+import {plaidProvider} from '@openint/connector-plaid'
+import {postgresProvider} from '@openint/connector-postgres'
+import type {rxjs} from '@openint/util'
+import {R, Rx} from '@openint/util'
 
 function getInstance(
   provider: {

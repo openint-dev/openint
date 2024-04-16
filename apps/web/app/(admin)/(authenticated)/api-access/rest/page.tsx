@@ -1,19 +1,17 @@
 'use client'
 
 import '@stoplight/elements/styles.min.css'
-
 // this pollutes the global CSS space
 
 import {API as StoplightElements} from '@stoplight/elements'
 import {useQuery} from '@tanstack/react-query'
-
-import {getRestEndpoint} from '@usevenice/app-config/constants'
+import {getRestEndpoint} from '@openint/app-config/constants'
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   LoadingText,
-} from '@usevenice/ui'
+} from '@openint/ui'
 
 export default function RestExplorerPage() {
   const oasDocument = useQuery({

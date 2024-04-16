@@ -4,9 +4,9 @@ import type {
   DisplayOf,
   DistributiveOmit,
   EnumOf,
-} from '@usevenice/util'
-import {objectFromArray, startCase, temp_makeId} from '@usevenice/util'
-import {z} from '@usevenice/vdk'
+} from '@openint/util'
+import {objectFromArray, startCase, temp_makeId} from '@openint/util'
+import {z} from '@openint/vdk'
 import type * as Pta from './pta-types'
 
 export function stdTypeAndEntity<T extends Pta.TypeAndEntity[0]>(

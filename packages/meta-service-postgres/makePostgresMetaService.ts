@@ -1,21 +1,21 @@
-import type {Id, Viewer, ZRaw} from '@usevenice/cdk'
-import {zViewer} from '@usevenice/cdk'
-import {zPgConfig} from '@usevenice/connector-postgres/def'
+import type {Id, Viewer, ZRaw} from '@openint/cdk'
+import {zViewer} from '@openint/cdk'
+import {zPgConfig} from '@openint/connector-postgres/def'
 import type {
   DatabaseTransactionConnection,
   SqlTaggedTemplate,
   TransactionFunction,
-} from '@usevenice/connector-postgres/makePostgresClient'
+} from '@openint/connector-postgres/makePostgresClient'
 import {
   applyLimitOffset,
   makePostgresClient,
-} from '@usevenice/connector-postgres/makePostgresClient'
+} from '@openint/connector-postgres/makePostgresClient'
 import type {
   EndUserResultRow,
   MetaService,
   MetaTable,
-} from '@usevenice/engine-backend'
-import {memoize, R, zFunction} from '@usevenice/util'
+} from '@openint/engine-backend'
+import {memoize, R, zFunction} from '@openint/util'
 
 const getPostgreClient = memoize((databaseUrl: string) =>
   makePostgresClient({databaseUrl}),

@@ -1,7 +1,6 @@
-import type {ConnectorClient} from '@usevenice/cdk'
-import {CANCELLATION_TOKEN, DivContainer, useScript} from '@usevenice/cdk'
-import type {NonDiscriminatedUnion} from '@usevenice/util'
-
+import type {ConnectorClient} from '@openint/cdk'
+import {CANCELLATION_TOKEN, DivContainer, useScript} from '@openint/cdk'
+import type {NonDiscriminatedUnion} from '@openint/util'
 import type {yodleeSchemas} from './def'
 import type {FastLinkOpenOptions} from './fastlink'
 
@@ -45,8 +44,8 @@ export const yodleeClientConnector = {
               ...(providerAccountId
                 ? {flow: 'edit', providerAccountId}
                 : providerId
-                ? {flow: 'add', providerId}
-                : undefined),
+                  ? {flow: 'add', providerId}
+                  : undefined),
             },
             onSuccess: (data) => {
               console.debug('[yodlee] Did receive successful response', data)

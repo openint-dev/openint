@@ -25,7 +25,7 @@ import {
   $writeFile,
   implementProxyFn,
   memoize,
-} from '@usevenice/util'
+} from '@openint/util'
 
 /**
  * Do not relace global version unnecessarily.

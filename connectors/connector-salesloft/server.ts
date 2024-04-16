@@ -1,7 +1,7 @@
 import type {SalesloftSDK} from '@opensdks/sdk-salesloft'
 import {initSalesloftSDK} from '@opensdks/sdk-salesloft'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {nangoProxyLink} from '@usevenice/cdk'
+import type {ConnectorServer} from '@openint/cdk'
+import {nangoProxyLink} from '@openint/cdk'
 import type {salesloftSchemas} from './def'
 
 export const salesloftServer = {

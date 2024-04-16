@@ -1,6 +1,6 @@
 import {TRPCError} from '@trpc/server'
-import {extractId, zStandard} from '@usevenice/cdk'
-import {R, z} from '@usevenice/util'
+import {extractId, zStandard} from '@openint/cdk'
+import {R, z} from '@openint/util'
 import {inngest, zEvent} from '../events'
 import {protectedProcedure, trpc} from './_base'
 

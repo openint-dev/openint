@@ -1,7 +1,6 @@
 /** Used for the side effect of window.MergeLink */
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import {makeBrexClient} from './BrexClient'
 import type {brexSchemas} from './def'
 import {helpers} from './def'
@@ -17,10 +16,11 @@ export const brexServer = {
       .from(
         client.transactions
           .get('/v2/transactions/card/primary', {})
-          .then((res) =>
-            (res.items ?? [])?.map((txn) =>
-              helpers._opData('transaction', txn.id ?? '', txn),
-            ),
+          .then(
+            (res) =>
+              (res.items ?? [])?.map((txn) =>
+                helpers._opData('transaction', txn.id ?? '', txn),
+              ),
           ),
       )
       .pipe(Rx.mergeMap((ops) => rxjs.from(ops)))

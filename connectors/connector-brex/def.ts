@@ -1,7 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers, zCcfgAuth} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, zCcfgAuth} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 import type {components} from './__generated__/transactions.gen'
 
 export const brexSchemas = {

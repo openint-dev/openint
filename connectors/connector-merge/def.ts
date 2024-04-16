@@ -1,10 +1,8 @@
 /** Used for the side effect of window.MergeLink */
 
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import type {Pta} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
+import {connHelpers} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 import {mergeLogoSvg} from './merge-logo.svg'
 import type {components} from './merge.accounting.gen'
 import {zCategory, zIntegration} from './MergeClient'

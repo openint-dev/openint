@@ -1,11 +1,11 @@
 'use client'
 
 import React from 'react'
-import {zId} from '@usevenice/cdk'
-import {_trpcReact} from '@usevenice/engine-frontend'
-import type {SchemaSheetRef} from '@usevenice/ui'
-import {SchemaSheet} from '@usevenice/ui'
-import {z} from '@usevenice/util'
+import {zId} from '@openint/cdk'
+import {_trpcReact} from '@openint/engine-frontend'
+import type {SchemaSheetRef} from '@openint/ui'
+import {SchemaSheet} from '@openint/ui'
+import {z} from '@openint/util'
 import type {ZClient} from '@/lib-common/schemas'
 
 /** TODO: See if we can eliminate the need having entity specific sheets */

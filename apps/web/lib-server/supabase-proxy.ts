@@ -1,18 +1,15 @@
 import type {IncomingMessage} from 'node:http'
-
 import {createProxy} from 'http-proxy'
 import type {NextApiRequest, NextApiResponse} from 'next'
-
-import {backendEnv} from '@usevenice/app-config/backendConfig'
+import {backendEnv} from '@openint/app-config/backendConfig'
 import {
   kAcceptUrlParam,
   kApikeyHeader,
   kApikeyUrlParam,
-} from '@usevenice/app-config/constants'
-import {env} from '@usevenice/app-config/env'
-import {makeJwtClient} from '@usevenice/cdk'
-import {parseUrl, stringifyUrl} from '@usevenice/util'
-
+} from '@openint/app-config/constants'
+import {env} from '@openint/app-config/env'
+import {makeJwtClient} from '@openint/cdk'
+import {parseUrl, stringifyUrl} from '@openint/util'
 import {respondToCORS, serverGetViewer} from '.'
 
 // TODO: Centralize this

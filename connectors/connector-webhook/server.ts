@@ -1,7 +1,6 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import {handlersLink} from '@usevenice/cdk'
-import {createHTTPClient, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {handlersLink} from '@openint/cdk'
+import {createHTTPClient, rxjs} from '@openint/util'
 import type {webhookHelpers, webhookSchemas} from './def'
 
 export const webhookServer = {

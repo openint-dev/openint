@@ -1,5 +1,5 @@
 import type {oas30, oas31} from 'openapi3-ts'
-import {createClient} from '@usevenice/openapi-client'
+import {createClient} from '@openint/openapi-client'
 
 export type OpenAPISpec = oas30.OpenAPIObject | oas31.OpenAPIObject
 

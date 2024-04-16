@@ -1,8 +1,7 @@
 import type {QueryClient} from '@tanstack/react-query'
 import {createTRPCReact, httpBatchLink, httpLink} from '@trpc/react-query'
 import React from 'react'
-
-import type {AnyRouter, FlatRouter} from '@usevenice/engine-backend'
+import type {AnyRouter, FlatRouter} from '@openint/engine-backend'
 
 export const _trpcReact = createTRPCReact<FlatRouter>()
 

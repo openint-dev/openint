@@ -1,9 +1,9 @@
 import type {
   SalesloftSDK,
   SalesloftSDKTypes,
-} from '@usevenice/connector-salesloft'
-import type {StrictObj} from '@usevenice/vdk'
-import {mapper, zCast} from '@usevenice/vdk'
+} from '@openint/connector-salesloft'
+import type {StrictObj} from '@openint/vdk'
+import {mapper, zCast} from '@openint/vdk'
 import type {VerticalSalesEngagement} from '../sales-engagement'
 import {zSalesEngagement} from '../sales-engagement'
 

@@ -1,9 +1,7 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {zEntityPayload} from '@usevenice/cdk'
-import type {Brand} from '@usevenice/util'
-import {A, DateTime, z, zCast} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, zEntityPayload} from '@openint/cdk'
+import type {Brand} from '@openint/util'
+import {A, DateTime, z, zCast} from '@openint/util'
 import {
   descriptionFromTransaction,
   payeeFromTransaction,

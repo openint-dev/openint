@@ -1,6 +1,5 @@
-import type {Id, WebhookInput} from '@usevenice/cdk'
-import type {NonEmptyArray} from '@usevenice/util'
-
+import type {Id, WebhookInput} from '@openint/cdk'
+import type {NonEmptyArray} from '@openint/util'
 import type {RouterInput} from './router'
 
 const kWebhook = 'webhook' as const

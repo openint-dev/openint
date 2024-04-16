@@ -1,5 +1,5 @@
-import {_pathFromId} from '@usevenice/connector-fs'
-import {zKVStore} from '@usevenice/engine-backend'
+import {_pathFromId} from '@openint/connector-fs'
+import {zKVStore} from '@openint/engine-backend'
 import {
   $path,
   joinPath,
@@ -9,7 +9,7 @@ import {
   writeJson,
   z,
   zFunction,
-} from '@usevenice/util'
+} from '@openint/util'
 
 export const _idFromPath = (path: string) =>
   $path()

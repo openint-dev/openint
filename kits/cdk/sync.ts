@@ -1,4 +1,4 @@
-import {R, Rx, toCompletion} from '@usevenice/util'
+import {R, Rx, toCompletion} from '@openint/util'
 import type {
   AnyEntityPayload,
   Destination,

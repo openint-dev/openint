@@ -1,11 +1,4 @@
-import {
-  createHTTPClient,
-  DateTime,
-  memoize,
-  z,
-  zFunction,
-} from '@usevenice/util'
-
+import {createHTTPClient, DateTime, memoize, z, zFunction} from '@openint/util'
 import {inferOneBrickEnvFromToken} from './onebrick-utils'
 
 export type OneBrickEnvName = z.infer<typeof zOneBrickEnvName>

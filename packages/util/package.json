@@ -1,13 +1,13 @@
 {
-  "name": "@usevenice/util",
+  "name": "@openint/util",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
   "module": "./index.ts",
   "dependencies": {
     "@blossomfinance/iso-4217-currencies": "0.2.5",
+    "@openint/zod": "workspace:*",
     "@trpc/server": "10.40.0",
-    "@usevenice/zod": "workspace:*",
     "accounting": "0.4.1",
     "async-sema": "3.1.1",
     "awilix": "7.0.3",

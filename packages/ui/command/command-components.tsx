@@ -1,8 +1,6 @@
 import {MoreHorizontal} from 'lucide-react'
 import React from 'react'
-
-import {R} from '@usevenice/util'
-
+import {R} from '@openint/util'
 import {Icon} from '../components/Icon'
 import type {ButtonProps} from '../shadcn'
 import {Button, Popover, PopoverContent, PopoverTrigger} from '../shadcn'

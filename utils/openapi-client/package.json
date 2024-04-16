@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/openapi-client",
+  "name": "@openint/openapi-client",
   "version": "0.0.2",
   "private": false,
   "sideEffects": false,

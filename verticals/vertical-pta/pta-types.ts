@@ -1,5 +1,5 @@
-import type {Amount, AmountMap, Brand, Split} from '@usevenice/util'
-import type {z} from '@usevenice/vdk'
+import type {Amount, AmountMap, Brand, Split} from '@openint/util'
+import type {z} from '@openint/vdk'
 import type {zAccountType, zResourceStatus, zReviewStatus} from './pta-utils'
 
 // MARK: - Resource

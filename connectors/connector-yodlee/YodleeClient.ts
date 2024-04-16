@@ -3,7 +3,7 @@ import {
   createClient,
   formDataBodySerializer,
   HTTPError as OpenapiHTTPError,
-} from '@usevenice/openapi-client'
+} from '@openint/openapi-client'
 import {
   $makeProxyAgent,
   createHTTPClient,
@@ -14,7 +14,7 @@ import {
   z,
   zFunction,
   type HTTPError,
-} from '@usevenice/util'
+} from '@openint/util'
 import type {paths} from './yodlee.oas'
 import type {YodleeAccount, YodleeTransaction} from './yodlee.types'
 

@@ -1,14 +1,11 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import type {Pta} from '@usevenice/cdk'
-import type {StdCache} from '@usevenice/cdk'
-import {cachingLink} from '@usevenice/cdk'
+import type {ConnectorServer, Pta, StdCache} from '@openint/cdk'
+import {cachingLink} from '@openint/cdk'
 import {
   $writeFile,
   fromCompletion,
   objectEntries,
   stableStringify,
-} from '@usevenice/util'
-
+} from '@openint/util'
 import {beanJsonToDir} from './bean-fs-utils'
 import {convBeanFile, convBeanJsonToStdJson} from './beancountConverters'
 import type {BeancountDestOptions, beancountSchemas} from './def'

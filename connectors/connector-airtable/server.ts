@@ -1,6 +1,6 @@
-import type {ConnectorServer, Pta} from '@usevenice/cdk'
-import {handlersLink} from '@usevenice/cdk'
-import {fromCompletion} from '@usevenice/util'
+import type {ConnectorServer, Pta} from '@openint/cdk'
+import {handlersLink} from '@openint/cdk'
+import {fromCompletion} from '@openint/util'
 import {makeAirtableClient} from './AirtableClient'
 import type {airtableSchemas} from './def'
 

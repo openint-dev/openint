@@ -1,4 +1,4 @@
-import {createClient} from '@usevenice/openapi-client'
+import {createClient} from '@openint/openapi-client'
 import type {paths} from './venice.oas'
 import oas from './venice.oas.json'
 

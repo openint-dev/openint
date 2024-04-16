@@ -1,8 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, z} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, makePostingsMap} from '@openint/cdk'
+import {A, z} from '@openint/util'
 import {
   profileResponseItemSchema,
   transferResponseItemSchema,

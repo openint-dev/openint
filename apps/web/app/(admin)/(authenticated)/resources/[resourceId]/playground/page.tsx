@@ -1,9 +1,7 @@
-import type {Id} from '@usevenice/cdk'
-
+import type {Id} from '@openint/cdk'
 import {contextFactory} from '@/../app-config/backendConfig'
 import {getOrCreateApikey} from '@/lib-server'
 import {serverComponentGetViewer} from '@/lib-server/server-component-helpers'
-
 import {PlaygroundPage} from './PlaygroundPage'
 
 export default async function PlaygroundPageServer({

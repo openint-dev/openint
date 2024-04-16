@@ -1,5 +1,4 @@
-import type {z} from '@usevenice/util'
-
+import type {z} from '@openint/util'
 import type {IconName} from '../components/Icon'
 
 export type _infer<T, TDefault = unknown> = T extends z.ZodTypeAny

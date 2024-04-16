@@ -1,10 +1,8 @@
 import type {Db} from 'mongodb'
 import {MongoClient} from 'mongodb'
-
-import type {AnyEntityPayload, ConnectorServer} from '@usevenice/cdk'
-import {handlersLink} from '@usevenice/cdk'
-import {zCast, zFunction} from '@usevenice/util'
-
+import type {AnyEntityPayload, ConnectorServer} from '@openint/cdk'
+import {handlersLink} from '@openint/cdk'
+import {zCast, zFunction} from '@openint/util'
 import type {mongoSchemas} from './def'
 import {mongoDef, zMongoConnection} from './def'
 

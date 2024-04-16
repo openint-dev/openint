@@ -1,19 +1,19 @@
 {
-  "name": "@usevenice/engine-frontend",
+  "name": "@openint/engine-frontend",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
   "module": "./index.ts",
   "dependencies": {
     "@nangohq/frontend": "0.33.8",
+    "@openint/cdk": "workspace:*",
+    "@openint/engine-backend": "workspace:*",
+    "@openint/ui": "workspace:*",
+    "@openint/util": "workspace:*",
     "@tanstack/react-query": "*",
     "@trpc/client": "10.40.0",
     "@trpc/react-query": "10.40.0",
-    "@trpc/server": "10.40.0",
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/engine-backend": "workspace:*",
-    "@usevenice/ui": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@trpc/server": "10.40.0"
   },
   "devDependencies": {
     "@types/react": "*"

@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-foreceipt",
+  "name": "@openint/connector-foreceipt",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [
@@ -7,9 +7,9 @@
   ],
   "module": "./index.ts",
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/connector-firebase": "workspace:*",
-    "@usevenice/util": "workspace:*",
+    "@openint/cdk": "workspace:*",
+    "@openint/connector-firebase": "workspace:*",
+    "@openint/util": "workspace:*",
     "firebase": "9.8.1"
   }
 }

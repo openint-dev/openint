@@ -1,6 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers, zWebhookInput} from '@usevenice/cdk'
-import {z} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, zWebhookInput} from '@openint/cdk'
+import {z} from '@openint/util'
 
 export const debugSchemas = {
   name: z.literal('debug'),

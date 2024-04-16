@@ -1,6 +1,5 @@
-import type {Pta} from '@usevenice/cdk'
-import {A, DateTime, R} from '@usevenice/util'
-
+import type {Pta} from '@openint/cdk'
+import {A, DateTime, R} from '@openint/util'
 import type {YodleeAccount, YodleeBalances} from './yodlee.types'
 
 export function getYodleeAccountName(account: YodleeAccount) {

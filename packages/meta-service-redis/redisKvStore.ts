@@ -1,7 +1,6 @@
 import {createNodeRedisClient} from 'handy-redis'
-
-import {zKVStore} from '@usevenice/engine-backend'
-import {memoize, safeJSONParse, z, zFunction} from '@usevenice/util'
+import {zKVStore} from '@openint/engine-backend'
+import {memoize, safeJSONParse, z, zFunction} from '@openint/util'
 
 export const makeRedisKVStore = zFunction(
   z.object({redisUrl: z.string().optional()}),

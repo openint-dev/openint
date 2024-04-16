@@ -1,4 +1,4 @@
-import {z} from '@usevenice/util'
+import {z} from '@openint/util'
 
 const zImage = z.object({
   original: z.string().nullish(),

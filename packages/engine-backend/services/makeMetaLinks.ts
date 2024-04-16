@@ -1,8 +1,7 @@
-import type {AnyEntityPayload, Id, IDS, OpHandlers, ZRaw} from '@usevenice/cdk'
-import {extractId, handlersLink, IDS_INVERTED, makeId} from '@usevenice/cdk'
-import type {ObjectPartialDeep} from '@usevenice/util'
-import {deepMerge, R} from '@usevenice/util'
-
+import type {AnyEntityPayload, Id, IDS, OpHandlers, ZRaw} from '@openint/cdk'
+import {extractId, handlersLink, IDS_INVERTED, makeId} from '@openint/cdk'
+import type {ObjectPartialDeep} from '@openint/util'
+import {deepMerge, R} from '@openint/util'
 import type {MetaService, MetaTable} from './metaService'
 
 // TODO: Validate connection before saving...
@@ -150,7 +149,7 @@ export function makeMetaLinks(metaBase: MetaService) {
         )
         // console.log(`[meta] Did update resource`, id, op.data)
       },
-    } satisfies OpHandlers<Promise<void>>)
+    }) satisfies OpHandlers<Promise<void>>
 
   // TODO: Dedupe with contextHelpers
   const patch = async <TTable extends keyof ZRaw>(

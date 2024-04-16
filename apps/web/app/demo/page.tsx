@@ -2,10 +2,8 @@
 
 import 'next/image'
 import '../global.css'
-
 import {useSearchParams} from 'next/navigation'
-
-import {VeniceConnectEmbed} from '@usevenice/connect'
+import {VeniceConnectEmbed} from '@openint/connect'
 
 export default function Demo() {
   const params = useSearchParams()

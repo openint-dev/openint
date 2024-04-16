@@ -1,7 +1,7 @@
 import type {Link as FetchLink} from '@opensdks/runtime'
-import type {MaybePromise, PathsOf} from '@usevenice/util'
-import {R} from '@usevenice/util'
-import type {z} from '@usevenice/zod'
+import type {MaybePromise, PathsOf} from '@openint/util'
+import {R} from '@openint/util'
+import type {z} from '@openint/zod'
 import type {
   CheckResourceContext,
   CheckResourceOptions,

@@ -1,15 +1,15 @@
 {
-  "name": "@usevenice/meta-service-fs",
+  "name": "@openint/meta-service-fs",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
   "module": "./index.ts",
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/connector-fs": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/connector-fs": "workspace:*",
+    "@openint/util": "workspace:*"
   },
   "devDependencies": {
-    "@usevenice/engine-backend": "workspace:*"
+    "@openint/engine-backend": "workspace:*"
   }
 }

@@ -1,10 +1,8 @@
 #!/usr/bin/env tsx
-import '@usevenice/app-config/register.node'
-
+import '@openint/app-config/register.node'
 import path from 'node:path'
-
-import {makePostgresClient} from '@usevenice/connector-postgres'
-import {z} from '@usevenice/util'
+import {makePostgresClient} from '@openint/connector-postgres'
+import {z} from '@openint/util'
 
 void makePostgresClient({
   databaseUrl: z.string().parse(process.env['POSTGRES_OR_WEBHOOK_URL']),

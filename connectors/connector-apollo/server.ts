@@ -1,7 +1,7 @@
 import type {ApolloSDK} from '@opensdks/sdk-apollo'
 import {initApolloSDK} from '@opensdks/sdk-apollo'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import type {apolloSchemas} from './def'
 import {APOLLO_ENTITY_NAME, apolloHelpers} from './def'
 

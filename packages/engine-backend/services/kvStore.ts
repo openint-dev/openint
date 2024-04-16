@@ -3,8 +3,8 @@ import type {
   MaybePromise,
   NoInfer,
   ObjectPartialDeep,
-} from '@usevenice/util'
-import {R, z} from '@usevenice/util'
+} from '@openint/util'
+import {R, z} from '@openint/util'
 
 /** @deprecated. See metaService. */
 export interface KVStore<T = Json> {

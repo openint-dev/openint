@@ -6,9 +6,9 @@ import type {
   PlaidAccount as PlaidLinkAccount,
   PlaidLinkOnSuccessMetadata,
 } from 'react-plaid-link'
-import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@usevenice/cdk'
-import {connHelpers, makePostingsMap, zWebhookInput} from '@usevenice/cdk'
-import {A, R, z, zCast} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@openint/cdk'
+import {connHelpers, makePostingsMap, zWebhookInput} from '@openint/cdk'
+import {A, R, z, zCast} from '@openint/util'
 import {
   getPlaidAccountBalance,
   getPlaidAccountFullName,

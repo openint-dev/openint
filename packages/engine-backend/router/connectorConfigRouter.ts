@@ -7,8 +7,8 @@ import {
   oauthBaseSchema,
   zId,
   zRaw,
-} from '@usevenice/cdk'
-import {makeUlid, z} from '@usevenice/util'
+} from '@openint/cdk'
+import {makeUlid, z} from '@openint/util'
 import {adminProcedure, protectedProcedure, trpc} from './_base'
 
 export {type inferProcedureInput} from '@trpc/server'

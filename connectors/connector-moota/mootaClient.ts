@@ -1,4 +1,4 @@
-import {createHTTPClient, z, zCast, zFunction} from '@usevenice/util'
+import {createHTTPClient, z, zCast, zFunction} from '@openint/util'
 
 export const zConfig = z.object({
   token: z.string(),

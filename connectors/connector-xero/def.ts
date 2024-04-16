@@ -1,7 +1,7 @@
 import type {components} from '@opensdks/sdk-xero/xero_accounting.oas.types'
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers, oauthBaseSchema, zEntityPayload} from '@usevenice/cdk'
-import {R, z} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, oauthBaseSchema, zEntityPayload} from '@openint/cdk'
+import {R, z} from '@openint/util'
 
 export const zConfig = oauthBaseSchema.connectorConfig
 

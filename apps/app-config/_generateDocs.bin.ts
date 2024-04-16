@@ -1,10 +1,7 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-
 import tablemark from 'tablemark'
-
-import {buildUrl, R} from '@usevenice/util'
-
+import {buildUrl, R} from '@openint/util'
 import {parseConnectorConfigsFromRawEnv} from './connector-envs'
 import {defConnectors} from './connectors/connectors.def'
 import {env, envConfig} from './env'

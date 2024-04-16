@@ -1,4 +1,4 @@
-import {createHTTPClient} from '@usevenice/util'
+import {createHTTPClient} from '@openint/util'
 
 export function makeSentryClient(opts: {dsn: string}) {
   if (!opts.dsn) {

@@ -2,12 +2,12 @@ import type {paths} from '@opensdks/sdk-plaid/plaid.oas.types'
 import type {PlaidApi, PlaidError} from 'plaid'
 import * as plaid from 'plaid'
 import {CountryCode, Products} from 'plaid'
-import type {ConnectorServer} from '@usevenice/cdk'
+import type {ConnectorServer} from '@openint/cdk'
 import type {
   DurationObjectUnits,
   IAxiosError,
   InfoFromPaths,
-} from '@usevenice/util'
+} from '@openint/util'
 import {
   DateTime,
   makeOpenApiClient,
@@ -16,7 +16,7 @@ import {
   Rx,
   rxjs,
   safeJSONParse,
-} from '@usevenice/util'
+} from '@openint/util'
 import type {plaidSchemas} from './def'
 import {helpers as def} from './def'
 import {inferPlaidEnvFromToken} from './plaid-utils'

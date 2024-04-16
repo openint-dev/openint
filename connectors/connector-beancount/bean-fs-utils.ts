@@ -7,8 +7,7 @@ import {
   produce,
   R,
   stableStringify,
-} from '@usevenice/util'
-
+} from '@openint/util'
 import {
   convBeanFile,
   defaultOptions,

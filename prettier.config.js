@@ -8,7 +8,7 @@ module.exports = {
   importOrder: [
     '^node:(.+)$',
     '<THIRD_PARTY_MODULES>',
-    '^@usevenice/(.+)$',
+    '^@openint/(.+)$',
     '^@/(.+)$',
     '^[./]',
   ],

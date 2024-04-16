@@ -1,14 +1,12 @@
 import firebase from 'firebase/compat/app'
-
 import {
   getQuerySnapshot$,
   initFirebase,
   zFirebaseUserConfig,
   zServiceAccount,
-} from '@usevenice/connector-firebase'
-import type {HTTPError} from '@usevenice/util'
-import {createHTTPClient, Rx, rxjs, z, zCast, zFunction} from '@usevenice/util'
-
+} from '@openint/connector-firebase'
+import type {HTTPError} from '@openint/util'
+import {createHTTPClient, Rx, rxjs, z, zCast, zFunction} from '@openint/util'
 import {_parseResourceInfo} from './foreceipt-utils'
 
 class ForeceiptError extends Error {

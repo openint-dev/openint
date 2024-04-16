@@ -1,9 +1,9 @@
 import type {Combine, EventsFromOpts} from 'inngest'
 import {EventSchemas, Inngest} from 'inngest'
 import type {ZodToStandardSchema} from 'inngest/components/EventSchemas'
-import {zId} from '@usevenice/cdk'
-import type {NonEmptyArray} from '@usevenice/util'
-import {R, z} from '@usevenice/util'
+import {zId} from '@openint/cdk'
+import type {NonEmptyArray} from '@openint/util'
+import {R, z} from '@openint/util'
 
 // TODO: Implement webhook as events too
 

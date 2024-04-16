@@ -34,7 +34,7 @@ patchedDependencies:
     hash: qbdhvjs7sktehqpuch2x3qhd4y
     path: patches/esbuild-jest@0.5.0.patch
   firebase@9.8.1:
-    hash: bmwbs4hhuxm5sycev5w2vhohk4
+    hash: xv6drfi56cgifjvxlrcjb2s3qe
     path: patches/firebase@9.8.1.patch
   micro-memoize@4.0.10:
     hash: hko3q5jvea7ey3trpjtkqgcale
@@ -44,13 +44,19 @@ importers:
 
   .:
     dependencies:
-      '@usevenice/cli':
+      '@openint/cli':
         specifier: workspace:*
         version: link:apps/cli
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
         version: 4.1.1(prettier@3.1.0)
+      '@openint/sdk':
+        specifier: workspace:*
+        version: link:kits/sdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:packages/util
       '@roarr/cli':
         specifier: 5.7.0
         version: 5.7.0
@@ -72,12 +78,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: 5.57.1
         version: 5.57.1(eslint@8.23.0)(typescript@5.0.4)
-      '@usevenice/sdk':
-        specifier: workspace:*
-        version: link:kits/sdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:packages/util
       esbuild:
         specifier: 0.17.5
         version: 0.17.5
@@ -168,141 +168,141 @@ importers:
       '@clerk/nextjs':
         specifier: 4.29.3
         version: 4.29.3(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/connector-airtable':
+        specifier: workspace:*
+        version: link:../../connectors/connector-airtable
+      '@openint/connector-alphavantage':
+        specifier: workspace:*
+        version: link:../../connectors/connector-alphavantage
+      '@openint/connector-apollo':
+        specifier: workspace:*
+        version: link:../../connectors/connector-apollo
+      '@openint/connector-beancount':
+        specifier: workspace:*
+        version: link:../../connectors/connector-beancount
+      '@openint/connector-brex':
+        specifier: workspace:*
+        version: link:../../connectors/connector-brex
+      '@openint/connector-debug':
+        specifier: workspace:*
+        version: link:../../connectors/connector-debug
+      '@openint/connector-discord':
+        specifier: workspace:*
+        version: link:../../connectors/connector-discord
+      '@openint/connector-expensify':
+        specifier: workspace:*
+        version: link:../../connectors/connector-expensify
+      '@openint/connector-finch':
+        specifier: workspace:*
+        version: link:../../connectors/connector-finch
+      '@openint/connector-firebase':
+        specifier: workspace:*
+        version: link:../../connectors/connector-firebase
+      '@openint/connector-foreceipt':
+        specifier: workspace:*
+        version: link:../../connectors/connector-foreceipt
+      '@openint/connector-fs':
+        specifier: workspace:*
+        version: link:../../connectors/connector-fs
+      '@openint/connector-heron':
+        specifier: workspace:*
+        version: link:../../connectors/connector-heron
+      '@openint/connector-lunchmoney':
+        specifier: workspace:*
+        version: link:../../connectors/connector-lunchmoney
+      '@openint/connector-mercury':
+        specifier: workspace:*
+        version: link:../../connectors/connector-mercury
+      '@openint/connector-merge':
+        specifier: workspace:*
+        version: link:../../connectors/connector-merge
+      '@openint/connector-mongodb':
+        specifier: workspace:*
+        version: link:../../connectors/connector-mongodb
+      '@openint/connector-moota':
+        specifier: workspace:*
+        version: link:../../connectors/connector-moota
+      '@openint/connector-notion':
+        specifier: workspace:*
+        version: link:../../connectors/connector-notion
+      '@openint/connector-onebrick':
+        specifier: workspace:*
+        version: link:../../connectors/connector-onebrick
+      '@openint/connector-outreach':
+        specifier: workspace:*
+        version: link:../../connectors/connector-outreach
+      '@openint/connector-plaid':
+        specifier: workspace:*
+        version: link:../../connectors/connector-plaid
+      '@openint/connector-postgres':
+        specifier: workspace:*
+        version: link:../../connectors/connector-postgres
+      '@openint/connector-qbo':
+        specifier: workspace:*
+        version: link:../../connectors/connector-qbo
+      '@openint/connector-ramp':
+        specifier: workspace:*
+        version: link:../../connectors/connector-ramp
+      '@openint/connector-revert':
+        specifier: workspace:*
+        version: link:../../connectors/connector-revert
+      '@openint/connector-salesloft':
+        specifier: workspace:*
+        version: link:../../connectors/connector-salesloft
+      '@openint/connector-saltedge':
+        specifier: workspace:*
+        version: link:../../connectors/connector-saltedge
+      '@openint/connector-splitwise':
+        specifier: workspace:*
+        version: link:../../connectors/connector-splitwise
+      '@openint/connector-spreadsheet':
+        specifier: workspace:*
+        version: link:../../connectors/connector-spreadsheet
+      '@openint/connector-stripe':
+        specifier: workspace:*
+        version: link:../../connectors/connector-stripe
+      '@openint/connector-teller':
+        specifier: workspace:*
+        version: link:../../connectors/connector-teller
+      '@openint/connector-toggl':
+        specifier: workspace:*
+        version: link:../../connectors/connector-toggl
+      '@openint/connector-twenty':
+        specifier: workspace:*
+        version: link:../../connectors/connector-twenty
+      '@openint/connector-venmo':
+        specifier: workspace:*
+        version: link:../../connectors/connector-venmo
+      '@openint/connector-webhook':
+        specifier: workspace:*
+        version: link:../../connectors/connector-webhook
+      '@openint/connector-wise':
+        specifier: workspace:*
+        version: link:../../connectors/connector-wise
+      '@openint/connector-xero':
+        specifier: workspace:*
+        version: link:../../connectors/connector-xero
+      '@openint/connector-yodlee':
+        specifier: workspace:*
+        version: link:../../connectors/connector-yodlee
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../../packages/engine-backend
+      '@openint/engine-frontend':
+        specifier: workspace:*
+        version: link:../../packages/engine-frontend
+      '@openint/meta-service-postgres':
+        specifier: workspace:*
+        version: link:../../packages/meta-service-postgres
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@t3-oss/env-nextjs':
         specifier: 0.3.1
         version: 0.3.1(typescript@5.0.4)(zod@3.22.4)
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/connector-airtable':
-        specifier: workspace:*
-        version: link:../../connectors/connector-airtable
-      '@usevenice/connector-alphavantage':
-        specifier: workspace:*
-        version: link:../../connectors/connector-alphavantage
-      '@usevenice/connector-apollo':
-        specifier: workspace:*
-        version: link:../../connectors/connector-apollo
-      '@usevenice/connector-beancount':
-        specifier: workspace:*
-        version: link:../../connectors/connector-beancount
-      '@usevenice/connector-brex':
-        specifier: workspace:*
-        version: link:../../connectors/connector-brex
-      '@usevenice/connector-debug':
-        specifier: workspace:*
-        version: link:../../connectors/connector-debug
-      '@usevenice/connector-discord':
-        specifier: workspace:*
-        version: link:../../connectors/connector-discord
-      '@usevenice/connector-expensify':
-        specifier: workspace:*
-        version: link:../../connectors/connector-expensify
-      '@usevenice/connector-finch':
-        specifier: workspace:*
-        version: link:../../connectors/connector-finch
-      '@usevenice/connector-firebase':
-        specifier: workspace:*
-        version: link:../../connectors/connector-firebase
-      '@usevenice/connector-foreceipt':
-        specifier: workspace:*
-        version: link:../../connectors/connector-foreceipt
-      '@usevenice/connector-fs':
-        specifier: workspace:*
-        version: link:../../connectors/connector-fs
-      '@usevenice/connector-heron':
-        specifier: workspace:*
-        version: link:../../connectors/connector-heron
-      '@usevenice/connector-lunchmoney':
-        specifier: workspace:*
-        version: link:../../connectors/connector-lunchmoney
-      '@usevenice/connector-mercury':
-        specifier: workspace:*
-        version: link:../../connectors/connector-mercury
-      '@usevenice/connector-merge':
-        specifier: workspace:*
-        version: link:../../connectors/connector-merge
-      '@usevenice/connector-mongodb':
-        specifier: workspace:*
-        version: link:../../connectors/connector-mongodb
-      '@usevenice/connector-moota':
-        specifier: workspace:*
-        version: link:../../connectors/connector-moota
-      '@usevenice/connector-notion':
-        specifier: workspace:*
-        version: link:../../connectors/connector-notion
-      '@usevenice/connector-onebrick':
-        specifier: workspace:*
-        version: link:../../connectors/connector-onebrick
-      '@usevenice/connector-outreach':
-        specifier: workspace:*
-        version: link:../../connectors/connector-outreach
-      '@usevenice/connector-plaid':
-        specifier: workspace:*
-        version: link:../../connectors/connector-plaid
-      '@usevenice/connector-postgres':
-        specifier: workspace:*
-        version: link:../../connectors/connector-postgres
-      '@usevenice/connector-qbo':
-        specifier: workspace:*
-        version: link:../../connectors/connector-qbo
-      '@usevenice/connector-ramp':
-        specifier: workspace:*
-        version: link:../../connectors/connector-ramp
-      '@usevenice/connector-revert':
-        specifier: workspace:*
-        version: link:../../connectors/connector-revert
-      '@usevenice/connector-salesloft':
-        specifier: workspace:*
-        version: link:../../connectors/connector-salesloft
-      '@usevenice/connector-saltedge':
-        specifier: workspace:*
-        version: link:../../connectors/connector-saltedge
-      '@usevenice/connector-splitwise':
-        specifier: workspace:*
-        version: link:../../connectors/connector-splitwise
-      '@usevenice/connector-spreadsheet':
-        specifier: workspace:*
-        version: link:../../connectors/connector-spreadsheet
-      '@usevenice/connector-stripe':
-        specifier: workspace:*
-        version: link:../../connectors/connector-stripe
-      '@usevenice/connector-teller':
-        specifier: workspace:*
-        version: link:../../connectors/connector-teller
-      '@usevenice/connector-toggl':
-        specifier: workspace:*
-        version: link:../../connectors/connector-toggl
-      '@usevenice/connector-twenty':
-        specifier: workspace:*
-        version: link:../../connectors/connector-twenty
-      '@usevenice/connector-venmo':
-        specifier: workspace:*
-        version: link:../../connectors/connector-venmo
-      '@usevenice/connector-webhook':
-        specifier: workspace:*
-        version: link:../../connectors/connector-webhook
-      '@usevenice/connector-wise':
-        specifier: workspace:*
-        version: link:../../connectors/connector-wise
-      '@usevenice/connector-xero':
-        specifier: workspace:*
-        version: link:../../connectors/connector-xero
-      '@usevenice/connector-yodlee':
-        specifier: workspace:*
-        version: link:../../connectors/connector-yodlee
-      '@usevenice/engine-backend':
-        specifier: workspace:*
-        version: link:../../packages/engine-backend
-      '@usevenice/engine-frontend':
-        specifier: workspace:*
-        version: link:../../packages/engine-frontend
-      '@usevenice/meta-service-postgres':
-        specifier: workspace:*
-        version: link:../../packages/meta-service-postgres
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
       chokidar:
         specifier: 3.5.3
         version: 3.5.3
@@ -343,99 +343,99 @@ importers:
 
   apps/cli:
     dependencies:
+      '@openint/app-config':
+        specifier: workspace:*
+        version: link:../app-config
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/connector-alphavantage':
+        specifier: workspace:*
+        version: link:../../connectors/connector-alphavantage
+      '@openint/connector-beancount':
+        specifier: workspace:*
+        version: link:../../connectors/connector-beancount
+      '@openint/connector-brex':
+        specifier: workspace:*
+        version: link:../../connectors/connector-brex
+      '@openint/connector-expensify':
+        specifier: workspace:*
+        version: link:../../connectors/connector-expensify
+      '@openint/connector-firebase':
+        specifier: workspace:*
+        version: link:../../connectors/connector-firebase
+      '@openint/connector-fs':
+        specifier: workspace:*
+        version: link:../../connectors/connector-fs
+      '@openint/connector-heron':
+        specifier: workspace:*
+        version: link:../../connectors/connector-heron
+      '@openint/connector-lunchmoney':
+        specifier: workspace:*
+        version: link:../../connectors/connector-lunchmoney
+      '@openint/connector-merge':
+        specifier: workspace:*
+        version: link:../../connectors/connector-merge
+      '@openint/connector-moota':
+        specifier: workspace:*
+        version: link:../../connectors/connector-moota
+      '@openint/connector-onebrick':
+        specifier: workspace:*
+        version: link:../../connectors/connector-onebrick
+      '@openint/connector-plaid':
+        specifier: workspace:*
+        version: link:../../connectors/connector-plaid
+      '@openint/connector-postgres':
+        specifier: workspace:*
+        version: link:../../connectors/connector-postgres
+      '@openint/connector-qbo':
+        specifier: workspace:*
+        version: link:../../connectors/connector-qbo
+      '@openint/connector-ramp':
+        specifier: workspace:*
+        version: link:../../connectors/connector-ramp
+      '@openint/connector-saltedge':
+        specifier: workspace:*
+        version: link:../../connectors/connector-saltedge
+      '@openint/connector-stripe':
+        specifier: workspace:*
+        version: link:../../connectors/connector-stripe
+      '@openint/connector-teller':
+        specifier: workspace:*
+        version: link:../../connectors/connector-teller
+      '@openint/connector-toggl':
+        specifier: workspace:*
+        version: link:../../connectors/connector-toggl
+      '@openint/connector-venmo':
+        specifier: workspace:*
+        version: link:../../connectors/connector-venmo
+      '@openint/connector-wise':
+        specifier: workspace:*
+        version: link:../../connectors/connector-wise
+      '@openint/connector-xero':
+        specifier: workspace:*
+        version: link:../../connectors/connector-xero
+      '@openint/connector-yodlee':
+        specifier: workspace:*
+        version: link:../../connectors/connector-yodlee
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../../packages/engine-backend
+      '@openint/env':
+        specifier: workspace:*
+        version: link:../../utils/env
+      '@openint/meta-service-airbyte':
+        specifier: workspace:*
+        version: link:../../packages/meta-service-airbyte
+      '@openint/meta-service-postgres':
+        specifier: workspace:*
+        version: link:../../packages/meta-service-postgres
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/app-config':
-        specifier: workspace:*
-        version: link:../app-config
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/connector-alphavantage':
-        specifier: workspace:*
-        version: link:../../connectors/connector-alphavantage
-      '@usevenice/connector-beancount':
-        specifier: workspace:*
-        version: link:../../connectors/connector-beancount
-      '@usevenice/connector-brex':
-        specifier: workspace:*
-        version: link:../../connectors/connector-brex
-      '@usevenice/connector-expensify':
-        specifier: workspace:*
-        version: link:../../connectors/connector-expensify
-      '@usevenice/connector-firebase':
-        specifier: workspace:*
-        version: link:../../connectors/connector-firebase
-      '@usevenice/connector-fs':
-        specifier: workspace:*
-        version: link:../../connectors/connector-fs
-      '@usevenice/connector-heron':
-        specifier: workspace:*
-        version: link:../../connectors/connector-heron
-      '@usevenice/connector-lunchmoney':
-        specifier: workspace:*
-        version: link:../../connectors/connector-lunchmoney
-      '@usevenice/connector-merge':
-        specifier: workspace:*
-        version: link:../../connectors/connector-merge
-      '@usevenice/connector-moota':
-        specifier: workspace:*
-        version: link:../../connectors/connector-moota
-      '@usevenice/connector-onebrick':
-        specifier: workspace:*
-        version: link:../../connectors/connector-onebrick
-      '@usevenice/connector-plaid':
-        specifier: workspace:*
-        version: link:../../connectors/connector-plaid
-      '@usevenice/connector-postgres':
-        specifier: workspace:*
-        version: link:../../connectors/connector-postgres
-      '@usevenice/connector-qbo':
-        specifier: workspace:*
-        version: link:../../connectors/connector-qbo
-      '@usevenice/connector-ramp':
-        specifier: workspace:*
-        version: link:../../connectors/connector-ramp
-      '@usevenice/connector-saltedge':
-        specifier: workspace:*
-        version: link:../../connectors/connector-saltedge
-      '@usevenice/connector-stripe':
-        specifier: workspace:*
-        version: link:../../connectors/connector-stripe
-      '@usevenice/connector-teller':
-        specifier: workspace:*
-        version: link:../../connectors/connector-teller
-      '@usevenice/connector-toggl':
-        specifier: workspace:*
-        version: link:../../connectors/connector-toggl
-      '@usevenice/connector-venmo':
-        specifier: workspace:*
-        version: link:../../connectors/connector-venmo
-      '@usevenice/connector-wise':
-        specifier: workspace:*
-        version: link:../../connectors/connector-wise
-      '@usevenice/connector-xero':
-        specifier: workspace:*
-        version: link:../../connectors/connector-xero
-      '@usevenice/connector-yodlee':
-        specifier: workspace:*
-        version: link:../../connectors/connector-yodlee
-      '@usevenice/engine-backend':
-        specifier: workspace:*
-        version: link:../../packages/engine-backend
-      '@usevenice/env':
-        specifier: workspace:*
-        version: link:../../utils/env
-      '@usevenice/meta-service-airbyte':
-        specifier: workspace:*
-        version: link:../../packages/meta-service-airbyte
-      '@usevenice/meta-service-postgres':
-        specifier: workspace:*
-        version: link:../../packages/meta-service-postgres
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
       cac:
         specifier: 6.7.12
         version: 6.7.12(patch_hash=nsfmzcycabp3f3q7kw2uyer77u)
@@ -451,13 +451,13 @@ importers:
 
   apps/gondola:
     dependencies:
-      '@usevenice/connect':
+      '@openint/connect':
         specifier: workspace:*
         version: link:../../kits/connect
-      '@usevenice/ui':
+      '@openint/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       next:
@@ -501,6 +501,22 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
 
+  apps/tests:
+    dependencies:
+      '@openint/app-config':
+        specifier: workspace:*
+        version: link:../app-config
+      remeda:
+        specifier: 1.6.1
+        version: 1.6.1
+    devDependencies:
+      openapi-typescript:
+        specifier: 6.7.1
+        version: 6.7.1
+      tsx:
+        specifier: 3.12.2
+        version: 3.12.2
+
   apps/web:
     dependencies:
       '@clerk/nextjs':
@@ -512,6 +528,30 @@ importers:
       '@lilyrose2798/trpc-openapi':
         specifier: 1.3.10
         version: 1.3.10(patch_hash=hesfnkphzbtlqjldce4x4rhy6e)(@trpc/server@10.40.0)(zod@3.22.4)
+      '@openint/app-config':
+        specifier: workspace:*
+        version: link:../app-config
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/connect':
+        specifier: workspace:*
+        version: link:../../kits/connect
+      '@openint/connector-postgres':
+        specifier: workspace:*
+        version: link:../../connectors/connector-postgres
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../../packages/engine-backend
+      '@openint/engine-frontend':
+        specifier: workspace:*
+        version: link:../../packages/engine-frontend
+      '@openint/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/fetch-links':
         specifier: 0.0.16
         version: 0.0.16
@@ -542,30 +582,6 @@ importers:
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/app-config':
-        specifier: workspace:*
-        version: link:../app-config
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/connect':
-        specifier: workspace:*
-        version: link:../../kits/connect
-      '@usevenice/connector-postgres':
-        specifier: workspace:*
-        version: link:../../connectors/connector-postgres
-      '@usevenice/engine-backend':
-        specifier: workspace:*
-        version: link:../../packages/engine-backend
-      '@usevenice/engine-frontend':
-        specifier: workspace:*
-        version: link:../../packages/engine-frontend
-      '@usevenice/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
       commandbar:
         specifier: 1.7.3
         version: 1.7.3(react@18.2.0)
@@ -672,10 +688,10 @@ importers:
 
   connectors/connector-airtable:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       airtable:
@@ -684,43 +700,43 @@ importers:
 
   connectors/connector-alphavantage:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-apollo:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-apollo':
         specifier: ^0.0.18
         version: 0.0.18
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-beancount:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-brex:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
     devDependencies:
@@ -730,60 +746,60 @@ importers:
 
   connectors/connector-copilot:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/connector-firebase':
+      '@openint/connector-firebase':
         specifier: workspace:*
         version: link:../connector-firebase
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-debug:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-discord:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/sdk-discord':
         specifier: ^0.0.14
         version: 0.0.14
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-expensify:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-finch:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/sdk-finch':
         specifier: ^0.0.3
         version: 0.0.3
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -809,49 +825,49 @@ importers:
       '@firebase/auth':
         specifier: '*'
         version: 0.20.1(@firebase/app@0.7.24)
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       firebase:
         specifier: 9.8.1
-        version: 9.8.1(patch_hash=bmwbs4hhuxm5sycev5w2vhohk4)
+        version: 9.8.1(patch_hash=xv6drfi56cgifjvxlrcjb2s3qe)
       firebase-admin:
         specifier: 10.2.0
         version: 10.2.0(@firebase/app-compat@0.1.25)(@firebase/app-types@0.8.0)
 
   connectors/connector-foreceipt:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/connector-firebase':
+      '@openint/connector-firebase':
         specifier: workspace:*
         version: link:../connector-firebase
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       firebase:
         specifier: 9.8.1
-        version: 9.8.1(patch_hash=bmwbs4hhuxm5sycev5w2vhohk4)
+        version: 9.8.1(patch_hash=xv6drfi56cgifjvxlrcjb2s3qe)
 
   connectors/connector-fs:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-heron:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
     devDependencies:
@@ -861,19 +877,19 @@ importers:
 
   connectors/connector-lunchmoney:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-mercury:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
     devDependencies:
@@ -883,10 +899,10 @@ importers:
 
   connectors/connector-merge:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       react:
@@ -905,10 +921,10 @@ importers:
 
   connectors/connector-mongodb:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       mongodb:
@@ -917,10 +933,10 @@ importers:
 
   connectors/connector-moota:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
@@ -932,10 +948,10 @@ importers:
 
   connectors/connector-onebrick:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       react:
@@ -951,21 +967,27 @@ importers:
 
   connectors/connector-outreach:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-outreach':
         specifier: 0.0.15
         version: 0.0.15
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-plaid:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
@@ -975,12 +997,6 @@ importers:
       '@t3-oss/env-core':
         specifier: 0.7.1
         version: 0.7.1(typescript@5.0.4)(zod@3.22.4)
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
       plaid:
         specifier: 12.3.0
         version: 12.3.0
@@ -1003,15 +1019,15 @@ importers:
 
   connectors/connector-postgres:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@slonik/migrator':
         specifier: 0.11.3
         version: 0.11.3(slonik@30.3.1)
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
       handlebars:
         specifier: 4.7.7
         version: 4.7.7
@@ -1037,82 +1053,82 @@ importers:
 
   connectors/connector-qbo:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-qbo':
         specifier: ^0.0.14
         version: 0.0.14
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-ramp:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-revert:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/sdk-revert':
         specifier: ^0.0.1
         version: 0.0.1
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-salesloft:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-salesloft':
         specifier: 0.0.16
         version: 0.0.16
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-saltedge:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-splitwise:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-spreadsheet:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       papaparse:
@@ -1128,10 +1144,10 @@ importers:
 
   connectors/connector-stripe:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
     devDependencies:
@@ -1141,10 +1157,10 @@ importers:
 
   connectors/connector-teller:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       react:
@@ -1157,15 +1173,21 @@ importers:
 
   connectors/connector-toggl:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-twenty:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/sdk-revert':
         specifier: ^0.0.1
         version: 0.0.1
@@ -1175,19 +1197,13 @@ importers:
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-venmo:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
@@ -1199,24 +1215,30 @@ importers:
 
   connectors/connector-webhook:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-wise:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
 
   connectors/connector-xero:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       '@opensdks/runtime':
         specifier: ^0.0.19
         version: 0.0.19
@@ -1226,22 +1248,16 @@ importers:
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
 
   connectors/connector-yodlee:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/openapi-client':
+      '@openint/openapi-client':
         specifier: workspace:*
         version: link:../../utils/openapi-client
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       react:
@@ -1266,6 +1282,9 @@ importers:
       '@mintlify/scraping':
         specifier: ^3.0.64
         version: 3.0.64(openapi-types@12.1.0)(typescript@5.0.4)
+      '@openint/sdk':
+        specifier: workspace:*
+        version: link:../kits/sdk
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
@@ -1281,27 +1300,24 @@ importers:
       '@opensdks/sdk-venice':
         specifier: ^0.0.14
         version: 0.0.14(@opensdks/runtime@0.0.16)
-      '@usevenice/sdk':
-        specifier: workspace:*
-        version: link:../kits/sdk
       mintlify:
         specifier: 4.0.59
         version: 4.0.59(axios@0.21.1)(openapi-types@12.1.0)
 
   kits/cdk:
     dependencies:
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@openint/zod':
+        specifier: workspace:*
+        version: link:../../utils/zod
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../../packages/util
-      '@usevenice/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
       jsonwebtoken:
         specifier: 9.0.0
         version: 9.0.0
@@ -1333,7 +1349,7 @@ importers:
 
   kits/connect:
     dependencies:
-      '@usevenice/sdk':
+      '@openint/sdk':
         specifier: workspace:*
         version: link:../sdk
       react:
@@ -1352,7 +1368,7 @@ importers:
 
   kits/sdk:
     dependencies:
-      '@usevenice/openapi-client':
+      '@openint/openapi-client':
         specifier: workspace:*
         version: link:../../utils/openapi-client
       openapi3-ts:
@@ -1368,33 +1384,33 @@ importers:
 
   kits/vdk:
     dependencies:
+      '@openint/types':
+        specifier: workspace:*
+        version: link:../../utils/types
+      '@openint/zod':
+        specifier: workspace:*
+        version: link:../../utils/zod
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/types':
-        specifier: workspace:*
-        version: link:../../utils/types
-      '@usevenice/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
       remeda:
         specifier: 1.6.1
         version: 1.6.1
 
   packages/engine-backend:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../util
+      '@openint/zod':
+        specifier: workspace:*
+        version: link:../../utils/zod
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../util
-      '@usevenice/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
       inngest:
         specifier: ^3.16.0
         version: 3.16.0(typescript@5.0.4)
@@ -1417,6 +1433,18 @@ importers:
       '@nangohq/frontend':
         specifier: 0.33.8
         version: 0.33.8(patch_hash=cscdyzeu5adridjxg5g7kdqy6q)
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../engine-backend
+      '@openint/ui':
+        specifier: workspace:*
+        version: link:../ui
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../util
       '@tanstack/react-query':
         specifier: 4.28.0
         version: 4.28.0(react-dom@18.2.0)(react@18.2.0)
@@ -1429,18 +1457,6 @@ importers:
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/engine-backend':
-        specifier: workspace:*
-        version: link:../engine-backend
-      '@usevenice/ui':
-        specifier: workspace:*
-        version: link:../ui
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../util
       lucide-react:
         specifier: '*'
         version: 0.115.0(react@18.2.0)
@@ -1454,18 +1470,18 @@ importers:
 
   packages/meta-service-airbyte:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/meta-service-postgres':
+        specifier: workspace:*
+        version: link:../meta-service-postgres
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../util
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@usevenice/meta-service-postgres':
-        specifier: workspace:*
-        version: link:../meta-service-postgres
-      '@usevenice/util':
-        specifier: workspace:*
-        version: link:../util
       '@zodios/core':
         specifier: 10.9.6
         version: 10.9.6(axios@0.21.1)(zod@3.22.4)
@@ -1476,12 +1492,12 @@ importers:
         specifier: 3.22.4
         version: 3.22.4
     devDependencies:
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../engine-backend
       '@redocly/cli':
         specifier: 1.4.0
         version: 1.4.0
-      '@usevenice/engine-backend':
-        specifier: workspace:*
-        version: link:../engine-backend
       concurrently:
         specifier: 8.2.2
         version: 8.2.2
@@ -1497,45 +1513,45 @@ importers:
 
   packages/meta-service-fs:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/connector-fs':
+      '@openint/connector-fs':
         specifier: workspace:*
         version: link:../../connectors/connector-fs
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../util
     devDependencies:
-      '@usevenice/engine-backend':
+      '@openint/engine-backend':
         specifier: workspace:*
         version: link:../engine-backend
 
   packages/meta-service-postgres:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/connector-postgres':
+      '@openint/connector-postgres':
         specifier: workspace:*
         version: link:../../connectors/connector-postgres
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../util
     devDependencies:
-      '@usevenice/engine-backend':
+      '@openint/engine-backend':
         specifier: workspace:*
         version: link:../engine-backend
 
   packages/meta-service-redis:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/engine-backend':
+      '@openint/engine-backend':
         specifier: workspace:*
         version: link:../engine-backend
-      '@usevenice/util':
+      '@openint/util':
         specifier: workspace:*
         version: link:../util
       handy-redis:
@@ -1644,30 +1660,30 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
     devDependencies:
+      '@openint/cdk':
+        specifier: '*'
+        version: link:../../kits/cdk
+      '@openint/engine-backend':
+        specifier: '*'
+        version: link:../engine-backend
       '@tanstack/react-query':
         specifier: 4.28.0
         version: 4.28.0(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
         specifier: 18.0.27
         version: 18.0.27
-      '@usevenice/cdk':
-        specifier: '*'
-        version: link:../../kits/cdk
-      '@usevenice/engine-backend':
-        specifier: '*'
-        version: link:../engine-backend
 
   packages/util:
     dependencies:
       '@blossomfinance/iso-4217-currencies':
         specifier: 0.2.5
         version: 0.2.5
+      '@openint/zod':
+        specifier: workspace:*
+        version: link:../../utils/zod
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
-      '@usevenice/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
       accounting:
         specifier: 0.4.1
         version: 0.4.1
@@ -1801,12 +1817,12 @@ importers:
 
   utils/env:
     dependencies:
+      '@openint/zod':
+        specifier: workspace:*
+        version: link:../zod
       '@t3-oss/env-core':
         specifier: 0.7.1
         version: 0.7.1(typescript@5.0.4)(zod@3.22.4)
-      '@usevenice/zod':
-        specifier: workspace:*
-        version: link:../zod
 
   utils/openapi-client:
     dependencies:
@@ -1834,75 +1850,75 @@ importers:
 
   verticals/vertical-accounting:
     dependencies:
-      '@usevenice/vdk':
+      '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
     devDependencies:
-      '@usevenice/connector-qbo':
+      '@openint/connector-qbo':
         specifier: workspace:*
         version: link:../../connectors/connector-qbo
 
   verticals/vertical-banking:
     dependencies:
-      '@usevenice/cdk':
+      '@openint/cdk':
         specifier: workspace:*
         version: link:../../kits/cdk
-      '@usevenice/vdk':
+      '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
       rxjs:
         specifier: 7.5.6
         version: 7.5.6
     devDependencies:
-      '@usevenice/connector-plaid':
+      '@openint/connector-plaid':
         specifier: workspace:*
         version: link:../../connectors/connector-plaid
-      '@usevenice/connector-postgres':
+      '@openint/connector-postgres':
         specifier: workspace:*
         version: link:../../connectors/connector-postgres
-      '@usevenice/connector-qbo':
+      '@openint/connector-qbo':
         specifier: workspace:*
         version: link:../../connectors/connector-qbo
-      '@usevenice/connector-xero':
+      '@openint/connector-xero':
         specifier: workspace:*
         version: link:../../connectors/connector-xero
-      '@usevenice/types':
+      '@openint/types':
         specifier: workspace:*
         version: link:../../utils/types
 
   verticals/vertical-investment:
     dependencies:
-      '@usevenice/vdk':
+      '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
     devDependencies:
-      '@usevenice/connector-plaid':
+      '@openint/connector-plaid':
         specifier: workspace:*
         version: link:../../connectors/connector-plaid
 
   verticals/vertical-pta:
     dependencies:
-      '@usevenice/vdk':
+      '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
     devDependencies:
-      '@usevenice/connector-qbo':
+      '@openint/connector-qbo':
         specifier: workspace:*
         version: link:../../connectors/connector-qbo
 
   verticals/vertical-sales-engagement:
     dependencies:
-      '@usevenice/vdk':
+      '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
     devDependencies:
-      '@usevenice/connector-apollo':
+      '@openint/connector-apollo':
         specifier: workspace:*
         version: link:../../connectors/connector-apollo
-      '@usevenice/connector-outreach':
+      '@openint/connector-outreach':
         specifier: workspace:*
         version: link:../../connectors/connector-outreach
-      '@usevenice/connector-salesloft':
+      '@openint/connector-salesloft':
         specifier: workspace:*
         version: link:../../connectors/connector-salesloft
 
@@ -11496,7 +11512,7 @@ packages:
       - supports-color
     dev: false
 
-  /firebase@9.8.1(patch_hash=bmwbs4hhuxm5sycev5w2vhohk4):
+  /firebase@9.8.1(patch_hash=xv6drfi56cgifjvxlrcjb2s3qe):
     resolution: {integrity: sha512-VyM+3ijzB1Q24b9v6HzVOB0bXNy0a/maOZlmv2P8M29VXfrS/npo6zntNiOEtcjrCoItZIuWFH4oDGiYkPHxbg==}
     dependencies:
       '@firebase/analytics': 0.7.9(@firebase/app@0.7.24)

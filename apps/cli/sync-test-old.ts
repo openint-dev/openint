@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable unicorn/prefer-top-level-await */
-import '@usevenice/app-config/register.node'
+import '@openint/app-config/register.node'
 import readline from 'node:readline'
-import {sync} from '@usevenice/cdk'
-import {brexImpl} from '@usevenice/connector-brex'
-import {fsServer} from '@usevenice/connector-fs'
-import {heronImpl} from '@usevenice/connector-heron'
-import {mergeImpl} from '@usevenice/connector-merge'
-import {postgresProvider} from '@usevenice/connector-postgres'
-import {Rx, rxjs, safeJSONParse} from '@usevenice/util'
+import {sync} from '@openint/cdk'
+import {brexImpl} from '@openint/connector-brex'
+import {fsServer} from '@openint/connector-fs'
+import {heronImpl} from '@openint/connector-heron'
+import {mergeImpl} from '@openint/connector-merge'
+import {postgresProvider} from '@openint/connector-postgres'
+import {Rx, rxjs, safeJSONParse} from '@openint/util'
 
 const srcPath = './apps/tests/__encrypted__/meta'
 const destPath = './temp'

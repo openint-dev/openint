@@ -1,8 +1,7 @@
 import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister'
 import {QueryClient} from '@tanstack/react-query'
 import {persistQueryClient} from '@tanstack/react-query-persist-client'
-
-import {__DEBUG__} from '@usevenice/app-config/constants'
+import {__DEBUG__} from '@openint/app-config/constants'
 
 export function createQueryClient() {
   const queryClient = new QueryClient({

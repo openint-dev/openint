@@ -2,8 +2,8 @@ import type {
   AnyEntityPayload,
   ConnectorDef,
   ConnectorSchemas,
-} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
+} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 
 export const zMongoConnection = z.object({
   databaseUrl: z.string(),

@@ -1,8 +1,7 @@
 import type firestoreAdmin from '@google-cloud/firestore'
 import type firebaseAdmin from 'firebase-admin'
 import type firebase from 'firebase/compat'
-
-import type {Merge} from '@usevenice/util'
+import type {Merge} from '@openint/util'
 
 export {firebase, firebaseAdmin, firestoreAdmin}
 

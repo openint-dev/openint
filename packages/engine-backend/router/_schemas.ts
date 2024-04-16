@@ -1,4 +1,4 @@
-import {z} from '@usevenice/util'
+import {z} from '@openint/util'
 
 export const zListParams = z.object({
   limit: z.number().optional(),

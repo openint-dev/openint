@@ -1,5 +1,4 @@
-import {R, titleCase, z} from '@usevenice/util'
-
+import {R, titleCase, z} from '@openint/util'
 import type {
   CommandDefinitionInput,
   CommandDefinitionMap,

@@ -1,9 +1,8 @@
 'use client'
 
 import {Copy, MoreHorizontal, RefreshCcw} from 'lucide-react'
-
-import type {RouterOutput} from '@usevenice/engine-backend'
-import {_trpcReact} from '@usevenice/engine-frontend'
+import type {RouterOutput} from '@openint/engine-backend'
+import {_trpcReact} from '@openint/engine-frontend'
 import {
   Button,
   DataTable,
@@ -14,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   useToast,
-} from '@usevenice/ui'
+} from '@openint/ui'
 
 export default function EndUsersPage() {
   const res = _trpcReact.adminSearchEndUsers.useQuery({})

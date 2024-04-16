@@ -1,7 +1,6 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import {cachingLink} from '@usevenice/cdk'
-import {fromCompletion, Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {cachingLink} from '@openint/cdk'
+import {fromCompletion, Rx, rxjs} from '@openint/util'
 import type {heronSchemas} from './def'
 import {helpers} from './def'
 import type {components} from './heron.gen'

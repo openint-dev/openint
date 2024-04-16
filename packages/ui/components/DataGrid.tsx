@@ -1,15 +1,12 @@
 'use client'
 
 import '@glideapps/glide-data-grid/dist/index.css'
-
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type {GridCell, GridColumn, Item} from '@glideapps/glide-data-grid'
 import {DataEditor, GridCellKind} from '@glideapps/glide-data-grid'
 import type {UseQueryResult} from '@tanstack/react-query'
 import React from 'react'
-
-import {produce} from '@usevenice/util'
-
+import {produce} from '@openint/util'
 import {cn} from '../utils'
 
 interface DataGridProps<TData extends Record<string, unknown>> {
@@ -48,8 +45,8 @@ export function DataGrid<TData extends Record<string, unknown>>({
     const data = !cell
       ? ''
       : typeof cell === 'string'
-      ? cell
-      : JSON.stringify(cell)
+        ? cell
+        : JSON.stringify(cell)
 
     // Unfortunately copying of JSON value is really not going to work well
     // as they are escaped poorly for our purposes...

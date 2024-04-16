@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-brex",
+  "name": "@openint/connector-brex",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [],
@@ -8,8 +8,8 @@
     "codegen:transactions": "openapi-typescript __generated__/transactions.openapi.json --make-paths-enum --output __generated__/transactions.gen.ts"
   },
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*"
   },
   "devDependencies": {
     "openapi-typescript": "6.7.1"

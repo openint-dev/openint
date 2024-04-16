@@ -1,8 +1,7 @@
 /** Used for the side effect of window.MergeLink */
 
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import type {mergeSchemas} from './def'
 import {helpers} from './def'
 import {makeMergeClient} from './MergeClient'
@@ -94,18 +93,20 @@ export const mergeServer = {
     async function* iterateEntities() {
       yield await client.accounting
         .get('/accounts', {})
-        .then((res) =>
-          (res.results ?? [])?.map((acct) =>
-            helpers._opData('account', acct.id ?? '', acct),
-          ),
+        .then(
+          (res) =>
+            (res.results ?? [])?.map((acct) =>
+              helpers._opData('account', acct.id ?? '', acct),
+            ),
         )
 
       yield await client.accounting
         .get('/transactions', {})
-        .then((res) =>
-          (res.results ?? [])?.map((txn) =>
-            helpers._opData('transaction', txn.id ?? '', txn),
-          ),
+        .then(
+          (res) =>
+            (res.results ?? [])?.map((txn) =>
+              helpers._opData('transaction', txn.id ?? '', txn),
+            ),
         )
     }
 

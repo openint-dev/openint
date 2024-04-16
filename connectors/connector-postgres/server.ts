@@ -3,9 +3,9 @@
 
 import type {DatabasePool} from 'slonik'
 import {sql} from 'slonik'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {handlersLink} from '@usevenice/cdk'
-import {R, Rx, rxjs, snakeCase} from '@usevenice/util'
+import type {ConnectorServer} from '@openint/cdk'
+import {handlersLink} from '@openint/cdk'
+import {R, Rx, rxjs, snakeCase} from '@openint/util'
 import type {postgresSchemas} from './def'
 import {postgresHelpers} from './def'
 import {makePostgresClient, upsertByIdQuery} from './makePostgresClient'

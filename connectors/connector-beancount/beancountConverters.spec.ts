@@ -1,7 +1,6 @@
-import {ACCOUNT_TYPES, makePostingsMap, type Pta} from '@usevenice/cdk'
+import {ACCOUNT_TYPES, makePostingsMap, type Pta} from '@openint/cdk'
 // Not sure why this is needed for ci but not locally, but cannot be bothered to find out for now
-import {A} from '@usevenice/util'
-
+import {A} from '@openint/util'
 import {
   cleanBeancountAccountName,
   convAccountFullName,

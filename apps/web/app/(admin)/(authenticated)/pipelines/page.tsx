@@ -1,7 +1,6 @@
 'use client'
 
-import {DataTable} from '@usevenice/ui'
-
+import {DataTable} from '@openint/ui'
 import {trpcReact} from '@/lib-client/trpcReact'
 import {VCommandButton, VCommandMenu} from '@/vcommands/vcommand-components'
 

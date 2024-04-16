@@ -1,13 +1,13 @@
 import type {components} from '@opensdks/sdk-qbo/qbo.oas.types'
-import type {ConnectorDef, ConnectorSchemas, Pta} from '@usevenice/cdk'
+import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
 import {
   connHelpers,
   makePostingsMap,
   oauthBaseSchema,
   zEntityPayload,
-} from '@usevenice/cdk'
-import type {EnumOf} from '@usevenice/util'
-import {A, DateTime, R, z, zCast} from '@usevenice/util'
+} from '@openint/cdk'
+import type {EnumOf} from '@openint/util'
+import {A, DateTime, R, z, zCast} from '@openint/util'
 
 export type QBO = components['schemas']
 

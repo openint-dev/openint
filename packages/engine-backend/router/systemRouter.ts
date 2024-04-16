@@ -1,5 +1,5 @@
-import {zId, zWebhookInput} from '@usevenice/cdk'
-import {z} from '@usevenice/util'
+import {zId, zWebhookInput} from '@openint/cdk'
+import {z} from '@openint/util'
 import {adminProcedure, systemProcedure, trpc} from './_base'
 
 export const systemRouter = trpc.router({

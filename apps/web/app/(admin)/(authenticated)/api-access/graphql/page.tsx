@@ -2,15 +2,13 @@
 
 import {createGraphiQLFetcher} from '@graphiql/toolkit'
 import {GraphiQL} from 'graphiql'
-
-import {getGraphqlEndpoint} from '@usevenice/app-config/constants'
+import {getGraphqlEndpoint} from '@openint/app-config/constants'
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   useConstant,
-} from '@usevenice/ui'
-
+} from '@openint/ui'
 import 'graphiql/graphiql.css'
 
 export default function GraphQLExplorer() {

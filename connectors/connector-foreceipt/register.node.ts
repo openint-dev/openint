@@ -1,1 +1,1 @@
-import '@usevenice/connector-firebase/register.node'
+import '@openint/connector-firebase/register.node'

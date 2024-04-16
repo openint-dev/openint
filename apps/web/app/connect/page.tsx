@@ -1,18 +1,18 @@
 import {clerkClient} from '@clerk/nextjs'
 import Image from 'next/image'
-import {defConnectors} from '@usevenice/app-config/connectors/connectors.def'
-import {kAccessToken} from '@usevenice/app-config/constants'
-import {env} from '@usevenice/app-config/env'
-import type {ConnectorDef} from '@usevenice/cdk'
+import {defConnectors} from '@openint/app-config/connectors/connectors.def'
+import {kAccessToken} from '@openint/app-config/constants'
+import {env} from '@openint/app-config/env'
+import type {ConnectorDef} from '@openint/cdk'
 import {
   extractConnectorName,
   getViewerId,
   makeId,
   makeNangoClient,
   zId,
-} from '@usevenice/cdk'
-import {zConnectPageParams} from '@usevenice/engine-backend/router/endUserRouter'
-import {makeUlid, z} from '@usevenice/util'
+} from '@openint/cdk'
+import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
+import {makeUlid, z} from '@openint/util'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'

@@ -3,9 +3,9 @@
 import {Loader2} from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
-import {zId, zRaw} from '@usevenice/cdk'
-import {_trpcReact} from '@usevenice/engine-frontend'
-import type {SchemaFormElement} from '@usevenice/ui'
+import {zId, zRaw} from '@openint/cdk'
+import {_trpcReact} from '@openint/engine-frontend'
+import type {SchemaFormElement} from '@openint/ui'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,13 +29,13 @@ import {
   SheetTitle,
   SheetTrigger,
   useToast,
-} from '@usevenice/ui'
-import {z} from '@usevenice/util'
+} from '@openint/ui'
+import {z} from '@openint/util'
 import {useCurrengOrg} from '@/components/viewer-context'
 import {cn} from '@/lib-client/ui-utils'
 import type {ConnectorConfig} from './ConnectorConfigPage'
 
-// import {defConnectors } from '@usevenice/app-config/connectorss/connectorss.def'
+// import {defConnectors } from '@openint/app-config/connectorss/connectorss.def'
 
 export function ConnectorConfigSheet({
   connectorConfig: ccfg,

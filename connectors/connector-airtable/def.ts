@@ -1,8 +1,10 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import type {EntityPayloadWithRaw} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
-
+import type {
+  ConnectorDef,
+  ConnectorSchemas,
+  EntityPayloadWithRaw,
+} from '@openint/cdk'
+import {connHelpers} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 import {zAirtableResourceSettings} from './AirtableClient'
 
 export const airtableSchemas = {

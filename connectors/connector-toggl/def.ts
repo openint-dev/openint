@@ -1,9 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import type {Pta} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, R, z} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
+import {connHelpers, makePostingsMap} from '@openint/cdk'
+import {A, R, z} from '@openint/util'
 import {itemProjectResponseSchema, itemTimeEntriesSchema} from './TogglCient'
 
 export const togglSchemas = {

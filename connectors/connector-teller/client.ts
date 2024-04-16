@@ -1,6 +1,5 @@
-import type {ConnectorClient} from '@usevenice/cdk'
-import {useScript} from '@usevenice/cdk'
-
+import type {ConnectorClient} from '@openint/cdk'
+import {useScript} from '@openint/cdk'
 import type {tellerSchemas} from './def'
 
 export const tellerClient = {

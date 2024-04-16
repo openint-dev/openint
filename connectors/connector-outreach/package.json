@@ -1,13 +1,13 @@
 {
-  "name": "@usevenice/connector-outreach",
+  "name": "@openint/connector-outreach",
   "version": "0.0.0",
   "private": true,
   "module": "./index.ts",
   "dependencies": {
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*",
     "@opensdks/runtime": "^0.0.16",
-    "@opensdks/sdk-outreach": "0.0.15",
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@opensdks/sdk-outreach": "0.0.15"
   },
   "devDependencies": {}
 }

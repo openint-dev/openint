@@ -1,14 +1,14 @@
 {
-  "name": "@usevenice/engine-backend",
+  "name": "@openint/engine-backend",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
   "module": "./index.ts",
   "dependencies": {
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*",
+    "@openint/zod": "workspace:*",
     "@trpc/server": "10.40.0",
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*",
-    "@usevenice/zod": "workspace:*",
     "inngest": "^3.16.0",
     "zod-openapi": "2.11.0"
   },

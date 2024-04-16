@@ -1,9 +1,9 @@
 {
-  "name": "@usevenice/vertical-investment",
+  "name": "@openint/vertical-investment",
   "dependencies": {
-    "@usevenice/vdk": "workspace:*"
+    "@openint/vdk": "workspace:*"
   },
   "devDependencies": {
-    "@usevenice/connector-plaid": "workspace:*"
+    "@openint/connector-plaid": "workspace:*"
   }
 }

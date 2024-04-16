@@ -1,6 +1,5 @@
-import type {Endpoints, InfoFromEndpoints, InfoFromPaths} from '@usevenice/util'
-import {makeOpenApiClient, z} from '@usevenice/util'
-
+import type {Endpoints, InfoFromEndpoints, InfoFromPaths} from '@openint/util'
+import {makeOpenApiClient, z} from '@openint/util'
 import type {paths} from './merge.accounting.gen'
 
 export const zCategory = z.enum([

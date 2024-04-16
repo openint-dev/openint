@@ -1,6 +1,5 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import type {mootaSchemas} from './def'
 import {mootaHelpers} from './def'
 import {makeMootaClient} from './mootaClient'

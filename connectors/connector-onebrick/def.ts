@@ -1,8 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers, zWebhookInput} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, parseMoney, z} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, makePostingsMap, zWebhookInput} from '@openint/cdk'
+import {A, parseMoney, z} from '@openint/util'
 import {
   accountItemSchema,
   transactionBrickSchema,

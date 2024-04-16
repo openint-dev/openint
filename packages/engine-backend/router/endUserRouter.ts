@@ -4,7 +4,7 @@ import type {
   OauthBaseTypes,
   ResourceUpdate,
   Viewer,
-} from '@usevenice/cdk'
+} from '@openint/cdk'
 import {
   makeId,
   makeOauthConnectorServer,
@@ -12,8 +12,8 @@ import {
   zEndUserId,
   zId,
   zPostConnectOptions,
-} from '@usevenice/cdk'
-import {joinPath, z} from '@usevenice/util'
+} from '@openint/cdk'
+import {joinPath, z} from '@openint/util'
 import {inngest} from '../events'
 import {parseWebhookRequest} from '../parseWebhookRequest'
 import {protectedProcedure, trpc} from './_base'

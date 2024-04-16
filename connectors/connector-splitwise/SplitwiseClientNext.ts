@@ -1,6 +1,5 @@
-import type {HTTPError} from '@usevenice/util'
-import {createHTTPClient, OAuth2Client, z, zFunction} from '@usevenice/util'
-
+import type {HTTPError} from '@openint/util'
+import {createHTTPClient, OAuth2Client, z, zFunction} from '@openint/util'
 import type {zCurrentUser, zExpense, zGroup} from './splitwise-schema'
 import {zExpensesParams} from './splitwise-schema'
 

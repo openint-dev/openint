@@ -3,11 +3,9 @@
 import type {RealtimePostgresChangesPayload} from '@supabase/realtime-js'
 import {RealtimeClient} from '@supabase/realtime-js'
 import React from 'react'
-
-import {env} from '@usevenice/app-config/env'
-import {_trpcReact} from '@usevenice/engine-frontend'
-import {joinPath} from '@usevenice/util'
-
+import {env} from '@openint/app-config/env'
+import {_trpcReact} from '@openint/engine-frontend'
+import {joinPath} from '@openint/util'
 import type {Database} from '../supabase/supabase.gen'
 
 // https://db-dev.venice.is

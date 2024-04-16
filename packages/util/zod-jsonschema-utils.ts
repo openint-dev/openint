@@ -1,6 +1,6 @@
 import * as R from 'remeda'
-import type {z} from '@usevenice/zod'
-import {zodToOas31Schema} from '@usevenice/zod'
+import type {z} from '@openint/zod'
+import {zodToOas31Schema} from '@openint/zod'
 import {jsonSchemaWalkNodes} from './jsonschema-nodewalker'
 
 /** Warning will modify input */

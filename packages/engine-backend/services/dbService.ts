@@ -1,8 +1,8 @@
 import {TRPCError} from '@trpc/server'
-import type {AnyConnectorImpl, Id, IDS, ZRaw} from '@usevenice/cdk'
-import {extractId, zRaw} from '@usevenice/cdk'
-import type {ObjectPartialDeep} from '@usevenice/util'
-import {deepMerge, z} from '@usevenice/util'
+import type {AnyConnectorImpl, Id, IDS, ZRaw} from '@openint/cdk'
+import {extractId, zRaw} from '@openint/cdk'
+import type {ObjectPartialDeep} from '@openint/util'
+import {deepMerge, z} from '@openint/util'
 import {makeMetaLinks} from './makeMetaLinks'
 import type {MetaService, MetaTable} from './metaService'
 

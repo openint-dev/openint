@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {usePathname} from 'next/navigation'
-import {__DEBUG__} from '@usevenice/app-config/constants'
-import type {IconName} from '@usevenice/ui'
-import {Button, Icon, ScrollArea} from '@usevenice/ui'
-import {R} from '@usevenice/util'
+import {__DEBUG__} from '@openint/app-config/constants'
+import type {IconName} from '@openint/ui'
+import {Button, Icon, ScrollArea} from '@openint/ui'
+import {R} from '@openint/util'
 import {cn} from '@/lib-client/ui-utils'
 
 type TypedHref = Extract<React.ComponentProps<typeof Link>['href'], string>

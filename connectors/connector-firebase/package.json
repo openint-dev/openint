@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-firebase",
+  "name": "@openint/connector-firebase",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [
@@ -11,8 +11,8 @@
     "@firebase/app-compat": "0.x",
     "@firebase/app-types": "0.x",
     "@firebase/auth": "*",
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*",
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*",
     "firebase": "9.8.1",
     "firebase-admin": "10.2.0"
   },

@@ -1,6 +1,6 @@
-import type {EndUserId, Id, IDS} from '@usevenice/cdk/id.types'
-import type {ZRaw} from '@usevenice/cdk/models'
-import type {NoInfer, ObjectPartialDeep} from '@usevenice/util'
+import type {EndUserId, Id, IDS} from '@openint/cdk/id.types'
+import type {ZRaw} from '@openint/cdk/models'
+import type {NoInfer, ObjectPartialDeep} from '@openint/util'
 
 export interface MetaTable<
   TID extends string = string,

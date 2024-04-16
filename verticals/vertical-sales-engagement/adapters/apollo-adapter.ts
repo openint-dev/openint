@@ -1,6 +1,6 @@
-import type {ApolloSDK, ApolloSDKTypes} from '@usevenice/connector-apollo'
-import type {StrictObj} from '@usevenice/vdk'
-import {mapper, zCast} from '@usevenice/vdk'
+import type {ApolloSDK, ApolloSDKTypes} from '@openint/connector-apollo'
+import type {StrictObj} from '@openint/vdk'
+import {mapper, zCast} from '@openint/vdk'
 import type {VerticalSalesEngagement} from '../sales-engagement'
 import {zSalesEngagement} from '../sales-engagement'
 

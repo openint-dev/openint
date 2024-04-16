@@ -1,16 +1,13 @@
 'use client'
 
 import React from 'react'
-
 import '@stoplight/elements/styles.min.css'
-
 // this pollutes the global CSS space
 
 import {API as StoplightElements} from '@stoplight/elements'
-
-import type {Id, OpenApiSpec, PassthroughInput} from '@usevenice/cdk'
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink} from '@usevenice/ui'
-import {safeJSONParse} from '@usevenice/util'
+import type {Id, OpenApiSpec, PassthroughInput} from '@openint/cdk'
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink} from '@openint/ui'
+import {safeJSONParse} from '@openint/util'
 
 export function PlaygroundPage({
   apikey,

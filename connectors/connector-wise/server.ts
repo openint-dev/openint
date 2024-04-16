@@ -1,7 +1,6 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import type {z} from '@usevenice/util'
-import {Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import type {z} from '@openint/util'
+import {Rx, rxjs} from '@openint/util'
 import type {wiseSchemas} from './def'
 import {wiseHelpers} from './def'
 import type {profileResponseItemSchema} from './WiseClient'

@@ -1,5 +1,5 @@
-import type {AnyConnectorImpl, Id, LinkFactory} from '@usevenice/cdk'
-import {z} from '@usevenice/util'
+import type {AnyConnectorImpl, Id, LinkFactory} from '@openint/cdk'
+import {z} from '@openint/util'
 
 // MARK: - Input types
 

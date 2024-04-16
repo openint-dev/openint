@@ -1,5 +1,5 @@
 import {TRPCError} from '@trpc/server'
-import type {ResourceUpdate, ZRaw} from '@usevenice/cdk'
+import type {ResourceUpdate, ZRaw} from '@openint/cdk'
 import {
   extractId,
   makeId,
@@ -9,8 +9,8 @@ import {
   zId,
   zPassthroughInput,
   zRaw,
-} from '@usevenice/cdk'
-import {joinPath, makeUlid, Rx, rxjs, z} from '@usevenice/util'
+} from '@openint/cdk'
+import {joinPath, makeUlid, Rx, rxjs, z} from '@openint/util'
 import {inngest} from '../events'
 import {parseWebhookRequest} from '../parseWebhookRequest'
 import {zSyncOptions} from '../types'

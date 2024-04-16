@@ -1,4 +1,4 @@
-import type {HTTPError, HTTPRequestConfig, MPDate} from '@usevenice/util'
+import type {HTTPError, HTTPRequestConfig, MPDate} from '@openint/util'
 import {
   $makeProxyAgent,
   createHTTPClient,
@@ -7,8 +7,7 @@ import {
   parseDateTime,
   z,
   zFunction,
-} from '@usevenice/util'
-
+} from '@openint/util'
 import {parseOptionalDateTime} from './venmo-helpers'
 
 export const zConfig = z.object({

@@ -1,6 +1,5 @@
 import {createEnv} from '@t3-oss/env-core'
-
-import {z} from '@usevenice/zod'
+import {z} from '@openint/zod'
 
 export function getEnv<T extends z.ZodTypeAny = z.ZodString>(
   name: string,

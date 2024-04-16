@@ -1,8 +1,7 @@
-import type {Id} from '@usevenice/cdk'
-import {extractId, makeId} from '@usevenice/cdk'
-import {flatRouter} from '@usevenice/engine-backend'
-import {getEnvVar} from '@usevenice/util'
-
+import type {Id} from '@openint/cdk'
+import {extractId, makeId} from '@openint/cdk'
+import {flatRouter} from '@openint/engine-backend'
+import {getEnvVar} from '@openint/util'
 import {contextFactory} from './backendConfig'
 import {parseConnectorConfigsFromRawEnv} from './connector-envs'
 

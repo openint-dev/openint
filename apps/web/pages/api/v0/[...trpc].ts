@@ -1,7 +1,7 @@
 import {createOpenApiNextHandler} from '@lilyrose2798/trpc-openapi'
 import {respondToCORS} from '@/lib-server'
 import {appRouter} from '@/lib-server/appRouter'
-import '@usevenice/app-config/register.node'
+import '@openint/app-config/register.node'
 import type {NextApiHandler} from 'next'
 import {createContext, onError} from '../trpc/[...trpc]'
 

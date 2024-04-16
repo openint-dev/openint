@@ -1,8 +1,8 @@
 'use client'
 
-import {clientConnectors} from '@usevenice/app-config/connectors/connectors.client'
-import {_trpcReact, VeniceConnectButton} from '@usevenice/engine-frontend'
-import {DataTable} from '@usevenice/ui'
+import {clientConnectors} from '@openint/app-config/connectors/connectors.client'
+import {_trpcReact, VeniceConnectButton} from '@openint/engine-frontend'
+import {DataTable} from '@openint/ui'
 import {VCommandMenu} from '@/vcommands/vcommand-components'
 
 // TODO: Maybe allow filtering / sorting, also easily tell sources from destinations?

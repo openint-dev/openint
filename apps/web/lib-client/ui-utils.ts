@@ -1,1 +1,1 @@
-export {cn} from '@usevenice/ui/utils'
+export {cn} from '@openint/ui/utils'

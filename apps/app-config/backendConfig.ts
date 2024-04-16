@@ -1,10 +1,10 @@
 import {clerkClient} from '@clerk/nextjs'
-import type {LinkFactory} from '@usevenice/cdk'
-import {logLink, renameAccountLink} from '@usevenice/cdk'
-import type {PipelineInput} from '@usevenice/engine-backend'
-import {getContextFactory} from '@usevenice/engine-backend'
-import {makePostgresMetaService} from '@usevenice/meta-service-postgres'
-import {joinPath} from '@usevenice/util'
+import type {LinkFactory} from '@openint/cdk'
+import {logLink, renameAccountLink} from '@openint/cdk'
+import type {PipelineInput} from '@openint/engine-backend'
+import {getContextFactory} from '@openint/engine-backend'
+import {makePostgresMetaService} from '@openint/meta-service-postgres'
+import {joinPath} from '@openint/util'
 import {mergedConnectors} from './connectors/connectors.merged'
 import {getServerUrl} from './constants'
 import {env} from './env'
@@ -12,8 +12,8 @@ import {env} from './env'
 export {
   DatabaseError,
   makePostgresClient,
-} from '@usevenice/connector-postgres/makePostgresClient'
-export {Papa} from '@usevenice/connector-spreadsheet'
+} from '@openint/connector-postgres/makePostgresClient'
+export {Papa} from '@openint/connector-spreadsheet'
 
 export const backendEnv = env
 

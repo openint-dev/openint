@@ -6,15 +6,7 @@ import {
   PlaidEnvironments,
   Products,
 } from 'plaid'
-
-import {
-  getDefaultProxyAgent,
-  memoize,
-  z,
-  zCast,
-  zFunction,
-} from '@usevenice/util'
-
+import {getDefaultProxyAgent, memoize, z, zCast, zFunction} from '@openint/util'
 import {inferPlaidEnvFromToken} from './plaid-utils'
 import type {WebhookShape} from './plaid.types'
 

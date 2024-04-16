@@ -1,5 +1,5 @@
-import {R, titleCase, urlFromImage, zodToJsonSchema} from '@usevenice/util'
-import {z} from '@usevenice/zod'
+import {R, titleCase, urlFromImage, zodToJsonSchema} from '@openint/util'
+import {z} from '@openint/zod'
 import type {AnyConnectorImpl, ConnectorSchemas} from './connector.types'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

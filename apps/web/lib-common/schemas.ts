@@ -2,10 +2,10 @@ import type {clerkClient} from '@clerk/nextjs'
 import {
   kApikeyMetadata,
   kWebhookUrlMetadata,
-} from '@usevenice/app-config/constants'
-import {zId} from '@usevenice/cdk'
-import type {RouterOutput} from '@usevenice/engine-backend'
-import {z, zRecord} from '@usevenice/util'
+} from '@openint/app-config/constants'
+import {zId} from '@openint/cdk'
+import type {RouterOutput} from '@openint/engine-backend'
+import {z, zRecord} from '@openint/util'
 
 export type ClerkOrg = Awaited<
   ReturnType<(typeof clerkClient)['organizations']['getOrganization']>

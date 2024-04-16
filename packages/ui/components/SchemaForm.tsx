@@ -3,10 +3,8 @@ import {withTheme} from '@rjsf/core'
 import type {RJSFSchema} from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import React from 'react'
-
-import type {z} from '@usevenice/util'
-import {zodToJsonSchema} from '@usevenice/util'
-
+import type {z} from '@openint/util'
+import {zodToJsonSchema} from '@openint/util'
 import {cn} from '../utils'
 
 const theme: ThemeProps = {widgets: {}}

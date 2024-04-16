@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-vercel",
+  "name": "@openint/connector-vercel",
   "version": "0.0.0",
   "private": true,
   "module": "./index.ts",

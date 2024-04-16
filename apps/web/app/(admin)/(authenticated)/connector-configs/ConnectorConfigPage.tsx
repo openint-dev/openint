@@ -3,16 +3,16 @@
 import {Loader2} from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
-import {zConnectorStage, zConnectorVertical} from '@usevenice/cdk'
-import type {RouterOutput} from '@usevenice/engine-backend'
-import {_trpcReact} from '@usevenice/engine-frontend'
+import {zConnectorStage, zConnectorVertical} from '@openint/cdk'
+import type {RouterOutput} from '@openint/engine-backend'
+import {_trpcReact} from '@openint/engine-frontend'
 import {
   ConnectorCard as _ConnectorCard,
   ConnectorConfigCard as _ConnectorConfigCard,
   Button,
   LoadingText,
-} from '@usevenice/ui'
-import {inPlaceSort, R, titleCase} from '@usevenice/util'
+} from '@openint/ui'
+import {inPlaceSort, R, titleCase} from '@openint/util'
 import {ConnectorConfigSheet} from './ConnectorConfigSheet'
 
 export type ConnectorConfig = RouterOutput['adminListConnectorConfigs'][number]

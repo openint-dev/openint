@@ -1,7 +1,5 @@
 import Papa from 'papaparse'
-
-import {A, DateTime, parseMoney, zCast} from '@usevenice/util'
-
+import {A, DateTime, parseMoney, zCast} from '@openint/util'
 import {makeImportFormat} from '../makeImportFormat'
 import {RowIdMaker} from '../RowIdMaker'
 

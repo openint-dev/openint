@@ -4,7 +4,7 @@ import {
   OAuth2Client,
   z,
   zFunction,
-} from '@usevenice/util'
+} from '@openint/util'
 
 export type EnvName = z.infer<typeof zEnvName>
 export const zEnvName = z.enum(['sandbox', 'live'])

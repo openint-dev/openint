@@ -1,10 +1,10 @@
-import type {HTTPError} from '@usevenice/util'
+import type {HTTPError} from '@openint/util'
 import {
   createHTTPClient,
   stringifyQueryParams,
   z,
   zFunction,
-} from '@usevenice/util'
+} from '@openint/util'
 
 export const zConfig = z.object({
   authToken: z.string().nullish(),

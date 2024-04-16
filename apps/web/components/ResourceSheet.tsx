@@ -2,10 +2,10 @@
 
 import Image from 'next/image'
 import React from 'react'
-import {extractConnectorName, zRaw} from '@usevenice/cdk'
-import {_trpcReact} from '@usevenice/engine-frontend'
-import type {SchemaSheetRef} from '@usevenice/ui'
-import {Badge, cn, SchemaSheet, SheetDescription} from '@usevenice/ui'
+import {extractConnectorName, zRaw} from '@openint/cdk'
+import {_trpcReact} from '@openint/engine-frontend'
+import type {SchemaSheetRef} from '@openint/ui'
+import {Badge, cn, SchemaSheet, SheetDescription} from '@openint/ui'
 import type {ZClient} from '@/lib-common/schemas'
 
 const formSchema = zRaw.resource.pick({

@@ -1,15 +1,15 @@
-import type {MaybePromise} from '@usevenice/util'
-import {objectEntries, R, z, zObject} from '@usevenice/util'
+import type {MaybePromise} from '@openint/util'
+import {objectEntries, R, z, zObject} from '@openint/util'
 import type {
   PaginatedOutput,
   Pagination,
   VerticalRouterOpts,
-} from '@usevenice/vdk'
+} from '@openint/vdk'
 import {
   paginatedOutput,
   proxyListRemoteRedux,
   zPaginationParams,
-} from '@usevenice/vdk'
+} from '@openint/vdk'
 import type {
   ConnectorSchemas,
   ConnHelpers,

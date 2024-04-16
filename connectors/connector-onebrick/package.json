@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-onebrick",
+  "name": "@openint/connector-onebrick",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [
@@ -11,8 +11,8 @@
     "codegen:next": "openapi-typescript https://dash.readme.com/api/v1/api-registry/rwkfe1gl7puob14 --output onebrick.gen.ts"
   },
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "*",

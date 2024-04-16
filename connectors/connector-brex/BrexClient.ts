@@ -1,6 +1,5 @@
-import type {InfoFromPaths} from '@usevenice/util'
-import {makeOpenApiClient} from '@usevenice/util'
-
+import type {InfoFromPaths} from '@openint/util'
+import {makeOpenApiClient} from '@openint/util'
 import type {paths} from './__generated__/transactions.gen'
 
 export function makeBrexClient(opts: {accessToken: string}) {

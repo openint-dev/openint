@@ -1,6 +1,5 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import type {togglSchemas} from './def'
 import {togglHelpers} from './def'
 import {makeTogglClient} from './TogglCient'

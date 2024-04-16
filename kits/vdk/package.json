@@ -1,10 +1,10 @@
 {
-  "name": "@usevenice/vdk",
+  "name": "@openint/vdk",
   "description": "Vertical Development Kit",
   "dependencies": {
+    "@openint/types": "workspace:*",
+    "@openint/zod": "workspace:*",
     "@trpc/server": "10.40.0",
-    "@usevenice/types": "workspace:*",
-    "@usevenice/zod": "workspace:*",
     "remeda": "1.6.1"
   }
 }

@@ -1,7 +1,6 @@
 import {ClerkProvider} from '@clerk/nextjs'
-// import {TRPCProvider} from '@usevenice/engine-frontend'
+// import {TRPCProvider} from '@openint/engine-frontend'
 import React from 'react'
-
 import {ClientRootWithClerk} from '@/components/ClientRoot'
 
 export default function AdminLayout(props: {children: React.ReactNode}) {

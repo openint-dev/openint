@@ -2,9 +2,8 @@ import type {
   ButtonProps,
   CommandComponentProps,
   CommandDraft,
-} from '@usevenice/ui'
-import {CommandBar, CommandButton, CommandPopover} from '@usevenice/ui'
-
+} from '@openint/ui'
+import {CommandBar, CommandButton, CommandPopover} from '@openint/ui'
 import type {CommandContext} from './vcommand-context'
 import {WithCommandContext} from './vcommand-context'
 import {vDefinitions} from './vcommand-definitions'

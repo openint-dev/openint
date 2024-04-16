@@ -4,7 +4,7 @@ import {
   OAuth2Client,
   z,
   zFunction,
-} from '@usevenice/util'
+} from '@openint/util'
 
 export const zRampConfig = z.object({
   clientId: z.string(),

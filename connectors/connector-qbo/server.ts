@@ -1,9 +1,9 @@
 import {initSDK} from '@opensdks/runtime'
 import type {QBOSDKTypes} from '@opensdks/sdk-qbo'
 import {qboSdkDef} from '@opensdks/sdk-qbo'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {nangoProxyLink} from '@usevenice/cdk'
-import {Rx, rxjs, snakeCase} from '@usevenice/util'
+import type {ConnectorServer} from '@openint/cdk'
+import {nangoProxyLink} from '@openint/cdk'
+import {Rx, rxjs, snakeCase} from '@openint/util'
 import type {QBO, qboSchemas, TransactionTypeName} from './def'
 import {QBO_ENTITY_NAME, qboHelpers, TRANSACTION_TYPE_NAME} from './def'
 

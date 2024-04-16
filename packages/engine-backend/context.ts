@@ -6,11 +6,11 @@ import type {
   Id,
   LinkFactory,
   NangoClient,
-} from '@usevenice/cdk'
-import {makeNangoClient} from '@usevenice/cdk'
-import type {JWTClient, Viewer, ViewerRole} from '@usevenice/cdk/viewer'
-import {makeJwtClient, zViewerFromJwtPayload} from '@usevenice/cdk/viewer'
-import {R} from '@usevenice/util'
+} from '@openint/cdk'
+import {makeNangoClient} from '@openint/cdk'
+import type {JWTClient, Viewer, ViewerRole} from '@openint/cdk/viewer'
+import {makeJwtClient, zViewerFromJwtPayload} from '@openint/cdk/viewer'
+import {R} from '@openint/util'
 import type {Env} from '../../apps/app-config/env'
 import {makeServices as _makeServices} from './services'
 // Should we actually do this hmm

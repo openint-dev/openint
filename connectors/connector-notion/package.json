@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-notion",
+  "name": "@openint/connector-notion",
   "version": "0.0.0",
   "private": true,
   "module": "./index.ts",

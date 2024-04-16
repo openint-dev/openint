@@ -1,4 +1,4 @@
-import {makeUlid, md5Hash, stableStringify} from '@usevenice/util'
+import {makeUlid, md5Hash, stableStringify} from '@openint/util'
 
 export class RowIdMaker {
   readonly ids = new Set<string>()

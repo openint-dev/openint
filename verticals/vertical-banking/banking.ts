@@ -1,12 +1,12 @@
 import * as rxjs from 'rxjs'
 import * as Rx from 'rxjs/operators'
-import type {AnyEntityPayload, Id, Link} from '@usevenice/cdk'
-import type {PlaidSDKTypes} from '@usevenice/connector-plaid'
-import type {postgresHelpers} from '@usevenice/connector-postgres'
-import type {QBO} from '@usevenice/connector-qbo'
-import type {Oas_accounting} from '@usevenice/connector-xero'
-import type {StrictObj} from '@usevenice/types'
-import type {RouterMap, RouterMeta, VerticalRouterOpts} from '@usevenice/vdk'
+import type {AnyEntityPayload, Id, Link} from '@openint/cdk'
+import type {PlaidSDKTypes} from '@openint/connector-plaid'
+import type {postgresHelpers} from '@openint/connector-postgres'
+import type {QBO} from '@openint/connector-qbo'
+import type {Oas_accounting} from '@openint/connector-xero'
+import type {StrictObj} from '@openint/types'
+import type {RouterMap, RouterMeta, VerticalRouterOpts} from '@openint/vdk'
 import {
   applyMapper,
   mapper,
@@ -14,7 +14,7 @@ import {
   z,
   zCast,
   zPaginationParams,
-} from '@usevenice/vdk'
+} from '@openint/vdk'
 
 type Plaid = PlaidSDKTypes['oas']['components']
 type Xero = Oas_accounting['components']['schemas']

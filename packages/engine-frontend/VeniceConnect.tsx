@@ -9,16 +9,16 @@ import type {
   Id,
   OpenDialogFn,
   UseConnectHook,
-} from '@usevenice/cdk'
+} from '@openint/cdk'
 import {
   CANCELLATION_TOKEN,
   extractConnectorName,
   extractId,
   oauthConnect,
   zConnectorVertical,
-} from '@usevenice/cdk'
-import type {RouterInput, RouterOutput} from '@usevenice/engine-backend'
-import type {SchemaFormElement, UIProps, UIPropsNoChildren} from '@usevenice/ui'
+} from '@openint/cdk'
+import type {RouterInput, RouterOutput} from '@openint/engine-backend'
+import type {SchemaFormElement, UIProps, UIPropsNoChildren} from '@openint/ui'
 import {
   Button,
   ConnectorConfigCard,
@@ -39,9 +39,9 @@ import {
   ResourceCard,
   SchemaForm,
   useToast,
-} from '@usevenice/ui'
-import {cn} from '@usevenice/ui/utils'
-import {R, titleCase, z} from '@usevenice/util'
+} from '@openint/ui'
+import {cn} from '@openint/ui/utils'
+import {R, titleCase, z} from '@openint/util'
 import {_trpcReact} from './TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'

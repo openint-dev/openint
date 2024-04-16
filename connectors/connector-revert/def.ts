@@ -1,8 +1,8 @@
 import type {RevertSDKTypes} from '@opensdks/sdk-revert'
 import revertOas from '@opensdks/sdk-revert/revert.oas.json'
-import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@openint/cdk'
+import {connHelpers} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 
 type components = RevertSDKTypes['oas']['components']
 

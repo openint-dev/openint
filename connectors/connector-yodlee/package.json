@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-yodlee",
+  "name": "@openint/connector-yodlee",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [
@@ -13,9 +13,9 @@
     "generate:types": "openapi-typescript ./yodlee.oas.json --output yodlee.oas.d.ts"
   },
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/openapi-client": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/openapi-client": "workspace:*",
+    "@openint/util": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "*",

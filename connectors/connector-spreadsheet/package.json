@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-spreadsheet",
+  "name": "@openint/connector-spreadsheet",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [
@@ -7,8 +7,8 @@
   ],
   "module": "./index.ts",
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*",
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*",
     "papaparse": "5.3.2",
     "xlsx": "0.17.5"
   },

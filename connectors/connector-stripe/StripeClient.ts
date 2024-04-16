@@ -1,6 +1,5 @@
-import type {InfoFromPaths} from '@usevenice/util'
-import {makeOpenApiClient} from '@usevenice/util'
-
+import type {InfoFromPaths} from '@openint/util'
+import {makeOpenApiClient} from '@openint/util'
 import type {operations, paths} from './stripe.gen'
 
 export function makeStripeClient(opts: {

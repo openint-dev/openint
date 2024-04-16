@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-merge",
+  "name": "@openint/connector-merge",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [],
@@ -8,8 +8,8 @@
     "codegen:next:accounting": "openapi-typescript https://api.merge.dev/api/accounting/v1/schema --make-paths-enum --output merge.accounting.gen.ts"
   },
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*"
   },
   "devDependencies": {
     "@mergeapi/react-merge-link": "2.0.6",

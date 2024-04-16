@@ -1,6 +1,6 @@
-import type {ConnectorServer, SyncOperation} from '@usevenice/cdk'
-import {handlersLink} from '@usevenice/cdk'
-import type {z} from '@usevenice/util'
+import type {ConnectorServer, SyncOperation} from '@openint/cdk'
+import {handlersLink} from '@openint/cdk'
+import type {z} from '@openint/util'
 import {
   $chokidar,
   $path,
@@ -13,8 +13,7 @@ import {
   rxjs,
   safeJSONParse,
   writeJson,
-} from '@usevenice/util'
-
+} from '@openint/util'
 import type {fsSchemas, zWatchPathsInput} from './def'
 
 export const _pathFromId = (basePath: string, id: string) =>

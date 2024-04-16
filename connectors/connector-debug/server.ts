@@ -1,7 +1,6 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import {logLink} from '@usevenice/cdk'
-import {rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {logLink} from '@openint/cdk'
+import {rxjs} from '@openint/util'
 import type {debugSchemas} from './def'
 
 export const debugServer = {

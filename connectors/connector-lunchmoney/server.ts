@@ -1,6 +1,5 @@
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
-
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import type {lunchmoneySchemas} from './def'
 import {lunchmoneyHelpers} from './def'
 import {makeLunchmoneyClient} from './lunchmoneyClient'

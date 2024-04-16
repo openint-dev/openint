@@ -1,4 +1,4 @@
-import {createHTTPClient, memoize, z, zFunction} from '@usevenice/util'
+import {createHTTPClient, memoize, z, zFunction} from '@openint/util'
 
 export const zTogglConfig = z.object({
   email: z.string().nullish(),

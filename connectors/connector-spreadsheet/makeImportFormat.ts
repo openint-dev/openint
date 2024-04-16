@@ -1,6 +1,6 @@
-import type {EntityPayload} from '@usevenice/cdk'
-import type {ValueOf} from '@usevenice/util'
-import {R, z} from '@usevenice/util'
+import type {EntityPayload} from '@openint/cdk'
+import type {ValueOf} from '@openint/util'
+import {R, z} from '@openint/util'
 
 /**
  * Can be reused by in places such as Google Sheets / Excel. CSV is a starting

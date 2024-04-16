@@ -1,7 +1,7 @@
 import {TRPCError} from '@trpc/server'
-import {metaForConnector} from '@usevenice/cdk'
-import {R, z} from '@usevenice/util'
-import {zodToOas31Schema} from '@usevenice/zod'
+import {metaForConnector} from '@openint/cdk'
+import {R, z} from '@openint/util'
+import {zodToOas31Schema} from '@openint/zod'
 import {publicProcedure, trpc} from './_base'
 
 const tags = ['Connectors']

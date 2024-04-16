@@ -1,11 +1,11 @@
 {
-  "name": "@usevenice/vertical-sales-engagement",
+  "name": "@openint/vertical-sales-engagement",
   "dependencies": {
-    "@usevenice/vdk": "workspace:*"
+    "@openint/vdk": "workspace:*"
   },
   "devDependencies": {
-    "@usevenice/connector-apollo": "workspace:*",
-    "@usevenice/connector-outreach": "workspace:*",
-    "@usevenice/connector-salesloft": "workspace:*"
+    "@openint/connector-apollo": "workspace:*",
+    "@openint/connector-outreach": "workspace:*",
+    "@openint/connector-salesloft": "workspace:*"
   }
 }

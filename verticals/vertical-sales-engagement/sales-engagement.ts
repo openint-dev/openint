@@ -1,5 +1,5 @@
-import type {RouterMap, RouterMeta, VerticalRouterOpts} from '@usevenice/vdk'
-import {proxyCallRemote, z, zPaginationParams} from '@usevenice/vdk'
+import type {RouterMap, RouterMeta, VerticalRouterOpts} from '@openint/vdk'
+import {proxyCallRemote, z, zPaginationParams} from '@openint/vdk'
 import * as zSalesEngagement from './schemas'
 
 export {zSalesEngagement}

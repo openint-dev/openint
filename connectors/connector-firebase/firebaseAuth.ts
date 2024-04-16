@@ -2,12 +2,9 @@
 // compat is working
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
-
 import {UserImpl} from '@firebase/auth/internal'
 import firebase from 'firebase/compat/app'
-
-import {z, zFunction} from '@usevenice/util'
-
+import {z, zFunction} from '@openint/util'
 import {zAuthData, zFirebaseConfig} from './def'
 
 export const makeFirebaseAuth = zFunction(zFirebaseConfig, (config) => {
@@ -27,8 +24,8 @@ export const makeFirebaseAuth = zFunction(zFirebaseConfig, (config) => {
       const res = await (input.method === 'userJson'
         ? authUpdateCurrentUserFromJSON(auth, input.userJson)
         : input.method === 'customToken'
-        ? auth.signInWithCustomToken(input.customToken)
-        : auth.signInWithEmailAndPassword(input.email, input.password))
+          ? auth.signInWithCustomToken(input.customToken)
+          : auth.signInWithEmailAndPassword(input.email, input.password))
       return res.user?.toJSON()
     }),
     logout: zFunction(() => auth.signOut()),

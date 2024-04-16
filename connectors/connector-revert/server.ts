@@ -1,7 +1,7 @@
 import type {RevertSDK} from '@opensdks/sdk-revert'
 import {initRevertSDK} from '@opensdks/sdk-revert'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {Rx, rxjs} from '@usevenice/util'
+import type {ConnectorServer} from '@openint/cdk'
+import {Rx, rxjs} from '@openint/util'
 import type {revertSchemas} from './def'
 import {helpers} from './def'
 

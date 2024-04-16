@@ -1,4 +1,4 @@
-import '@usevenice/app-config/register.node'
+import '@openint/app-config/register.node'
 import {parseArgs} from 'node:util'
 import * as routines from './routines'
 

@@ -1,5 +1,5 @@
-import type {WritableDraft} from '@usevenice/util'
-import {produce, R, Rx, rxjs} from '@usevenice/util'
+import type {WritableDraft} from '@openint/util'
+import {produce, R, Rx, rxjs} from '@openint/util'
 import type {
   AnyEntityPayload,
   Link,

@@ -1,10 +1,7 @@
 import {serve} from 'inngest/next'
-import type {Events} from '@usevenice/engine-backend/events'
-import {
-  inngest,
-  outgoingWebhookEventMap,
-} from '@usevenice/engine-backend/events'
-import {withLog} from '@usevenice/util'
+import type {Events} from '@openint/engine-backend/events'
+import {inngest, outgoingWebhookEventMap} from '@openint/engine-backend/events'
+import {withLog} from '@openint/util'
 import * as functions from '../../inngest/functions'
 import {sendWebhook} from '../../inngest/routines'
 

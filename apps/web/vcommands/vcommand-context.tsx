@@ -2,7 +2,7 @@ import {useMutation} from '@tanstack/react-query'
 import {Loader2} from 'lucide-react'
 import {useRouter} from 'next/navigation'
 import React from 'react'
-import type {SchemaSheetRefValue} from '@usevenice/ui'
+import type {SchemaSheetRefValue} from '@openint/ui'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,7 +14,7 @@ import {
   AlertDialogTitle,
   Button,
   useWithToast,
-} from '@usevenice/ui'
+} from '@openint/ui'
 import {PipelineSheet} from '@/components/PipelineSheet'
 import {ResourceSheet} from '@/components/ResourceSheet'
 import type {ZClient} from '@/lib-common/schemas'

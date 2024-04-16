@@ -1,10 +1,7 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import type {Pta} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
-import type {Brand} from '@usevenice/util'
-import {A, startCase, z, zCast} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
+import {connHelpers, makePostingsMap} from '@openint/cdk'
+import type {Brand} from '@openint/util'
+import {A, startCase, z, zCast} from '@openint/util'
 import {CACHED_CATEGORIES_MAP, zConfig} from './saltedgeClient'
 
 export const saltedgeSchemas = {

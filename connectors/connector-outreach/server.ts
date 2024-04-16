@@ -1,7 +1,7 @@
 import type {OutreachSDK} from '@opensdks/sdk-outreach'
 import {initOutreachSDK} from '@opensdks/sdk-outreach'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {nangoProxyLink} from '@usevenice/cdk'
+import type {ConnectorServer} from '@openint/cdk'
+import {nangoProxyLink} from '@openint/cdk'
 import type {outreachSchemas} from './def'
 
 export const outreachServer = {

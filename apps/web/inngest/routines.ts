@@ -1,9 +1,9 @@
-import {backendEnv, contextFactory} from '@usevenice/app-config/backendConfig'
-import {env} from '@usevenice/app-config/env'
-import '@usevenice/app-config/register.node'
+import {backendEnv, contextFactory} from '@openint/app-config/backendConfig'
+import {env} from '@openint/app-config/env'
+import '@openint/app-config/register.node'
 import type {SendEventPayload} from 'inngest/helpers/types'
-import {flatRouter} from '@usevenice/engine-backend'
-import type {Events, OrgProperties} from '@usevenice/engine-backend'
+import {flatRouter} from '@openint/engine-backend'
+import type {Events, OrgProperties} from '@openint/engine-backend'
 import {makeSentryClient} from '../lib-server/sentry-client'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

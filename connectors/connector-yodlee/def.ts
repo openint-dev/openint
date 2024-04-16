@@ -1,7 +1,7 @@
-import type {ConnectorDef, ConnectorSchemas, Pta} from '@usevenice/cdk'
-import {connHelpers, makePostingsMap} from '@usevenice/cdk'
-import type {Brand} from '@usevenice/util'
-import {A, objectFromObject, parseDateTime, z, zCast} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
+import {connHelpers, makePostingsMap} from '@openint/cdk'
+import type {Brand} from '@openint/util'
+import {A, objectFromObject, parseDateTime, z, zCast} from '@openint/util'
 import {
   getYodleeAccountBalance,
   getYodleeAccountName,

@@ -1,7 +1,6 @@
-import type {ConnectorServer, SyncOperation} from '@usevenice/cdk'
-import {zEndUserId} from '@usevenice/cdk'
-import {md5Hash, R, Rx, rxjs, z} from '@usevenice/util'
-
+import type {ConnectorServer, SyncOperation} from '@openint/cdk'
+import {zEndUserId} from '@openint/cdk'
+import {md5Hash, R, Rx, rxjs, z} from '@openint/util'
 import type {onebrickSchemas} from './def'
 import {helpers} from './def'
 import {makeOneBrickClient} from './OneBrickClient'

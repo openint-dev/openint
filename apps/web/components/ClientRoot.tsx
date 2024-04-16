@@ -4,14 +4,11 @@ import {useAuth} from '@clerk/nextjs'
 import {QueryClientProvider} from '@tanstack/react-query'
 import {ThemeProvider} from 'next-themes'
 import React, {useEffect, useRef} from 'react'
-
-import {env} from '@usevenice/app-config/env'
-import {getViewerId, zViewerFromUnverifiedJwtToken} from '@usevenice/cdk'
-import {TRPCProvider} from '@usevenice/engine-frontend'
-import {Toaster} from '@usevenice/ui'
-
+import {env} from '@openint/app-config/env'
+import {getViewerId, zViewerFromUnverifiedJwtToken} from '@openint/cdk'
+import {TRPCProvider} from '@openint/engine-frontend'
+import {Toaster} from '@openint/ui'
 import {__DEBUG__} from '@/../app-config/constants'
-
 import {createQueryClient} from '../lib-client/react-query-client'
 import {
   createRealtimeClient,

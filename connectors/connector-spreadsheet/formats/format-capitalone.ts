@@ -1,8 +1,6 @@
 import Papa from 'papaparse'
-
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, zCast} from '@usevenice/util'
-
+import {makePostingsMap} from '@openint/cdk'
+import {A, zCast} from '@openint/util'
 import {makeImportFormat} from '../makeImportFormat'
 import {RowIdMaker} from '../RowIdMaker'
 

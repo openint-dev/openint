@@ -1,6 +1,6 @@
-import type {Pta} from '@usevenice/cdk'
-import type {DateTime} from '@usevenice/util'
-import {A, parseDateTime} from '@usevenice/util'
+import type {Pta} from '@openint/cdk'
+import type {DateTime} from '@openint/util'
+import {A, parseDateTime} from '@openint/util'
 
 export function signFromTransaction(
   txn: Venmo.Transaction,

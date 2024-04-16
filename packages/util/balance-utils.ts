@@ -1,5 +1,5 @@
-import type {Amount, AmountMap} from '@usevenice/util'
-import {AM} from '@usevenice/util'
+import type {Amount, AmountMap} from '@openint/util'
+import {AM} from '@openint/util'
 
 export function computeTrialBalance(
   postings: Array<{amount?: Amount | null; date: ISODateTime | ISODate}>,

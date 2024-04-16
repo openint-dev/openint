@@ -1,13 +1,11 @@
 import createClient from 'openapi-fetch'
 import {z} from 'zod'
-
-import type {MetaService} from '@usevenice/engine-backend'
-import {makePostgresMetaService} from '@usevenice/meta-service-postgres'
+import type {MetaService} from '@openint/engine-backend'
+import {makePostgresMetaService} from '@openint/meta-service-postgres'
 // import {createApiClient} from './api/airbyte-private-api.gen'
 
-import type {InfoFromPaths} from '@usevenice/util'
-import {makeOpenApiClient} from '@usevenice/util'
-
+import type {InfoFromPaths} from '@openint/util'
+import {makeOpenApiClient} from '@openint/util'
 import type {paths} from './api/airbyte-private-api.gen'
 
 const http = createClient<paths>({baseUrl: 'https://platform.brexapis.com'})

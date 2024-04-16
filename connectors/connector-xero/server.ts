@@ -1,7 +1,7 @@
 import {initXeroSDK} from '@opensdks/sdk-xero'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {nangoProxyLink} from '@usevenice/cdk'
-import {delay, Rx, rxjs} from '@usevenice/util'
+import type {ConnectorServer} from '@openint/cdk'
+import {nangoProxyLink} from '@openint/cdk'
+import {delay, Rx, rxjs} from '@openint/util'
 import {XERO_ENTITY_NAME, xeroHelpers, type xeroSchemas} from './def'
 
 export const xeroServer = {

@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/zod",
+  "name": "@openint/zod",
   "version": "0.0.0",
   "private": false,
   "sideEffects": false,

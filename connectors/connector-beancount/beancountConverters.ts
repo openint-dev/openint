@@ -1,5 +1,5 @@
 /// <reference path="./beancount.d.ts"/>
-import type {Pta} from '@usevenice/cdk'
+import type {Pta} from '@openint/cdk'
 import {
   formatAccountType,
   makePostingsMap,
@@ -7,8 +7,8 @@ import {
   splitAccountType,
   stdTypeAndEntity,
   TRANSACTION_LABELS,
-} from '@usevenice/cdk'
-import type {Amount, NonEmptyArray} from '@usevenice/util'
+} from '@openint/cdk'
+import type {Amount, NonEmptyArray} from '@openint/util'
 import {
   $execCommand,
   A,
@@ -27,7 +27,7 @@ import {
   shallowOmitUndefined,
   temp_makeId,
   upperCaseFirst,
-} from '@usevenice/util'
+} from '@openint/util'
 
 // @see https://beancount.github.io/docs/beancount_language_syntax.html
 // The general format of a Transaction directive is:

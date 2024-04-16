@@ -7,10 +7,10 @@ import type {
   Link,
   ResourceUpdate,
   Source,
-} from '@usevenice/cdk'
-import {bankingLink, logLink, makeId, sync} from '@usevenice/cdk'
-import type {z} from '@usevenice/util'
-import {makeUlid, rxjs} from '@usevenice/util'
+} from '@openint/cdk'
+import {bankingLink, logLink, makeId, sync} from '@openint/cdk'
+import type {z} from '@openint/util'
+import {makeUlid, rxjs} from '@openint/util'
 import {inngest} from '../events'
 import type {zSyncOptions} from '../types'
 import type {

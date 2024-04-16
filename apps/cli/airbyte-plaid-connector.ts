@@ -1,8 +1,6 @@
-import '@usevenice/app-config/register.node'
-
-import {plaidProvider} from '@usevenice/connector-plaid'
-import {makeAirbyteConnector} from '@usevenice/meta-service-airbyte/makeAirbyteConnector'
-
+import '@openint/app-config/register.node'
+import {plaidProvider} from '@openint/connector-plaid'
+import {makeAirbyteConnector} from '@openint/meta-service-airbyte/makeAirbyteConnector'
 import {cliFromRouter} from './cli-utils'
 
 cliFromRouter(makeAirbyteConnector(plaidProvider), {

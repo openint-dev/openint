@@ -1,18 +1,16 @@
 import {TRPCError} from '@trpc/server'
 import type {NextRequest} from 'next/server'
 import {NextResponse} from 'next/server'
-
 import {
   contextFactory,
   DatabaseError,
   Papa,
-} from '@usevenice/app-config/backendConfig'
-import {kAcceptUrlParam} from '@usevenice/app-config/constants'
-import type {Id} from '@usevenice/cdk'
-import {hasRole} from '@usevenice/cdk'
-import {makePostgresClient, zPgConfig} from '@usevenice/connector-postgres'
-import {R, z} from '@usevenice/util'
-
+} from '@openint/app-config/backendConfig'
+import {kAcceptUrlParam} from '@openint/app-config/constants'
+import type {Id} from '@openint/cdk'
+import {hasRole} from '@openint/cdk'
+import {makePostgresClient, zPgConfig} from '@openint/connector-postgres'
+import {R, z} from '@openint/util'
 import {serverComponentGetViewer} from '@/lib-server/server-component-helpers'
 import {trpcErrorResponse} from '@/lib-server/server-helpers'
 
@@ -73,8 +71,8 @@ export async function GET(
                   v instanceof Date
                     ? v.toISOString()
                     : typeof v === 'object'
-                    ? JSON.stringify(v)
-                    : v,
+                      ? JSON.stringify(v)
+                      : v,
                 ),
               ),
             ]),

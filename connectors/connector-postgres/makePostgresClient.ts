@@ -5,7 +5,7 @@ import type {
   PrimitiveValueExpression,
   TaggedTemplateLiteralInvocation,
 } from 'slonik/dist/src/types'
-import type {MaybeArray} from '@usevenice/util'
+import type {MaybeArray} from '@openint/util'
 import {
   fromMaybeArray,
   isPlainObject,
@@ -13,7 +13,7 @@ import {
   R,
   snakeCase,
   zFunction,
-} from '@usevenice/util'
+} from '@openint/util'
 import {zPgConfig} from './def'
 
 export {DatabaseError} from 'pg'

@@ -1,5 +1,5 @@
-import {handlersLink, makeId, sync, zId, zRaw} from '@usevenice/cdk'
-import {makeUlid, rxjs, z} from '@usevenice/util'
+import {handlersLink, makeId, sync, zId, zRaw} from '@openint/cdk'
+import {makeUlid, rxjs, z} from '@openint/util'
 import {adminProcedure, trpc} from './_base'
 
 export {type inferProcedureInput} from '@trpc/server'

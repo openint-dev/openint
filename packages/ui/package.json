@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/ui",
+  "name": "@openint/ui",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
@@ -37,10 +37,10 @@
     "tailwind-merge": "1.6.0"
   },
   "devDependencies": {
+    "@openint/cdk": "*",
+    "@openint/engine-backend": "*",
     "@tanstack/react-query": "*",
-    "@types/react": "*",
-    "@usevenice/cdk": "*",
-    "@usevenice/engine-backend": "*"
+    "@types/react": "*"
   },
   "peerDependencies": {
     "react": "*",

@@ -1,15 +1,10 @@
-// import '@usevenice/app-config/register.node'
+// import '@openint/app-config/register.node'
 import {clerkClient} from '@clerk/nextjs'
-
-import {
-  backendEnv,
-  makePostgresClient,
-} from '@usevenice/app-config/backendConfig'
-import {kApikeyMetadata} from '@usevenice/app-config/constants'
-import type {Viewer} from '@usevenice/cdk'
-import {hasRole} from '@usevenice/cdk'
-import {makeUlid} from '@usevenice/util'
-
+import {backendEnv, makePostgresClient} from '@openint/app-config/backendConfig'
+import {kApikeyMetadata} from '@openint/app-config/constants'
+import type {Viewer} from '@openint/cdk'
+import {hasRole} from '@openint/cdk'
+import {makeUlid} from '@openint/util'
 import {encodeApiKey} from '@/lib-server'
 
 export const {getPool, sql} = makePostgresClient({

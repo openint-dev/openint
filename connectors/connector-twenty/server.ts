@@ -1,7 +1,7 @@
 import type {RevertSDKTypes} from '@opensdks/sdk-revert'
 import {initTwentySDK} from '@opensdks/sdk-twenty'
-import type {ConnectorServer} from '@usevenice/cdk'
-import {handlersLink} from '@usevenice/cdk'
+import type {ConnectorServer} from '@openint/cdk'
+import {handlersLink} from '@openint/cdk'
 import type {twentySchemas} from './def'
 
 type Revert = RevertSDKTypes['oas']['components']['schemas']

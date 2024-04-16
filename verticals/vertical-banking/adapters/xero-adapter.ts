@@ -1,6 +1,6 @@
 import type {Oas_accounting, XeroSDK} from 'connectors/connector-xero'
-import type {StrictObj} from '@usevenice/vdk'
-import {mapper, z, zCast} from '@usevenice/vdk'
+import type {StrictObj} from '@openint/vdk'
+import {mapper, z, zCast} from '@openint/vdk'
 import type {VerticalBanking} from '../banking'
 import {zBanking} from '../banking'
 

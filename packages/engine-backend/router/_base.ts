@@ -1,7 +1,7 @@
 import type {OpenApiMeta} from '@lilyrose2798/trpc-openapi'
 import {initTRPC, TRPCError} from '@trpc/server'
-import {getExtEndUserId, hasRole} from '@usevenice/cdk'
-import {HTTPError} from '@usevenice/util'
+import {getExtEndUserId, hasRole} from '@openint/cdk'
+import {HTTPError} from '@openint/util'
 import type {RouterContext} from '../context'
 
 export interface RouterMeta extends OpenApiMeta {

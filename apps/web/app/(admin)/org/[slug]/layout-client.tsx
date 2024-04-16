@@ -8,9 +8,7 @@ import {
 } from '@clerk/nextjs'
 import {useRouter} from 'next/navigation'
 import React from 'react'
-
-import {LoadingText} from '@usevenice/ui'
-
+import {LoadingText} from '@openint/ui'
 import {NoSSR} from '@/components/NoSSR'
 import {RedirectToNext13} from '@/components/RedirectTo'
 

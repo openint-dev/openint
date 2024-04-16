@@ -1,9 +1,7 @@
-import '@usevenice/app-config/register.node'
-import {joinPath} from '@usevenice/util'
-
+import '@openint/app-config/register.node'
 import type {NextApiHandler} from 'next'
+import {joinPath} from '@openint/util'
 import {serverAnalytics} from '../../../lib-server/analytics-server'
-
 import {proxySupabase} from '../../../lib-server/supabase-proxy'
 
 // Enable `externalResolver` option in Next.js

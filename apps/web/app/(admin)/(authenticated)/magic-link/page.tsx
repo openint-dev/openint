@@ -1,9 +1,8 @@
 'use client'
 
-import {endUserRouterSchema} from '@usevenice/engine-backend/router/endUserRouter'
-import {_trpcReact} from '@usevenice/engine-frontend'
-import {SchemaForm, useToast} from '@usevenice/ui'
-
+import {endUserRouterSchema} from '@openint/engine-backend/router/endUserRouter'
+import {_trpcReact} from '@openint/engine-frontend'
+import {SchemaForm, useToast} from '@openint/ui'
 import {copyToClipboard} from '@/lib-client/copyToClipboard'
 
 export default function MagicLinkPage() {

@@ -1,8 +1,7 @@
 import {useAuth} from '@clerk/nextjs'
 import React from 'react'
-
-import type {Viewer} from '@usevenice/cdk'
-import {getViewerId} from '@usevenice/cdk'
+import type {Viewer} from '@openint/cdk'
+import {getViewerId} from '@openint/cdk'
 
 /** TODO This ought to be a bit more generic... */
 export type AsyncStatus = 'initial' | 'loading' | 'error' | 'success'

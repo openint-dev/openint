@@ -1,7 +1,7 @@
 /** Used for the side effect of window.FinchConnect */
 import type {useFinchConnect} from '@tryfinch/react-connect'
-import type {ConnectorClient} from '@usevenice/cdk'
-import {CANCELLATION_TOKEN, useScript} from '@usevenice/cdk'
+import type {ConnectorClient} from '@openint/cdk'
+import {CANCELLATION_TOKEN, useScript} from '@openint/cdk'
 import type {finchSchemas} from './def'
 
 declare global {

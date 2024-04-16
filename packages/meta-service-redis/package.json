@@ -1,13 +1,13 @@
 {
-  "name": "@usevenice/meta-service-redis",
+  "name": "@openint/meta-service-redis",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [],
   "module": "./index.ts",
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/engine-backend": "workspace:*",
-    "@usevenice/util": "workspace:*",
+    "@openint/cdk": "workspace:*",
+    "@openint/engine-backend": "workspace:*",
+    "@openint/util": "workspace:*",
     "handy-redis": "2.3.1",
     "redis": "3.1.2"
   },

@@ -1,6 +1,6 @@
-import type {OutreachSDK, OutreachSDKTypes} from '@usevenice/connector-outreach'
-import type {StrictObj} from '@usevenice/vdk'
-import {mapper, zCast} from '@usevenice/vdk'
+import type {OutreachSDK, OutreachSDKTypes} from '@openint/connector-outreach'
+import type {StrictObj} from '@openint/vdk'
+import {mapper, zCast} from '@openint/vdk'
 import type {VerticalSalesEngagement} from '../sales-engagement'
 import {zSalesEngagement} from '../sales-engagement'
 

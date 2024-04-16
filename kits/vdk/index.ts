@@ -2,4 +2,4 @@
 export * from './new-mapper'
 // codegen:end
 
-export * from '@usevenice/zod'
+export * from '@openint/zod'

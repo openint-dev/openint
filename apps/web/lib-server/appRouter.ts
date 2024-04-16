@@ -5,16 +5,16 @@ import type {
   ZodOpenApiPathsObject,
 } from '@lilyrose2798/trpc-openapi/dist/generator'
 import {TRPCError} from '@trpc/server'
-import {getServerUrl} from '@usevenice/app-config/constants'
-import type {Viewer} from '@usevenice/cdk'
-import {zViewer} from '@usevenice/cdk'
-import {flatRouter, outgoingWebhookEventMap} from '@usevenice/engine-backend'
+import {getServerUrl} from '@openint/app-config/constants'
+import type {Viewer} from '@openint/cdk'
+import {zViewer} from '@openint/cdk'
+import {flatRouter, outgoingWebhookEventMap} from '@openint/engine-backend'
 import {
   adminProcedure,
   publicProcedure,
   trpc,
-} from '@usevenice/engine-backend/router/_base'
-import {R, z} from '@usevenice/util'
+} from '@openint/engine-backend/router/_base'
+import {R, z} from '@openint/util'
 import {zAuth} from '@/lib-common/schemas'
 
 const customRouter = trpc.router({

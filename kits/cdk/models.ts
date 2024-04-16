@@ -1,4 +1,4 @@
-import {z} from '@usevenice/zod'
+import {z} from '@openint/zod'
 import {zEndUserId, zId} from './id.types'
 
 // Utility types

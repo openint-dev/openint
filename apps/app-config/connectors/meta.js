@@ -6,8 +6,8 @@ module.exports = [
     dirName: 'connector-airtable',
     varName: 'connectorAirtable',
     imports: {
-      def: '@usevenice/connector-airtable/def',
-      server: '@usevenice/connector-airtable/server',
+      def: '@openint/connector-airtable/def',
+      server: '@openint/connector-airtable/server',
     },
   },
   {
@@ -20,8 +20,8 @@ module.exports = [
     dirName: 'connector-apollo',
     varName: 'connectorApollo',
     imports: {
-      def: '@usevenice/connector-apollo/def',
-      server: '@usevenice/connector-apollo/server',
+      def: '@openint/connector-apollo/def',
+      server: '@openint/connector-apollo/server',
     },
   },
   {
@@ -29,8 +29,8 @@ module.exports = [
     dirName: 'connector-beancount',
     varName: 'connectorBeancount',
     imports: {
-      def: '@usevenice/connector-beancount/def',
-      server: '@usevenice/connector-beancount/server',
+      def: '@openint/connector-beancount/def',
+      server: '@openint/connector-beancount/server',
     },
   },
   {
@@ -38,8 +38,8 @@ module.exports = [
     dirName: 'connector-brex',
     varName: 'connectorBrex',
     imports: {
-      def: '@usevenice/connector-brex/def',
-      server: '@usevenice/connector-brex/server',
+      def: '@openint/connector-brex/def',
+      server: '@openint/connector-brex/server',
     },
   },
   {dirName: 'connector-copilot', varName: 'connectorCopilot', imports: {}},
@@ -48,8 +48,8 @@ module.exports = [
     dirName: 'connector-debug',
     varName: 'connectorDebug',
     imports: {
-      def: '@usevenice/connector-debug/def',
-      server: '@usevenice/connector-debug/server',
+      def: '@openint/connector-debug/def',
+      server: '@openint/connector-debug/server',
     },
   },
   {
@@ -57,8 +57,8 @@ module.exports = [
     dirName: 'connector-discord',
     varName: 'connectorDiscord',
     imports: {
-      def: '@usevenice/connector-discord/def',
-      server: '@usevenice/connector-discord/server',
+      def: '@openint/connector-discord/def',
+      server: '@openint/connector-discord/server',
     },
   },
   {dirName: 'connector-expensify', varName: 'connectorExpensify', imports: {}},
@@ -67,9 +67,9 @@ module.exports = [
     dirName: 'connector-finch',
     varName: 'connectorFinch',
     imports: {
-      def: '@usevenice/connector-finch/def',
-      client: '@usevenice/connector-finch/client',
-      server: '@usevenice/connector-finch/server',
+      def: '@openint/connector-finch/def',
+      client: '@openint/connector-finch/client',
+      server: '@openint/connector-finch/server',
     },
   },
   {
@@ -77,8 +77,8 @@ module.exports = [
     dirName: 'connector-firebase',
     varName: 'connectorFirebase',
     imports: {
-      def: '@usevenice/connector-firebase/def',
-      server: '@usevenice/connector-firebase/server',
+      def: '@openint/connector-firebase/def',
+      server: '@openint/connector-firebase/server',
     },
   },
   {
@@ -86,8 +86,8 @@ module.exports = [
     dirName: 'connector-foreceipt',
     varName: 'connectorForeceipt',
     imports: {
-      def: '@usevenice/connector-foreceipt/def',
-      server: '@usevenice/connector-foreceipt/server',
+      def: '@openint/connector-foreceipt/def',
+      server: '@openint/connector-foreceipt/server',
     },
   },
   {
@@ -95,8 +95,8 @@ module.exports = [
     dirName: 'connector-fs',
     varName: 'connectorFs',
     imports: {
-      def: '@usevenice/connector-fs/def',
-      server: '@usevenice/connector-fs/server',
+      def: '@openint/connector-fs/def',
+      server: '@openint/connector-fs/server',
     },
   },
   {
@@ -104,8 +104,8 @@ module.exports = [
     dirName: 'connector-heron',
     varName: 'connectorHeron',
     imports: {
-      def: '@usevenice/connector-heron/def',
-      server: '@usevenice/connector-heron/server',
+      def: '@openint/connector-heron/def',
+      server: '@openint/connector-heron/server',
     },
   },
   {
@@ -113,24 +113,24 @@ module.exports = [
     dirName: 'connector-lunchmoney',
     varName: 'connectorLunchmoney',
     imports: {
-      def: '@usevenice/connector-lunchmoney/def',
-      server: '@usevenice/connector-lunchmoney/server',
+      def: '@openint/connector-lunchmoney/def',
+      server: '@openint/connector-lunchmoney/server',
     },
   },
   {
     name: 'mercury',
     dirName: 'connector-mercury',
     varName: 'connectorMercury',
-    imports: {def: '@usevenice/connector-mercury/def'},
+    imports: {def: '@openint/connector-mercury/def'},
   },
   {
     name: 'merge',
     dirName: 'connector-merge',
     varName: 'connectorMerge',
     imports: {
-      def: '@usevenice/connector-merge/def',
-      client: '@usevenice/connector-merge/client',
-      server: '@usevenice/connector-merge/server',
+      def: '@openint/connector-merge/def',
+      client: '@openint/connector-merge/client',
+      server: '@openint/connector-merge/server',
     },
   },
   {
@@ -138,8 +138,8 @@ module.exports = [
     dirName: 'connector-mongodb',
     varName: 'connectorMongodb',
     imports: {
-      def: '@usevenice/connector-mongodb/def',
-      server: '@usevenice/connector-mongodb/server',
+      def: '@openint/connector-mongodb/def',
+      server: '@openint/connector-mongodb/server',
     },
   },
   {
@@ -147,8 +147,8 @@ module.exports = [
     dirName: 'connector-moota',
     varName: 'connectorMoota',
     imports: {
-      def: '@usevenice/connector-moota/def',
-      server: '@usevenice/connector-moota/server',
+      def: '@openint/connector-moota/def',
+      server: '@openint/connector-moota/server',
     },
   },
   {dirName: 'connector-notion', varName: 'connectorNotion', imports: {}},
@@ -157,9 +157,9 @@ module.exports = [
     dirName: 'connector-onebrick',
     varName: 'connectorOnebrick',
     imports: {
-      def: '@usevenice/connector-onebrick/def',
-      client: '@usevenice/connector-onebrick/client',
-      server: '@usevenice/connector-onebrick/server',
+      def: '@openint/connector-onebrick/def',
+      client: '@openint/connector-onebrick/client',
+      server: '@openint/connector-onebrick/server',
     },
   },
   {
@@ -167,8 +167,8 @@ module.exports = [
     dirName: 'connector-outreach',
     varName: 'connectorOutreach',
     imports: {
-      def: '@usevenice/connector-outreach/def',
-      server: '@usevenice/connector-outreach/server',
+      def: '@openint/connector-outreach/def',
+      server: '@openint/connector-outreach/server',
     },
   },
   {
@@ -176,9 +176,9 @@ module.exports = [
     dirName: 'connector-plaid',
     varName: 'connectorPlaid',
     imports: {
-      def: '@usevenice/connector-plaid/def',
-      client: '@usevenice/connector-plaid/client',
-      server: '@usevenice/connector-plaid/server',
+      def: '@openint/connector-plaid/def',
+      client: '@openint/connector-plaid/client',
+      server: '@openint/connector-plaid/server',
     },
   },
   {
@@ -186,8 +186,8 @@ module.exports = [
     dirName: 'connector-postgres',
     varName: 'connectorPostgres',
     imports: {
-      def: '@usevenice/connector-postgres/def',
-      server: '@usevenice/connector-postgres/server',
+      def: '@openint/connector-postgres/def',
+      server: '@openint/connector-postgres/server',
     },
   },
   {
@@ -195,8 +195,8 @@ module.exports = [
     dirName: 'connector-qbo',
     varName: 'connectorQbo',
     imports: {
-      def: '@usevenice/connector-qbo/def',
-      server: '@usevenice/connector-qbo/server',
+      def: '@openint/connector-qbo/def',
+      server: '@openint/connector-qbo/server',
     },
   },
   {
@@ -204,8 +204,8 @@ module.exports = [
     dirName: 'connector-ramp',
     varName: 'connectorRamp',
     imports: {
-      def: '@usevenice/connector-ramp/def',
-      server: '@usevenice/connector-ramp/server',
+      def: '@openint/connector-ramp/def',
+      server: '@openint/connector-ramp/server',
     },
   },
   {
@@ -213,8 +213,8 @@ module.exports = [
     dirName: 'connector-revert',
     varName: 'connectorRevert',
     imports: {
-      def: '@usevenice/connector-revert/def',
-      server: '@usevenice/connector-revert/server',
+      def: '@openint/connector-revert/def',
+      server: '@openint/connector-revert/server',
     },
   },
   {
@@ -222,8 +222,8 @@ module.exports = [
     dirName: 'connector-salesloft',
     varName: 'connectorSalesloft',
     imports: {
-      def: '@usevenice/connector-salesloft/def',
-      server: '@usevenice/connector-salesloft/server',
+      def: '@openint/connector-salesloft/def',
+      server: '@openint/connector-salesloft/server',
     },
   },
   {
@@ -231,8 +231,8 @@ module.exports = [
     dirName: 'connector-saltedge',
     varName: 'connectorSaltedge',
     imports: {
-      def: '@usevenice/connector-saltedge/def',
-      server: '@usevenice/connector-saltedge/server',
+      def: '@openint/connector-saltedge/def',
+      server: '@openint/connector-saltedge/server',
     },
   },
   {
@@ -240,8 +240,8 @@ module.exports = [
     dirName: 'connector-splitwise',
     varName: 'connectorSplitwise',
     imports: {
-      def: '@usevenice/connector-splitwise/def',
-      server: '@usevenice/connector-splitwise/server',
+      def: '@openint/connector-splitwise/def',
+      server: '@openint/connector-splitwise/server',
     },
   },
   {
@@ -249,8 +249,8 @@ module.exports = [
     dirName: 'connector-spreadsheet',
     varName: 'connectorSpreadsheet',
     imports: {
-      def: '@usevenice/connector-spreadsheet/def',
-      server: '@usevenice/connector-spreadsheet/server',
+      def: '@openint/connector-spreadsheet/def',
+      server: '@openint/connector-spreadsheet/server',
     },
   },
   {
@@ -258,8 +258,8 @@ module.exports = [
     dirName: 'connector-stripe',
     varName: 'connectorStripe',
     imports: {
-      def: '@usevenice/connector-stripe/def',
-      server: '@usevenice/connector-stripe/server',
+      def: '@openint/connector-stripe/def',
+      server: '@openint/connector-stripe/server',
     },
   },
   {
@@ -267,9 +267,9 @@ module.exports = [
     dirName: 'connector-teller',
     varName: 'connectorTeller',
     imports: {
-      def: '@usevenice/connector-teller/def',
-      client: '@usevenice/connector-teller/client',
-      server: '@usevenice/connector-teller/server',
+      def: '@openint/connector-teller/def',
+      client: '@openint/connector-teller/client',
+      server: '@openint/connector-teller/server',
     },
   },
   {
@@ -277,8 +277,8 @@ module.exports = [
     dirName: 'connector-toggl',
     varName: 'connectorToggl',
     imports: {
-      def: '@usevenice/connector-toggl/def',
-      server: '@usevenice/connector-toggl/server',
+      def: '@openint/connector-toggl/def',
+      server: '@openint/connector-toggl/server',
     },
   },
   {
@@ -286,15 +286,15 @@ module.exports = [
     dirName: 'connector-twenty',
     varName: 'connectorTwenty',
     imports: {
-      def: '@usevenice/connector-twenty/def',
-      server: '@usevenice/connector-twenty/server',
+      def: '@openint/connector-twenty/def',
+      server: '@openint/connector-twenty/server',
     },
   },
   {
     name: 'venmo',
     dirName: 'connector-venmo',
     varName: 'connectorVenmo',
-    imports: {def: '@usevenice/connector-venmo/def'},
+    imports: {def: '@openint/connector-venmo/def'},
   },
   {dirName: 'connector-vercel', varName: 'connectorVercel', imports: {}},
   {
@@ -302,8 +302,8 @@ module.exports = [
     dirName: 'connector-webhook',
     varName: 'connectorWebhook',
     imports: {
-      def: '@usevenice/connector-webhook/def',
-      server: '@usevenice/connector-webhook/server',
+      def: '@openint/connector-webhook/def',
+      server: '@openint/connector-webhook/server',
     },
   },
   {
@@ -311,8 +311,8 @@ module.exports = [
     dirName: 'connector-wise',
     varName: 'connectorWise',
     imports: {
-      def: '@usevenice/connector-wise/def',
-      server: '@usevenice/connector-wise/server',
+      def: '@openint/connector-wise/def',
+      server: '@openint/connector-wise/server',
     },
   },
   {
@@ -320,8 +320,8 @@ module.exports = [
     dirName: 'connector-xero',
     varName: 'connectorXero',
     imports: {
-      def: '@usevenice/connector-xero/def',
-      server: '@usevenice/connector-xero/server',
+      def: '@openint/connector-xero/def',
+      server: '@openint/connector-xero/server',
     },
   },
   {
@@ -329,9 +329,9 @@ module.exports = [
     dirName: 'connector-yodlee',
     varName: 'connectorYodlee',
     imports: {
-      def: '@usevenice/connector-yodlee/def',
-      client: '@usevenice/connector-yodlee/client',
-      server: '@usevenice/connector-yodlee/server',
+      def: '@openint/connector-yodlee/def',
+      client: '@openint/connector-yodlee/client',
+      server: '@openint/connector-yodlee/server',
     },
   },
 ]

@@ -1,8 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers, zCcfgAuth} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, z, zCast} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, makePostingsMap, zCcfgAuth} from '@openint/cdk'
+import {A, z, zCast} from '@openint/util'
 import type {components} from './stripe.gen'
 
 export const stripeSchemas = {

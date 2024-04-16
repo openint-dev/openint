@@ -1,8 +1,7 @@
 /** @deprecated. We no longer initialize integration from ENVs, but maybe in clis still? */
-import type {ConnectorSchemas, ConnHelpers} from '@usevenice/cdk'
-import {makeId} from '@usevenice/cdk'
-import {R, z, zEnvVars, zFlattenForEnv} from '@usevenice/util'
-
+import type {ConnectorSchemas, ConnHelpers} from '@openint/cdk'
+import {makeId} from '@openint/cdk'
+import {R, z, zEnvVars, zFlattenForEnv} from '@openint/util'
 import {defConnectors} from './connectors/connectors.def'
 
 /** We would prefer to use `.` but vercel env var name can only be number, letter and underscore... */

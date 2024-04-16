@@ -1,14 +1,14 @@
 {
-  "name": "@usevenice/connector-apollo",
+  "name": "@openint/connector-apollo",
   "version": "0.0.0",
   "private": true,
   "module": "./index.ts",
   "scripts": {},
   "dependencies": {
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*",
     "@opensdks/runtime": "^0.0.16",
-    "@opensdks/sdk-apollo": "^0.0.18",
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@opensdks/sdk-apollo": "^0.0.18"
   },
   "devDependencies": {}
 }

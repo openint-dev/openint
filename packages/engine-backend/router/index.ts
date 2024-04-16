@@ -12,7 +12,7 @@ import {
   qboAdapter,
   salesloftAdapter,
   xeroAdapter,
-} from '@usevenice/cdk/verticals'
+} from '@openint/cdk/verticals'
 import {remoteProcedure, trpc} from './_base'
 import {adminRouter} from './adminRouter'
 import {connectorConfigRouter} from './connectorConfigRouter'

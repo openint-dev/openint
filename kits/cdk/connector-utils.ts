@@ -1,4 +1,4 @@
-import {z} from '@usevenice/zod'
+import {z} from '@openint/zod'
 
 export const _zOauthConfig = z.object({
   clientId: z.string(),

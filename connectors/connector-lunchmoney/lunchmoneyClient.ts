@@ -1,4 +1,4 @@
-import {createHTTPClient, DateTime, z, zCast, zFunction} from '@usevenice/util'
+import {createHTTPClient, DateTime, z, zCast, zFunction} from '@openint/util'
 
 export namespace lunchmoney {
   export type Category = z.infer<typeof categorySchema>

@@ -2,9 +2,9 @@
  * For documentation, @see https://docs.mercury.com/reference/accounts
  * https://share.cleanshot.com/QjmQTFf9
  */
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers, zCcfgAuth} from '@usevenice/cdk'
-import {z} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, zCcfgAuth} from '@openint/cdk'
+import {z} from '@openint/util'
 
 export const mercurySchemas = {
   name: z.literal('mercury'),

@@ -3,7 +3,7 @@
 import type {UseMutationResult} from '@tanstack/react-query'
 import {Loader2} from 'lucide-react'
 import React from 'react'
-import type {z} from '@usevenice/util'
+import type {z} from '@openint/util'
 import {
   Button,
   Sheet,

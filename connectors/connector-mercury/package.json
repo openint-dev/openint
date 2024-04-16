@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connector-mercury",
+  "name": "@openint/connector-mercury",
   "version": "0.0.0",
   "private": true,
   "sideEffects": [],
@@ -8,8 +8,8 @@
     "codegen": "openapi-typescript https://dash.readme.com/api/v1/api-registry/5pyq7alhaqulga --output ./lib/mercury.gen.ts"
   },
   "dependencies": {
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*"
   },
   "devDependencies": {
     "openapi-typescript": "6.7.1"

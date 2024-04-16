@@ -14,18 +14,17 @@ import type {ReadonlyRequestCookies} from 'next/dist/server/web/spec-extension/a
 import {NextResponse} from 'next/server'
 import superjson from 'superjson'
 import type {SuperJSONResult} from 'superjson/dist/types'
-
-import {backendEnv, contextFactory} from '@usevenice/app-config/backendConfig'
+import {backendEnv, contextFactory} from '@openint/app-config/backendConfig'
 import {
   kAccessToken,
   kApikeyHeader,
   kApikeyMetadata,
   kApikeyUrlParam,
-} from '@usevenice/app-config/constants'
-import type {Id, UserId, Viewer} from '@usevenice/cdk'
-import {makeJwtClient} from '@usevenice/cdk'
-import {flatRouter} from '@usevenice/engine-backend'
-import {fromMaybeArray} from '@usevenice/util'
+} from '@openint/app-config/constants'
+import type {Id, UserId, Viewer} from '@openint/cdk'
+import {makeJwtClient} from '@openint/cdk'
+import {flatRouter} from '@openint/engine-backend'
+import {fromMaybeArray} from '@openint/util'
 
 export interface PageProps {
   dehydratedState?: SuperJSONResult // SuperJSONResult<import('@tanstack/react-query').DehydratedState>
@@ -64,7 +63,7 @@ export function serverSideHelpersFromViewer(viewer: Viewer) {
 
 export async function createSSRHelpers(context: NextContext) {
   // TODO: Remove this once we fully migrate off next.js 12 routing
-  await import('@usevenice/app-config/register.node')
+  await import('@openint/app-config/register.node')
 
   const viewer = await serverGetViewer(context)
   const {ssg, ctx, queryClient, caller} = serverSideHelpersFromViewer(viewer)
@@ -109,10 +108,10 @@ export async function serverGetViewer(
     ('query' in context
       ? context.query
       : 'req' in context
-      ? context.req.query
-      : context.searchParams instanceof URLSearchParams
-      ? Object.fromEntries(context.searchParams.entries())
-      : context.searchParams) ?? {}
+        ? context.req.query
+        : context.searchParams instanceof URLSearchParams
+          ? Object.fromEntries(context.searchParams.entries())
+          : context.searchParams) ?? {}
 
   // console.log('headers', headers)
   // console.log('searchParams', searchParams)
@@ -142,8 +141,8 @@ export async function serverGetViewer(
     const res = id.startsWith('user_')
       ? await clerkClient.users.getUser(id)
       : id.startsWith('org_')
-      ? await clerkClient.organizations.getOrganization({organizationId: id})
-      : null
+        ? await clerkClient.organizations.getOrganization({organizationId: id})
+        : null
 
     // console.log('apikey', {apiKey: apikey, id, key, res})
 

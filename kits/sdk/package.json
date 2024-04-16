@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/sdk",
+  "name": "@openint/sdk",
   "version": "0.0.11",
   "private": false,
   "sideEffects": false,
@@ -14,7 +14,7 @@
     "pub": "pnpm publish --no-git-checks --access public"
   },
   "dependencies": {
-    "@usevenice/openapi-client": "workspace:*",
+    "@openint/openapi-client": "workspace:*",
     "openapi3-ts": "4.1.2",
     "tsx": "3.12.2"
   },

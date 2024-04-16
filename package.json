@@ -30,10 +30,12 @@
     "**/*.{js,ts,tsx}": "eslint --ext .js,.ts,.tsx --cache --fix"
   },
   "dependencies": {
-    "@usevenice/cli": "workspace:*"
+    "@openint/cli": "workspace:*"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "@openint/sdk": "workspace:*",
+    "@openint/util": "workspace:*",
     "@roarr/cli": "5.7.0",
     "@tsconfig/strictest": "1.0.2",
     "@types/jest": "29.5.10",
@@ -41,8 +43,6 @@
     "@types/prettier": "3.0.0",
     "@typescript-eslint/eslint-plugin": "5.57.1",
     "@typescript-eslint/parser": "5.57.1",
-    "@usevenice/sdk": "workspace:*",
-    "@usevenice/util": "workspace:*",
     "esbuild": "0.17.5",
     "esbuild-jest": "0.5.0",
     "eslint": "8.23.0",

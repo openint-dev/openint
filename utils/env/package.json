@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/env",
+  "name": "@openint/env",
   "version": "0.0.0",
   "private": false,
   "sideEffects": false,
@@ -9,8 +9,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@t3-oss/env-core": "0.7.1",
-    "@usevenice/zod": "workspace:*"
+    "@openint/zod": "workspace:*",
+    "@t3-oss/env-core": "0.7.1"
   },
   "devDependencies": {}
 }

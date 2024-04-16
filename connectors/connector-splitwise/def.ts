@@ -1,7 +1,5 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import type {Pta} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
+import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
+import {connHelpers, makePostingsMap} from '@openint/cdk'
 import {
   A,
   DateTime,
@@ -10,8 +8,7 @@ import {
   objectFromArray,
   parseMoney,
   z,
-} from '@usevenice/util'
-
+} from '@openint/util'
 import type {zUser} from './splitwise-schema'
 import {zCurrentUser, zExpense, zGroup} from './splitwise-schema'
 
@@ -67,12 +64,10 @@ export const splitwiseDef = {
         }
 
         if (t.payment) {
-          const from = t.users.find(
-            (u) => u.user.id === t.repayments[0]?.from,
-          )?.user
-          const to = t.users.find(
-            (u) => u.user.id === t.repayments[0]?.to,
-          )?.user
+          const from = t.users.find((u) => u.user.id === t.repayments[0]?.from)
+            ?.user
+          const to = t.users.find((u) => u.user.id === t.repayments[0]?.to)
+            ?.user
           return {
             id: `${t.id}`,
             entityName: 'transaction',

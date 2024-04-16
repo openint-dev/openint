@@ -1,15 +1,12 @@
-import '@usevenice/app-config/register.node'
-
-import * as trpcNext from '@trpc/server/adapters/next'
+import '@openint/app-config/register.node'
 import type {TRPCError} from '@trpc/server'
+import * as trpcNext from '@trpc/server/adapters/next'
 import type {NextApiHandler} from 'next'
-
-import {contextFactory} from '@usevenice/app-config/backendConfig'
-import type {Id} from '@usevenice/cdk'
-import type {RouterContext} from '@usevenice/engine-backend'
-import {parseWebhookRequest} from '@usevenice/engine-backend'
-import {fromMaybeArray, HTTPError} from '@usevenice/util'
-
+import {contextFactory} from '@openint/app-config/backendConfig'
+import type {Id} from '@openint/cdk'
+import type {RouterContext} from '@openint/engine-backend'
+import {parseWebhookRequest} from '@openint/engine-backend'
+import {fromMaybeArray, HTTPError} from '@openint/util'
 import {appRouter} from '@/lib-server/appRouter'
 import {respondToCORS, serverGetViewer} from '@/lib-server/server-helpers'
 

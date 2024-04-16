@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import {initTRPC} from '@trpc/server'
-import type {AnyConnectorImpl, AnyEntityPayload} from '@usevenice/cdk'
-import {
-  fromMaybePromise,
-  R,
-  Rx,
-  rxjs,
-  z,
-  zodToJsonSchema,
-} from '@usevenice/util'
+import type {AnyConnectorImpl, AnyEntityPayload} from '@openint/cdk'
+import {fromMaybePromise, R, Rx, rxjs, z, zodToJsonSchema} from '@openint/util'
 import type {ABMessage, ABMessageStream} from './protocol/protocol'
 import {abMessage} from './protocol/protocol'
 import type {AirbyteStream} from './protocol/protocol.gen'

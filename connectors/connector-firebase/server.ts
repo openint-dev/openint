@@ -1,7 +1,6 @@
 import firebase from 'firebase/compat/app'
-
-import type {ConnectorServer, Link, SyncOperation} from '@usevenice/cdk'
-import {handlersLink, mergeReady} from '@usevenice/cdk'
+import type {ConnectorServer, Link, SyncOperation} from '@openint/cdk'
+import {handlersLink, mergeReady} from '@openint/cdk'
 import {
   defineProxyFn,
   fromCompletion,
@@ -13,8 +12,7 @@ import {
   tapTeartown,
   z,
   zFunction,
-} from '@usevenice/util'
-
+} from '@openint/util'
 import type {firebaseSchemas} from './def'
 import {zSettings} from './def'
 import type {AnyQuery} from './firebase-types'

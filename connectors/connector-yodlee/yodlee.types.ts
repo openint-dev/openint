@@ -1,4 +1,4 @@
-import {z, zCast} from '@usevenice/util'
+import {z, zCast} from '@openint/util'
 import type {components} from './yodlee.oas'
 
 // TODO: Deprecate most of me and use the types generated from openAPI

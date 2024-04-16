@@ -1,7 +1,7 @@
-import '@usevenice/app-config/register.node'
+import '@openint/app-config/register.node'
 import type {NextApiHandler} from 'next'
-import {inngest} from '@usevenice/engine-backend'
-import {fromMaybeArray, makeUlid} from '@usevenice/util'
+import {inngest} from '@openint/engine-backend'
+import {fromMaybeArray, makeUlid} from '@openint/util'
 
 export default (async (req, res) => {
   const {webhook, ...query} = req.query

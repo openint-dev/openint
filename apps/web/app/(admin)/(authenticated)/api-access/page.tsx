@@ -1,8 +1,6 @@
 import Link from 'next/link'
-
-import {kApikeyHeader, kApikeyUrlParam} from '@usevenice/app-config/constants'
-import {Input, Label} from '@usevenice/ui/shadcn'
-
+import {kApikeyHeader, kApikeyUrlParam} from '@openint/app-config/constants'
+import {Input, Label} from '@openint/ui/shadcn'
 import {cn} from '@/lib-client/ui-utils'
 import {getOrCreateApikey} from '@/lib-server'
 import {serverComponentGetViewer} from '@/lib-server/server-component-helpers'

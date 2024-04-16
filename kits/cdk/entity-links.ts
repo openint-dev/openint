@@ -1,4 +1,4 @@
-import type {AmountMap, WritableDraft} from '@usevenice/util'
+import type {AmountMap, WritableDraft} from '@openint/util'
 import {
   A,
   AM,
@@ -10,8 +10,8 @@ import {
   rxjs,
   setDefault,
   zFunction,
-} from '@usevenice/util'
-import {z} from '@usevenice/zod'
+} from '@openint/util'
+import {z} from '@openint/zod'
 import {handlersLink, transformLink} from './base-links'
 import type {ConnectorDef, EntityMapper} from './connector.types'
 import type {Id} from './id.types'

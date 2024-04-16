@@ -1,7 +1,7 @@
 /** TODO: Move this into @opensdks */
-import type {Endpoints, InfoFromEndpoints} from '@usevenice/util'
-import {makeOpenApiClient} from '@usevenice/util'
-import {z} from '@usevenice/zod'
+import type {Endpoints, InfoFromEndpoints} from '@openint/util'
+import {makeOpenApiClient} from '@openint/util'
+import {z} from '@openint/zod'
 
 const zNangoProvider = z.enum([
   'accelo',

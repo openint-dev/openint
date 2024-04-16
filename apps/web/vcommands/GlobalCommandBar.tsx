@@ -2,12 +2,9 @@ import {init as initCommandBar} from 'commandbar'
 import {useTheme} from 'next-themes'
 import {useRouter} from 'next/navigation'
 import React from 'react'
-
-import {env} from '@usevenice/app-config/env'
-import {prepareCommands} from '@usevenice/ui/command/command-fns'
-
+import {env} from '@openint/app-config/env'
+import {prepareCommands} from '@openint/ui/command/command-fns'
 import {vDefinitions} from '@/vcommands/vcommand-definitions'
-
 import {useViewerContext} from '../components/viewer-context'
 
 export function GlobalCommandBar() {

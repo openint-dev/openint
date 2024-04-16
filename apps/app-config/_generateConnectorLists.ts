@@ -6,8 +6,8 @@
 import * as fs from 'node:fs'
 import {join as pathJoin} from 'node:path'
 import prettier from 'prettier'
-import type {ConnectorDef} from '@usevenice/cdk'
-import {camelCase} from '@usevenice/util/string-utils'
+import type {ConnectorDef} from '@openint/cdk'
+import {camelCase} from '@openint/util/string-utils'
 import prettierConfig from '../../prettier.config'
 
 async function writePretty(filename: string, content: string, pretty = true) {
@@ -36,7 +36,7 @@ const connectorList = fs
       ? // TODO: Automate generation of package.json is still needed, otherwise does not work for new packages
         // @see https://share.cleanshot.com/wDmqwsHS
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        (require(`@usevenice/${d.name}/def`).default as ConnectorDef)
+        (require(`@openint/${d.name}/def`).default as ConnectorDef)
       : undefined
     // we do some validation also
 
@@ -49,13 +49,13 @@ const connectorList = fs
       varName: camelCase(d.name),
       imports: {
         def: fs.existsSync(pathJoin(path, 'def.ts'))
-          ? `@usevenice/${d.name}/def`
+          ? `@openint/${d.name}/def`
           : undefined,
         client: fs.existsSync(pathJoin(path, 'client.ts'))
-          ? `@usevenice/${d.name}/client`
+          ? `@openint/${d.name}/client`
           : undefined,
         server: fs.existsSync(pathJoin(path, 'server.ts'))
-          ? `@usevenice/${d.name}/server`
+          ? `@openint/${d.name}/server`
           : undefined,
       },
     }

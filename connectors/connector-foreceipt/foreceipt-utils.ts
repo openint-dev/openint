@@ -1,4 +1,4 @@
-import {objectFromArray} from '@usevenice/util'
+import {objectFromArray} from '@openint/util'
 
 export const _parseAccounts = (
   connData: {_id: string},

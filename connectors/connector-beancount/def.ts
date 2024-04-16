@@ -1,7 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {zEntityPayload} from '@usevenice/cdk'
-import {isAmountUnit, z} from '@usevenice/util'
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, zEntityPayload} from '@openint/cdk'
+import {isAmountUnit, z} from '@openint/util'
 
 export type BeancountDestOptions = z.infer<typeof zBeancountDestOptions>
 export const zBeancountDestOptions = z.object({

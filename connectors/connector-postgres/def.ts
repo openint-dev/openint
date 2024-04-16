@@ -2,9 +2,9 @@ import type {
   ConnectorDef,
   ConnectorSchemas,
   EntityPayloadWithRaw,
-} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {z, zCast} from '@usevenice/util'
+} from '@openint/cdk'
+import {connHelpers} from '@openint/cdk'
+import {z, zCast} from '@openint/util'
 
 export const zPgConfig = z.object({
   databaseUrl: z.string(),

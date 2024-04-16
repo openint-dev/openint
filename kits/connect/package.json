@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/connect",
+  "name": "@openint/connect",
   "version": "0.1.11",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -10,7 +10,7 @@
     "pub": "pnpm publish --no-git-checks"
   },
   "dependencies": {
-    "@usevenice/sdk": "workspace:*",
+    "@openint/sdk": "workspace:*",
     "zod": "3.22.4"
   },
   "devDependencies": {

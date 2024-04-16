@@ -1,5 +1,5 @@
 {
-  "name": "@usevenice/docs",
+  "name": "@openint/docs",
   "scripts": {
     "generate": "pnpm run generate:api-pages && pnpm run generate:mint",
     "generate:api-pages": "rm -rf api-reference && mkdir -p api-reference && mintlify-scrape openapi-file -o api-reference ./venice.oas.json | tail -n +2 > ./api-reference/index.json",
@@ -7,12 +7,12 @@
   },
   "devDependencies": {
     "@mintlify/scraping": "^3.0.64",
+    "@openint/sdk": "workspace:*",
     "@opensdks/runtime": "^0.0.16",
     "@opensdks/sdk-discord": "^0.0.14",
     "@opensdks/sdk-openai": "^0.0.14",
     "@opensdks/sdk-slack": "^0.0.14",
     "@opensdks/sdk-venice": "^0.0.14",
-    "@usevenice/sdk": "workspace:*",
     "mintlify": "4.0.59"
   }
 }

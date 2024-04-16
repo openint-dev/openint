@@ -1,13 +1,13 @@
 {
-  "name": "@usevenice/connector-discord",
+  "name": "@openint/connector-discord",
   "version": "0.0.0",
   "private": true,
   "module": "./index.ts",
   "scripts": {},
   "dependencies": {
-    "@opensdks/sdk-discord": "^0.0.14",
-    "@usevenice/cdk": "workspace:*",
-    "@usevenice/util": "workspace:*"
+    "@openint/cdk": "workspace:*",
+    "@openint/util": "workspace:*",
+    "@opensdks/sdk-discord": "^0.0.14"
   },
   "devDependencies": {}
 }

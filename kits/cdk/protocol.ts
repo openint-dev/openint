@@ -3,8 +3,8 @@ import type {
   NonDiscriminatedUnion,
   ObjectPartialDeep,
   rxjs,
-} from '@usevenice/util'
-import {z} from '@usevenice/zod'
+} from '@openint/util'
+import {z} from '@openint/zod'
 import type {ExternalId, Id} from './id.types'
 
 /**

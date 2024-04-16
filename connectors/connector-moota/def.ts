@@ -1,8 +1,6 @@
-import type {ConnectorDef, ConnectorSchemas} from '@usevenice/cdk'
-import {connHelpers} from '@usevenice/cdk'
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, objectFromArray, z, zCast} from '@usevenice/util'
-
+import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import {connHelpers, makePostingsMap} from '@openint/cdk'
+import {A, objectFromArray, z, zCast} from '@openint/util'
 import {zConfig} from './mootaClient'
 
 export const mootaSchemas = {

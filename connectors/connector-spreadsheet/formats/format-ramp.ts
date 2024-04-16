@@ -1,8 +1,6 @@
 import Papa from 'papaparse'
-
-import {makePostingsMap} from '@usevenice/cdk'
-import {A, DateTime, leftPad, parseMoney, R, zCast} from '@usevenice/util'
-
+import {makePostingsMap} from '@openint/cdk'
+import {A, DateTime, leftPad, parseMoney, R, zCast} from '@openint/util'
 import {makeImportFormat} from '../makeImportFormat'
 
 // prettier-ignore

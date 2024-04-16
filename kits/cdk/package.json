@@ -1,14 +1,14 @@
 {
-  "name": "@usevenice/cdk",
+  "name": "@openint/cdk",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
   "module": "./index.ts",
   "dependencies": {
+    "@openint/util": "workspace:*",
+    "@openint/zod": "workspace:*",
     "@opensdks/runtime": "^0.0.16",
     "@trpc/server": "10.40.0",
-    "@usevenice/util": "workspace:*",
-    "@usevenice/zod": "workspace:*",
     "jsonwebtoken": "9.0.0",
     "react-script-hook": "1.7.2"
   },
