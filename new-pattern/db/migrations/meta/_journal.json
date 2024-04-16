@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709314808854,
+      "tag": "0000_safe_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1709321295199,
+      "tag": "0001_fast_sprite",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709323471846,
+      "tag": "0002_naive_roulette",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1709328600901,
+      "tag": "0003_bright_fallen_one",
+      "breakpoints": true
+    }
+  ]
+}

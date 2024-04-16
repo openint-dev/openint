@@ -1381,8 +1381,8 @@ importers:
         specifier: 10.40.0
         version: 10.40.0
       remeda:
-        specifier: 1.6.1
-        version: 1.6.1
+        specifier: ^1.46.0
+        version: 1.59.0
 
   kits/vdk2:
     dependencies:
@@ -1778,8 +1778,8 @@ importers:
         specifier: 7.1.1
         version: 7.1.1
       remeda:
-        specifier: 1.6.1
-        version: 1.6.1
+        specifier: ^1.46.0
+        version: 1.59.0
       rxjs:
         specifier: 7.5.6
         version: 7.5.6
@@ -18998,10 +18998,6 @@ packages:
 
   /remeda@1.59.0:
     resolution: {integrity: sha512-yqIz7z+eriLF6ll4TxhUM56b2wIrmHgJNbzRGYqfJ0Jx6QOioSvGJuT9jD6MqtKzGUizaxSlJZXTVYjVSC4Qig==}
-    dev: false
-
-  /remeda@1.6.1:
-    resolution: {integrity: sha512-ywn4Tv2cPBj6hk0TEYMHusWVXu72yJNCaWUdMK7kc7x/PjQPBSvtMbmBWP4PQH791kpl3rPBe3ZVkJyPj3c+0g==}
     dev: false
 
   /remove-accents@0.4.2:

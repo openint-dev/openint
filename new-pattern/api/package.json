@@ -1,0 +1,24 @@
+{
+  "name": "@openint/api",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "module": "./index.ts",
+  "scripts": {
+    "gen": "run-s gen:*",
+    "gen:oas": "npx tsx ./appRouter.ts > ./client/openapi.json",
+    "gen:types": "npx @opensdks/cli --meta-dir ./client/ --types-dir ./client/ ./client/openapi.json"
+  },
+  "dependencies": {
+    "@lilyrose2798/trpc-openapi": "1.3.10",
+    "@opensdks/util-zod": "0.0.15",
+    "@openint/events": "workspace:*",
+    "@openint/mgmt": "workspace:*",
+    "@openint/env": "workspace:*",
+    "@openint/vdk2": "workspace:*",
+    "@openint/vertical-crm": "workspace:*",
+    "@openint/vertical-sales-engagement": "workspace:*",
+    "remeda": "^1.46.0"
+  },
+  "devDependencies": {}
+}
