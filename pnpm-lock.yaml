@@ -1478,6 +1478,12 @@ importers:
       drizzle-kit:
         specifier: ^0.20.12
         version: 0.20.14
+      prettier:
+        specifier: 3.1.0
+        version: 3.1.0
+      prettier-plugin-sql:
+        specifier: 0.16.0
+        version: 0.16.0(prettier@3.1.0)
 
   new-pattern/env:
     dependencies:
