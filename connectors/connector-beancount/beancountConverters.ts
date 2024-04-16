@@ -1,4 +1,3 @@
-/// <reference path="./beancount.d.ts"/>
 import type {Pta} from '@openint/cdk'
 import {
   formatAccountType,

@@ -267,7 +267,7 @@ export const salesforceProviderJsForce = {
       // Update permission
       const existingFieldPermission = existingFieldPermissions[0]
       const result = await sfdc.update('FieldPermissions', {
-        Id: existingFieldPermission?.Id!,
+        Id: existingFieldPermission!.Id!,
         ParentId: permissionSetId,
         SobjectType: sourceObject,
         Field: `${sourceObject}.${keyName}`,

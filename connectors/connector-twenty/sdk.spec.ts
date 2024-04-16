@@ -24,7 +24,8 @@ maybeTest('CRUD company', async () => {
 
   const update = await twenty.core.PUT('/companies/{id}', {
     body: {domainName: 'test2.com'},
-    params: {path: {id: company?.id!}},
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    params: {path: {id: company!.id!}},
   })
   expect(update.data.data?.['updateCompany' as 'company']?.domainName).toEqual(
     'test2.com',
@@ -32,14 +33,14 @@ maybeTest('CRUD company', async () => {
 
   const get = await twenty.core.GET('/companies/{id}', {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    params: {path: {id: company?.id!}},
+    params: {path: {id: company!.id!}},
   })
 
   expect(get.data.data?.company?.name).toBe('test company')
 
   const del = await twenty.core.DELETE('/companies/{id}', {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    params: {path: {id: company?.id!}},
+    params: {path: {id: company!.id!}},
   })
   expect(del.data.data?.['deleteCompany' as 'company']?.id).toEqual(company?.id)
 

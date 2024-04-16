@@ -1,20 +1,18 @@
 import {createHTTPClient, DateTime, z, zCast, zFunction} from '@openint/util'
 
-export namespace lunchmoney {
-  export type Category = z.infer<typeof categorySchema>
-  export type Asset = z.infer<typeof assetSchema>
-  export type Transaction = z.infer<typeof transactionSchema>
-  export interface GetTransactionsParams {
-    start_date?: ISODate
-    end_date?: ISODate
-    debit_as_negative?: boolean
-    limit?: number
-    offset?: number
-  }
+export type Category = z.infer<typeof categorySchema>
+export type Asset = z.infer<typeof assetSchema>
+export type Transaction = z.infer<typeof transactionSchema>
+export interface GetTransactionsParams {
+  start_date?: ISODate
+  end_date?: ISODate
+  debit_as_negative?: boolean
+  limit?: number
+  offset?: number
+}
 
-  export interface ClientConfig {
-    accessToken: string
-  }
+export interface ClientConfig {
+  accessToken: string
 }
 
 export const zConfig = z.object({
@@ -135,19 +133,13 @@ export const makeLunchmoneyClient = zFunction(zConfig, ({accessToken}) => {
     },
   })
 
-  const getTransactions = zFunction(
-    zCast<lunchmoney.GetTransactionsParams>(),
-    (params) =>
-      http
-        .get<{transactions: unknown[]}>('transactions', {params})
-        .then((r) =>
-          r.data.transactions.map((t) => transactionSchema.parse(t)),
-        ),
+  const getTransactions = zFunction(zCast<GetTransactionsParams>(), (params) =>
+    http
+      .get<{transactions: unknown[]}>('transactions', {params})
+      .then((r) => r.data.transactions.map((t) => transactionSchema.parse(t))),
   )
 
-  async function* iterateAllTransactions(
-    params: lunchmoney.GetTransactionsParams,
-  ) {
+  async function* iterateAllTransactions(params: GetTransactionsParams) {
     const today = DateTime.local()
     const {
       start_date = today.minus({year: 10}).toISODate(),

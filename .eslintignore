@@ -17,6 +17,7 @@
 *.snap
 
 # next.js
+/apps/gondola/.next/
 /apps/web/.next/
 /apps/web/out/
 
