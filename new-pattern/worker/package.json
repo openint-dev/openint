@@ -1,0 +1,22 @@
+{
+  "name": "@openint/worker",
+  "version": "0.0.0",
+  "private": true,
+  "module": "./index.ts",
+  "scripts": {},
+  "dependencies": {
+    "@opensdks/sdk-supaglue": "0.0.3",
+    "@openint/api": "workspace:*",
+    "@openint/db": "workspace:*",
+    "@openint/env": "workspace:*",
+    "@openint/events": "workspace:*",
+    "@openint/sdk2": "workspace:*",
+    "drizzle-orm": "^0.29.3",
+    "inngest": "^3.12.0",
+    "postgres": "^3.4.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.12"
+  }
+}

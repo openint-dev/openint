@@ -29,7 +29,7 @@ export const email_address_type = z
 
 export const email_address = z
   .object({
-    /** @example hello@supaglue.com */
+    /** @example hello@openint.com */
     email_address: z.string(),
 
     email_address_type,
