@@ -10,17 +10,20 @@ import {default as connectorFirebase} from '@openint/connector-firebase/server'
 import {default as connectorForeceipt} from '@openint/connector-foreceipt/server'
 import {default as connectorFs} from '@openint/connector-fs/server'
 import {default as connectorHeron} from '@openint/connector-heron/server'
+import {default as connectorHubspot} from '@openint/connector-hubspot/server'
 import {default as connectorLunchmoney} from '@openint/connector-lunchmoney/server'
 import {default as connectorMerge} from '@openint/connector-merge/server'
 import {default as connectorMongodb} from '@openint/connector-mongodb/server'
 import {default as connectorMoota} from '@openint/connector-moota/server'
 import {default as connectorOnebrick} from '@openint/connector-onebrick/server'
 import {default as connectorOutreach} from '@openint/connector-outreach/server'
+import {default as connectorPipedrive} from '@openint/connector-pipedrive/server'
 import {default as connectorPlaid} from '@openint/connector-plaid/server'
 import {default as connectorPostgres} from '@openint/connector-postgres/server'
 import {default as connectorQbo} from '@openint/connector-qbo/server'
 import {default as connectorRamp} from '@openint/connector-ramp/server'
 import {default as connectorRevert} from '@openint/connector-revert/server'
+import {default as connectorSalesforce} from '@openint/connector-salesforce/server'
 import {default as connectorSalesloft} from '@openint/connector-salesloft/server'
 import {default as connectorSaltedge} from '@openint/connector-saltedge/server'
 import {default as connectorSplitwise} from '@openint/connector-splitwise/server'
@@ -46,17 +49,20 @@ export const serverConnectors = {
   foreceipt: connectorForeceipt,
   fs: connectorFs,
   heron: connectorHeron,
+  hubspot: connectorHubspot,
   lunchmoney: connectorLunchmoney,
   merge: connectorMerge,
   mongodb: connectorMongodb,
   moota: connectorMoota,
   onebrick: connectorOnebrick,
   outreach: connectorOutreach,
+  pipedrive: connectorPipedrive,
   plaid: connectorPlaid,
   postgres: connectorPostgres,
   qbo: connectorQbo,
   ramp: connectorRamp,
   revert: connectorRevert,
+  salesforce: connectorSalesforce,
   salesloft: connectorSalesloft,
   saltedge: connectorSaltedge,
   splitwise: connectorSplitwise,

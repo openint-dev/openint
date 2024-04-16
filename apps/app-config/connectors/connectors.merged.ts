@@ -21,6 +21,8 @@ import {default as connectorFs_def} from '@openint/connector-fs/def'
 import {default as connectorFs_server} from '@openint/connector-fs/server'
 import {default as connectorHeron_def} from '@openint/connector-heron/def'
 import {default as connectorHeron_server} from '@openint/connector-heron/server'
+import {default as connectorHubspot_def} from '@openint/connector-hubspot/def'
+import {default as connectorHubspot_server} from '@openint/connector-hubspot/server'
 import {default as connectorLunchmoney_def} from '@openint/connector-lunchmoney/def'
 import {default as connectorLunchmoney_server} from '@openint/connector-lunchmoney/server'
 import {default as connectorMercury_def} from '@openint/connector-mercury/def'
@@ -34,6 +36,8 @@ import {default as connectorOnebrick_def} from '@openint/connector-onebrick/def'
 import {default as connectorOnebrick_server} from '@openint/connector-onebrick/server'
 import {default as connectorOutreach_def} from '@openint/connector-outreach/def'
 import {default as connectorOutreach_server} from '@openint/connector-outreach/server'
+import {default as connectorPipedrive_def} from '@openint/connector-pipedrive/def'
+import {default as connectorPipedrive_server} from '@openint/connector-pipedrive/server'
 import {default as connectorPlaid_def} from '@openint/connector-plaid/def'
 import {default as connectorPlaid_server} from '@openint/connector-plaid/server'
 import {default as connectorPostgres_def} from '@openint/connector-postgres/def'
@@ -44,6 +48,8 @@ import {default as connectorRamp_def} from '@openint/connector-ramp/def'
 import {default as connectorRamp_server} from '@openint/connector-ramp/server'
 import {default as connectorRevert_def} from '@openint/connector-revert/def'
 import {default as connectorRevert_server} from '@openint/connector-revert/server'
+import {default as connectorSalesforce_def} from '@openint/connector-salesforce/def'
+import {default as connectorSalesforce_server} from '@openint/connector-salesforce/server'
 import {default as connectorSalesloft_def} from '@openint/connector-salesloft/def'
 import {default as connectorSalesloft_server} from '@openint/connector-salesloft/server'
 import {default as connectorSaltedge_def} from '@openint/connector-saltedge/def'
@@ -125,6 +131,11 @@ const connectorHeron = {
   ...connectorHeron_server,
 }
 
+const connectorHubspot = {
+  ...connectorHubspot_def,
+  ...connectorHubspot_server,
+}
+
 const connectorLunchmoney = {
   ...connectorLunchmoney_def,
   ...connectorLunchmoney_server,
@@ -159,6 +170,11 @@ const connectorOutreach = {
   ...connectorOutreach_server,
 }
 
+const connectorPipedrive = {
+  ...connectorPipedrive_def,
+  ...connectorPipedrive_server,
+}
+
 const connectorPlaid = {
   ...connectorPlaid_def,
   ...connectorPlaid_server,
@@ -182,6 +198,11 @@ const connectorRamp = {
 const connectorRevert = {
   ...connectorRevert_def,
   ...connectorRevert_server,
+}
+
+const connectorSalesforce = {
+  ...connectorSalesforce_def,
+  ...connectorSalesforce_server,
 }
 
 const connectorSalesloft = {
@@ -260,6 +281,7 @@ export const mergedConnectors = {
   foreceipt: connectorForeceipt,
   fs: connectorFs,
   heron: connectorHeron,
+  hubspot: connectorHubspot,
   lunchmoney: connectorLunchmoney,
   mercury: connectorMercury,
   merge: connectorMerge,
@@ -267,11 +289,13 @@ export const mergedConnectors = {
   moota: connectorMoota,
   onebrick: connectorOnebrick,
   outreach: connectorOutreach,
+  pipedrive: connectorPipedrive,
   plaid: connectorPlaid,
   postgres: connectorPostgres,
   qbo: connectorQbo,
   ramp: connectorRamp,
   revert: connectorRevert,
+  salesforce: connectorSalesforce,
   salesloft: connectorSalesloft,
   saltedge: connectorSaltedge,
   splitwise: connectorSplitwise,

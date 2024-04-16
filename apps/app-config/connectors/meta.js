@@ -109,6 +109,15 @@ module.exports = [
     },
   },
   {
+    name: 'hubspot',
+    dirName: 'connector-hubspot',
+    varName: 'connectorHubspot',
+    imports: {
+      def: '@openint/connector-hubspot/def',
+      server: '@openint/connector-hubspot/server',
+    },
+  },
+  {
     name: 'lunchmoney',
     dirName: 'connector-lunchmoney',
     varName: 'connectorLunchmoney',
@@ -172,6 +181,15 @@ module.exports = [
     },
   },
   {
+    name: 'pipedrive',
+    dirName: 'connector-pipedrive',
+    varName: 'connectorPipedrive',
+    imports: {
+      def: '@openint/connector-pipedrive/def',
+      server: '@openint/connector-pipedrive/server',
+    },
+  },
+  {
     name: 'plaid',
     dirName: 'connector-plaid',
     varName: 'connectorPlaid',
@@ -215,6 +233,15 @@ module.exports = [
     imports: {
       def: '@openint/connector-revert/def',
       server: '@openint/connector-revert/server',
+    },
+  },
+  {
+    name: 'salesforce',
+    dirName: 'connector-salesforce',
+    varName: 'connectorSalesforce',
+    imports: {
+      def: '@openint/connector-salesforce/def',
+      server: '@openint/connector-salesforce/server',
     },
   },
   {

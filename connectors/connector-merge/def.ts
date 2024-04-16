@@ -57,7 +57,7 @@ export const mergeDef = {
     displayName: 'merge.dev',
     stage: 'beta',
     logoSvg: mergeLogoSvg,
-    categories: ['accounting', 'commerce'],
+    categories: ['accounting', 'commerce', 'crm', 'ats'],
   },
 
   standardMappers: {

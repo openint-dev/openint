@@ -216,6 +216,9 @@ importers:
       '@openint/connector-heron':
         specifier: workspace:*
         version: link:../../connectors/connector-heron
+      '@openint/connector-hubspot':
+        specifier: workspace:*
+        version: link:../../connectors/connector-hubspot
       '@openint/connector-lunchmoney':
         specifier: workspace:*
         version: link:../../connectors/connector-lunchmoney
@@ -240,6 +243,9 @@ importers:
       '@openint/connector-outreach':
         specifier: workspace:*
         version: link:../../connectors/connector-outreach
+      '@openint/connector-pipedrive':
+        specifier: workspace:*
+        version: link:../../connectors/connector-pipedrive
       '@openint/connector-plaid':
         specifier: workspace:*
         version: link:../../connectors/connector-plaid
@@ -255,6 +261,9 @@ importers:
       '@openint/connector-revert':
         specifier: workspace:*
         version: link:../../connectors/connector-revert
+      '@openint/connector-salesforce':
+        specifier: workspace:*
+        version: link:../../connectors/connector-salesforce
       '@openint/connector-salesloft':
         specifier: workspace:*
         version: link:../../connectors/connector-salesloft
@@ -868,6 +877,21 @@ importers:
         specifier: 6.7.1
         version: 6.7.1
 
+  connectors/connector-hubspot:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/runtime':
+        specifier: ^0.0.16
+        version: 0.0.16
+      '@opensdks/sdk-hubspot':
+        specifier: 0.0.6
+        version: 0.0.6
+
   connectors/connector-lunchmoney:
     dependencies:
       '@openint/cdk':
@@ -972,6 +996,21 @@ importers:
       '@opensdks/sdk-outreach':
         specifier: 0.0.15
         version: 0.0.15
+
+  connectors/connector-pipedrive:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/runtime':
+        specifier: ^0.0.16
+        version: 0.0.16
+      '@opensdks/sdk-pipedrive':
+        specifier: 0.0.1
+        version: 0.0.1
 
   connectors/connector-plaid:
     dependencies:
@@ -1082,6 +1121,21 @@ importers:
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
+
+  connectors/connector-salesforce:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/runtime':
+        specifier: ^0.0.16
+        version: 0.0.16
+      '@opensdks/sdk-salesforce':
+        specifier: 0.0.2
+        version: 0.0.2
 
   connectors/connector-salesloft:
     dependencies:

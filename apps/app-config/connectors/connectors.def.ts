@@ -10,6 +10,7 @@ import {default as connectorFirebase} from '@openint/connector-firebase/def'
 import {default as connectorForeceipt} from '@openint/connector-foreceipt/def'
 import {default as connectorFs} from '@openint/connector-fs/def'
 import {default as connectorHeron} from '@openint/connector-heron/def'
+import {default as connectorHubspot} from '@openint/connector-hubspot/def'
 import {default as connectorLunchmoney} from '@openint/connector-lunchmoney/def'
 import {default as connectorMercury} from '@openint/connector-mercury/def'
 import {default as connectorMerge} from '@openint/connector-merge/def'
@@ -17,11 +18,13 @@ import {default as connectorMongodb} from '@openint/connector-mongodb/def'
 import {default as connectorMoota} from '@openint/connector-moota/def'
 import {default as connectorOnebrick} from '@openint/connector-onebrick/def'
 import {default as connectorOutreach} from '@openint/connector-outreach/def'
+import {default as connectorPipedrive} from '@openint/connector-pipedrive/def'
 import {default as connectorPlaid} from '@openint/connector-plaid/def'
 import {default as connectorPostgres} from '@openint/connector-postgres/def'
 import {default as connectorQbo} from '@openint/connector-qbo/def'
 import {default as connectorRamp} from '@openint/connector-ramp/def'
 import {default as connectorRevert} from '@openint/connector-revert/def'
+import {default as connectorSalesforce} from '@openint/connector-salesforce/def'
 import {default as connectorSalesloft} from '@openint/connector-salesloft/def'
 import {default as connectorSaltedge} from '@openint/connector-saltedge/def'
 import {default as connectorSplitwise} from '@openint/connector-splitwise/def'
@@ -48,6 +51,7 @@ export const defConnectors = {
   foreceipt: connectorForeceipt,
   fs: connectorFs,
   heron: connectorHeron,
+  hubspot: connectorHubspot,
   lunchmoney: connectorLunchmoney,
   mercury: connectorMercury,
   merge: connectorMerge,
@@ -55,11 +59,13 @@ export const defConnectors = {
   moota: connectorMoota,
   onebrick: connectorOnebrick,
   outreach: connectorOutreach,
+  pipedrive: connectorPipedrive,
   plaid: connectorPlaid,
   postgres: connectorPostgres,
   qbo: connectorQbo,
   ramp: connectorRamp,
   revert: connectorRevert,
+  salesforce: connectorSalesforce,
   salesloft: connectorSalesloft,
   saltedge: connectorSaltedge,
   splitwise: connectorSplitwise,
