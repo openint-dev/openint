@@ -9,6 +9,7 @@ const connectorInfos = require('../app-config/connectors/meta')
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  // TODO: Figure out why this is still needed. Does not appear to be needed in byos anymore...
   transpilePackages: [
     path.resolve(__dirname, '../app-config'),
     // Should we generate this list from fs also?
