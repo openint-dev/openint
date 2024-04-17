@@ -36,6 +36,21 @@ export const pipelineRouter = trpc.router({
     .mutation(async ({ctx, input: {id, ...input}}) =>
       ctx.services.patchReturning('pipeline', id, input),
     ),
+  createPipeline: protectedProcedure
+    .meta({openapi: {method: 'POST', path: '/core/pipeline', tags}})
+    .input(
+      zRaw.pipeline.pick({
+        id: true,
+        metadata: true,
+        disabled: true,
+        sourceId: true,
+        destinationId: true,
+      }),
+    )
+    .output(zRaw.pipeline)
+    .mutation(async ({ctx, input: {id, ...input}}) =>
+      ctx.services.patchReturning('pipeline', id, input),
+    ),
   deletePipeline: protectedProcedure
     .meta({openapi: {method: 'DELETE', path: '/core/pipeline/{id}', tags}})
     .input(z.object({id: zId('pipe')}))
@@ -84,7 +99,7 @@ export const pipelineRouter = trpc.router({
           ...standardReso,
           id: reso.id,
           displayName:
-            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+             
             reso.displayName ||
             standardReso?.displayName ||
             standardInt?.name ||
