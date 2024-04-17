@@ -70,6 +70,8 @@ jobs:
       #   uses: lhotari/action-upterm@v1
       - name: Run type checks
         run: pnpm run typecheck
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
 
         # TODO: Figure out a pattern to make environment variables parsed / required on demand rather than on startup time
         # Ideally have a way to switch between the two... Where we can also choose proactive parsing for sanity checking...
