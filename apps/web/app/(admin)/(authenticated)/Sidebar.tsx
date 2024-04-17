@@ -123,13 +123,11 @@ export function Sidebar({className}: SidebarProps) {
         </div>
       </ScrollArea>
       <div className="mt-auto p-4">
-        <Link className="hover:opacity-90" href="/">
-          <Image
-            width={102}
-            height={32}
-            src="/venice-logo-black.svg"
-            alt="Venice"
-          />
+        <Link
+          className="flex flex-row items-center gap-2 hover:opacity-90"
+          href="/">
+          <Image width={50} height={50} src="/openint-logo.png" alt="OpenInt" />
+          OpenInt
         </Link>
       </div>
     </nav>
