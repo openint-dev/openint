@@ -24,6 +24,7 @@ export const zConnectorVertical = z.enum([
   'other',
   'payroll', // e.g. Gusto
   'ats', // e.g. Greenhouse
+  'calendar',
 ])
 
 export const zConnectorStage = z.enum(['hidden', 'alpha', 'beta', 'ga'])
