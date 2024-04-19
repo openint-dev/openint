@@ -3,6 +3,7 @@
   "description": "Vertical Development Kit",
   "dependencies": {
     "@openint/types": "workspace:*",
+    "@openint/vdk2": "workspace:*",
     "@openint/zod": "workspace:*",
     "@trpc/server": "10.40.0",
     "remeda": "1.6.1"

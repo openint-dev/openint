@@ -38,4 +38,12 @@ export * from './errors'
 
 // re-exporting utiltities
 
-export {uniq, uniqBy, mapValues, mapKeys, pick} from 'remeda'
+export {mapKeys, mapValues, pick, uniq, uniqBy} from 'remeda'
+
+// TODO: Remove me
+export {
+  RouterMap,
+  VerticalRouterOpts,
+  proxyCallRemote,
+  proxyListRemoteRedux,
+} from './deprecated'

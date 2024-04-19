@@ -5,6 +5,19 @@ import type {StrictObjDeep} from './type-utils/StrictObj'
 
 export const literal = <T>(literal: T) => ({literal})
 
+// type abc = PathsOf<
+//   StrictObjDeep<
+//     Required<{
+//       Contact?: {
+//         ContactId: string
+//         Account?: {
+//           accountId?: string
+//         }
+//       }
+//     }>
+//   >
+// >
+
 export function mapper<
   ZInputSchema extends z.ZodTypeAny,
   ZOutputSchema extends z.ZodTypeAny,
@@ -16,7 +29,8 @@ export function mapper<
   mapping:
     | {
         [k in keyof TOut]:  // | ExtractKeyOfValueType<TIn, TOut[k]> // | Getter<ExtractKeyOfValueType<TIn, TOut[k]>> // | TOut[k] // Constant
-          | PathsOf<StrictObjDeep<TIn>> // Getter for the keypaths
+          | PathsOf<StrictObjDeep<Required<TIn>>> // Getter for the keypaths
+          // A bit of a hack as PathsOf<StrictObjDeep> does not work with optional props...
           | ReturnType<typeof literal<TOut[k]>> // literal value
           | ((ext: TIn) => TOut[k]) // Function that can do whatever on a property level
       }

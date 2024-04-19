@@ -70,15 +70,15 @@ export const qboServer = {
         switch (type) {
           case 'account': {
             const res = await qbo.getAll('Account').next()
-            return {hasNextPage: true, items: res.value?.entities ?? []}
+            return {has_next_page: true, items: res.value?.entities ?? []}
           }
           case 'expense': {
             const res = await qbo.getAll('Purchase').next()
-            return {hasNextPage: true, items: res.value?.entities ?? []}
+            return {has_next_page: true, items: res.value?.entities ?? []}
           }
           case 'vendor': {
             const res = await qbo.getAll('Vendor').next()
-            return {hasNextPage: true, items: res.value?.entities ?? []}
+            return {has_next_page: true, items: res.value?.entities ?? []}
           }
           default:
             throw new Error(`Unknown type: ${type}`)
@@ -90,7 +90,7 @@ export const qboServer = {
         switch (type) {
           case 'account': {
             const res = await qbo.getAll('Account').next()
-            return {hasNextPage: true, items: res.value?.entities ?? []}
+            return {has_next_page: true, items: res.value?.entities ?? []}
           }
           case 'transaction': {
             async function* iterateEntities() {
@@ -110,7 +110,7 @@ export const qboServer = {
               }
             }
             const res = await iterateEntities().next()
-            return {hasNextPage: true, items: res.value ?? []}
+            return {has_next_page: true, items: res.value ?? []}
           }
           default:
             throw new Error(`Unknown type: ${type}`)

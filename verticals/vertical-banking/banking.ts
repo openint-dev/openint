@@ -5,7 +5,6 @@ import type {PlaidSDKTypes} from '@openint/connector-plaid'
 import type {postgresHelpers} from '@openint/connector-postgres'
 import type {QBO} from '@openint/connector-qbo'
 import type {Oas_accounting} from '@openint/connector-xero'
-import type {StrictObj} from '@openint/types'
 import type {RouterMap, RouterMeta, VerticalRouterOpts} from '@openint/vdk'
 import {
   applyMapper,
@@ -275,16 +274,16 @@ export function bankingLink(ctx: {
 
 const mappers = {
   xero: {
-    account: mapper(zCast<StrictObj<Xero['Account']>>(), zBanking.account, {
+    account: mapper(zCast<Xero['Account']>(), zBanking.account, {
       id: 'AccountID',
       name: 'Name',
     }),
-    category: mapper(zCast<StrictObj<Xero['Account']>>(), zBanking.account, {
+    category: mapper(zCast<Xero['Account']>(), zBanking.account, {
       id: 'AccountID',
       name: 'Name',
     }),
     bank_transaction: mapper(
-      zCast<StrictObj<Xero['BankTransaction']>>(),
+      zCast<Xero['BankTransaction']>(),
       zBanking.transaction,
       {
         id: 'BankTransactionID',
@@ -304,43 +303,39 @@ const mappers = {
   },
   // Should be able to have input and output entity types in here also.
   qbo: {
-    purchase: mapper(
-      zCast<StrictObj<QBO['Purchase']>>(),
-      zBanking.transaction,
-      {
-        id: 'Id',
-        amount: 'TotalAmt',
-        currency: 'CurrencyRef.value',
-        date: 'TxnDate',
-        account_id: 'AccountRef.value',
-        account_name: 'AccountRef.name',
-        // This is a significant approximation, as there can also be ItemBasedLineDetail as well as
-        // multiple lines... However we sit with it for now...
-        category_id: (p) =>
-          p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.value,
-        category_name: (p) =>
-          p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.name,
-        description: (p) => p.Line[0]?.Description,
-        merchant_id: 'EntityRef.value',
-        merchant_name: 'EntityRef.name',
-      },
-    ),
-    account: mapper(zCast<StrictObj<QBO['Account']>>(), zBanking.account, {
+    purchase: mapper(zCast<QBO['Purchase']>(), zBanking.transaction, {
+      id: 'Id',
+      amount: 'TotalAmt',
+      currency: 'CurrencyRef.value',
+      date: 'TxnDate',
+      account_id: 'AccountRef.value',
+      account_name: 'AccountRef.name',
+      // This is a significant approximation, as there can also be ItemBasedLineDetail as well as
+      // multiple lines... However we sit with it for now...
+      category_id: (p) =>
+        p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.value,
+      category_name: (p) =>
+        p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.name,
+      description: (p) => p.Line[0]?.Description,
+      merchant_id: 'EntityRef.value',
+      merchant_name: 'EntityRef.name',
+    }),
+    account: mapper(zCast<QBO['Account']>(), zBanking.account, {
       id: 'Id',
       name: 'FullyQualifiedName',
     }),
-    category: mapper(zCast<StrictObj<QBO['Account']>>(), zBanking.category, {
+    category: mapper(zCast<QBO['Account']>(), zBanking.category, {
       id: 'Id',
       name: 'FullyQualifiedName',
     }),
-    vendor: mapper(zCast<StrictObj<QBO['Vendor']>>(), zBanking.merchant, {
+    vendor: mapper(zCast<QBO['Vendor']>(), zBanking.merchant, {
       id: 'Id',
       name: 'DisplayName',
     }),
   },
   plaid: {
     transaction: mapper(
-      zCast<StrictObj<Plaid['schemas']['Transaction']>>(),
+      zCast<Plaid['schemas']['Transaction']>(),
       zBanking.transaction,
       {
         id: 'transaction_id',
@@ -361,7 +356,7 @@ const mappers = {
       },
     ),
     account: mapper(
-      zCast<StrictObj<Plaid['schemas']['AccountBase']>>(),
+      zCast<Plaid['schemas']['AccountBase']>(),
       zBanking.account,
       {
         id: 'account_id',

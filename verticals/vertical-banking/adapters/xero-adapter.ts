@@ -1,5 +1,4 @@
 import type {Oas_accounting, XeroSDK} from 'connectors/connector-xero'
-import type {StrictObj} from '@openint/vdk'
 import {mapper, z, zCast} from '@openint/vdk'
 import type {VerticalBanking} from '../banking'
 import {zBanking} from '../banking'
@@ -8,7 +7,7 @@ type Xero = Oas_accounting['components']['schemas']
 
 const mappers = {
   category: mapper(
-    zCast<StrictObj<Xero['Account']>>(),
+    zCast<Xero['Account']>(),
     zBanking.category.extend({_raw: z.unknown().optional()}),
     {
       id: 'AccountID',

@@ -1,5 +1,4 @@
 import type {OutreachSDK, OutreachSDKTypes} from '@openint/connector-outreach'
-import type {StrictObj} from '@openint/vdk'
 import {mapper, zCast} from '@openint/vdk'
 import type {VerticalSalesEngagement} from '../sales-engagement'
 import {zSalesEngagement} from '../sales-engagement'
@@ -8,7 +7,7 @@ type Outreach = OutreachSDKTypes['oas']['components']['schemas']
 
 const mappers = {
   contact: mapper(
-    zCast<StrictObj<Outreach['prospectResponse']>>(),
+    zCast<Outreach['prospectResponse']>(),
     zSalesEngagement.contact,
     {
       id: (r) => r.id?.toString() ?? '',

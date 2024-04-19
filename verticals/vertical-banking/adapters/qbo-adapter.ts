@@ -1,5 +1,4 @@
 import type {QBOSDK, QBOSDKTypes} from '@openint/connector-qbo'
-import type {StrictObj} from '@openint/vdk'
 import {mapper, z, zCast} from '@openint/vdk'
 import type {VerticalBanking} from '../banking'
 import {zBanking} from '../banking'
@@ -8,7 +7,7 @@ type QBO = QBOSDKTypes['oas']['components']['schemas']
 
 const mappers = {
   category: mapper(
-    zCast<StrictObj<QBO['Account']>>(),
+    zCast<QBO['Account']>(),
     zBanking.category.extend({_raw: z.unknown().optional()}),
     {
       id: 'Id',
