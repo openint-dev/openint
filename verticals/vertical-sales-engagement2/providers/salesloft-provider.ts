@@ -3,7 +3,7 @@ import {
   type SalesloftSDK,
   type SalesloftSDKTypes,
 } from '@opensdks/sdk-salesloft'
-import {mapper, z, zCast} from '@openint/vdk2'
+import {mapper, z, zCast} from '@openint/vdk'
 import type {SalesEngagementProvider} from '../router'
 import {unified} from '../router'
 import type {EmailAddress, PhoneNumber} from '../unifiedModels'

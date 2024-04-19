@@ -1,5 +1,5 @@
 import {initPipedriveSDK, type PipedriveSDK} from '@opensdks/sdk-pipedrive'
-import {NotImplementedError, PLACEHOLDER_BASE_URL} from '@openint/vdk2'
+import {NotImplementedError, PLACEHOLDER_BASE_URL} from '@openint/vdk'
 import type {CRMProvider} from '../../router'
 import {MS_DYNAMICS_365_SALES_STANDARD_OBJECTS} from './constants'
 

@@ -1,6 +1,6 @@
 import type {CustomField as SalesforceCustomField} from 'jsforce/lib/api/metadata/schema'
-import type {z} from '@openint/vdk2'
-import {BadRequestError} from '@openint/vdk2'
+import type {z} from '@openint/vdk'
+import {BadRequestError} from '@openint/vdk'
 import type {CRMProvider, unified} from '../../../router'
 
 type RouteInput<T extends Exclude<keyof CRMProvider<unknown>, '__init__'>> =

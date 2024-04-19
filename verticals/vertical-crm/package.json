@@ -1,7 +1,7 @@
 {
   "name": "@openint/vertical-crm",
   "dependencies": {
-    "@openint/vdk2": "workspace:*",
+    "@openint/vdk": "workspace:*",
     "@opensdks/sdk-hubspot": "0.0.6",
     "@opensdks/sdk-pipedrive": "0.0.1",
     "@opensdks/sdk-salesforce": "0.0.2",

@@ -1,5 +1,5 @@
 import type * as jsforce from 'jsforce'
-import {BadRequestError} from '@openint/vdk2'
+import {BadRequestError} from '@openint/vdk'
 import type {CRMProvider} from '../../../router'
 import {SALESFORCE_API_VERSION} from '../constants'
 import {

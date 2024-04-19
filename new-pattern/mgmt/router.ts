@@ -1,6 +1,6 @@
 import {and, db, eq, schema} from '@openint/db'
-import type {_Provider, ProviderFromRouter} from '@openint/vdk2'
-import {NotImplementedError, publicProcedure, trpc, z} from '@openint/vdk2'
+import type {_Provider, ProviderFromRouter} from '@openint/vdk'
+import {NotImplementedError, publicProcedure, trpc, z} from '@openint/vdk'
 import {nangoPostgresProvider} from './providers/nango-postgres-provider'
 import {supaglueProvider} from './providers/supaglue-provider'
 import * as unified from './unifiedModels'

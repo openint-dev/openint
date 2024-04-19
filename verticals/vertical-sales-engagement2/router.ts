@@ -1,5 +1,5 @@
-import type {ProviderFromRouter, RouterMeta} from '@openint/vdk2'
-import {proxyCallProvider, remoteProcedure, trpc, z} from '@openint/vdk2'
+import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
+import {proxyCallProvider, remoteProcedure, trpc, z} from '@openint/vdk'
 import * as unified from './unifiedModels'
 
 export {unified}

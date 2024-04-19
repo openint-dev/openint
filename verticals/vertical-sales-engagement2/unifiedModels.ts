@@ -1,4 +1,4 @@
-import {z} from '@openint/vdk2'
+import {z} from '@openint/vdk'
 
 export const address = z
   .object({

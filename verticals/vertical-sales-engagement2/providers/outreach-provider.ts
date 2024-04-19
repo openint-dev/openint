@@ -3,7 +3,7 @@ import {
   type OutreachSDK,
   type OutreachSDKTypes,
 } from '@opensdks/sdk-outreach'
-import {mapper, z, zCast} from '@openint/vdk2'
+import {mapper, z, zCast} from '@openint/vdk'
 import type {SalesEngagementProvider} from '../router'
 import {unified} from '../router'
 import type {EmailAddress, PhoneNumber} from '../unifiedModels'

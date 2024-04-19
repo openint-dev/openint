@@ -1,5 +1,5 @@
 import type {Oas_crm_contacts, Oas_crm_owners} from '@opensdks/sdk-hubspot'
-import {mapper, z, zBaseRecord, zCast} from '@openint/vdk2'
+import {mapper, z, zBaseRecord, zCast} from '@openint/vdk'
 import type {PipelineStageMapping} from '.'
 import {unified} from '../../router'
 

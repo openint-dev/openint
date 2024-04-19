@@ -11,7 +11,7 @@
     "@openint/db": "workspace:*",
     "@openint/env": "workspace:*",
     "@openint/events": "workspace:*",
-    "@openint/vdk2": "workspace:*",
+    "@openint/vdk": "workspace:*",
     "cookie": "^0.6.0"
   },
   "devDependencies": {

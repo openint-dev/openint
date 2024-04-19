@@ -2,14 +2,14 @@ import type {Oas_crm_schemas} from '@opensdks/sdk-hubspot'
 import {initHubspotSDK, type HubspotSDK} from '@opensdks/sdk-hubspot'
 import {LRUCache} from 'lru-cache'
 import * as RM from 'remeda'
-import type {BaseRecord, z} from '@openint/vdk2'
+import type {BaseRecord, z} from '@openint/vdk'
 import {
   BadRequestError,
   InternalServerError,
   LastUpdatedAtNextOffset,
   NotFoundError,
   uniqBy,
-} from '@openint/vdk2'
+} from '@openint/vdk'
 import type {CRMProvider} from '../../router'
 import type {
   HSAssociation,

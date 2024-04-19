@@ -1,4 +1,4 @@
-import {z, zBaseRecord} from '@openint/vdk2'
+import {z, zBaseRecord} from '@openint/vdk'
 
 export const address_type = z
   .enum(['primary', 'mailing', 'other', 'billing', 'shipping'])

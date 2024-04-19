@@ -1,4 +1,4 @@
-import type {ProviderFromRouter, RouterMeta} from '@openint/vdk2'
+import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
 import {
   proxyCallProvider,
   remoteProcedure,
@@ -7,7 +7,7 @@ import {
   z,
   zPaginatedResult,
   zPaginationParams,
-} from '@openint/vdk2'
+} from '@openint/vdk'
 import * as unified from './unifiedModels'
 
 export {unified}

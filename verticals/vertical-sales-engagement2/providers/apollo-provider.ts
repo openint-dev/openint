@@ -3,7 +3,7 @@ import {
   type ApolloSDK,
   type ApolloSDKTypes,
 } from '@opensdks/sdk-apollo'
-import {mapper, pick, zCast} from '@openint/vdk2'
+import {mapper, pick, zCast} from '@openint/vdk'
 import type {SalesEngagementProvider} from '../router'
 import {unified} from '../router'
 import type {EmailAddress} from '../unifiedModels'

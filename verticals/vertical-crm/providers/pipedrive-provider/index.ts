@@ -1,6 +1,6 @@
 import {initPipedriveSDK, type PipedriveSDK} from '@opensdks/sdk-pipedrive'
-import type {BaseRecord} from '@openint/vdk2'
-import {NotAuthorizedError} from '@openint/vdk2'
+import type {BaseRecord} from '@openint/vdk'
+import {NotAuthorizedError} from '@openint/vdk'
 import type {CRMProvider} from '../../router'
 import {mappers, zErrorPayload} from './mappers'
 

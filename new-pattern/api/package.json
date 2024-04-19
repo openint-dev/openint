@@ -15,7 +15,7 @@
     "@openint/events": "workspace:*",
     "@openint/mgmt": "workspace:*",
     "@openint/env": "workspace:*",
-    "@openint/vdk2": "workspace:*",
+    "@openint/vdk": "workspace:*",
     "@openint/vertical-crm": "workspace:*",
     "@openint/vertical-sales-engagement2": "workspace:*",
     "remeda": "1.6.1"

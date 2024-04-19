@@ -3,13 +3,13 @@ import {
   type SalesforceSDK as _SalesforceSDK,
 } from '@opensdks/sdk-salesforce'
 import * as jsforce from 'jsforce'
-import type {BaseRecord} from '@openint/vdk2'
+import type {BaseRecord} from '@openint/vdk'
 import {
   LastUpdatedAtId,
   modifyRequest,
   PLACEHOLDER_BASE_URL,
   uniqBy,
-} from '@openint/vdk2'
+} from '@openint/vdk'
 import type {CRMProvider} from '../../router'
 import {SALESFORCE_API_VERSION, SALESFORCE_STANDARD_OBJECTS} from './constants'
 import {salesforceProviderJsForce} from './jsforce'
