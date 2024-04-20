@@ -26,7 +26,7 @@ import {makeYodleeClient} from '@openint/connector-yodlee'
 import {getEnv} from '@openint/env'
 import {AirbytePublicSDK} from '@openint/meta-service-airbyte/airbyte-sdk'
 import {makePostgresMetaService} from '@openint/meta-service-postgres'
-import {createVeniceClient} from '@openint/sdk'
+import {initOpenIntSDK} from '@openint/sdk'
 import type {ZFunctionMap} from '@openint/util'
 import {getEnvVar, R, z, zodInsecureDebug} from '@openint/util'
 import type {CliOpts} from './cli-utils'
@@ -38,7 +38,7 @@ if (getEnvVar('DEBUG_ZOD')) {
 
 function env() {
   process.env['_SKIP_ENV_VALIDATION'] = 'true'
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+   
   return require('@openint/app-config/env')
     .env as (typeof import('@openint/app-config/env'))['env']
 }
@@ -107,9 +107,11 @@ if (require.main === module) {
     airbyte: () =>
       AirbytePublicSDK({accessToken: process.env['_AIRBYTE_ACCESS_TOKEN']!}),
     sdk: () =>
-      createVeniceClient({
-        apiKey: getEnv('VENICE_API_KEY'),
-        resourceId: getEnv('VENICE_RESOURCE_ID'),
+      initOpenIntSDK({
+        headers: {
+          'x-apikey': getEnv('VENICE_API_KEY'),
+          'x-resource-id': getEnv('VENICE_RESOURCE_ID'),
+        },
       }),
   }
 

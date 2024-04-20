@@ -11,7 +11,7 @@ import {
 } from '@openint/db'
 import {env} from '@openint/env'
 import type {Events} from '@openint/events'
-import {initByosSDK} from '@openint/sdk2'
+import {initOpenIntSDK} from '@openint/sdk'
 import {HTTPError, parseErrorInfo} from '../../kits/vdk/errors'
 
 /**
@@ -38,7 +38,7 @@ export async function scheduleSyncs({
   event,
 }: FunctionInput<'scheduler.requested'>) {
   console.log('[scheduleSyncs]', event)
-  const byos = initByosSDK({
+  const byos = initOpenIntSDK({
     headers: {
       'x-api-key': env.SUPAGLUE_API_KEY,
       'x-nango-secret-key': env.NANGO_SECRET_KEY,
@@ -168,7 +168,7 @@ export async function syncConnection({
     .returning()
     .then((rows) => rows[0]!.id)
 
-  const byos = initByosSDK({
+  const byos = initOpenIntSDK({
     headers: {
       'x-api-key': env.SUPAGLUE_API_KEY,
       'x-nango-secret-key': env.NANGO_SECRET_KEY,

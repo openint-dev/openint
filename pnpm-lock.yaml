@@ -59,7 +59,7 @@ importers:
         version: 29.7.0
       '@openint/sdk':
         specifier: workspace:*
-        version: link:kits/sdk
+        version: link:kits/sdk2
       '@openint/util':
         specifier: workspace:*
         version: link:packages/util
@@ -1353,7 +1353,7 @@ importers:
         version: 3.0.64(openapi-types@12.1.0)(typescript@5.4.5)
       '@openint/sdk':
         specifier: workspace:*
-        version: link:../kits/sdk
+        version: link:../kits/sdk2
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
@@ -1418,9 +1418,6 @@ importers:
 
   kits/connect:
     dependencies:
-      '@openint/sdk':
-        specifier: workspace:*
-        version: link:../sdk
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -1435,21 +1432,15 @@ importers:
         specifier: '*'
         version: 5.0.4
 
-  kits/sdk:
+  kits/sdk2:
     dependencies:
-      '@openint/openapi-client':
-        specifier: workspace:*
-        version: link:../../utils/openapi-client
-      openapi3-ts:
-        specifier: 4.1.2
-        version: 4.1.2
-      tsx:
-        specifier: 3.12.2
-        version: 3.12.2
+      '@opensdks/runtime':
+        specifier: 0.0.19
+        version: 0.0.19
     devDependencies:
-      openapi-typescript:
-        specifier: 7.0.0-next.3
-        version: 7.0.0-next.3
+      '@openint/api':
+        specifier: workspace:*
+        version: link:../../new-pattern/api
 
   kits/vdk:
     dependencies:
@@ -1610,16 +1601,6 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
 
-  new-pattern/sdk2:
-    dependencies:
-      '@opensdks/runtime':
-        specifier: 0.0.19
-        version: 0.0.19
-    devDependencies:
-      '@openint/api':
-        specifier: workspace:*
-        version: link:../api
-
   new-pattern/worker:
     dependencies:
       '@openint/api':
@@ -1634,9 +1615,9 @@ importers:
       '@openint/events':
         specifier: workspace:*
         version: link:../events
-      '@openint/sdk2':
+      '@openint/sdk':
         specifier: workspace:*
-        version: link:../sdk2
+        version: link:../../kits/sdk2
       '@opensdks/sdk-supaglue':
         specifier: 0.0.3
         version: 0.0.3
@@ -3169,12 +3150,14 @@ packages:
     dependencies:
       '@esbuild-kit/core-utils': 3.0.0
       get-tsconfig: 4.2.0
+    dev: true
 
   /@esbuild-kit/core-utils@3.0.0:
     resolution: {integrity: sha512-TXmwH9EFS3DC2sI2YJWJBgHGhlteK0Xyu1VabwetMULfm3oYhbrsWV5yaSr2NTWZIgDGVLHbRf0inxbjXqAcmQ==}
     dependencies:
       esbuild: 0.17.5
       source-map-support: 0.5.21
+    dev: true
 
   /@esbuild-kit/core-utils@3.3.2:
     resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
@@ -3188,6 +3171,7 @@ packages:
     dependencies:
       '@esbuild-kit/core-utils': 3.0.0
       get-tsconfig: 4.2.0
+    dev: true
 
   /@esbuild-kit/esm-loader@2.6.5:
     resolution: {integrity: sha512-FxEMIkJKnodyA1OaCUoEvbYRkoZlLZ4d/eXFu9Fh8CbBBgP5EmZxrfTRyN0qpXZ4vOvqnE5YdRdcrmUUXuU+dA==}
@@ -12720,6 +12704,7 @@ packages:
 
   /get-tsconfig@4.2.0:
     resolution: {integrity: sha512-X8u8fREiYOE6S8hLbq99PeykTDoLVnxvF4DjWKJmz9xy2nNRdUcV8ZN9tniJFeKyTU3qnC9lL8n4Chd6LmVKHg==}
+    dev: true
 
   /get-tsconfig@4.7.3:
     resolution: {integrity: sha512-ZvkrzoUA0PQZM6fy6+/Hce561s+faD1rsNwhnO5FelNjyy7EMGJ3Rz1AQ8GYDWjhRs/7dBLOEJvhK8MiEJOAFg==}
@@ -21671,6 +21656,7 @@ packages:
       '@esbuild-kit/esm-loader': 2.5.4
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
 
   /tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}

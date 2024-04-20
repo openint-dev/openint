@@ -1,13 +1,16 @@
-import {createVeniceClient} from '@openint/sdk'
+import {initOpenIntSDK} from '@openint/sdk'
 
-const venice = createVeniceClient({
-  apiKey: process.env['_VENICE_API_KEY'],
-  apiHost: process.env['_VENICE_API_HOST'],
-  // resourceId: process.env['_QBO_RESOURCE_ID'],
-  resourceId: process.env['_XERO_RESOURCE_ID'],
+const openint = initOpenIntSDK({
+  baseUrl: process.env['_VENICE_API_HOST'],
+  headers: {
+    'x-apikey': process.env['_VENICE_API_KEY'],
+    'x-resource-id': process.env['_XERO_RESOURCE_ID'],
+
+    // resourceId: process.env['_QBO_RESOURCE_ID'],
+  },
 })
 
-void venice.GET('/verticals/banking/category').then((r) => {
+void openint.GET('/verticals/banking/category').then((r) => {
   console.log(r.data)
 })
 

@@ -1,0 +1,31 @@
+import {
+  initSDK,
+  type ClientOptions,
+  type SdkDefinition,
+  type SDKTypes,
+} from '@opensdks/runtime'
+import oasMeta from './openapi.meta'
+import type oasTypes from './openapi.types'
+
+export type OpenIntSdkTypes = SDKTypes<
+  oasTypes,
+  Omit<ClientOptions, 'headers'> & {
+    headers: {
+      'x-apikey'?: string
+      'x-resource-id'?: string
+      Authorization?: `Bearer ${string}`
+      [k: string]: string | undefined
+    }
+  }
+>
+
+export const openIntSdkDef = {
+  types: {} as OpenIntSdkTypes,
+  oasMeta,
+} satisfies SdkDefinition<OpenIntSdkTypes>
+
+export function initOpenIntSDK(opts: OpenIntSdkTypes['options']) {
+  return initSDK(openIntSdkDef, opts)
+}
+
+export type BYOSupaglueSDK = ReturnType<typeof initOpenIntSDK>

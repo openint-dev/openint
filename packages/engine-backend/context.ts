@@ -19,7 +19,6 @@ import type {MetaService} from './services/metaService'
 
 type Services = ReturnType<typeof _makeServices>
 export interface RouterContext {
-
   // Viewer-dependent
   viewer: Viewer
   /** Helpers with the designated permission level */

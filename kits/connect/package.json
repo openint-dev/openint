@@ -10,7 +10,6 @@
     "pub": "pnpm publish --no-git-checks"
   },
   "dependencies": {
-    "@openint/sdk": "workspace:*",
     "zod": "3.22.4"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "@openint/sdk2",
+  "name": "@openint/sdk",
   "version": "0.0.0",
   "private": true,
   "description": "SDK for BYO Supaglue",
