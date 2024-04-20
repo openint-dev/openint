@@ -4,8 +4,8 @@ import type {
   ZodOpenApiPathsObject,
 } from '@lilyrose2798/trpc-openapi/dist/generator'
 import {generateOpenApiDocument} from '@lilyrose2798/trpc-openapi/dist/generator'
-import {getServerUrl} from 'apps/app-config/constants'
-import {flatRouter, outgoingWebhookEventMap} from 'packages/engine-backend'
+import {getServerUrl} from '@openint/app-config/constants'
+import {flatRouter, outgoingWebhookEventMap} from '@openint/engine-backend'
 import {mgmtRouter} from '@openint/mgmt'
 import {mapKeys, mapValues, publicProcedure, trpc, z} from '@openint/vdk'
 import {crmRouter} from '@openint/vertical-crm'
