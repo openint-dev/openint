@@ -184,7 +184,7 @@ export async function syncConnection({
     {cursor?: string | null}
   >
 
-  let errorInfo: ReturnType<typeof parseErrorInfo> | undefined
+  let errorInfo: Awaited<ReturnType<typeof parseErrorInfo>> | undefined
 
   const metrics: Record<string, number | string> = {}
 
@@ -327,7 +327,7 @@ export async function syncConnection({
       try {
         await syncStream(stream)
       } catch (err) {
-        errorInfo = parseErrorInfo(err)
+        errorInfo = await parseErrorInfo(err)
         // No longer authenticated error means we should be able to break out of all other streams, it's unnecessary.
         // Will need to think more about how this works for parallel read scenarios though.
         if (errorInfo?.error_type === 'USER_ERROR') {
@@ -337,7 +337,7 @@ export async function syncConnection({
       }
     }
   } catch (err) {
-    errorInfo = parseErrorInfo(err)
+    errorInfo = await parseErrorInfo(err)
   } finally {
     await db
       .update(schema.sync_run)
