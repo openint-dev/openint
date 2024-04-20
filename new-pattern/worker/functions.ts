@@ -145,6 +145,7 @@ export async function syncConnection({
     .then(
       (ss) =>
         ss ??
+        // eslint-disable-next-line promise/no-nesting
         db
           .insert(schema.sync_state)
           .values({
@@ -153,6 +154,7 @@ export async function syncConnection({
             state: sql`${{}}::jsonb`,
           })
           .returning()
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           .then((rows) => rows[0]!),
     )
 

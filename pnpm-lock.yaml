@@ -1496,9 +1496,21 @@ importers:
 
   new-pattern/api:
     dependencies:
+      '@clerk/nextjs':
+        specifier: 4.29.3
+        version: 4.29.3(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       '@lilyrose2798/trpc-openapi':
         specifier: 1.3.10
         version: 1.3.10(patch_hash=hesfnkphzbtlqjldce4x4rhy6e)(@trpc/server@10.40.0)(zod@3.22.4)
+      '@openint/app-config':
+        specifier: workspace:*
+        version: link:../../apps/app-config
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../../packages/engine-backend
       '@openint/env':
         specifier: workspace:*
         version: link:../env

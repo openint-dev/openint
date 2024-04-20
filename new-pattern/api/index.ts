@@ -17,7 +17,10 @@ export function createAppHandler({
       endpoint,
       req,
       router: appRouter,
-      createContext: () => {
+      createContext: (): never => {
+        if (1 === 1) {
+          throw new Error('Not Implemented')
+        }
         // Temporary workaround to automatically set nango secret key based on supaglue API key
         if (
           req.headers.get('x-api-key') === env['SUPAGLUE_API_KEY'] &&
@@ -34,17 +37,17 @@ export function createAppHandler({
           //   'x-nango-secret-key': req.headers.get('x-nango-secret-key'),
           // })
         }
-        return createContext({headers: req.headers})
+        return createContext({headers: req.headers}) as never
       },
       // onError, // can only have side effect and not modify response error status code unfortunately...
-      responseMeta: ({errors, ctx}) => {
+      responseMeta: ({errors, ctx: _ctx}) => {
         // Pass the status along
         for (const err of errors) {
           console.warn(
             '[TRPCError]',
             {
-              customerId: ctx?.headers.get('x-customer-id'),
-              providerName: ctx?.headers.get('x-provider-name'),
+              // customerId: ctx?.headers.get('x-customer-id'),
+              // providerName: ctx?.headers.get('x-provider-name'),
             },
             err,
           )

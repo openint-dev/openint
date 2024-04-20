@@ -1,6 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {renderTrpcPanel} from 'trpc-panel'
-import {appRouter} from '@/lib-server/appRouter'
+import {appRouter} from '@openint/api'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // req.url is normally `/api/trpc` already which is the right place

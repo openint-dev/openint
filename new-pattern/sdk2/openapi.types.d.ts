@@ -3,13 +3,129 @@
  * Do not make direct changes to the file.
  */
 
+/** OneOf type helpers */
+type Without<T, U> = {[P in Exclude<keyof T, keyof U>]?: never}
+type XOR<T, U> = T | U extends object
+  ? (Without<T, U> & U) | (Without<U, T> & T)
+  : T | U
+type OneOf<T extends any[]> = T extends [infer Only]
+  ? Only
+  : T extends [infer A, infer B, ...infer Rest]
+    ? OneOf<[XOR<A, B>, ...Rest]>
+    : never
+
 export interface paths {
   '/health': {
     /** Health check */
-    get: operations['public-health']
+    get: operations['health']
+  }
+  '/debug/raw-schemas': {
+    /** @description Get raw schemas */
+    get: operations['getRawSchemas']
+  }
+  '/connect/token': {
+    post: operations['createConnectToken']
+  }
+  '/connect/magic-link': {
+    post: operations['createMagicLink']
+  }
+  '/passthrough': {
+    post: operations['passthrough']
+  }
+  '/core/resource/{id}/source_sync': {
+    /** @description Return records that would have otherwise been emitted during a sync and return it instead */
+    post: operations['sourceSync']
+  }
+  '/core/resource': {
+    get: operations['listResources']
+    post: operations['createResource']
+  }
+  '/core/resource/{id}': {
+    get: operations['getResource']
+    delete: operations['deleteResource']
+    patch: operations['updateResource']
+  }
+  '/core/resource/{id}/_sync': {
+    post: operations['syncResource']
+  }
+  '/core/connector_config': {
+    get: operations['adminListConnectorConfigs']
+    post: operations['adminUpsertConnectorConfig']
+  }
+  '/core/connector_config/{id}': {
+    get: operations['adminGetConnectorConfig']
+    delete: operations['adminDeleteConnectorConfig']
+    patch: operations['adminUpdateConnectorConfig']
+  }
+  '/core/connector_config_info': {
+    get: operations['listConnectorConfigInfos']
+  }
+  '/connector': {
+    /** @description Get catalog of all available connectors */
+    get: operations['listConnectorMetas']
+  }
+  '/connector/{name}': {
+    get: operations['getConnectorMeta']
+  }
+  '/connector/{name}/oas': {
+    get: operations['getConnectorOpenApiSpec']
+  }
+  '/connector/{name}/schemas': {
+    get: operations['getConnectorSchemas']
+  }
+  '/core/pipeline': {
+    get: operations['listPipelines']
+    post: operations['createPipeline']
+  }
+  '/core/pipeline/{id}': {
+    delete: operations['deletePipeline']
+    patch: operations['updatePipeline']
+  }
+  '/core/pipeline/{id}/_sync': {
+    post: operations['syncPipeline']
+  }
+  '/verticals/accounting/account': {
+    get: operations['verticals-accounting-account_list']
+  }
+  '/verticals/accounting/expense': {
+    get: operations['verticals-accounting-expense_list']
+  }
+  '/verticals/accounting/vendor': {
+    get: operations['verticals-accounting-vendor_list']
+  }
+  '/verticals/pta/account': {
+    get: operations['verticals-pta-account_list']
+  }
+  '/verticals/pta/transaction': {
+    get: operations['verticals-pta-transaction_list']
+  }
+  '/verticals/pta/commodity': {
+    get: operations['verticals-pta-commodity_list']
+  }
+  '/verticals/investment/account': {
+    get: operations['verticals-investment-account_list']
+  }
+  '/verticals/investment/transaction': {
+    get: operations['verticals-investment-transaction_list']
+  }
+  '/verticals/investment/holding': {
+    get: operations['verticals-investment-holding_list']
+  }
+  '/verticals/investment/security': {
+    get: operations['verticals-investment-security_list']
+  }
+  '/verticals/sales-engagement/contacts': {
+    get: operations['verticals-salesEngagement-listContacts']
+  }
+  '/verticals/banking/category': {
+    get: operations['verticals-banking-listCategories']
+  }
+  '/viewer': {
+    /** Get current viewer accessing the API */
+    get: operations['getViewer']
   }
   '/openapi.json': {
-    get: operations['public-getOpenAPISpec']
+    get: operations['public-getOpenapiDocument']
   }
   '/customers': {
     get: operations['mgmt-listCustomers']
@@ -126,26 +242,6 @@ export interface paths {
 }
 
 export interface webhooks {
-  'scheduler.requested': {
-    post: {
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['webhooks.scheduler.requested']
-        }
-      }
-      responses: {}
-    }
-  }
-  'sync.requested': {
-    post: {
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['webhooks.sync.requested']
-        }
-      }
-      responses: {}
-    }
-  }
   'sync.completed': {
     post: {
       requestBody?: {
@@ -156,89 +252,21 @@ export interface webhooks {
       responses: {}
     }
   }
-  'connection.created': {
-    post: {
-      requestBody?: {
-        content: {
-          'application/json': components['schemas']['webhooks.connection.created']
-        }
-      }
-      responses: {}
-    }
-  }
 }
 
 export interface components {
   schemas: {
-    'webhooks.scheduler.requested': {
-      data: {
-        provider_names: string[]
-        /** @enum {string} */
-        vertical: 'crm' | 'engagement'
-        /** @enum {string} */
-        sync_mode: 'full' | 'incremental'
-      }
-      /** @enum {string} */
-      name: 'scheduler.requested'
-      id?: string
-    }
-    'webhooks.sync.requested': {
-      data: {
-        customer_id: string
-        provider_name: string
-        /** @enum {string} */
-        vertical: 'crm' | 'engagement'
-        unified_objects?: string[]
-        standard_objects?: string[]
-        custom_objects?: string[]
-        /**
-         * @description Incremental by default
-         * @enum {string}
-         */
-        sync_mode?: 'full' | 'incremental'
-        destination_schema?: string
-        page_size?: number
-      }
-      /** @enum {string} */
-      name: 'sync.requested'
-      id?: string
-    }
     'webhooks.sync.completed': {
       data: {
-        customer_id: string
-        provider_name: string
-        /** @enum {string} */
-        vertical: 'crm' | 'engagement'
-        unified_objects?: string[]
-        standard_objects?: string[]
-        custom_objects?: string[]
-        /**
-         * @description Incremental by default
-         * @enum {string}
-         */
-        sync_mode?: 'full' | 'incremental'
-        destination_schema?: string
-        page_size?: number
-        request_event_id?: string
-        run_id: string
-        metrics: {
-          [key: string]: unknown
-        }
-        /** @enum {string} */
-        result: 'SUCCESS' | 'USER_ERROR' | 'REMOTE_ERROR' | 'INTERNAL_ERROR'
-        error_detail?: string
+        /** @description Must start with 'pipe_' */
+        pipeline_id: string
+        /** @description Must start with 'reso_' */
+        source_id: string
+        /** @description Must start with 'reso_' */
+        destination_id: string
       }
       /** @enum {string} */
       name: 'sync.completed'
-      id?: string
-    }
-    'webhooks.connection.created': {
-      data: {
-        customer_id: string
-        provider_name: string
-      }
-      /** @enum {string} */
-      name: 'connection.created'
       id?: string
     }
     /**
@@ -269,12 +297,6 @@ export interface components {
         message: string
       }[]
     }
-    customer: {
-      customer_id: string
-      name?: string | null
-      /** @description Email, but not validated as data from Supaglue has invalid emails for now */
-      email?: string | null
-    }
     /**
      * Error
      * @description The error information
@@ -303,6 +325,38 @@ export interface components {
         message: string
       }[]
     }
+    Resource: {
+      createdAt: string
+      updatedAt: string
+      /** @description Must start with 'reso_' */
+      id: string
+      /** @description Unique name of the connector */
+      connectorName: string
+      displayName?: string | null
+      endUserId?: string | null
+      /** @description Must start with 'ccfg_' */
+      connectorConfigId: string
+      /** @description Must start with 'int_' */
+      integrationId?: string | null
+      settings?: {
+        [key: string]: unknown
+      } | null
+      standard?: {
+        displayName: string
+        /** @enum {string|null} */
+        status?: 'healthy' | 'disconnected' | 'error' | 'manual'
+        statusMessage?: string | null
+        labels?: string[]
+      } | null
+      disabled?: boolean
+      /**
+       * @description
+       *   JSON object can can be used to associate arbitrary metadata to
+       *   avoid needing a separate 1-1 table just for simple key values in your application.
+       *   During updates this object will be shallowly merged
+       */
+      metadata?: unknown
+    }
     /**
      * Error
      * @description The error information
@@ -330,6 +384,130 @@ export interface components {
       issues?: {
         message: string
       }[]
+    }
+    ConnectorConfig: {
+      createdAt: string
+      updatedAt: string
+      /** @description Must start with 'ccfg_' */
+      id: string
+      connectorName: string
+      config?: {
+        [key: string]: unknown
+      } | null
+      /** @description Must start with 'org_' */
+      orgId: string
+      displayName?: string | null
+      disabled?: boolean
+      /** @description Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL */
+      defaultPipeOut?: {
+        streams?: {
+          [key: string]: boolean
+        } | null
+        /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
+        links?: components['schemas']['Link'][] | null
+        /** @description Must start with 'reso_' */
+        destination_id: string
+      } | null
+      /** @description Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL */
+      defaultPipeIn?: {
+        /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
+        links?: components['schemas']['Link'][] | null
+        /** @description Must start with 'reso_' */
+        source_id: string
+      } | null
+      envName?: string | null
+      /**
+       * @description
+       *   JSON object can can be used to associate arbitrary metadata to
+       *   avoid needing a separate 1-1 table just for simple key values in your application.
+       *   During updates this object will be shallowly merged
+       */
+      metadata?: unknown
+    }
+    /** @enum {string} */
+    Link: 'banking'
+    Pipeline: {
+      createdAt: string
+      updatedAt: string
+      /** @description Must start with 'pipe_' */
+      id: string
+      /** @description Must start with 'reso_' */
+      sourceId?: string
+      sourceState?: {
+        [key: string]: unknown
+      }
+      /** @description Must start with 'reso_' */
+      destinationId?: string
+      destinationState?: {
+        [key: string]: unknown
+      }
+      linkOptions?: unknown[] | null
+      lastSyncStartedAt?: string | null
+      lastSyncCompletedAt?: string | null
+      disabled?: boolean
+      /**
+       * @description
+       *   JSON object can can be used to associate arbitrary metadata to
+       *   avoid needing a separate 1-1 table just for simple key values in your application.
+       *   During updates this object will be shallowly merged
+       */
+      metadata?: unknown
+    }
+    'sales-engagement-old.contact': {
+      id: string
+      first_name: string
+      last_name: string
+    }
+    'banking.category': {
+      id: string
+      name: string
+    }
+    Viewer: OneOf<
+      [
+        {
+          /** @enum {string} */
+          role: 'anon'
+        },
+        {
+          /** @enum {string} */
+          role: 'end_user'
+          endUserId: string
+          /** @description Must start with 'org_' */
+          orgId: string
+        },
+        {
+          /** @enum {string} */
+          role: 'user'
+          /** @description Must start with 'user_' */
+          userId: string
+          /** @description Must start with 'org_' */
+          orgId?: string | null
+          /** @description Currently clerk user */
+          extra?: {
+            [key: string]: unknown
+          }
+        },
+        {
+          /** @enum {string} */
+          role: 'org'
+          /** @description Must start with 'org_' */
+          orgId: string
+          /** @description Currently clerk organization */
+          extra?: {
+            [key: string]: unknown
+          }
+        },
+        {
+          /** @enum {string} */
+          role: 'system'
+        },
+      ]
+    >
+    customer: {
+      customer_id: string
+      name?: string | null
+      /** @description Email, but not validated as data from Supaglue has invalid emails for now */
+      email?: string | null
     }
     connection: {
       id: string
@@ -754,7 +932,7 @@ export type external = Record<string, never>
 
 export interface operations {
   /** Health check */
-  'public-health': {
+  health: {
     responses: {
       /** @description Successful response */
       200: {
@@ -770,7 +948,1540 @@ export interface operations {
       }
     }
   }
-  'public-getOpenAPISpec': {
+  /** @description Get raw schemas */
+  getRawSchemas: {
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  createConnectToken: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Anything that uniquely identifies the end user that you will be sending the magic link to */
+          endUserId?: string
+          /**
+           * @description How long the magic link will be valid for (in seconds) before it expires
+           * @default 3600
+           */
+          validityInSeconds?: number
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            token: string
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  createMagicLink: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Anything that uniquely identifies the end user that you will be sending the magic link to */
+          endUserId?: string
+          /**
+           * @description How long the magic link will be valid for (in seconds) before it expires
+           * @default 3600
+           */
+          validityInSeconds?: number
+          /** @description What to call user by */
+          displayName?: string | null
+          /** @description Where to send user to after connect / if they press back button */
+          redirectUrl?: string | null
+          /** @description Filter connector config by connector name */
+          connectorName?: string | null
+          /** @description Filter connector config by displayName */
+          connectorConfigDisplayName?: string | null
+          /** @description Must start with 'ccfg_' */
+          connectorConfigId?: string
+          /** @default true */
+          showExisting?: boolean
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            url: string
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  passthrough: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @enum {string} */
+          method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS'
+          path: string
+          query?: {
+            [key: string]: unknown
+          }
+          headers?: {
+            [key: string]: unknown
+          }
+          body?: {
+            [key: string]: unknown
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** @description Return records that would have otherwise been emitted during a sync and return it instead */
+  sourceSync: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          state?: {
+            [key: string]: unknown
+          }
+          streams?: {
+            [key: string]: boolean
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            [key: string]: unknown
+          }[]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  listResources: {
+    parameters: {
+      query?: {
+        limit?: number
+        offset?: number
+        endUserId?: string | null
+        connectorConfigId?: string | null
+        connectorName?: string | null
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Resource'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  createResource: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Must start with 'ccfg_' */
+          connectorConfigId: string
+          settings?: {
+            [key: string]: unknown
+          } | null
+          displayName?: string | null
+          endUserId?: string | null
+          disabled?: boolean
+          /**
+           * @description
+           *   JSON object can can be used to associate arbitrary metadata to
+           *   avoid needing a separate 1-1 table just for simple key values in your application.
+           *   During updates this object will be shallowly merged
+           */
+          metadata?: unknown
+          /** @description Must start with 'int_' */
+          integrationId?: string | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': string
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  getResource: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Resource']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  deleteResource: {
+    parameters: {
+      query?: {
+        skipRevoke?: boolean
+      }
+      path: {
+        id: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  updateResource: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          settings?: {
+            [key: string]: unknown
+          } | null
+          displayName?: string | null
+          /**
+           * @description
+           *   JSON object can can be used to associate arbitrary metadata to
+           *   avoid needing a separate 1-1 table just for simple key values in your application.
+           *   During updates this object will be shallowly merged
+           */
+          metadata?: unknown
+          disabled?: boolean
+          endUserId?: string | null
+          /** @description Must start with 'int_' */
+          integrationId?: string | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Resource']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  syncResource: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Run sync in the background, not compatible with other options for now... */
+          async?: boolean | null
+          /** @description Only sync resource metadata and skip pipelines */
+          metaOnly?: boolean | null
+          /** @description Remove `state` of pipeline and trigger a full resync */
+          fullResync?: boolean | null
+          /**
+           * @description
+           *     Triggers provider to refresh data from its source
+           *     https://plaid.com/docs/api/products/transactions/#transactionsrefresh
+           *     This may also load historical transactions. For example,
+           *     Finicity treats historical transaction as premium service.
+           */
+          todo_upstreamRefresh?: boolean | null
+          /**
+           * @description
+           *     See coda's implmementation. Requires adding a new message to the sync protocol
+           *     to remove all data from a particular source_id
+           */
+          todo_removeUnsyncedData?: boolean | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  adminListConnectorConfigs: {
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['ConnectorConfig'][]
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  adminUpsertConnectorConfig: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Must start with 'ccfg_' */
+          id?: string
+          connectorName?: string
+          /** @description Must start with 'org_' */
+          orgId: string
+          config?: {
+            [key: string]: unknown
+          } | null
+          displayName?: string | null
+          /** @description Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL */
+          defaultPipeOut?: {
+            streams?: {
+              [key: string]: boolean
+            } | null
+            /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
+            links?: components['schemas']['Link'][] | null
+            /** @description Must start with 'reso_' */
+            destination_id: string
+          } | null
+          /** @description Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL */
+          defaultPipeIn?: {
+            /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
+            links?: components['schemas']['Link'][] | null
+            /** @description Must start with 'reso_' */
+            source_id: string
+          } | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['ConnectorConfig']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  adminGetConnectorConfig: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['ConnectorConfig']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  adminDeleteConnectorConfig: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  adminUpdateConnectorConfig: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          /**
+           * @description
+           *   JSON object can can be used to associate arbitrary metadata to
+           *   avoid needing a separate 1-1 table just for simple key values in your application.
+           *   During updates this object will be shallowly merged
+           */
+          metadata?: unknown
+          displayName?: string | null
+          disabled?: boolean
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['ConnectorConfig']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  listConnectorConfigInfos: {
+    parameters: {
+      query?: {
+        type?: 'source' | 'destination'
+        id?: string | null
+        connectorName?: string | null
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            /** @description Must start with 'ccfg_' */
+            id: string
+            envName?: string | null
+            displayName?: string | null
+            connectorName: string
+            isSource: boolean
+            isDestination: boolean
+          }[]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** @description Get catalog of all available connectors */
+  listConnectorMetas: {
+    parameters: {
+      query?: {
+        includeOas?: boolean
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  getConnectorMeta: {
+    parameters: {
+      query?: {
+        includeOas?: boolean
+      }
+      path: {
+        name: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  getConnectorOpenApiSpec: {
+    parameters: {
+      query?: {
+        original?: boolean
+      }
+      path: {
+        name: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  getConnectorSchemas: {
+    parameters: {
+      query?: {
+        type?: string
+      }
+      path: {
+        name: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  listPipelines: {
+    parameters: {
+      query?: {
+        limit?: number
+        offset?: number
+        resourceIds?: string[]
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Pipeline'][]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  createPipeline: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Must start with 'pipe_' */
+          id: string
+          /**
+           * @description
+           *   JSON object can can be used to associate arbitrary metadata to
+           *   avoid needing a separate 1-1 table just for simple key values in your application.
+           *   During updates this object will be shallowly merged
+           */
+          metadata?: unknown
+          disabled?: boolean
+          /** @description Must start with 'reso_' */
+          sourceId?: string
+          /** @description Must start with 'reso_' */
+          destinationId?: string
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Pipeline']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  deletePipeline: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': true
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  updatePipeline: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          /**
+           * @description
+           *   JSON object can can be used to associate arbitrary metadata to
+           *   avoid needing a separate 1-1 table just for simple key values in your application.
+           *   During updates this object will be shallowly merged
+           */
+          metadata?: unknown
+          disabled?: boolean
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Pipeline']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  syncPipeline: {
+    parameters: {
+      path: {
+        id: string
+      }
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Run sync in the background, not compatible with other options for now... */
+          async?: boolean | null
+          /** @description Only sync resource metadata and skip pipelines */
+          metaOnly?: boolean | null
+          /** @description Remove `state` of pipeline and trigger a full resync */
+          fullResync?: boolean | null
+          /**
+           * @description
+           *     Triggers provider to refresh data from its source
+           *     https://plaid.com/docs/api/products/transactions/#transactionsrefresh
+           *     This may also load historical transactions. For example,
+           *     Finicity treats historical transaction as premium service.
+           */
+          todo_upstreamRefresh?: boolean | null
+          /**
+           * @description
+           *     See coda's implmementation. Requires adding a new message to the sync protocol
+           *     to remove all data from a particular source_id
+           */
+          todo_removeUnsyncedData?: boolean | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-accounting-account_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              number?: string | null
+              name: string
+              type: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-accounting-expense_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              amount: number
+              currency: string
+              payment_account: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-accounting-vendor_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              name: string
+              url: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-pta-account_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-pta-transaction_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-pta-commodity_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-investment-account_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              name: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-investment-transaction_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-investment-holding_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-investment-security_list': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            has_next_page: boolean
+            items: {
+              id: string
+              _original?: unknown
+            }[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-salesEngagement-listContacts': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            hasNextPage: boolean
+            items: components['schemas']['sales-engagement-old.contact'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'verticals-banking-listCategories': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            hasNextPage: boolean
+            items: ({
+              _raw?: unknown
+            } & components['schemas']['banking.category'])[]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** Get current viewer accessing the API */
+  getViewer: {
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['Viewer']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'public-getOpenapiDocument': {
     responses: {
       /** @description Successful response */
       200: {
@@ -1668,7 +3379,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': unknown
+          'application/json': components['schemas']['crm.account'][]
         }
       }
       /** @description Invalid input data */
@@ -1886,7 +3597,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': unknown
+          'application/json': components['schemas']['crm.contact'][]
         }
       }
       /** @description Invalid input data */

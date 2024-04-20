@@ -1,46 +1,7 @@
-import type {clerkClient} from '@clerk/nextjs'
-import {
-  kApikeyMetadata,
-  kWebhookUrlMetadata,
-} from '@openint/app-config/constants'
 import {zId} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
-import {z, zRecord} from '@openint/util'
-
-export type ClerkOrg = Awaited<
-  ReturnType<(typeof clerkClient)['organizations']['getOrganization']>
->
-
-export type ClerkUser = Awaited<
-  ReturnType<(typeof clerkClient)['users']['getUser']>
->
-
-export function zOrgMetadata() {
-  return z.object({})
-}
-
-export const zAuth = {
-  organization: z.object({
-    id: zId('org'),
-    slug: z.string(),
-    publicMetadata: zOrgMetadata(),
-    privateMetadata: z.object({
-      [kApikeyMetadata]: z.string().optional(),
-      [kWebhookUrlMetadata]: z.string().optional(),
-    }),
-  }),
-
-  user: z.object({
-    id: zId('user'),
-    publicMetadata: z.object({}),
-    privateMetadata: z.object({}),
-    unsafeMetadata: z.object({}),
-  }),
-}
-
-export type ZAuth = {
-  [k in keyof typeof zAuth]: z.infer<(typeof zAuth)[k]>
-}
+import type {z} from '@openint/util'
+import {zRecord} from '@openint/util'
 
 type Pipeline = RouterOutput['listPipelines'][number]
 type Resource = RouterOutput['listConnections'][number]
