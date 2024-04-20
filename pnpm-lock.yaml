@@ -1628,9 +1628,9 @@ importers:
       '@openint/vertical-crm':
         specifier: workspace:*
         version: link:../../verticals/vertical-crm
-      '@openint/vertical-sales-engagement2':
+      '@openint/vertical-sales-engagement':
         specifier: workspace:*
-        version: link:../../verticals/vertical-sales-engagement2
+        version: link:../../verticals/vertical-sales-engagement
       '@opensdks/util-zod':
         specifier: 0.0.15
         version: 0.0.15
@@ -2163,22 +2163,6 @@ importers:
         version: link:../../connectors/connector-qbo
 
   verticals/vertical-sales-engagement:
-    dependencies:
-      '@openint/vdk':
-        specifier: workspace:*
-        version: link:../../kits/vdk
-    devDependencies:
-      '@openint/connector-apollo':
-        specifier: workspace:*
-        version: link:../../connectors/connector-apollo
-      '@openint/connector-outreach':
-        specifier: workspace:*
-        version: link:../../connectors/connector-outreach
-      '@openint/connector-salesloft':
-        specifier: workspace:*
-        version: link:../../connectors/connector-salesloft
-
-  verticals/vertical-sales-engagement2:
     dependencies:
       '@openint/vdk':
         specifier: workspace:*

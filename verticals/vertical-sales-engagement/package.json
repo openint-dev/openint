@@ -1,11 +1,9 @@
 {
   "name": "@openint/vertical-sales-engagement",
   "dependencies": {
-    "@openint/vdk": "workspace:*"
-  },
-  "devDependencies": {
-    "@openint/connector-apollo": "workspace:*",
-    "@openint/connector-outreach": "workspace:*",
-    "@openint/connector-salesloft": "workspace:*"
+    "@openint/vdk": "workspace:*",
+    "@opensdks/sdk-apollo": "0.0.21",
+    "@opensdks/sdk-outreach": "0.0.16",
+    "@opensdks/sdk-salesloft": "0.0.17"
   }
 }

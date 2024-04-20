@@ -2,15 +2,11 @@ import type {inferRouterInputs, inferRouterOutputs} from '@trpc/server'
 // import {accountingRouter} from './verticals/accounting'
 
 import {
-  apolloAdapter,
   createAccountingRouter,
   createBankingRouter,
   createInvestmentRouter,
   createPtaRouter,
-  createSalesEngagementRouter,
-  outreachAdapter,
   qboAdapter,
-  salesloftAdapter,
   xeroAdapter,
 } from '@openint/cdk/verticals'
 import {remoteProcedure, trpc} from './_base'
@@ -40,16 +36,6 @@ const investmentRouter = createInvestmentRouter({
   remoteProcedure,
   adapterByName: {},
 })
-const salesEngagementRouter = createSalesEngagementRouter({
-  trpc,
-  remoteProcedure,
-  // TODO: This should be moved into the vertical itself.
-  adapterByName: {
-    apollo: apolloAdapter,
-    salesloft: salesloftAdapter,
-    outreach: outreachAdapter,
-  },
-})
 
 // accountingRouter._def.procedures.listAccounts._def.meta?.openapi?.path += '/accounting/'
 
@@ -67,7 +53,6 @@ export const routers = {
   accounting: accountingRouter,
   pta: ptaRouter,
   investment: investmentRouter,
-  salesEngagement: salesEngagementRouter,
   banking: bankingRouter,
 }
 
@@ -89,7 +74,6 @@ export const flatRouter = trpc.mergeRouters(
       accounting: accountingRouter,
       pta: ptaRouter,
       investment: investmentRouter,
-      salesEngagement: salesEngagementRouter,
       banking: bankingRouter,
     }),
   }),

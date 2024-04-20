@@ -9,7 +9,7 @@ import {flatRouter, outgoingWebhookEventMap} from '@openint/engine-backend'
 import {mgmtRouter} from '@openint/mgmt'
 import {mapKeys, mapValues, publicProcedure, trpc, z} from '@openint/vdk'
 import {crmRouter} from '@openint/vertical-crm'
-import {salesEngagementRouter} from '@openint/vertical-sales-engagement2'
+import {salesEngagementRouter} from '@openint/vertical-sales-engagement'
 import {authRouter} from './authRouter'
 
 export const publicRouter = trpc.router({

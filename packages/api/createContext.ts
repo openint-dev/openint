@@ -9,7 +9,7 @@ import {
   apolloProvider,
   outreachProvider,
   salesloftProvider,
-} from '@openint/vertical-sales-engagement2'
+} from '@openint/vertical-sales-engagement'
 
 const providerByName = {
   apollo: apolloProvider,
