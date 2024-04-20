@@ -114,9 +114,6 @@ export interface paths {
   '/verticals/investment/security': {
     get: operations['verticals-investment-security_list']
   }
-  '/verticals/sales-engagement/contacts': {
-    get: operations['verticals-salesEngagement-listContacts']
-  }
   '/verticals/banking/category': {
     get: operations['verticals-banking-listCategories']
   }
@@ -150,93 +147,93 @@ export interface paths {
     get: operations['mgmt-getConnectionSyncConfig']
     put: operations['mgmt-upsertConnectionSyncConfig']
   }
-  '/engagement/v2/contact': {
+  '/verticals/sales-engagement/contact': {
     get: operations['salesEngagement-listContacts']
   }
-  '/engagement/v2/sequence': {
+  '/verticals/sales-engagement/sequence': {
     get: operations['salesEngagement-listSequences']
   }
-  '/engagement/v2/sequence_state': {
+  '/verticals/sales-engagement/sequence_state': {
     get: operations['salesEngagement-listSequenceStates']
     post: operations['salesEngagement-insertSequenceState']
   }
-  '/engagement/v2/user': {
+  '/verticals/sales-engagement/user': {
     get: operations['salesEngagement-listUsers']
   }
-  '/engagement/v2/account': {
+  '/verticals/sales-engagement/account': {
     get: operations['salesEngagement-listAccounts']
   }
-  '/engagement/v2/mailbox': {
+  '/verticals/sales-engagement/mailbox': {
     get: operations['salesEngagement-listMailboxes']
   }
-  '/engagement/v2/account/_upsert': {
+  '/verticals/sales-engagement/account/_upsert': {
     post: operations['salesEngagement-upsertAccount']
   }
-  '/engagement/v2/contact/_upsert': {
+  '/verticals/sales-engagement/contact/_upsert': {
     post: operations['salesEngagement-upsertContact']
   }
-  '/crm/v2/{entity}/_count': {
+  '/verticals/crm/{entity}/_count': {
     get: operations['crm-countEntity']
   }
-  '/crm/v2/account': {
+  '/verticals/crm/account': {
     get: operations['crm-listAccounts']
     post: operations['crm-createAccount']
   }
-  '/crm/v2/account/{id}': {
+  '/verticals/crm/account/{id}': {
     get: operations['crm-getAccount']
     patch: operations['crm-updateAccount']
   }
-  '/crm/v2/account/batch_read': {
+  '/verticals/crm/account/batch_read': {
     post: operations['crm-batchReadAccounts']
   }
-  '/crm/v2/account/_upsert': {
+  '/verticals/crm/account/_upsert': {
     post: operations['crm-upsertAccount']
   }
-  '/crm/v2/contact': {
+  '/verticals/crm/contact': {
     get: operations['crm-listContacts']
     post: operations['crm-createContact']
   }
-  '/crm/v2/contact/{id}': {
+  '/verticals/crm/contact/{id}': {
     get: operations['crm-getContact']
     patch: operations['crm-updateContact']
   }
-  '/crm/v2/contact/_batch_read': {
+  '/verticals/crm/contact/_batch_read': {
     post: operations['crm-batchReadContacts']
   }
-  '/crm/v2/contact/_upsert': {
+  '/verticals/crm/contact/_upsert': {
     post: operations['crm-upsertContact']
   }
-  '/crm/v2/lead': {
+  '/verticals/crm/lead': {
     get: operations['crm-listLeads']
   }
-  '/crm/v2/lead/{id}': {
+  '/verticals/crm/lead/{id}': {
     get: operations['crm-getLead']
   }
-  '/crm/v2/opportunity': {
+  '/verticals/crm/opportunity': {
     get: operations['crm-listOpportunities']
   }
-  '/crm/v2/opportunity/{id}': {
+  '/verticals/crm/opportunity/{id}': {
     get: operations['crm-getOpportunity']
   }
-  '/crm/v2/user': {
+  '/verticals/crm/user': {
     get: operations['crm-listUsers']
   }
-  '/crm/v2/user/{id}': {
+  '/verticals/crm/user/{id}': {
     get: operations['crm-getUser']
   }
-  '/crm/v2/custom_objects/{object_name}': {
+  '/verticals/crm/custom_objects/{object_name}': {
     get: operations['crm-listCustomObjectRecords']
     post: operations['crm-createCustomObjectRecord']
   }
-  '/crm/v2/metadata/objects': {
+  '/verticals/crm/metadata/objects': {
     get: operations['crm-metadataListObjects']
     /** @description Create custom object schema */
     post: operations['crm-metadataCreateObject']
   }
-  '/crm/v2/metadata/objects/{object_name}/properties': {
+  '/verticals/crm/metadata/objects/{object_name}/properties': {
     get: operations['crm-metadataListObjectProperties']
   }
-  '/crm/v2/metadata/associations': {
+  '/verticals/crm/metadata/associations': {
     post: operations['crm-metadataCreateAssociation']
   }
 }
@@ -293,9 +290,9 @@ export interface components {
        * @description An array of issues that were responsible for the error
        * @example []
        */
-      issues?: Array<{
+      issues?: {
         message: string
-      }>
+      }[]
     }
     /**
      * Error
@@ -321,9 +318,9 @@ export interface components {
        * @description An array of issues that were responsible for the error
        * @example []
        */
-      issues?: Array<{
+      issues?: {
         message: string
-      }>
+      }[]
     }
     Resource: {
       createdAt: string
@@ -381,9 +378,9 @@ export interface components {
        * @description An array of issues that were responsible for the error
        * @example []
        */
-      issues?: Array<{
+      issues?: {
         message: string
-      }>
+      }[]
     }
     ConnectorConfig: {
       createdAt: string
@@ -404,14 +401,14 @@ export interface components {
           [key: string]: boolean
         } | null
         /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
-        links?: Array<components['schemas']['Link']> | null
+        links?: components['schemas']['Link'][] | null
         /** @description Must start with 'reso_' */
         destination_id: string
       } | null
       /** @description Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL */
       defaultPipeIn?: {
         /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
-        links?: Array<components['schemas']['Link']> | null
+        links?: components['schemas']['Link'][] | null
         /** @description Must start with 'reso_' */
         source_id: string
       } | null
@@ -452,11 +449,6 @@ export interface components {
        *   During updates this object will be shallowly merged
        */
       metadata?: unknown
-    }
-    'sales-engagement-old.contact': {
-      id: string
-      first_name: string
-      last_name: string
     }
     'banking.category': {
       id: string
@@ -524,15 +516,21 @@ export interface components {
         type: string
         schema?: string | null
       } | null
-      unified_objects?: Array<{
-        object: string
-      }> | null
-      standard_objects?: Array<{
-        object: string
-      }> | null
-      custom_objects?: Array<{
-        object: string
-      }> | null
+      unified_objects?:
+        | {
+            object: string
+          }[]
+        | null
+      standard_objects?:
+        | {
+            object: string
+          }[]
+        | null
+      custom_objects?:
+        | {
+            object: string
+          }[]
+        | null
     }
     'sales-engagement.contact': {
       id: string
@@ -542,12 +540,8 @@ export interface components {
       account_id?: string
       job_title: string
       address: components['schemas']['sales-engagement.address']
-      email_addresses: Array<
-        components['schemas']['sales-engagement.email_address']
-      >
-      phone_numbers: Array<
-        components['schemas']['sales-engagement.phone_number']
-      >
+      email_addresses: components['schemas']['sales-engagement.email_address'][]
+      phone_numbers: components['schemas']['sales-engagement.phone_number'][]
       open_count: number
       click_count: number
       reply_count: number
@@ -667,11 +661,13 @@ export interface components {
       description?: string | null
       /** @description date-time */
       last_activity_at?: string | null
-      addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?: Array<{
-        phone_number: string | null
-        phone_number_type: components['schemas']['crm.phone_number_type']
-      }> | null
+      addresses?: components['schemas']['crm.address'][] | null
+      phone_numbers?:
+        | {
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }[]
+        | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       last_modified_at?: string | null
     }
@@ -705,11 +701,13 @@ export interface components {
       name?: string | null
       number_of_employees?: number | null
       website?: string | null
-      addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?: Array<{
-        phone_number: string | null
-        phone_number_type: components['schemas']['crm.phone_number_type']
-      }> | null
+      addresses?: components['schemas']['crm.address'][] | null
+      phone_numbers?:
+        | {
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }[]
+        | null
       owner_id?: string | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       passthrough_fields?: {
@@ -758,12 +756,14 @@ export interface components {
       lead_source?: string | null
       converted_account_id?: string | null
       converted_contact_id?: string | null
-      addresses?: Array<components['schemas']['crm.address']> | null
-      email_addresses?: Array<components['schemas']['crm.email_address']> | null
-      phone_numbers?: Array<{
-        phone_number: string | null
-        phone_number_type: components['schemas']['crm.phone_number_type']
-      }> | null
+      addresses?: components['schemas']['crm.address'][] | null
+      email_addresses?: components['schemas']['crm.email_address'][] | null
+      phone_numbers?:
+        | {
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }[]
+        | null
       created_at?: string | null
       is_deleted?: boolean | null
       last_modified_at?: string | null
@@ -842,7 +842,7 @@ export interface components {
       /** @description Only applicable in Salesforce. If not given, will default to 0. */
       scale?: number
       /** @description The list of options for a picklist/multipicklist field. */
-      options?: Array<components['schemas']['crm.meta.pick_list_option']>
+      options?: components['schemas']['crm.meta.pick_list_option'][]
       /** @description The raw details of the property as provided by the third-party Provider, if available. */
       raw_details?: {
         [key: string]: unknown
@@ -1106,9 +1106,9 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<{
+          'application/json': {
             [key: string]: unknown
-          }>
+          }[]
         }
       }
       /** @description Invalid input data */
@@ -1139,7 +1139,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['Resource']>
+          'application/json': components['schemas']['Resource'][]
         }
       }
       /** @description Invalid input data */
@@ -1388,7 +1388,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['ConnectorConfig']>
+          'application/json': components['schemas']['ConnectorConfig'][]
         }
       }
       /** @description Internal server error */
@@ -1418,14 +1418,14 @@ export interface operations {
               [key: string]: boolean
             } | null
             /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
-            links?: Array<components['schemas']['Link']> | null
+            links?: components['schemas']['Link'][] | null
             /** @description Must start with 'reso_' */
             destination_id: string
           } | null
           /** @description Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL */
           defaultPipeIn?: {
             /** @description Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization. */
-            links?: Array<components['schemas']['Link']> | null
+            links?: components['schemas']['Link'][] | null
             /** @description Must start with 'reso_' */
             source_id: string
           } | null
@@ -1579,7 +1579,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<{
+          'application/json': {
             /** @description Must start with 'ccfg_' */
             id: string
             envName?: string | null
@@ -1587,7 +1587,7 @@ export interface operations {
             connectorName: string
             isSource: boolean
             isDestination: boolean
-          }>
+          }[]
         }
       }
       /** @description Invalid input data */
@@ -1764,7 +1764,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['Pipeline']>
+          'application/json': components['schemas']['Pipeline'][]
         }
       }
       /** @description Invalid input data */
@@ -1976,13 +1976,13 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               number?: string | null
               name: string
               type: string
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2020,13 +2020,13 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               amount: number
               currency: string
               payment_account: string
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2064,12 +2064,12 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               name: string
               url: string
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2107,9 +2107,9 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2147,9 +2147,9 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2187,9 +2187,9 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2227,11 +2227,11 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               name: string
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2269,10 +2269,10 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2310,10 +2310,10 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               _original?: unknown
-            }>
+            }[]
           }
         }
       }
@@ -2351,48 +2351,10 @@ export interface operations {
         content: {
           'application/json': {
             has_next_page: boolean
-            items: Array<{
+            items: {
               id: string
               _original?: unknown
-            }>
-          }
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'verticals-salesEngagement-listContacts': {
-    parameters: {
-      query?: {
-        sync_mode?: 'full' | 'incremental'
-        cursor?: string | null
-        page_size?: number
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': {
-            hasNextPage: boolean
-            items: Array<components['schemas']['sales-engagement-old.contact']>
+            }[]
           }
         }
       }
@@ -2430,11 +2392,9 @@ export interface operations {
         content: {
           'application/json': {
             hasNextPage: boolean
-            items: Array<
-              {
-                _raw?: unknown
-              } & components['schemas']['banking.category']
-            >
+            items: ({
+              _raw?: unknown
+            } & components['schemas']['banking.category'])[]
           }
         }
       }
@@ -2496,7 +2456,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['customer']>
+          'application/json': components['schemas']['customer'][]
         }
       }
       /** @description Internal server error */
@@ -2592,7 +2552,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['connection']>
+          'application/json': components['schemas']['connection'][]
         }
       }
       /** @description Invalid input data */
@@ -2688,7 +2648,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['sync_config']>
+          'application/json': components['schemas']['sync_config'][]
         }
       }
       /** @description Internal server error */
@@ -2723,15 +2683,21 @@ export interface operations {
             type: string
             schema?: string | null
           } | null
-          unified_objects?: Array<{
-            object: string
-          }> | null
-          standard_objects?: Array<{
-            object: string
-          }> | null
-          custom_objects?: Array<{
-            object: string
-          }> | null
+          unified_objects?:
+            | {
+                object: string
+              }[]
+            | null
+          standard_objects?:
+            | {
+                object: string
+              }[]
+            | null
+          custom_objects?:
+            | {
+                object: string
+              }[]
+            | null
         }
       }
     }
@@ -2774,7 +2740,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.contact']>
+            items: components['schemas']['sales-engagement.contact'][]
           }
         }
       }
@@ -2810,7 +2776,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.sequence']>
+            items: components['schemas']['sales-engagement.sequence'][]
           }
         }
       }
@@ -2846,9 +2812,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<
-              components['schemas']['sales-engagement.sequenceState']
-            >
+            items: components['schemas']['sales-engagement.sequenceState'][]
           }
         }
       }
@@ -2926,7 +2890,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.user']>
+            items: components['schemas']['sales-engagement.user'][]
           }
         }
       }
@@ -2962,7 +2926,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.account']>
+            items: components['schemas']['sales-engagement.account'][]
           }
         }
       }
@@ -2998,7 +2962,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.mailbox']>
+            items: components['schemas']['sales-engagement.mailbox'][]
           }
         }
       }
@@ -3110,11 +3074,11 @@ export interface operations {
              *   }
              * ]
              */
-            email_addresses: Array<{
+            email_addresses: {
               email_address: string
               /** @enum {string|null} */
               email_address_type?: 'primary' | 'personal' | 'work'
-            }>
+            }[]
             /**
              * @example [
              *   {
@@ -3123,7 +3087,7 @@ export interface operations {
              *   }
              * ]
              */
-            phone_numbers: Array<{
+            phone_numbers: {
               phone_number: string
               /** @enum {string} */
               phone_number_type:
@@ -3132,7 +3096,7 @@ export interface operations {
                 | 'home'
                 | 'mobile'
                 | 'other'
-            }>
+            }[]
             /** @example 9f3e97fd-4d5d-4efc-959d-bbebfac079f5 */
             owner_id?: string | null
             /** @example ae4be028-9078-4850-a0bf-d2112b7c4d11 */
@@ -3223,7 +3187,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<components['schemas']['crm.account']>
+            items: components['schemas']['crm.account'][]
           }
         }
       }
@@ -3369,7 +3333,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['crm.account']>
+          'application/json': components['schemas']['crm.account'][]
         }
       }
       /** @description Invalid input data */
@@ -3441,7 +3405,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<components['schemas']['crm.contact']>
+            items: components['schemas']['crm.contact'][]
           }
         }
       }
@@ -3587,7 +3551,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['crm.contact']>
+          'application/json': components['schemas']['crm.contact'][]
         }
       }
       /** @description Invalid input data */
@@ -3659,7 +3623,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<components['schemas']['crm.lead']>
+            items: components['schemas']['crm.lead'][]
           }
         }
       }
@@ -3734,7 +3698,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<components['schemas']['crm.opportunity']>
+            items: components['schemas']['crm.opportunity'][]
           }
         }
       }
@@ -3809,7 +3773,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<components['schemas']['crm.user']>
+            items: components['schemas']['crm.user'][]
           }
         }
       }
@@ -3932,7 +3896,7 @@ export interface operations {
         content: {
           'application/json': {
             record?: unknown
-            warnings?: Array<components['schemas']['warning']>
+            warnings?: components['schemas']['warning'][]
           }
         }
       }
@@ -3960,7 +3924,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['crm.meta.object']>
+          'application/json': components['schemas']['crm.meta.object'][]
         }
       }
       /** @description Invalid input data */
@@ -3995,7 +3959,7 @@ export interface operations {
             plural: string
           }
           primary_field_id: string
-          fields: Array<components['schemas']['crm.meta.custom_object_field']>
+          fields: components['schemas']['crm.meta.custom_object_field'][]
         }
       }
     }
@@ -4030,7 +3994,7 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<components['schemas']['crm.meta.property']>
+          'application/json': components['schemas']['crm.meta.property'][]
         }
       }
       /** @description Invalid input data */
@@ -4071,7 +4035,7 @@ export interface operations {
         content: {
           'application/json': {
             association_schema: components['schemas']['crm.meta.association_schema']
-            warnings?: Array<components['schemas']['warning']>
+            warnings?: components['schemas']['warning'][]
           }
         }
       }

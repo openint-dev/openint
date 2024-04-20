@@ -10,7 +10,7 @@ const openint = initOpenIntSDK({
   },
 })
 
-void openint.GET('/verticals/sales-engagement/contacts').then((r) => {
+void openint.GET('/verticals/sales-engagement/contact').then((r) => {
   console.log(r.data)
 })
 

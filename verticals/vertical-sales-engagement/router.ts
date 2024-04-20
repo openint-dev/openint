@@ -5,7 +5,7 @@ import * as unified from './unifiedModels'
 export {unified}
 
 function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
-  return {openapi: {...meta, path: `/engagement/v2${meta.path}`}}
+  return {openapi: {...meta, path: `/verticals/sales-engagement${meta.path}`}}
 }
 
 export const salesEngagementRouter = trpc.router({
