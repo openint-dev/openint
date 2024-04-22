@@ -207,7 +207,7 @@ export async function syncConnection({
   ) {
     try {
       const res = await byos.GET(
-        `/${vertical}/v2/${stream}` as '/crm/v2/contact',
+        `/verticals/${vertical}/${stream}` as '/verticals/crm/contact',
         {params: {query: {cursor: state.cursor, page_size}}},
       )
       const count = incrementMetric(`${stream}_count`, res.data.items.length)
