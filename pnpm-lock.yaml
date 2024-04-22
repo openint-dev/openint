@@ -216,6 +216,9 @@ importers:
       '@openint/connector-google':
         specifier: workspace:*
         version: link:../../connectors/connector-google
+      '@openint/connector-greenhouse':
+        specifier: workspace:*
+        version: link:../../connectors/connector-greenhouse
       '@openint/connector-heron':
         specifier: workspace:*
         version: link:../../connectors/connector-heron
@@ -885,6 +888,21 @@ importers:
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
+
+  connectors/connector-greenhouse:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/runtime':
+        specifier: ^0.0.16
+        version: 0.0.16
+      '@opensdks/sdk-greenhouse':
+        specifier: ^0.0.1
+        version: 0.0.1
 
   connectors/connector-heron:
     dependencies:
@@ -5198,6 +5216,12 @@ packages:
 
   /@opensdks/sdk-finch@0.0.3:
     resolution: {integrity: sha512-fbKPSitxFIcCnb3v2kczLAeMuNTOqzT7IEY3O+vRtpRrFVwBjzs8m1ritQyX5nH4uWJiwfNOEPtz+iuTTzYlOw==}
+    dev: false
+
+  /@opensdks/sdk-greenhouse@0.0.1:
+    resolution: {integrity: sha512-4z0DM4/tuStPOE1tkbQCZlaEzBnthfJFk1CVQYfjB1BUPjxRIUl40qpRcPkjVv64e9d0SKfPjp7k7Bm8rbDrig==}
+    dependencies:
+      '@opensdks/runtime': 0.0.19
     dev: false
 
   /@opensdks/sdk-hubspot@0.0.6:
