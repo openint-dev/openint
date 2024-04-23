@@ -441,7 +441,7 @@ importers:
         version: link:../../packages/engine-backend
       '@openint/env':
         specifier: workspace:*
-        version: link:../../tbd/env
+        version: link:../../packages/env
       '@openint/meta-service-airbyte':
         specifier: workspace:*
         version: link:../../packages/meta-service-airbyte
@@ -1449,7 +1449,10 @@ importers:
         version: 1.1.7(patch_hash=wymar43eprx3gdqsv4laq3u2ei)
       '@openint/env':
         specifier: workspace:*
-        version: link:../../tbd/env
+        version: link:../../packages/env
+      '@openint/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@opensdks/fetch-links':
         specifier: 0.0.18
         version: 0.0.18
@@ -1462,16 +1465,10 @@ importers:
       '@opensdks/util-zod':
         specifier: 0.0.15
         version: 0.0.15
-      '@trpc/server':
-        specifier: 10.40.0
-        version: 10.40.0
       remeda:
         specifier: 1.6.1
         version: 1.6.1
     devDependencies:
-      '@lilyrose2798/trpc-openapi':
-        specifier: 1.3.10
-        version: 1.3.10(patch_hash=hesfnkphzbtlqjldce4x4rhy6e)(@trpc/server@10.40.0)(zod@3.22.4)
       '@opensdks/runtime':
         specifier: 0.0.19
         version: 0.0.19
@@ -1504,7 +1501,7 @@ importers:
         version: link:../engine-backend
       '@openint/env':
         specifier: workspace:*
-        version: link:../../tbd/env
+        version: link:../env
       '@openint/events':
         specifier: workspace:*
         version: link:../../tbd/events
@@ -1598,6 +1595,15 @@ importers:
         specifier: 18.0.27
         version: 18.0.27
 
+  packages/env:
+    dependencies:
+      '@opensdks/util-zod':
+        specifier: 0.0.15
+        version: 0.0.15
+      '@t3-oss/env-nextjs':
+        specifier: 0.7.3
+        version: 0.7.3(typescript@5.4.5)(zod@3.22.4)
+
   packages/meta-service-airbyte:
     dependencies:
       '@openint/cdk':
@@ -1690,6 +1696,24 @@ importers:
       redis:
         specifier: 3.1.2
         version: 3.1.2
+
+  packages/trpc:
+    dependencies:
+      '@lilyrose2798/trpc-openapi':
+        specifier: 1.3.10
+        version: 1.3.10(patch_hash=hesfnkphzbtlqjldce4x4rhy6e)(@trpc/server@10.40.0)(zod@3.22.4)
+      '@openint/env':
+        specifier: workspace:*
+        version: link:../env
+      '@opensdks/runtime':
+        specifier: 0.0.19
+        version: 0.0.19
+      '@opensdks/util-zod':
+        specifier: 0.0.15
+        version: 0.0.15
+      '@trpc/server':
+        specifier: 10.40.0
+        version: 10.40.0
 
   packages/ui:
     dependencies:
@@ -1949,7 +1973,7 @@ importers:
     dependencies:
       '@openint/env':
         specifier: workspace:*
-        version: link:../env
+        version: link:../../packages/env
       drizzle-orm:
         specifier: ^0.29.3
         version: 0.29.5(postgres@3.4.4)
@@ -1973,15 +1997,6 @@ importers:
         specifier: 0.16.0
         version: 0.16.0(prettier@3.1.0)
 
-  tbd/env:
-    dependencies:
-      '@opensdks/util-zod':
-        specifier: 0.0.15
-        version: 0.0.15
-      '@t3-oss/env-nextjs':
-        specifier: 0.7.3
-        version: 0.7.3(typescript@5.4.5)(zod@3.22.4)
-
   tbd/events:
     dependencies:
       '@opensdks/util-zod':
@@ -1998,7 +2013,7 @@ importers:
         version: link:../db
       '@openint/env':
         specifier: workspace:*
-        version: link:../env
+        version: link:../../packages/env
       '@openint/events':
         specifier: workspace:*
         version: link:../events
@@ -2029,7 +2044,7 @@ importers:
         version: link:../db
       '@openint/env':
         specifier: workspace:*
-        version: link:../env
+        version: link:../../packages/env
       '@openint/events':
         specifier: workspace:*
         version: link:../events

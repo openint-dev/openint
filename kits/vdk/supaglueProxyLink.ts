@@ -1,7 +1,7 @@
 import type {Link as FetchLink} from '@opensdks/fetch-links'
 import {mergeHeaders, modifyRequest} from '@opensdks/fetch-links'
 import {z} from '@opensdks/util-zod'
-import {NotAuthenticatedError} from './errors'
+import {NotAuthenticatedError} from '../../packages/trpc/errors'
 
 interface SupaglueHeaders {
   'x-api-key': string

@@ -12,7 +12,7 @@ import {
 import {env} from '@openint/env'
 import type {Events} from '@openint/events'
 import {initOpenIntSDK} from '@openint/sdk'
-import {HTTPError, parseErrorInfo} from '../../kits/vdk/errors'
+import {HTTPError, parseErrorInfo} from '../../packages/trpc/errors'
 
 /**
  * Unlike functions, routines are designed to run without dependency on Inngest

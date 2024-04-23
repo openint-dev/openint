@@ -9,6 +9,7 @@ import {
   type inferProcedureOutput,
   type MaybePromise,
 } from '@trpc/server'
+import {BadRequestError, publicProcedure} from '@openint/trpc'
 import {
   nangoConnectionWithCredentials,
   nangoProxyLink,
@@ -16,7 +17,22 @@ import {
   toNangoProviderConfigKey,
 } from './nangoProxyLink'
 import {supaglueProxyLink} from './supaglueProxyLink'
-import type {RemoteProcedureContext} from './trpc'
+
+export const remoteProcedure = publicProcedure.use(async ({next, ctx}) => {
+  const {'x-customer-id': customerId, 'x-provider-name': providerName} =
+    ctx.required
+  const provider = ctx.providerByName[
+    ctx.required['x-provider-name']
+  ] as Provider
+  if (!provider) {
+    throw new BadRequestError(`Provider ${providerName} not found`)
+  }
+  return next({ctx: {...ctx, customerId, providerName, provider}})
+})
+
+export type RemoteProcedureContext = ReturnType<
+  (typeof remoteProcedure)['query']
+>['_def']['_ctx_out']
 
 export interface _Provider<TInitOpts, TInstance = unknown> {
   __init__: (opts: TInitOpts) => TInstance
@@ -34,7 +50,8 @@ export interface ExtraInitOpts {
     instance_url: string | null | undefined
   }>
 }
-export type Provider = Record<string, (...args: any[]) => any> & _Provider<{ctx: RemoteProcedureContext} & ExtraInitOpts>
+export type Provider = Record<string, (...args: any[]) => any> &
+  _Provider<{ctx: RemoteProcedureContext} & ExtraInitOpts>
 
 export type ProviderFromRouter<
   TRouter extends AnyRouter,

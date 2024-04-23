@@ -8,7 +8,6 @@ import type {
 export * from './mapper'
 export * from './pagination'
 export * from './provider'
-export * from './trpc'
 export * from './type-utils/PathsOf'
 export * from './type-utils/StrictObj'
 
@@ -34,7 +33,7 @@ export type ResponseFrom<
   >
 >
 
-export * from './errors'
+export * from '@openint/trpc'
 
 // re-exporting utiltities
 

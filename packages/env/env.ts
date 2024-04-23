@@ -6,6 +6,12 @@ export const MGMT_PROVIDER_NAME = z.enum(['supaglue', 'nango'])
 
 export const env = createEnv({
   server: {
+    // MARK: - Actually used
+
+    // Variables set by Vercel when deployed
+    VERCEL_URL: z.string().optional(),
+
+    // MARK: - Not validated, may not be used...
     // Core env vars
     POSTGRES_URL: z.string().default('postgres://localhost:5432/postgres'),
     NANGO_SECRET_KEY: z.string().optional(),
@@ -34,9 +40,6 @@ export const env = createEnv({
     // Set if you want to receive webhooks for all the events
     WEBHOOK_URL: z.string().optional(),
     WEBHOOK_SECRET: z.string().optional(),
-
-    // Variables set by Vercel when deployed
-    VERCEL_URL: z.string().optional(),
 
     // Used for scripts / cli only, maybe we should rename them to all _ prefixed to be clear?
     PROVIDER_NAME: z.string().optional(),

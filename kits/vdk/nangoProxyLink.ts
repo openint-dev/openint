@@ -3,7 +3,7 @@ import {mergeHeaders, modifyRequest} from '@opensdks/fetch-links'
 import {initNangoSDK} from '@opensdks/sdk-nango'
 import {z} from '@opensdks/util-zod'
 import {env} from '@openint/env'
-import {isHttpError, NotAuthenticatedError} from './errors'
+import {isHttpError, NotAuthenticatedError} from '../../packages/trpc/errors'
 
 const kBaseUrlOverride = 'base-url-override'
 

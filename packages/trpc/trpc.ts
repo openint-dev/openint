@@ -3,11 +3,10 @@ import {z} from '@opensdks/util-zod'
 import {initTRPC} from '@trpc/server'
 import {env, MGMT_PROVIDER_NAME, proxyRequired} from '@openint/env'
 import {BadRequestError} from './errors'
-import type {Provider} from './provider'
 
 export interface RouterContext {
   headers: Headers
-  providerByName: Record<string, Provider>
+  providerByName: Record<string, unknown>
 }
 
 export interface RouterMeta extends OpenApiMeta {}
@@ -45,17 +44,3 @@ export const publicProcedure = trpc.procedure.use(async ({next, ctx, path}) => {
     ctx: {...ctx, path, optional, required, mgmtProviderName},
   })
 })
-
-export const remoteProcedure = publicProcedure.use(async ({next, ctx}) => {
-  const {'x-customer-id': customerId, 'x-provider-name': providerName} =
-    ctx.required
-  const provider = ctx.providerByName[ctx.required['x-provider-name']]
-  if (!provider) {
-    throw new BadRequestError(`Provider ${providerName} not found`)
-  }
-  return next({ctx: {...ctx, customerId, providerName, provider}})
-})
-
-export type RemoteProcedureContext = ReturnType<
-  (typeof remoteProcedure)['query']
->['_def']['_ctx_out']
