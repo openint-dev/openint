@@ -21,11 +21,10 @@ export const twentyServer = {
           if (company) {
             await twenty.core.POST('/companies', {
               body: {
-                id: company.id,
                 name: company.name ?? '',
-                annualRecurringRevenue: {
-                  amountMicros: String(company.annualRevenue),
-                },
+                // annualRecurringRevenue: {
+                //   amountMicros: String(company.annualRevenue),
+                // },
                 address: [
                   company.address.street,
                   company.address.city,
@@ -34,9 +33,9 @@ export const twentyServer = {
                   company.address.zip,
                   company.address.postalCode,
                 ].join(', '),
-                createdAt: String(company.createdTimestamp), // TODO(@jatin): make this typesafe
-                updatedAt: String(company.updatedTimestamp),
-                ...(company.additional as Object),
+                // createdAt: String(company.createdTimestamp), // TODO(@jatin): make this typesafe
+                // updatedAt: String(company.updatedTimestamp),
+                // ...(company.additional as Object), // TODO(@jatin): make this work
               },
             })
           }
@@ -45,16 +44,15 @@ export const twentyServer = {
           if (contact) {
             await twenty.core.POST('/people', {
               body: {
-                id: contact.id,
                 name: {
                   firstName: contact.firstName,
                   lastName: contact.lastName,
                 },
                 email: contact.email,
                 phone: contact.phone,
-                createdAt: String(contact.createdTimestamp), // TODO(@jatin): make this typesafe
-                updatedAt: String(contact.updatedTimestamp),
-                ...(contact.additional as Object),
+                // createdAt: String(contact.createdTimestamp), // TODO(@jatin): make this typesafe
+                // updatedAt: String(contact.updatedTimestamp),
+                // ...(contact.additional as Object), // TODO(@jatin): make this work
               },
             })
           }
@@ -63,17 +61,16 @@ export const twentyServer = {
           if (deal) {
             await twenty.core.POST('/opportunities', {
               body: {
-                id: deal.id,
                 name: deal.name ?? '',
-                amount: {
-                  amountMicros: String(deal.amount),
-                },
-                stage: deal.stage,
-                probability: String(deal.probability),
-                closeDate: String(deal.expectedCloseDate),
-                createdAt: String(deal.createdTimestamp),
-                updatedAt: String(deal.updatedTimestamp),
-                ...(deal.additional as Object),
+                // amount: {
+                //   amountMicros: String(deal.amount),
+                // },
+                // stage: deal.stage,
+                // probability: String(deal.probability),
+                // closeDate: String(deal.expectedCloseDate),
+                // createdAt: String(deal.createdTimestamp),
+                // updatedAt: String(deal.updatedTimestamp),
+                // ...(deal.additional as Object), // TODO(@jatin): make this work
               },
             })
           }

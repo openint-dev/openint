@@ -14,21 +14,21 @@ export const revertServer = {
         'x-revert-t-id': settings.tenant_id,
       },
     }),
-  sourceSync: ({instance, state, settings}) => {
-    // TODO:
+  sourceSync: ({instance, state}) => {
+    // TODO(@tony): Please help me fix this so the stream names from the UI & fields as well.
     // const streamNames = Object.keys(streams ?? {}).filter(
     //   (s) => !!streams[s as keyof typeof streams],
     // )
 
     async function* iterateRecords() {
       for (const [name, stream] of Object.entries(
-        settings.temp_pipe_out_streams ?? {},
+        ['company', 'contact', 'deal'] ?? {},
       )) {
         if (!stream) {
           continue
         }
         const sState = ((state ?? {}) as Record<string, unknown>)[name] ?? {}
-        yield* iterateRecordsInStream(name, stream.fields, sState)
+        yield* iterateRecordsInStream(stream, [], sState) // TODO(@jatin): update this.
       }
     }
 
