@@ -1,6 +1,6 @@
 import type {PlaidSDKTypes} from '@openint/connector-plaid'
 import {mapper, zCast} from '@openint/vdk'
-import {unified} from '../router'
+import * as unified from '../unifiedModels'
 
 type Plaid = PlaidSDKTypes['oas']['components']
 

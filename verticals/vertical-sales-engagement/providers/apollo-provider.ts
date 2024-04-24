@@ -5,7 +5,7 @@ import {
 } from '@opensdks/sdk-apollo'
 import {mapper, pick, zCast} from '@openint/vdk'
 import type {SalesEngagementProvider} from '../router'
-import {unified} from '../router'
+import * as unified from '../unifiedModels'
 import type {EmailAddress} from '../unifiedModels'
 
 type Apollo = ApolloSDKTypes['oas']['components']['schemas']

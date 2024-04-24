@@ -1,7 +1,7 @@
 import type {Oas_crm_contacts, Oas_crm_owners} from '@opensdks/sdk-hubspot'
 import {mapper, z, zBaseRecord, zCast} from '@openint/vdk'
 import type {PipelineStageMapping} from '.'
-import {unified} from '../../router'
+import * as unified from '../../unifiedModels'
 
 export type SimplePublicObject =
   Oas_crm_contacts['components']['schemas']['SimplePublicObject']

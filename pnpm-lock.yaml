@@ -1511,9 +1511,18 @@ importers:
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
+      '@openint/vertical-accounting':
+        specifier: workspace:*
+        version: link:../../verticals/vertical-accounting
+      '@openint/vertical-banking':
+        specifier: workspace:*
+        version: link:../../verticals/vertical-banking
       '@openint/vertical-crm':
         specifier: workspace:*
         version: link:../../verticals/vertical-crm
+      '@openint/vertical-pta':
+        specifier: workspace:*
+        version: link:../../verticals/vertical-pta
       '@openint/vertical-sales-engagement':
         specifier: workspace:*
         version: link:../../verticals/vertical-sales-engagement

@@ -1,6 +1,6 @@
 import type {SalesforceSDKTypes} from '@opensdks/sdk-salesforce'
 import {mapper, z, zBaseRecord, zCast} from '@openint/vdk'
-import {unified} from '../../router'
+import * as unified from '../../unifiedModels'
 
 // import {updateFieldPermissions} from './salesforce/updatePermissions'
 

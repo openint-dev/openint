@@ -4,7 +4,7 @@ import {mapper, z, zCast} from '@openint/vdk'
 import type * as Pta from '../pta-types'
 import {makePostingsMap} from '../pta-utils'
 import type {PtaAdapter} from '../router'
-import {unified} from '../router'
+import * as unified from '../unifiedModels'
 
 /** Prefix id with realmId to get id global within QBO provider */
 function globalId(realmId: string, entityId: string) {

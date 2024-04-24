@@ -1,7 +1,7 @@
 import type {PipedriveSDKTypes} from '@opensdks/sdk-pipedrive'
 import type {PathsWithMethod, ResponseFrom} from '@openint/vdk'
 import {mapper, z, zCast} from '@openint/vdk'
-import {unified} from '../../router'
+import * as unified from '../../unifiedModels'
 
 // Unfortunately pipedrive does not use the schemas field properly...
 // So we have to do the type magic...

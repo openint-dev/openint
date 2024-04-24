@@ -5,7 +5,7 @@ import {
 } from '@opensdks/sdk-outreach'
 import {mapper, z, zCast} from '@openint/vdk'
 import type {SalesEngagementProvider} from '../router'
-import {unified} from '../router'
+import * as unified from '../unifiedModels'
 import type {EmailAddress, PhoneNumber} from '../unifiedModels'
 
 type Outreach = OutreachSDKTypes['oas']['components']['schemas']

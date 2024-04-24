@@ -19,7 +19,10 @@
     "@openint/events": "workspace:*",
     "@openint/mgmt": "workspace:*",
     "@openint/vdk": "workspace:*",
+    "@openint/vertical-accounting": "workspace:*",
+    "@openint/vertical-banking": "workspace:*",
     "@openint/vertical-crm": "workspace:*",
+    "@openint/vertical-pta": "workspace:*",
     "@openint/vertical-sales-engagement": "workspace:*",
     "@opensdks/util-zod": "0.0.15",
     "remeda": "1.6.1"

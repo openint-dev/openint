@@ -8,7 +8,10 @@ import {getServerUrl} from '@openint/app-config/constants'
 import {flatRouter, outgoingWebhookEventMap} from '@openint/engine-backend'
 import {mgmtRouter} from '@openint/mgmt'
 import {mapKeys, mapValues, publicProcedure, trpc, z} from '@openint/vdk'
+import accountingRouter from '@openint/vertical-accounting'
+import bankingRouter from '@openint/vertical-banking'
 import {crmRouter} from '@openint/vertical-crm'
+import ptaRouter from '@openint/vertical-pta'
 import {salesEngagementRouter} from '@openint/vertical-sales-engagement'
 import {authRouter} from './authRouter'
 
@@ -24,13 +27,12 @@ export const _appRouter = trpc.router({
   public: publicRouter,
   // Can't get rid of mgmt api just yet
   mgmt: mgmtRouter,
-  //
+  // Verticals
   salesEngagement: salesEngagementRouter,
   crm: crmRouter,
-  // Pta
-  // investment
-  // accounting
-  // banking
+  banking: bankingRouter,
+  accounting: accountingRouter,
+  pta: ptaRouter,
 })
 
 export const appRouter = trpc.mergeRouters(flatRouter, authRouter, _appRouter)

@@ -1,7 +1,7 @@
 import type {QBOSDK, QBOSDKTypes} from '@openint/connector-qbo'
 import {mapper, zCast} from '@openint/vdk'
 import type {BankingAdapter} from '../router'
-import {unified} from '../router'
+import * as unified from '../unifiedModels'
 
 type QBO = QBOSDKTypes['oas']['components']['schemas']
 
