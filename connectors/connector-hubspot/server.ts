@@ -1,30 +1,13 @@
-import type {HubspotSDK} from '@opensdks/sdk-hubspot'
+import {initHubspotSDK, type HubspotSDK} from '@opensdks/sdk-hubspot'
 import type {ConnectorServer} from '@openint/cdk'
 import type {hubspotSchemas} from './def'
 
 export const hubspotServer = {
-  // newInstance: ({settings, fetchLinks}) => {
-  //   const sdk = initHubspotSDK({
-  //     // We rely on nango to refresh the access token...
-  //     headers: {
-  //       authorization: `Bearer ${settings.oauth.credentials.access_token}`,
-  //     },
-  //     links: (defaultLinks) => [
-  //       (req, next) => {
-  //         if (sdk.clientOptions.baseUrl) {
-  //           req.headers.set(
-  //             nangoProxyLink.kBaseUrlOverride,
-  //             sdk.clientOptions.baseUrl,
-  //           )
-  //         }
-  //         return next(req)
-  //       },
-  //       ...fetchLinks,
-  //       ...defaultLinks,
-  //     ],
-  //   })
-  //   return sdk
-  // },
+  newInstance: ({fetchLinks}) =>
+    initHubspotSDK({
+      headers: {authorization: 'Bearer ...'}, // This will be populated by auth provider
+      links: (defaultLinks) => [...fetchLinks, ...defaultLinks],
+    }),
   // passthrough: (instance, input) =>
   //   instance.request(input.method, input.path, {
   //     headers: input.headers as Record<string, string>,

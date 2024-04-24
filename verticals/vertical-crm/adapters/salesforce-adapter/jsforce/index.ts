@@ -311,4 +311,4 @@ export const salesforceAdapterJsForce = {
       },
     }
   },
-} satisfies Omit<CRMAdapter<jsforce.Connection>, '__init__'>
+} satisfies CRMAdapter<jsforce.Connection>

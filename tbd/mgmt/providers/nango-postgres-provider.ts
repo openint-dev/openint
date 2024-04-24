@@ -1,4 +1,6 @@
-import {db as _db, dbUpsert, eq, schema, sql} from '@openint/db'
+import type {NangoSDK, NangoSDKTypes} from '@opensdks/sdk-nango'
+import type {db as _db} from '@openint/db'
+import {dbUpsert, eq, schema, sql} from '@openint/db'
 import type {PathsWithMethod, ResponseFrom} from '@openint/vdk'
 import {NotAuthenticatedError, NotFoundError} from '@openint/vdk'
 import {
@@ -6,8 +8,6 @@ import {
   toNangoConnectionId,
   toNangoProviderConfigKey,
 } from '@openint/vdk/nangoProxyLink'
-import type {NangoSDK, NangoSDKTypes} from '@opensdks/sdk-nango'
-import {initNangoSDK} from '@opensdks/sdk-nango'
 import type {unified} from '../router'
 import {type MgmtProvider} from '../router'
 
@@ -86,12 +86,12 @@ async function authenticateOrFail(nango: NangoSDK) {
 }
 
 export const nangoPostgresProvider = {
-  __init__: ({ctx}) => ({
-    nango: initNangoSDK({
-      headers: {authorization: `Bearer ${ctx.required['x-nango-secret-key']}`},
-    }),
-    db: _db,
-  }),
+  // __init__: ({ctx}) => ({
+  //   nango: initNangoSDK({
+  //     headers: {authorization: `Bearer ${ctx.required['x-nango-secret-key']}`},
+  //   }),
+  //   db: _db,
+  // }),
   // TODO: consider separating nango provider from postgres provider... And then have user compose together a nangoPostgres provider
   listCustomers: async ({instance}) => {
     await authenticateOrFail(instance.nango)

@@ -38,7 +38,6 @@ export const mappers = {
 }
 
 export const qboAdapter = {
-  __init__: () => null as never,
   listCategories: async ({instance}) => {
     const res = await instance.query(
       // QBO API does not support OR in SQL query...

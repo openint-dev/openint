@@ -1,8 +1,7 @@
-import {initPipedriveSDK, type PipedriveSDK} from '@opensdks/sdk-pipedrive'
+import {type PipedriveSDK} from '@opensdks/sdk-pipedrive'
 import type {BaseRecord} from '@openint/vdk'
-import {NotAuthorizedError} from '@openint/vdk'
 import type {CRMAdapter} from '../../router'
-import {mappers, zErrorPayload} from './mappers'
+import {mappers} from './mappers'
 
 const _listEntityFullThenMap = async <TIn, TOut extends BaseRecord>(
   instance: PipedriveSDK,
@@ -43,32 +42,32 @@ const _listEntityFullThenMap = async <TIn, TOut extends BaseRecord>(
 }
 
 export const pipedriveAdapter = {
-  __init__: ({proxyLinks, ctx}) =>
-    initPipedriveSDK({
-      headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
-      links: (defaultLinks) => [
-        async (req, next) => {
-          const res = await next(req)
-          if (res.status === 403) {
-            const parsed = zErrorPayload.safeParse(await res.clone().json())
-            if (
-              parsed.success &&
-              parsed.data.error === 'Scope and URL mismatch'
-            ) {
-              throw new NotAuthorizedError(
-                ctx.remote.customerId,
-                ctx.remote.connectorName,
-                `${parsed.data.error}: ${parsed.data.error_info}`,
-                parsed.data,
-              )
-            }
-          }
-          return res
-        },
-        ...proxyLinks,
-        ...defaultLinks,
-      ],
-    }),
+  // __init__: ({proxyLinks, ctx}) =>
+  //   initPipedriveSDK({
+  //     headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
+  //     links: (defaultLinks) => [
+  //       async (req, next) => {
+  //         const res = await next(req)
+  //         if (res.status === 403) {
+  //           const parsed = zErrorPayload.safeParse(await res.clone().json())
+  //           if (
+  //             parsed.success &&
+  //             parsed.data.error === 'Scope and URL mismatch'
+  //           ) {
+  //             throw new NotAuthorizedError(
+  //               ctx.remote.customerId,
+  //               ctx.remote.connectorName,
+  //               `${parsed.data.error}: ${parsed.data.error_info}`,
+  //               parsed.data,
+  //             )
+  //           }
+  //         }
+  //         return res
+  //       },
+  //       ...proxyLinks,
+  //       ...defaultLinks,
+  //     ],
+  //   }),
   listAccounts: async ({instance, input}) =>
     _listEntityFullThenMap(instance, {
       ...input,

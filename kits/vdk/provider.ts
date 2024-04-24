@@ -19,21 +19,17 @@ import {
 export function verticalProcedure(adapterMap: AdapterMap) {
   return remoteProcedure.use(async ({next, ctx}) => {
     const {connectorName} = ctx.remote
-    const provider = adapterMap[connectorName]
-    if (!provider) {
-      throw new BadRequestError(`Provider ${connectorName} not found`)
+    const adapter = adapterMap[connectorName]
+    if (!adapter) {
+      throw new BadRequestError(`Adapter ${connectorName} not found`)
     }
-    return next({ctx: {...ctx, provider}})
+    return next({ctx: {...ctx, adapter}})
   })
 }
 
 export type VerticalProcedureContext = ReturnType<
   ReturnType<typeof verticalProcedure>['query']
 >['_def']['_ctx_out']
-
-export interface _Provider<TInitOpts, TInstance = unknown> {
-  __init__: (opts: TInitOpts) => TInstance
-}
 
 export interface AdapterMap {
   [k: string]: Adapter
@@ -51,14 +47,12 @@ export interface ExtraInitOpts {
     instance_url: string | null | undefined
   }>
 }
-export type Adapter = Record<string, (...args: any[]) => any> &
-  _Provider<{ctx: VerticalProcedureContext} & ExtraInitOpts>
+export type Adapter = Record<string, (...args: any[]) => any>
 
 export type AdapterFromRouter<
   TRouter extends AnyRouter,
   TInstance = {},
   TCtx = VerticalProcedureContext,
-  TInitOpts = {ctx: TCtx} & ExtraInitOpts,
 > = {
   [k in keyof TRouter as TRouter[k] extends AnyProcedure
     ? k
@@ -69,7 +63,7 @@ export type AdapterFromRouter<
         input: inferProcedureInput<TRouter[k]>
       }) => MaybePromise<inferProcedureOutput<TRouter[k]>>
     : never
-} & _Provider<TInitOpts, TInstance>
+}
 
 /**
  * Workaround for situation where we do not want to set an override of the base url
@@ -125,10 +119,19 @@ export async function proxyCallAdapter({
     }
   })()
 
-  const instance = ctx.provider.__init__({ctx, ...extraInitOpts})
+  const instance: unknown = ctx.remote.connector.newInstance?.({
+    config: ctx.remote.config,
+    settings: ctx.remote.settings,
+    fetchLinks: ctx.remote.fetchLinks,
+    onSettingsChange: (settings) =>
+      ctx.services.metaLinks.patch('resource', ctx.remote.id, {
+        settings,
+        ...extraInitOpts,
+      }),
+  })
 
   const methodName = ctx.path.split('.').pop() ?? ''
-  const implementation = ctx.provider?.[methodName] as Function
+  const implementation = ctx.adapter?.[methodName] as Function
 
   if (typeof implementation !== 'function') {
     throw new TRPCError({

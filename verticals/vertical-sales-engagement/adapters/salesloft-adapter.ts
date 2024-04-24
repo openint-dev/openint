@@ -1,12 +1,11 @@
 import {
-  initSalesloftSDK,
   type SalesloftSDK,
   type SalesloftSDKTypes,
 } from '@opensdks/sdk-salesloft'
 import {mapper, z, zCast} from '@openint/vdk'
 import type {SalesEngagementAdapter} from '../router'
-import * as unified from '../unifiedModels'
 import type {EmailAddress, PhoneNumber} from '../unifiedModels'
+import * as unified from '../unifiedModels'
 
 type Salesloft = SalesloftSDKTypes['oas']['components']['schemas']
 
@@ -152,11 +151,6 @@ const mappers = {
 }
 
 export const salesloftAdapter = {
-  __init__: ({proxyLinks}) =>
-    initSalesloftSDK({
-      headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
-      links: (defaultLinks) => [...proxyLinks, ...defaultLinks],
-    }),
   listContacts: async ({instance, input}) => {
     const res = await instance.GET(
       input.cursor

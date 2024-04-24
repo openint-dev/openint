@@ -1,12 +1,8 @@
-import {
-  initApolloSDK,
-  type ApolloSDK,
-  type ApolloSDKTypes,
-} from '@opensdks/sdk-apollo'
+import {type ApolloSDK, type ApolloSDKTypes} from '@opensdks/sdk-apollo'
 import {mapper, pick, zCast} from '@openint/vdk'
 import type {SalesEngagementAdapter} from '../router'
-import * as unified from '../unifiedModels'
 import type {EmailAddress} from '../unifiedModels'
+import * as unified from '../unifiedModels'
 
 type Apollo = ApolloSDKTypes['oas']['components']['schemas']
 
@@ -95,15 +91,6 @@ const mappers = {
 }
 
 export const apolloAdapter = {
-  __init__: ({proxyLinks}) =>
-    initApolloSDK({
-      api_key: '', // This will be populated by Nango, or you can populate your own
-      links: (defaultLinks) => [
-        ...defaultLinks.slice(0, -1),
-        ...proxyLinks, // proxy links shoudl be in the middle...
-        ...defaultLinks.slice(-1),
-      ],
-    }),
   listContacts: async ({instance}) => {
     const res = await instance.POST('/v1/contacts/search', {})
     return {

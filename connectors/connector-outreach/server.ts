@@ -1,7 +1,6 @@
 import type {OutreachSDK} from '@opensdks/sdk-outreach'
 import {initOutreachSDK} from '@opensdks/sdk-outreach'
 import type {ConnectorServer} from '@openint/cdk'
-import {nangoProxyLink} from '@openint/cdk'
 import type {outreachSchemas} from './def'
 
 export const outreachServer = {
@@ -11,19 +10,7 @@ export const outreachServer = {
       headers: {
         authorization: `Bearer ${settings.oauth.credentials.access_token}`,
       },
-      links: (defaultLinks) => [
-        (req, next) => {
-          if (sdk.clientOptions.baseUrl) {
-            req.headers.set(
-              nangoProxyLink.kBaseUrlOverride,
-              sdk.clientOptions.baseUrl,
-            )
-          }
-          return next(req)
-        },
-        ...fetchLinks,
-        ...defaultLinks,
-      ],
+      links: (defaultLinks) => [...fetchLinks, ...defaultLinks],
     })
     return sdk
   },

@@ -1,17 +1,9 @@
-import {
-  initSalesforceSDK,
-  type SalesforceSDK as _SalesforceSDK,
-} from '@opensdks/sdk-salesforce'
+import {type SalesforceSDK as _SalesforceSDK} from '@opensdks/sdk-salesforce'
 // import * as jsforce from 'jsforce'
 import type {BaseRecord} from '@openint/vdk'
-import {
-  LastUpdatedAtId,
-  modifyRequest,
-  PLACEHOLDER_BASE_URL,
-  uniqBy,
-} from '@openint/vdk'
+import {LastUpdatedAtId, uniqBy} from '@openint/vdk'
 import type {CRMAdapter} from '../../router'
-import {SALESFORCE_API_VERSION, SALESFORCE_STANDARD_OBJECTS} from './constants'
+import {SALESFORCE_STANDARD_OBJECTS} from './constants'
 // import {salesforceProviderJsForce} from './jsforce'
 import {capitalizeFirstChar, listFields, mappers} from './mappers'
 
@@ -112,42 +104,6 @@ function sdkExt(instance: SalesforceSDK) {
 }
 
 export const salesforceAdapter = {
-  __init__: ({proxyLinks}) => {
-    const sdk = initSalesforceSDK({
-      baseUrl: PLACEHOLDER_BASE_URL,
-      links: (defaultLinks) => [
-        (req, next) =>
-          next(
-            modifyRequest(req, {
-              url: req.url.replace(
-                PLACEHOLDER_BASE_URL,
-                PLACEHOLDER_BASE_URL +
-                  '/services/data/v' +
-                  SALESFORCE_API_VERSION,
-              ),
-            }),
-          ),
-        ...proxyLinks,
-        ...defaultLinks,
-      ],
-    })
-    // Would be nice if this method was in the salesforce-provider-jsforce file
-    return sdk
-    // async function getJsForce() {
-    //   const creds = await getCredentials()
-    //   if (!creds.instance_url || !creds.access_token) {
-    //     throw new Error('Missing instance_url or access_token')
-    //   }
-    //   const conn = new jsforce.Connection({
-    //     instanceUrl: creds.instance_url,
-    //     accessToken: creds.access_token,
-    //     version: SALESFORCE_API_VERSION,
-    //     maxRequest: 10,
-    //   })
-    //   return conn
-    // }
-    // return {...sdk, getJsForce} satisfies SalesforceSDK
-  },
   countEntity: async ({instance, input}) => {
     // NOTE: extract this into a helper function inside sdk-salesforce
     const res = await instance.query(`SELECT COUNT() FROM ${input.entity}`)

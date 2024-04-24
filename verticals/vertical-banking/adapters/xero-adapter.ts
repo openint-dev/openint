@@ -35,7 +35,6 @@ export const mappers = {
 }
 
 export const xeroAdapter = {
-  __init__: () => null as never,
   listCategories: async ({instance}) => {
     // TODO: Abstract this away please...
     const tenantId = await instance.identity

@@ -6,10 +6,14 @@ import type {apolloSchemas} from './def'
 import {APOLLO_ENTITY_NAME, apolloHelpers} from './def'
 
 export const apolloServer = {
-  newInstance: (opts) =>
+  newInstance: ({fetchLinks}) =>
     initApolloSDK({
-      api_key: opts.settings.api_key,
-      links: (defaultLinks) => [...opts.fetchLinks, ...defaultLinks],
+      api_key: '', // This will be populated by Nango, or you can populate your own
+      links: (defaultLinks) => [
+        ...defaultLinks.slice(0, -1),
+        ...fetchLinks, // proxy links shoudl be in the middle...
+        ...defaultLinks.slice(-1),
+      ],
     }),
   passthrough: (instance, input) =>
     instance.request(input.method, input.path, {

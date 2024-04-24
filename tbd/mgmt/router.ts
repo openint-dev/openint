@@ -1,5 +1,5 @@
 import {and, db, eq, schema} from '@openint/db'
-import type {_Provider, AdapterFromRouter} from '@openint/vdk'
+import type {Adapter, AdapterFromRouter} from '@openint/vdk'
 import {NotImplementedError, publicProcedure, trpc, z} from '@openint/vdk'
 import {nangoPostgresProvider} from './providers/nango-postgres-provider'
 import {supaglueProvider} from './providers/supaglue-provider'
@@ -10,7 +10,7 @@ export {unified}
 const mgmtProviderName = 'nango'
 
 export const mgmtProcedure = publicProcedure.use(async ({next, ctx}) => {
-  const provider: _Provider<InitOpts> =
+  const provider: Adapter =
     mgmtProviderName === 'nango' ? nangoPostgresProvider : supaglueProvider
   return next({ctx: {...ctx, provider}})
 })
@@ -19,13 +19,11 @@ type MgmtProcedureContext = ReturnType<
   (typeof mgmtProcedure)['query']
 >['_def']['_ctx_out']
 
-type InitOpts = {ctx: MgmtProcedureContext}
+// type InitOpts = {ctx: MgmtProcedureContext}
 
 export type MgmtProvider<TInstance> = AdapterFromRouter<
   typeof mgmtRouter,
-  TInstance,
-  MgmtProcedureContext,
-  InitOpts
+  TInstance
 >
 
 // Should the mgmt router be refactored into its own package outside of API?
@@ -133,7 +131,7 @@ async function mgmtProxyCallProvider({
   input: unknown
   ctx: MgmtProcedureContext
 }) {
-  const instance = ctx.provider.__init__({ctx})
+  const instance = (ctx.provider as any).__init__({ctx})
   // verticals.salesEngagement.listContacts -> listContacts
   const methodName = ctx.path.split('.').pop() ?? ''
   const implementation = ctx.provider?.[methodName as '__init__'] as Function

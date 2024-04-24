@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type {SupaglueSDK} from '@opensdks/sdk-supaglue'
-import {initSupaglueSDK} from '@opensdks/sdk-supaglue'
-import type {unified, MgmtProvider} from '../router'
+import type {MgmtProvider, unified} from '../router'
 
 export const supaglueProvider = {
-  __init__: ({ctx}) =>
-    initSupaglueSDK({headers: {'x-api-key': ctx.required['x-api-key']}}),
+  // __init__: ({ctx}) =>
+  //   initSupaglueSDK({headers: {'x-api-key': ctx.required['x-api-key']}}),
   listCustomers: async ({instance}) =>
     instance.mgmt.GET('/customers').then((r) => r.data),
   getCustomer: async ({instance, input}) =>

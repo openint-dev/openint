@@ -1,7 +1,6 @@
 import type {SalesloftSDK} from '@opensdks/sdk-salesloft'
 import {initSalesloftSDK} from '@opensdks/sdk-salesloft'
 import type {ConnectorServer} from '@openint/cdk'
-import {nangoProxyLink} from '@openint/cdk'
 import type {salesloftSchemas} from './def'
 
 export const salesloftServer = {
@@ -11,19 +10,7 @@ export const salesloftServer = {
       headers: {
         authorization: `Bearer ${settings.oauth.credentials.access_token}`,
       },
-      links: (defaultLinks) => [
-        (req, next) => {
-          if (sdk.clientOptions.baseUrl) {
-            req.headers.set(
-              nangoProxyLink.kBaseUrlOverride,
-              sdk.clientOptions.baseUrl,
-            )
-          }
-          return next(req)
-        },
-        ...fetchLinks,
-        ...defaultLinks,
-      ],
+      links: (defaultLinks) => [...fetchLinks, ...defaultLinks],
     })
     return sdk
   },

@@ -293,7 +293,6 @@ const mappers = {
 }
 
 export const qboAdapter = {
-  __init__: () => null as never,
   listAccounts: async ({instance}) => {
     const res = await instance.getAll('Account').next()
     return {

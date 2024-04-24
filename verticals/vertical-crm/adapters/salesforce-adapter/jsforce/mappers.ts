@@ -3,8 +3,9 @@ import type {z} from '@openint/vdk'
 import {BadRequestError} from '@openint/vdk'
 import type {CRMAdapter, unified} from '../../../router'
 
-type RouteInput<T extends Exclude<keyof CRMAdapter<unknown>, '__init__'>> =
-  Parameters<NonNullable<CRMAdapter<unknown>[T]>>[0]['input']
+type RouteInput<T extends keyof CRMAdapter<unknown>> = Parameters<
+  NonNullable<CRMAdapter<unknown>[T]>
+>[0]['input']
 
 type PropertyUnified = z.infer<(typeof unified)['meta_custom_object_field']>
 

@@ -1,5 +1,5 @@
 import type {Oas_crm_schemas} from '@opensdks/sdk-hubspot'
-import {initHubspotSDK, type HubspotSDK} from '@opensdks/sdk-hubspot'
+import {type HubspotSDK} from '@opensdks/sdk-hubspot'
 import {LRUCache} from 'lru-cache'
 import * as RM from 'remeda'
 import type {BaseRecord, z} from '@openint/vdk'
@@ -495,11 +495,6 @@ const _batchReadObjectThenMap = async <TIn, TOut extends BaseRecord>(
 }
 
 export const hubspotAdapter = {
-  __init__: ({proxyLinks}) =>
-    initHubspotSDK({
-      headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
-      links: (defaultLinks) => [...proxyLinks, ...defaultLinks],
-    }),
   listContacts: async ({instance, input, ctx}) =>
     input?.sync_mode === 'full'
       ? _listObjectsFullThenMap(instance, {

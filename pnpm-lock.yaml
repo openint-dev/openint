@@ -1152,6 +1152,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@openint/vdk':
+        specifier: workspace:*
+        version: link:../../kits/vdk
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
