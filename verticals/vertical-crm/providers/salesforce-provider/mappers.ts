@@ -223,14 +223,14 @@ const propertiesForCommonObject = {
 // to read metadata endpoint to filter them out. So instead we are gonna hard code it for now until we figure out a workaround.
 export function listFields<T extends keyof typeof propertiesForCommonObject>(
   objectType: T,
-  ctx: {customerId: string},
+  ctx: {remote: {customerId: string}},
 ) {
   const fields = propertiesForCommonObject[objectType]
 
   if (
     objectType === 'opportunity' &&
     ['63aca2d6213def0014837f98', '6580d11eda0dd92961348262'].includes(
-      ctx.customerId,
+      ctx.remote.customerId,
     )
   ) {
     return fields.filter((f) => f !== 'Description') as typeof fields
@@ -238,7 +238,7 @@ export function listFields<T extends keyof typeof propertiesForCommonObject>(
 
   if (
     objectType === 'account' &&
-    ctx.customerId === '63aca2d6213def0014837f98'
+    ctx.remote.customerId === '63aca2d6213def0014837f98'
   ) {
     return fields.filter(
       (f) =>

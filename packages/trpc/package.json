@@ -13,6 +13,7 @@
     "@trpc/server": "10.40.0"
   },
   "devDependencies": {
+    "@openint/cdk": "workspace:*",
     "@openint/engine-backend": "workspace:*"
   }
 }

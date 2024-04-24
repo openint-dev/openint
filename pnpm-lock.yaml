@@ -1718,6 +1718,9 @@ importers:
         specifier: 10.40.0
         version: 10.40.0
     devDependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
       '@openint/engine-backend':
         specifier: workspace:*
         version: link:../engine-backend

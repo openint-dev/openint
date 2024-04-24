@@ -1,6 +1,5 @@
 import type {Link as FetchLink} from '@opensdks/fetch-links'
 import {initNangoSDK} from '@opensdks/sdk-nango'
-import {initSupaglueSDK} from '@opensdks/sdk-supaglue'
 import {
   TRPCError,
   type AnyProcedure,
@@ -9,25 +8,22 @@ import {
   type inferProcedureOutput,
   type MaybePromise,
 } from '@trpc/server'
-import {BadRequestError, publicProcedure} from '@openint/trpc'
+import {BadRequestError, remoteProcedure} from '@openint/trpc'
 import {
   nangoConnectionWithCredentials,
   nangoProxyLink,
   toNangoConnectionId,
   toNangoProviderConfigKey,
 } from './nangoProxyLink'
-import {supaglueProxyLink} from './supaglueProxyLink'
 
 export function verticalProcedure(providerMap: ProviderMap) {
-  return publicProcedure.use(async ({next, ctx}) => {
-    const {'x-customer-id': customerId, 'x-provider-name': providerName} =
-      ctx.required
-
-    const provider = providerMap[ctx.required['x-provider-name']]
+  return remoteProcedure.use(async ({next, ctx}) => {
+    const {connectorName} = ctx.remote
+    const provider = providerMap[connectorName]
     if (!provider) {
-      throw new BadRequestError(`Provider ${providerName} not found`)
+      throw new BadRequestError(`Provider ${connectorName} not found`)
     }
-    return next({ctx: {...ctx, customerId, providerName, provider}})
+    return next({ctx: {...ctx, provider}})
   })
 }
 
@@ -92,79 +88,38 @@ export async function proxyCallProvider({
 }) {
   // This should probably be in mgmt package rather than vdk with some dependency injection involved
   const extraInitOpts = ((): ExtraInitOpts => {
-    if (ctx.mgmtProviderName === 'nango') {
-      const connectionId = toNangoConnectionId(ctx.customerId)
-      const providerConfigKey = toNangoProviderConfigKey(ctx.providerName)
-      return {
-        getCredentials: async () => {
-          const nango = initNangoSDK({
-            headers: {
-              authorization: `Bearer ${ctx.required['x-nango-secret-key']}`,
-            },
-          })
-          const conn = await nango
-            .GET('/connection/{connectionId}', {
-              params: {
-                path: {connectionId},
-                query: {provider_config_key: providerConfigKey},
-              },
-            })
-            .then((r) => nangoConnectionWithCredentials.parse(r.data))
-          return {
-            access_token: conn.credentials.access_token,
-            instance_url: conn.connection_config?.instance_url,
-          }
-        },
-        proxyLinks: [
-          nangoProxyLink({
-            secretKey: ctx.required['x-nango-secret-key'],
-            connectionId,
-            providerConfigKey,
-          }),
-        ],
-      }
-    }
+    const connectionId = toNangoConnectionId(ctx.remote.id) // ctx.customerId
+    const providerConfigKey = toNangoProviderConfigKey(
+      ctx.remote.connectorConfigId, // ctx.providerName
+    )
     return {
       getCredentials: async () => {
-        const supaglue = initSupaglueSDK({
-          headers: {'x-api-key': ctx.required['x-api-key']},
+        const nango = initNangoSDK({
+          headers: {
+            authorization: `Bearer ${
+              ctx.env.NANGO_SECRET_KEY
+              // ctx.required['x-nango-secret-key']
+            }`,
+          },
         })
-        const [{data: connections}] = await Promise.all([
-          supaglue.mgmt.GET('/customers/{customer_id}/connections', {
-            params: {path: {customer_id: ctx.customerId}},
-          }),
-          // This is a no-op passthrough request to ensure credentials have been refreshed if needed
-          supaglue.actions.POST('/passthrough', {
+        const conn = await nango
+          .GET('/connection/{connectionId}', {
             params: {
-              header: {
-                'x-customer-id': ctx.customerId,
-                'x-provider-name': ctx.providerName,
-              },
+              path: {connectionId},
+              query: {provider_config_key: providerConfigKey},
             },
-            body: {method: 'GET', path: '/'},
-          }),
-        ])
-        const conn = connections.find(
-          (c) => c.provider_name === ctx.providerName,
-        )
-        if (!conn) {
-          throw new Error('Connection not found')
-        }
-
-        const res = await supaglue.private.exportConnection({
-          customerId: conn.customer_id,
-          connectionId: conn.id,
-        })
+          })
+          .then((r) => nangoConnectionWithCredentials.parse(r.data))
         return {
-          access_token: res.data.credentials.access_token,
-          instance_url: res.data.instance_url,
+          access_token: conn.credentials.access_token,
+          instance_url: conn.connection_config?.instance_url,
         }
       },
       proxyLinks: [
-        supaglueProxyLink({
-          apiKey: ctx.required['x-api-key'],
-          customerId: ctx.customerId,
-          providerName: ctx.providerName,
+        nangoProxyLink({
+          secretKey: ctx.env.NANGO_SECRET_KEY,
+          connectionId,
+          providerConfigKey,
         }),
       ],
     }
@@ -178,7 +133,7 @@ export async function proxyCallProvider({
   if (typeof implementation !== 'function') {
     throw new TRPCError({
       code: 'NOT_IMPLEMENTED',
-      message: `${ctx.providerName} provider does not implement ${ctx.path}`,
+      message: `${ctx.remote.connectorName} provider does not implement ${ctx.path}`,
     })
   }
 

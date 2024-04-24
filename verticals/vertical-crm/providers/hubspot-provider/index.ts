@@ -152,8 +152,8 @@ const _listObjectsIncrementalThenMap = async <TIn, TOut extends BaseRecord>(
     mapper: {parse: (rawData: unknown) => TOut; _in: TIn}
     page_size?: number
     cursor?: string | null
-    // For caching prupose only really...
-    ctx: {customerId: string}
+    // For caching purposes only really...
+    ctx: {remote: {customerId: string}}
   },
 ) => {
   const limit = opts?.page_size ?? 100
@@ -176,7 +176,7 @@ const _listObjectsIncrementalThenMap = async <TIn, TOut extends BaseRecord>(
             ...fields,
             ...(opts.includeAllFields
               ? await cachedGetObjectProperties(instance, {
-                  customerId: opts.ctx.customerId,
+                  customerId: opts.ctx.remote.customerId,
                   objectType,
                 })
               : []),
@@ -348,18 +348,18 @@ const pipelineStageMappingCache = new LRUCache<
 // memory cache or redis cache... For now we are just gonna hack around by passing the customerId context around...
 const cachedGetPipelineStageMapping = async (
   instance: HubspotSDK,
-  opts: {customerId: string},
+  opts: {remote: {customerId: string}},
 ): ReturnType<typeof _getPipelineStageMapping> => {
-  const cached = pipelineStageMappingCache.get(opts.customerId)
+  const cached = pipelineStageMappingCache.get(opts.remote.customerId)
   if (cached) {
     console.log(
       '[hubspot] Using cached pipeline stage mapping for customerId:',
-      opts.customerId,
+      opts.remote.customerId,
     )
     return cached
   }
   const res = await _getPipelineStageMapping(instance)
-  pipelineStageMappingCache.set(opts.customerId, res)
+  pipelineStageMappingCache.set(opts.remote.customerId, res)
   return res
 }
 

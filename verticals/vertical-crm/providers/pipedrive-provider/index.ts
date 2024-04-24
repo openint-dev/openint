@@ -56,8 +56,8 @@ export const pipedriveProvider = {
               parsed.data.error === 'Scope and URL mismatch'
             ) {
               throw new NotAuthorizedError(
-                ctx.customerId,
-                ctx.providerName,
+                ctx.remote.customerId,
+                ctx.remote.connectorName,
                 `${parsed.data.error}: ${parsed.data.error_info}`,
                 parsed.data,
               )
