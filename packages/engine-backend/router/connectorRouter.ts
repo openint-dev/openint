@@ -92,10 +92,8 @@ export const connectorRouter = trpc.router({
           connector?.schemas[type as keyof (typeof connector)['schemas']]
         return zodToOas31Schema(zodSchema as z.ZodTypeAny)
       }
-      return R.mapValues(connector.schemas, (zodSchema, key) =>
-        key === 'verticals'
-          ? undefined
-          : zodToOas31Schema(zodSchema as z.ZodTypeAny),
+      return R.mapValues(connector.schemas, (zodSchema) =>
+        zodToOas31Schema(zodSchema as z.ZodTypeAny),
       )
     }),
 })

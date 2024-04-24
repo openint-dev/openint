@@ -1,5 +1,5 @@
 import type {Link as FetchLink} from '@opensdks/runtime'
-import type {MaybePromise, PathsOf} from '@openint/util'
+import type {MaybePromise} from '@openint/util'
 import {R} from '@openint/util'
 import type {z} from '@openint/zod'
 import type {
@@ -24,17 +24,6 @@ import type {
   StateUpdateData,
   SyncOperation,
 } from './protocol'
-import type {InvestmentMethods, ZInvestment} from './verticals'
-
-export interface Verticals<
-  TDef extends ConnectorSchemas = ConnectorSchemas,
-  TInstance = unknown,
-> {
-  investment: {
-    models: ZInvestment
-    methods: InvestmentMethods<TDef, TInstance>
-  }
-}
 
 /**
  * Equivalent to to airbyte's low code connector spec,
@@ -60,14 +49,6 @@ export interface ConnectorSchemas {
 
   destinationState?: z.ZodTypeAny
   destinationInputEntity?: z.ZodTypeAny
-
-  // Unfortunately we can't use AnyZodObject because it causes compile failure
-  // app-config/backendConfig.ts somehow
-  verticals?: {
-    [v in keyof Verticals]?: {
-      [k in keyof Verticals[v]['models']]?: z.ZodTypeAny
-    }
-  }
 }
 
 export type AnyConnectorHelpers = ConnHelpers
@@ -98,7 +79,8 @@ export interface ConnectorDef<
     resource?: (
       settings: T['_types']['resourceSettings'],
     ) => Omit<ZStandard['resource'], 'id'>
-    /** TODO: Currently unused. We shoud migrate this to the pta vertical probably */
+
+    // TODO: Migrate to vertical format, as only verticals deal with mapping entities
     entity?:
       | Partial<{
           // Simpler
@@ -117,24 +99,11 @@ export interface ConnectorDef<
   streams?: {
     $defaults: {
       /** Only singular primary key supported for the moment */
-      primaryKey: PathsOf<T['_remoteEntity']>
+      // TODO: Fix me up.
+      primaryKey: string // PathsOf<T['_remoteEntity']>
       /** Used for incremental sync. Should only be string entities */
-      cursorField?: PathsOf<T['_remoteEntity']>
+      cursorField?: string // PathsOf<T['_remoteEntity']>
     }
-  } & {
-    [v in keyof T['_verticals']]: v extends keyof Verticals
-      ? {
-          [k in keyof T['_verticals'][v]]: k extends keyof Verticals[v]['models']
-            ? EntityMapper<
-                {
-                  remote: T['_verticals'][v][k]
-                  settings: T['_types']['resourceSettings']
-                },
-                Verticals[v]['models'][k]
-              >
-            : never
-        }
-      : never
   }
 }
 
@@ -272,12 +241,6 @@ export interface ConnectorServer<
     instance: TInstance,
     input: z.infer<typeof zPassthroughInput>,
   ) => unknown
-
-  verticals?: {
-    [v in keyof T['_verticals']]: v extends keyof Verticals
-      ? Verticals<TDef, TInstance>[v]['methods']
-      : never
-  }
 }
 
 export interface ConnectorImpl<TSchemas extends ConnectorSchemas>
@@ -307,17 +270,6 @@ export function connHelpers<TSchemas extends ConnectorSchemas>(
     >
   }
   type _streamName = keyof _streams
-
-  type TSVerticals = NonNullable<TSchemas['verticals']>
-  type _verticals = {
-    [v in keyof TSVerticals]: {
-      [k in keyof TSVerticals[v]]: _infer<TSVerticals[v][k]>
-    }
-  }
-
-  type _remoteEntity = {
-    [v in keyof _verticals]: _verticals[v][keyof _verticals[v]]
-  }[keyof _verticals]
 
   type IntOpData = Extract<
     SyncOperation<{
@@ -360,8 +312,6 @@ export function connHelpers<TSchemas extends ConnectorSchemas>(
     _types: {} as _types,
     _streams: {} as _streams,
     _streamName: {} as _streamName,
-    _verticals: {} as _verticals,
-    _remoteEntity: {} as _remoteEntity,
     _resUpdateType: {} as resoUpdate,
     _stateUpdateType: {} as stateUpdate,
     _opType: {} as Op,

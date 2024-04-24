@@ -1,9 +1,0 @@
-{
-  "name": "@openint/vertical-investment",
-  "dependencies": {
-    "@openint/vdk": "workspace:*"
-  },
-  "devDependencies": {
-    "@openint/connector-plaid": "workspace:*"
-  }
-}

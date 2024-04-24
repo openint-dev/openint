@@ -16,7 +16,6 @@ import type {
   RemoteProcedureContext,
   trpc,
 } from '../../packages/engine-backend/router/_base'
-import type {PaginatedOutput} from './pagination'
 
 export type RouterMap<TRouter extends AnyRouter, TOpts = {}> = {
   [k in keyof TRouter as TRouter[k] extends AnyProcedure
@@ -65,49 +64,4 @@ export async function proxyCallRemote({
   const out = await implementation({instance, input})
   // console.log('[proxyCallRemote] output', out)
   return out
-}
-
-export async function proxyListRemoteRedux({
-  input,
-  ctx,
-  meta: {entityName, vertical},
-}: {
-  input: unknown
-  ctx: RemoteProcedureContext
-  meta: {vertical: string; entityName: string}
-}) {
-  const instance = ctx.remote.connector.newInstance?.({
-    config: ctx.remote.config,
-    settings: ctx.remote.settings,
-    fetchLinks: ctx.remote.fetchLinks,
-    onSettingsChange: (settings) =>
-      ctx.services.metaLinks.patch('resource', ctx.remote.id, {settings}),
-  })
-  const implementation = (
-    ctx.remote.connector.verticals?.[vertical as never] as any
-  )?.list as Function
-  if (typeof implementation !== 'function') {
-    throw new TRPCError({
-      code: 'NOT_IMPLEMENTED',
-      message: `${ctx.remote.connectorName} does not implement ${ctx.path}`,
-    })
-  }
-
-  const res: PaginatedOutput<any> = await implementation(
-    instance,
-    entityName,
-    input,
-  )
-
-  const mapper = (ctx.remote.connector.streams?.[vertical as never] as any)[
-    entityName
-  ] as (entity: unknown, settings: unknown) => any
-
-  return {
-    ...res,
-    items: res.items.map((item) => ({
-      ...mapper(item, ctx.remote.settings),
-      _original: item,
-    })),
-  }
 }
