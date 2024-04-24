@@ -3,7 +3,6 @@
 import {
   createBankingRouter,
   createInvestmentRouter,
-  createPtaRouter,
   qboAdapter,
   xeroAdapter,
 } from '@openint/cdk/verticals'
@@ -25,7 +24,6 @@ const bankingRouter = createBankingRouter({
   adapterByName: {qbo: qboAdapter, xero: xeroAdapter},
 })
 
-const ptaRouter = createPtaRouter({trpc, remoteProcedure, adapterByName: {}})
 const investmentRouter = createInvestmentRouter({
   trpc,
   remoteProcedure,
@@ -45,7 +43,6 @@ export const routers = {
   pipeline: pipelineRouter,
   connector: connectorRouter,
   /// @deprecated
-  pta: ptaRouter,
   investment: investmentRouter,
   banking: bankingRouter,
 }
@@ -65,7 +62,6 @@ export const flatRouter = trpc.mergeRouters(
   pipelineRouter,
   trpc.router({
     verticals: trpc.router({
-      pta: ptaRouter,
       investment: investmentRouter,
       banking: bankingRouter,
     }),

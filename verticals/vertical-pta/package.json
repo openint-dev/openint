@@ -1,9 +1,11 @@
 {
   "name": "@openint/vertical-pta",
   "dependencies": {
-    "@openint/vdk": "workspace:*"
+    "@openint/vdk": "workspace:*",
+    "luxon": "2.4.0"
   },
   "devDependencies": {
-    "@openint/connector-qbo": "workspace:*"
+    "@openint/connector-qbo": "workspace:*",
+    "@types/luxon": "2.3.2"
   }
 }

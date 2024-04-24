@@ -24,12 +24,7 @@ import type {
   StateUpdateData,
   SyncOperation,
 } from './protocol'
-import type {
-  InvestmentMethods,
-  PtaMethods,
-  ZInvestment,
-  ZPta,
-} from './verticals'
+import type {InvestmentMethods, ZInvestment} from './verticals'
 
 export interface Verticals<
   TDef extends ConnectorSchemas = ConnectorSchemas,
@@ -38,11 +33,6 @@ export interface Verticals<
   investment: {
     models: ZInvestment
     methods: InvestmentMethods<TDef, TInstance>
-  }
-  /** plain text accounting */
-  pta: {
-    models: ZPta
-    methods: PtaMethods<TDef, TInstance>
   }
 }
 

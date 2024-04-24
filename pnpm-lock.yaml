@@ -2100,13 +2100,12 @@ importers:
 
   verticals/vertical-accounting:
     dependencies:
-      '@openint/vdk':
-        specifier: workspace:*
-        version: link:../../kits/vdk
-    devDependencies:
       '@openint/connector-qbo':
         specifier: workspace:*
         version: link:../../connectors/connector-qbo
+      '@openint/vdk':
+        specifier: workspace:*
+        version: link:../../kits/vdk
 
   verticals/vertical-banking:
     dependencies:
@@ -2175,10 +2174,16 @@ importers:
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
+      luxon:
+        specifier: 2.4.0
+        version: 2.4.0
     devDependencies:
       '@openint/connector-qbo':
         specifier: workspace:*
         version: link:../../connectors/connector-qbo
+      '@types/luxon':
+        specifier: 2.3.2
+        version: 2.3.2
 
   verticals/vertical-sales-engagement:
     dependencies:

@@ -5,7 +5,7 @@ import type {ConnectorServer} from '@openint/cdk'
 import {nangoProxyLink} from '@openint/cdk'
 import {Rx, rxjs, snakeCase} from '@openint/util'
 import type {QBO, qboSchemas, TransactionTypeName} from './def'
-import {QBO_ENTITY_NAME, qboHelpers, TRANSACTION_TYPE_NAME} from './def'
+import {QBO_ENTITY_NAME, qboHelpers} from './def'
 
 export function initQBOSdk(options: QBOSDKTypes['options']) {
   const sdk = initSDK(qboSdkDef, options)
@@ -62,41 +62,6 @@ export const qboServer = {
     return rxjs
       .from(iterateEntities())
       .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, qboHelpers._op('commit')])))
-  },
-
-  verticals: {
-    pta: {
-      list: async (qbo, type, _opts) => {
-        switch (type) {
-          case 'account': {
-            const res = await qbo.getAll('Account').next()
-            return {has_next_page: true, items: res.value?.entities ?? []}
-          }
-          case 'transaction': {
-            async function* iterateEntities() {
-              const updatedSince = undefined
-              for (const type of Object.values(TRANSACTION_TYPE_NAME)) {
-                for await (const res of qbo.getAll(type, {updatedSince})) {
-                  const entities = res.entities as Array<
-                    QBO[TransactionTypeName]
-                  >
-                  yield entities.map((t) => ({
-                    Id: t.Id, // For primary key...
-                    type: type as 'Purchase',
-                    entity: t as QBO['Purchase'],
-                    realmId: qbo.realmId,
-                  }))
-                }
-              }
-            }
-            const res = await iterateEntities().next()
-            return {has_next_page: true, items: res.value ?? []}
-          }
-          default:
-            throw new Error(`Unknown type: ${type}`)
-        }
-      },
-    },
   },
 } satisfies ConnectorServer<typeof qboSchemas, ReturnType<typeof initQBOSdk>>
 

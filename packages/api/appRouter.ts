@@ -24,8 +24,13 @@ export const _appRouter = trpc.router({
   public: publicRouter,
   // Can't get rid of mgmt api just yet
   mgmt: mgmtRouter,
+  //
   salesEngagement: salesEngagementRouter,
   crm: crmRouter,
+  // Pta
+  // investment
+  // accounting
+  // banking
 })
 
 export const appRouter = trpc.mergeRouters(flatRouter, authRouter, _appRouter)
