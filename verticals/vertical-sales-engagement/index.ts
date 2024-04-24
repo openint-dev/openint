@@ -1,4 +1,4 @@
-import type {Vertical} from '@openint/vdk'
+import type {ProviderMap} from '@openint/vdk'
 import {apolloProvider} from './providers/apollo-provider'
 import {outreachProvider} from './providers/outreach-provider'
 import {salesloftProvider} from './providers/salesloft-provider'
@@ -12,4 +12,4 @@ export default {
   apollo: apolloProvider,
   salesloft: salesloftProvider,
   outreach: outreachProvider,
-} satisfies Vertical
+} satisfies ProviderMap

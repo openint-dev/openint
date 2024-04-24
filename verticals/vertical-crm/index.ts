@@ -1,4 +1,4 @@
-import type {Vertical} from '@openint/vdk'
+import type {ProviderMap} from '@openint/vdk'
 import {hubspotProvider} from './providers/hubspot-provider'
 import {msDynamics365SalesProvider} from './providers/ms-dynamics-365-sales-provider'
 import {pipedriveProvider} from './providers/pipedrive-provider'
@@ -15,4 +15,4 @@ export default {
   salesforce: salesforceProvider,
   pipedrive: pipedriveProvider,
   ms_dynamics_365_sales: msDynamics365SalesProvider,
-} satisfies Vertical
+} satisfies ProviderMap

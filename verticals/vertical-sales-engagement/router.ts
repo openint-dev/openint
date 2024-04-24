@@ -1,5 +1,6 @@
 import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
-import {proxyCallProvider, remoteProcedure, trpc, z} from '@openint/vdk'
+import {proxyCallProvider, trpc, verticalProcedure, z} from '@openint/vdk'
+import providers from './providers'
 import * as unified from './unifiedModels'
 
 export {unified}
@@ -8,8 +9,10 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
   return {openapi: {...meta, path: `/verticals/sales-engagement${meta.path}`}}
 }
 
+const procedure = verticalProcedure(providers)
+
 export const salesEngagementRouter = trpc.router({
-  listContacts: remoteProcedure
+  listContacts: procedure
     .meta(oapi({method: 'GET', path: '/contact'}))
     .input(z.object({cursor: z.string().nullish()}))
     .output(
@@ -19,7 +22,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  listSequences: remoteProcedure
+  listSequences: procedure
     .meta(oapi({method: 'GET', path: '/sequence'}))
     .input(z.object({cursor: z.string().nullish()}))
     .output(
@@ -29,7 +32,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  listSequenceStates: remoteProcedure
+  listSequenceStates: procedure
     .meta(oapi({method: 'GET', path: '/sequence_state'}))
     .input(z.object({cursor: z.string().nullish()}))
     .output(
@@ -39,7 +42,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  listUsers: remoteProcedure
+  listUsers: procedure
     .meta(oapi({method: 'GET', path: '/user'}))
     .input(z.object({cursor: z.string().nullish()}))
     .output(
@@ -49,7 +52,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  listAccounts: remoteProcedure
+  listAccounts: procedure
     .meta(oapi({method: 'GET', path: '/account'}))
     .input(z.object({cursor: z.string().nullish()}))
     .output(
@@ -59,7 +62,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  listMailboxes: remoteProcedure
+  listMailboxes: procedure
     .meta(oapi({method: 'GET', path: '/mailbox'}))
     .input(z.object({cursor: z.string().nullish()}))
     .output(
@@ -69,7 +72,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  upsertAccount: remoteProcedure
+  upsertAccount: procedure
     .meta(oapi({method: 'POST', path: '/account/_upsert'}))
     .input(
       z.object({
@@ -102,7 +105,7 @@ export const salesEngagementRouter = trpc.router({
     )
     .output(z.object({record: z.object({id: z.string()}).optional()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  upsertContact: remoteProcedure
+  upsertContact: procedure
     .meta(oapi({method: 'POST', path: '/contact/_upsert'}))
     .input(
       z.object({
@@ -187,7 +190,7 @@ export const salesEngagementRouter = trpc.router({
     )
     .output(z.object({record: z.object({id: z.string()}).optional()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  insertSequenceState: remoteProcedure
+  insertSequenceState: procedure
     .meta(oapi({method: 'POST', path: '/sequence_state'}))
     .input(
       z.object({

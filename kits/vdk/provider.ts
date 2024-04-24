@@ -18,29 +18,28 @@ import {
 } from './nangoProxyLink'
 import {supaglueProxyLink} from './supaglueProxyLink'
 
-// TODO: Fix this remote procedure
-export const remoteProcedure = publicProcedure.use(async ({next, ctx}) => {
-  const {'x-customer-id': customerId, 'x-provider-name': providerName} =
-    ctx.required
-  // @ts-expect-error
-  const provider = ctx.providerByName[
-    ctx.required['x-provider-name']
-  ] as Provider
-  if (!provider) {
-    throw new BadRequestError(`Provider ${providerName} not found`)
-  }
-  return next({ctx: {...ctx, customerId, providerName, provider}})
-})
+export function verticalProcedure(providerMap: ProviderMap) {
+  return publicProcedure.use(async ({next, ctx}) => {
+    const {'x-customer-id': customerId, 'x-provider-name': providerName} =
+      ctx.required
 
-export type RemoteProcedureContext = ReturnType<
-  (typeof remoteProcedure)['query']
+    const provider = providerMap[ctx.required['x-provider-name']]
+    if (!provider) {
+      throw new BadRequestError(`Provider ${providerName} not found`)
+    }
+    return next({ctx: {...ctx, customerId, providerName, provider}})
+  })
+}
+
+export type VerticalProcedureContext = ReturnType<
+  ReturnType<typeof verticalProcedure>['query']
 >['_def']['_ctx_out']
 
 export interface _Provider<TInitOpts, TInstance = unknown> {
   __init__: (opts: TInitOpts) => TInstance
 }
 
-export interface Vertical {
+export interface ProviderMap {
   [k: string]: Provider
 }
 
@@ -57,12 +56,12 @@ export interface ExtraInitOpts {
   }>
 }
 export type Provider = Record<string, (...args: any[]) => any> &
-  _Provider<{ctx: RemoteProcedureContext} & ExtraInitOpts>
+  _Provider<{ctx: VerticalProcedureContext} & ExtraInitOpts>
 
 export type ProviderFromRouter<
   TRouter extends AnyRouter,
   TInstance = {},
-  TCtx = RemoteProcedureContext,
+  TCtx = VerticalProcedureContext,
   TInitOpts = {ctx: TCtx} & ExtraInitOpts,
 > = {
   [k in keyof TRouter as TRouter[k] extends AnyProcedure
@@ -89,7 +88,7 @@ export async function proxyCallProvider({
   ctx,
 }: {
   input: unknown
-  ctx: RemoteProcedureContext
+  ctx: VerticalProcedureContext
 }) {
   // This should probably be in mgmt package rather than vdk with some dependency injection involved
   const extraInitOpts = ((): ExtraInitOpts => {

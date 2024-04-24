@@ -1,13 +1,14 @@
 import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
 import {
   proxyCallProvider,
-  remoteProcedure,
   trpc,
+  verticalProcedure,
   withWarnings,
   z,
   zPaginatedResult,
   zPaginationParams,
 } from '@openint/vdk'
+import providers from './providers'
 import * as unified from './unifiedModels'
 
 export {unified}
@@ -16,25 +17,27 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
   return {openapi: {...meta, path: `/verticals/crm${meta.path}`}}
 }
 
+const procedure = verticalProcedure(providers)
+
 export const crmRouter = trpc.router({
-  countEntity: remoteProcedure
+  countEntity: procedure
     .meta(oapi({method: 'GET', path: '/{entity}/_count'}))
     .input(z.object({entity: z.string()}))
     .output(z.object({count: z.number()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
   // MARK: - Account
-  listAccounts: remoteProcedure
+  listAccounts: procedure
     .meta(oapi({method: 'GET', path: '/account'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.account)}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  getAccount: remoteProcedure
+  getAccount: procedure
     .meta(oapi({method: 'GET', path: '/account/{id}'}))
     .input(z.object({id: z.string()}))
     .output(z.object({record: unified.account, raw: z.unknown()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  batchReadAccounts: remoteProcedure
+  batchReadAccounts: procedure
     .meta(oapi({method: 'POST', path: '/account/batch_read'}))
     .input(
       z.object({ids: z.array(z.string()), properties: z.array(z.string())}),
@@ -42,19 +45,19 @@ export const crmRouter = trpc.router({
     .output(z.array(unified.account))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  createAccount: remoteProcedure
+  createAccount: procedure
     .meta(oapi({method: 'POST', path: '/account'}))
     .input(z.object({record: unified.account_input}))
     .output(z.object({record: unified.account}))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  updateAccount: remoteProcedure
+  updateAccount: procedure
     .meta(oapi({method: 'PATCH', path: '/account/{id}'}))
     .input(z.object({id: z.string(), record: unified.account_input}))
     .output(z.object({record: unified.account}))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  upsertAccount: remoteProcedure
+  upsertAccount: procedure
     .meta(oapi({method: 'POST', path: '/account/_upsert'}))
     .input(
       z.object({
@@ -76,36 +79,36 @@ export const crmRouter = trpc.router({
     .output(z.object({record: unified.account}))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
   // MARK: - Contact
-  listContacts: remoteProcedure
+  listContacts: procedure
     .meta(oapi({method: 'GET', path: '/contact'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.contact)}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  getContact: remoteProcedure
+  getContact: procedure
     .meta(oapi({method: 'GET', path: '/contact/{id}'}))
     .input(z.object({id: z.string()}))
     .output(z.object({record: unified.contact, raw: z.unknown()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  batchReadContacts: remoteProcedure
+  batchReadContacts: procedure
     .meta(oapi({method: 'POST', path: '/contact/_batch_read'}))
     .input(
       z.object({ids: z.array(z.string()), properties: z.array(z.string())}),
     )
     .output(z.array(unified.contact))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  createContact: remoteProcedure
+  createContact: procedure
     .meta(oapi({method: 'POST', path: '/contact'}))
     .input(z.object({record: unified.contact_input}))
     .output(z.object({record: unified.contact}))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  updateContact: remoteProcedure
+  updateContact: procedure
     .meta(oapi({method: 'PATCH', path: '/contact/{id}'}))
     .input(z.object({id: z.string(), record: unified.contact_input}))
     .output(z.object({record: unified.contact}))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  upsertContact: remoteProcedure
+  upsertContact: procedure
     .meta(oapi({method: 'POST', path: '/contact/_upsert'}))
     .input(
       z.object({
@@ -127,43 +130,43 @@ export const crmRouter = trpc.router({
     .output(z.object({record: unified.contact}))
     .mutation(async ({input, ctx}) => proxyCallProvider({input, ctx})),
   // MARK: - Lead
-  listLeads: remoteProcedure
+  listLeads: procedure
     .meta(oapi({method: 'GET', path: '/lead'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.lead)}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  getLead: remoteProcedure
+  getLead: procedure
     .meta(oapi({method: 'GET', path: '/lead/{id}'}))
     .input(z.object({id: z.string()}))
     .output(z.object({record: unified.lead, raw: z.unknown()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
   // MARK: - Opportunity
-  listOpportunities: remoteProcedure
+  listOpportunities: procedure
     .meta(oapi({method: 'GET', path: '/opportunity'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.opportunity)}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  getOpportunity: remoteProcedure
+  getOpportunity: procedure
     .meta(oapi({method: 'GET', path: '/opportunity/{id}'}))
     .input(z.object({id: z.string()}))
     .output(z.object({record: unified.opportunity, raw: z.unknown()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
   // MARK: - User
-  listUsers: remoteProcedure
+  listUsers: procedure
     .meta(oapi({method: 'GET', path: '/user'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.user)}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
-  getUser: remoteProcedure
+  getUser: procedure
     .meta(oapi({method: 'GET', path: '/user/{id}'}))
     .input(z.object({id: z.string()}))
     .output(z.object({record: unified.user, raw: z.unknown()}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
   // MARK: - Custom objects
-  listCustomObjectRecords: remoteProcedure
+  listCustomObjectRecords: procedure
     .meta(oapi({method: 'GET', path: '/custom_objects/{object_name}'}))
     .input(
       z.object({
@@ -174,7 +177,7 @@ export const crmRouter = trpc.router({
     .output(zPaginatedResult.extend({items: z.array(z.unknown())}))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  createCustomObjectRecord: remoteProcedure
+  createCustomObjectRecord: procedure
     .meta(oapi({method: 'POST', path: '/custom_objects/{object_name}'}))
     .input(
       z.object({
@@ -186,13 +189,13 @@ export const crmRouter = trpc.router({
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
   // MARK: - Metadata
-  metadataListObjects: remoteProcedure
+  metadataListObjects: procedure
     .meta(oapi({method: 'GET', path: '/metadata/objects'}))
     .input(z.object({type: z.enum(['standard', 'custom']).optional()}))
     .output(z.array(unified.meta_object))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  metadataCreateObject: remoteProcedure
+  metadataCreateObject: procedure
     .meta(
       oapi({
         method: 'POST',
@@ -219,7 +222,7 @@ export const crmRouter = trpc.router({
     .output(unified.meta_object)
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  metadataListObjectProperties: remoteProcedure
+  metadataListObjectProperties: procedure
     .meta(
       oapi({method: 'GET', path: '/metadata/objects/{object_name}/properties'}),
     )
@@ -228,7 +231,7 @@ export const crmRouter = trpc.router({
     .output(z.array(unified.meta_property))
     .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
 
-  metadataCreateAssociation: remoteProcedure
+  metadataCreateAssociation: procedure
     .meta(oapi({method: 'POST', path: '/metadata/associations'}))
     .input(
       z.object({
