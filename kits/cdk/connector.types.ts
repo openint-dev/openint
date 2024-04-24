@@ -25,10 +25,8 @@ import type {
   SyncOperation,
 } from './protocol'
 import type {
-  AccountingMethods,
   InvestmentMethods,
   PtaMethods,
-  ZAccounting,
   ZInvestment,
   ZPta,
 } from './verticals'
@@ -37,10 +35,6 @@ export interface Verticals<
   TDef extends ConnectorSchemas = ConnectorSchemas,
   TInstance = unknown,
 > {
-  accounting: {
-    models: ZAccounting
-    methods: AccountingMethods<TDef, TInstance>
-  }
   investment: {
     models: ZInvestment
     methods: InvestmentMethods<TDef, TInstance>

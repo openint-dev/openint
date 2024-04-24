@@ -67,11 +67,6 @@ export const qboSchemas = {
   sourceOutputEntities: R.mapValues(QBO_ENTITY_NAME, () => z.unknown()),
 
   verticals: {
-    accounting: {
-      account: zCast<QBO['Account']>(),
-      expense: zCast<QBO['Purchase']>(),
-      vendor: zCast<QBO['Vendor']>(),
-    },
     pta: {
       account: zCast<QBO['Account']>(),
       transaction: z.discriminatedUnion('type', [
@@ -117,20 +112,6 @@ export const qboDef = {
     $defaults: {
       primaryKey: 'Id',
       cursorField: 'Metadata.LastUpdatedTime',
-    },
-    accounting: {
-      account: (a) => ({
-        name: a.Name,
-        type: a.AccountType as 'asset',
-        id: a.Id,
-      }),
-      expense: (e) => ({
-        id: e.Id,
-        amount: e.TotalAmt,
-        currency: e.CurrencyRef.value,
-        payment_account: e.AccountRef.value,
-      }),
-      vendor: (v) => ({id: v.Id, name: v.DisplayName, url: ''}),
     },
     pta: {
       account: (a) => ({

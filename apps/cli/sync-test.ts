@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable unicorn/prefer-top-level-await */
 import '@openint/app-config/register.node'
-import {logLink, mapStandardEntityLink, sync} from '@openint/cdk'
+import {logLink, sync} from '@openint/cdk'
 import {plaidProvider} from '@openint/connector-plaid'
 import {postgresProvider} from '@openint/connector-postgres'
 import type {rxjs} from '@openint/util'
@@ -113,13 +113,13 @@ sync({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
   source: getSource(process.argv[2]!) as any,
   links: R.compact([
-    process.argv[2] === 'plaid' &&
-      mapStandardEntityLink({
-        id: 'reso_plaid_demo',
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-        connectorConfig: {connector: plaidProvider as any},
-        settings: {},
-      }),
+    // process.argv[2] === 'plaid' &&
+    //   mapStandardEntityLink({
+    //     id: 'reso_plaid_demo',
+    //     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+    //     connectorConfig: {connector: plaidProvider as any},
+    //     settings: {},
+    //   }),
     process.argv[2] === 'plaid' && logLink({prefix: 'preDest'}),
   ]),
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any

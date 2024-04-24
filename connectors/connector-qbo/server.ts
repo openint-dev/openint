@@ -7,7 +7,7 @@ import {Rx, rxjs, snakeCase} from '@openint/util'
 import type {QBO, qboSchemas, TransactionTypeName} from './def'
 import {QBO_ENTITY_NAME, qboHelpers, TRANSACTION_TYPE_NAME} from './def'
 
-function initQBOSdk(options: QBOSDKTypes['options']) {
+export function initQBOSdk(options: QBOSDKTypes['options']) {
   const sdk = initSDK(qboSdkDef, options)
   // TODO: Should add options to sdk itself
   return {realmId: options.realmId, ...sdk}
@@ -65,26 +65,6 @@ export const qboServer = {
   },
 
   verticals: {
-    accounting: {
-      list: async (qbo, type, _opts) => {
-        switch (type) {
-          case 'account': {
-            const res = await qbo.getAll('Account').next()
-            return {has_next_page: true, items: res.value?.entities ?? []}
-          }
-          case 'expense': {
-            const res = await qbo.getAll('Purchase').next()
-            return {has_next_page: true, items: res.value?.entities ?? []}
-          }
-          case 'vendor': {
-            const res = await qbo.getAll('Vendor').next()
-            return {has_next_page: true, items: res.value?.entities ?? []}
-          }
-          default:
-            throw new Error(`Unknown type: ${type}`)
-        }
-      },
-    },
     pta: {
       list: async (qbo, type, _opts) => {
         switch (type) {

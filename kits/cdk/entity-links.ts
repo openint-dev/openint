@@ -6,103 +6,14 @@ import {
   objectEntries,
   produce,
   R,
-  Rx,
   rxjs,
   setDefault,
   zFunction,
 } from '@openint/util'
 import {z} from '@openint/zod'
 import {handlersLink, transformLink} from './base-links'
-import type {ConnectorDef, EntityMapper} from './connector.types'
-import type {Id} from './id.types'
-import type {
-  AnyEntityPayload,
-  EntityPayload,
-  EntityPayloadWithRaw,
-  Link,
-  StdSyncOperation,
-} from './protocol'
+import type {EntityPayload, Link, StdSyncOperation} from './protocol'
 import type {Pta} from './verticals'
-
-// TODO: Can we use the `parsedReso` type here?
-export function mapStandardEntityLink({
-  connectorConfig: {connector},
-  settings: initialSettings,
-  id: sourceId,
-}: {
-  connectorConfig: {connector: ConnectorDef}
-  settings: unknown
-  id: Id['reso'] | undefined
-}): Link<AnyEntityPayload, EntityPayloadWithRaw> {
-  return Rx.mergeMap((op) => {
-    if (op.type !== 'data') {
-      return rxjs.of(op)
-    }
-    // TODO: Extract this mapStandard into tis own function!
-    const [vertical, entityName] = op.data.entityName.split('.')
-    const mapper = connector.streams?.[vertical as 'accounting']?.[
-      entityName as never
-    ] as unknown as EntityMapper
-
-    const id = op.data.id
-    if (mapper) {
-      const standard = mapper(op.data.entity as never, initialSettings)
-      return rxjs.of({
-        ...op,
-        data: {
-          entityName: op.data.entityName as 'account',
-          entity: standard as any,
-          id,
-          raw: op.data.entity,
-          connectorName: connector.name,
-          sourceId,
-        } satisfies EntityPayloadWithRaw,
-      })
-    }
-
-    return rxjs.of({
-      ...op,
-      data: {
-        ...op.data,
-        id,
-        entity: undefined as any,
-        entityName: `${connector.name}_${op.data.entityName}`,
-        raw: op.data.entity as any,
-        connectorName: connector.name,
-        sourceId,
-      } satisfies EntityPayloadWithRaw,
-    })
-
-    // @deprecated
-    // const entity = connector.standardMappers?.entity
-    // if (!entity) {
-    //   throw new Error('Expecting VeniceProvider in mapStandardEntityLink')
-    // }
-    // // TODO: Update the initialReso as we receive resource updates
-    // const payload = R.pipe(entity, (map) =>
-    //   typeof map === 'function'
-    //     ? map(op.data, initialSettings)
-    //     : map?.[op.data.entityName]?.(op.data, initialSettings),
-    // )
-
-    // if (!payload) {
-    //   // console.error('[mapStandardEntityLink] Unable to map payload', op)
-    //   return rxjs.EMPTY
-    // }
-
-    // return rxjs.of({
-    //   ...op,
-    //   data: {
-    //     ...payload,
-    //     id,
-    //     external: op.data.entity,
-    //     connectorName: connector.name,
-    //     externalId: op.data.id,
-    //     sourceId,
-    //   },
-    // })
-  })
-}
 
 // TODO: Move into entityLink
 export interface StdCache {

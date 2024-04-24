@@ -1,7 +1,6 @@
 // import {accountingRouter} from './verticals/accounting'
 
 import {
-  createAccountingRouter,
   createBankingRouter,
   createInvestmentRouter,
   createPtaRouter,
@@ -25,11 +24,7 @@ const bankingRouter = createBankingRouter({
   remoteProcedure,
   adapterByName: {qbo: qboAdapter, xero: xeroAdapter},
 })
-const accountingRouter = createAccountingRouter({
-  trpc,
-  remoteProcedure,
-  adapterByName: {},
-})
+
 const ptaRouter = createPtaRouter({trpc, remoteProcedure, adapterByName: {}})
 const investmentRouter = createInvestmentRouter({
   trpc,
@@ -49,8 +44,7 @@ export const routers = {
   resource: resourceRouter,
   pipeline: pipelineRouter,
   connector: connectorRouter,
-  //
-  accounting: accountingRouter,
+  /// @deprecated
   pta: ptaRouter,
   investment: investmentRouter,
   banking: bankingRouter,
@@ -71,7 +65,6 @@ export const flatRouter = trpc.mergeRouters(
   pipelineRouter,
   trpc.router({
     verticals: trpc.router({
-      accounting: accountingRouter,
       pta: ptaRouter,
       investment: investmentRouter,
       banking: bankingRouter,

@@ -1,4 +1,3 @@
-export * from '../../verticals/vertical-accounting'
 export * from '../../verticals/vertical-banking'
 export * from '../../verticals/vertical-investment'
 export * from '../../verticals/vertical-pta'
