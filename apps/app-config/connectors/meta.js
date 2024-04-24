@@ -109,6 +109,15 @@ module.exports = [
     },
   },
   {
+    name: 'greenhouse',
+    dirName: 'connector-greenhouse',
+    varName: 'connectorGreenhouse',
+    imports: {
+      def: '@openint/connector-greenhouse/def',
+      server: '@openint/connector-greenhouse/server',
+    },
+  },
+  {
     name: 'heron',
     dirName: 'connector-heron',
     varName: 'connectorHeron',

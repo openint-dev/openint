@@ -10,6 +10,7 @@ import {default as connectorFirebase} from '@openint/connector-firebase/def'
 import {default as connectorForeceipt} from '@openint/connector-foreceipt/def'
 import {default as connectorFs} from '@openint/connector-fs/def'
 import {default as connectorGoogle} from '@openint/connector-google/def'
+import {default as connectorGreenhouse} from '@openint/connector-greenhouse/def'
 import {default as connectorHeron} from '@openint/connector-heron/def'
 import {default as connectorHubspot} from '@openint/connector-hubspot/def'
 import {default as connectorLunchmoney} from '@openint/connector-lunchmoney/def'
@@ -52,6 +53,7 @@ export const defConnectors = {
   foreceipt: connectorForeceipt,
   fs: connectorFs,
   google: connectorGoogle,
+  greenhouse: connectorGreenhouse,
   heron: connectorHeron,
   hubspot: connectorHubspot,
   lunchmoney: connectorLunchmoney,

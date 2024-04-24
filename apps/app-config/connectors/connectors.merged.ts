@@ -21,6 +21,8 @@ import {default as connectorFs_def} from '@openint/connector-fs/def'
 import {default as connectorFs_server} from '@openint/connector-fs/server'
 import {default as connectorGoogle_def} from '@openint/connector-google/def'
 import {default as connectorGoogle_server} from '@openint/connector-google/server'
+import {default as connectorGreenhouse_def} from '@openint/connector-greenhouse/def'
+import {default as connectorGreenhouse_server} from '@openint/connector-greenhouse/server'
 import {default as connectorHeron_def} from '@openint/connector-heron/def'
 import {default as connectorHeron_server} from '@openint/connector-heron/server'
 import {default as connectorHubspot_def} from '@openint/connector-hubspot/def'
@@ -131,6 +133,11 @@ const connectorFs = {
 const connectorGoogle = {
   ...connectorGoogle_def,
   ...connectorGoogle_server,
+}
+
+const connectorGreenhouse = {
+  ...connectorGreenhouse_def,
+  ...connectorGreenhouse_server,
 }
 
 const connectorHeron = {
@@ -288,6 +295,7 @@ export const mergedConnectors = {
   foreceipt: connectorForeceipt,
   fs: connectorFs,
   google: connectorGoogle,
+  greenhouse: connectorGreenhouse,
   heron: connectorHeron,
   hubspot: connectorHubspot,
   lunchmoney: connectorLunchmoney,
