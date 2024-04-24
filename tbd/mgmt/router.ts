@@ -1,5 +1,5 @@
 import {and, db, eq, schema} from '@openint/db'
-import type {_Provider, ProviderFromRouter} from '@openint/vdk'
+import type {_Provider, AdapterFromRouter} from '@openint/vdk'
 import {NotImplementedError, publicProcedure, trpc, z} from '@openint/vdk'
 import {nangoPostgresProvider} from './providers/nango-postgres-provider'
 import {supaglueProvider} from './providers/supaglue-provider'
@@ -21,7 +21,7 @@ type MgmtProcedureContext = ReturnType<
 
 type InitOpts = {ctx: MgmtProcedureContext}
 
-export type MgmtProvider<TInstance> = ProviderFromRouter<
+export type MgmtProvider<TInstance> = AdapterFromRouter<
   typeof mgmtRouter,
   TInstance,
   MgmtProcedureContext,

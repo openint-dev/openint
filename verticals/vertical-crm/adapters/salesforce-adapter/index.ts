@@ -10,7 +10,7 @@ import {
   PLACEHOLDER_BASE_URL,
   uniqBy,
 } from '@openint/vdk'
-import type {CRMProvider} from '../../router'
+import type {CRMAdapter} from '../../router'
 import {SALESFORCE_API_VERSION, SALESFORCE_STANDARD_OBJECTS} from './constants'
 // import {salesforceProviderJsForce} from './jsforce'
 import {capitalizeFirstChar, listFields, mappers} from './mappers'
@@ -111,7 +111,7 @@ function sdkExt(instance: SalesforceSDK) {
   }
 }
 
-export const salesforceProvider = {
+export const salesforceAdapter = {
   __init__: ({proxyLinks}) => {
     const sdk = initSalesforceSDK({
       baseUrl: PLACEHOLDER_BASE_URL,
@@ -289,7 +289,7 @@ export const salesforceProvider = {
   //     ...opts,
   //     instance: await instance.getJsForce(),
   //   }),
-} satisfies CRMProvider<SalesforceSDK>
+} satisfies CRMAdapter<SalesforceSDK>
 
 const COMPOUND_TYPES = ['location', 'address']
 

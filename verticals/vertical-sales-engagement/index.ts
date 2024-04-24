@@ -1,15 +1,15 @@
-import type {ProviderMap} from '@openint/vdk'
-import {apolloProvider} from './providers/apollo-provider'
-import {outreachProvider} from './providers/outreach-provider'
-import {salesloftProvider} from './providers/salesloft-provider'
+import type {AdapterMap} from '@openint/vdk'
+import {apolloAdapter} from './adapters/apollo-adapter'
+import {outreachAdapter} from './adapters/outreach-adapter'
+import {salesloftAdapter} from './adapters/salesloft-adapter'
 
-export * from './providers/apollo-provider'
-export * from './providers/outreach-provider'
-export * from './providers/salesloft-provider'
+export * from './adapters/apollo-adapter'
+export * from './adapters/outreach-adapter'
+export * from './adapters/salesloft-adapter'
 export * from './router'
 
 export default {
-  apollo: apolloProvider,
-  salesloft: salesloftProvider,
-  outreach: outreachProvider,
-} satisfies ProviderMap
+  apollo: apolloAdapter,
+  salesloft: salesloftAdapter,
+  outreach: outreachAdapter,
+} satisfies AdapterMap

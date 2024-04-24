@@ -38,6 +38,3 @@ export * from '@openint/trpc'
 // re-exporting utiltities
 
 export {mapKeys, mapValues, pick, uniq, uniqBy} from 'remeda'
-
-// TODO: Remove me
-export {RouterMap, VerticalRouterOpts, proxyCallRemote} from './deprecated'

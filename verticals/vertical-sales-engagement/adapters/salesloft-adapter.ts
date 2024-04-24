@@ -4,7 +4,7 @@ import {
   type SalesloftSDKTypes,
 } from '@opensdks/sdk-salesloft'
 import {mapper, z, zCast} from '@openint/vdk'
-import type {SalesEngagementProvider} from '../router'
+import type {SalesEngagementAdapter} from '../router'
 import * as unified from '../unifiedModels'
 import type {EmailAddress, PhoneNumber} from '../unifiedModels'
 
@@ -151,7 +151,7 @@ const mappers = {
   }),
 }
 
-export const salesloftProvider = {
+export const salesloftAdapter = {
   __init__: ({proxyLinks}) =>
     initSalesloftSDK({
       headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
@@ -231,4 +231,4 @@ export const salesloftProvider = {
       items: res.data.data?.map(mappers.user) ?? [],
     }
   },
-} satisfies SalesEngagementProvider<SalesloftSDK>
+} satisfies SalesEngagementAdapter<SalesloftSDK>

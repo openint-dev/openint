@@ -4,7 +4,7 @@ import {
   type OutreachSDKTypes,
 } from '@opensdks/sdk-outreach'
 import {mapper, z, zCast} from '@openint/vdk'
-import type {SalesEngagementProvider} from '../router'
+import type {SalesEngagementAdapter} from '../router'
 import * as unified from '../unifiedModels'
 import type {EmailAddress, PhoneNumber} from '../unifiedModels'
 
@@ -175,7 +175,7 @@ const mappers = {
   }),
 }
 
-export const outreachProvider = {
+export const outreachAdapter = {
   __init__: ({proxyLinks}) =>
     initOutreachSDK({
       headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
@@ -502,4 +502,4 @@ export const outreachProvider = {
     })
     return {record: {id: `${createRes.data.data?.id}`}}
   },
-} satisfies SalesEngagementProvider<OutreachSDK>
+} satisfies SalesEngagementAdapter<OutreachSDK>

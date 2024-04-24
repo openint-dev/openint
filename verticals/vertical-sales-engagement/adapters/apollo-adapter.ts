@@ -4,7 +4,7 @@ import {
   type ApolloSDKTypes,
 } from '@opensdks/sdk-apollo'
 import {mapper, pick, zCast} from '@openint/vdk'
-import type {SalesEngagementProvider} from '../router'
+import type {SalesEngagementAdapter} from '../router'
 import * as unified from '../unifiedModels'
 import type {EmailAddress} from '../unifiedModels'
 
@@ -94,7 +94,7 @@ const mappers = {
   }),
 }
 
-export const apolloProvider = {
+export const apolloAdapter = {
   __init__: ({proxyLinks}) =>
     initApolloSDK({
       api_key: '', // This will be populated by Nango, or you can populate your own
@@ -118,4 +118,4 @@ export const apolloProvider = {
       items: [],
     }
   },
-} satisfies SalesEngagementProvider<ApolloSDK>
+} satisfies SalesEngagementAdapter<ApolloSDK>

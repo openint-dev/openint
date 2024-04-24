@@ -1,9 +1,9 @@
 import {initPipedriveSDK, type PipedriveSDK} from '@opensdks/sdk-pipedrive'
 import {NotImplementedError, PLACEHOLDER_BASE_URL} from '@openint/vdk'
-import type {CRMProvider} from '../../router'
+import type {CRMAdapter} from '../../router'
 import {MS_DYNAMICS_365_SALES_STANDARD_OBJECTS} from './constants'
 
-export const msDynamics365SalesProvider = {
+export const msDynamics365SalesAdapter = {
   __init__: ({proxyLinks}) =>
     // FIXME: This is a placeholder, we need an actual msdynamics sdk!
     initPipedriveSDK({
@@ -26,4 +26,4 @@ export const msDynamics365SalesProvider = {
       name,
     }))
   },
-} satisfies CRMProvider<PipedriveSDK>
+} satisfies CRMAdapter<PipedriveSDK>

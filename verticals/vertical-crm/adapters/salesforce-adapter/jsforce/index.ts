@@ -1,6 +1,6 @@
 import type * as jsforce from 'jsforce'
 import {BadRequestError} from '@openint/vdk'
-import type {CRMProvider} from '../../../router'
+import type {CRMAdapter} from '../../../router'
 import {SALESFORCE_API_VERSION} from '../constants'
 import {
   toSalesforceCustomObjectCreateParams,
@@ -106,7 +106,7 @@ async function updateFieldPermissions(
  * Some salesforce APIs (e.g. metadata API) are SOAP based which is not currently supported in
  * openSDKs so we use the jsforce lib instead.
  */
-export const salesforceProviderJsForce = {
+export const salesforceAdapterJsForce = {
   metadataCreateObject: async ({instance: sfdc, input: params}) => {
     validateCustomObject(params)
 
@@ -311,4 +311,4 @@ export const salesforceProviderJsForce = {
       },
     }
   },
-} satisfies Omit<CRMProvider<jsforce.Connection>, '__init__'>
+} satisfies Omit<CRMAdapter<jsforce.Connection>, '__init__'>

@@ -1,10 +1,10 @@
 import type {CustomField as SalesforceCustomField} from 'jsforce/lib/api/metadata/schema'
 import type {z} from '@openint/vdk'
 import {BadRequestError} from '@openint/vdk'
-import type {CRMProvider, unified} from '../../../router'
+import type {CRMAdapter, unified} from '../../../router'
 
-type RouteInput<T extends Exclude<keyof CRMProvider<unknown>, '__init__'>> =
-  Parameters<NonNullable<CRMProvider<unknown>[T]>>[0]['input']
+type RouteInput<T extends Exclude<keyof CRMAdapter<unknown>, '__init__'>> =
+  Parameters<NonNullable<CRMAdapter<unknown>[T]>>[0]['input']
 
 type PropertyUnified = z.infer<(typeof unified)['meta_custom_object_field']>
 

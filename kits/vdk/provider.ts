@@ -16,10 +16,10 @@ import {
   toNangoProviderConfigKey,
 } from './nangoProxyLink'
 
-export function verticalProcedure(providerMap: ProviderMap) {
+export function verticalProcedure(adapterMap: AdapterMap) {
   return remoteProcedure.use(async ({next, ctx}) => {
     const {connectorName} = ctx.remote
-    const provider = providerMap[connectorName]
+    const provider = adapterMap[connectorName]
     if (!provider) {
       throw new BadRequestError(`Provider ${connectorName} not found`)
     }
@@ -35,8 +35,8 @@ export interface _Provider<TInitOpts, TInstance = unknown> {
   __init__: (opts: TInitOpts) => TInstance
 }
 
-export interface ProviderMap {
-  [k: string]: Provider
+export interface AdapterMap {
+  [k: string]: Adapter
 }
 
 /** To be refactored out of vdk probably...  */
@@ -51,10 +51,10 @@ export interface ExtraInitOpts {
     instance_url: string | null | undefined
   }>
 }
-export type Provider = Record<string, (...args: any[]) => any> &
+export type Adapter = Record<string, (...args: any[]) => any> &
   _Provider<{ctx: VerticalProcedureContext} & ExtraInitOpts>
 
-export type ProviderFromRouter<
+export type AdapterFromRouter<
   TRouter extends AnyRouter,
   TInstance = {},
   TCtx = VerticalProcedureContext,
@@ -79,7 +79,7 @@ export type ProviderFromRouter<
  */
 export const PLACEHOLDER_BASE_URL = 'http://placeholder'
 
-export async function proxyCallProvider({
+export async function proxyCallAdapter({
   input,
   ctx,
 }: {

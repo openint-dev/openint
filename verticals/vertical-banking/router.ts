@@ -1,6 +1,6 @@
-import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
+import type {AdapterFromRouter, RouterMeta} from '@openint/vdk'
 import {
-  proxyCallProvider,
+  proxyCallAdapter,
   trpc,
   verticalProcedure,
   z,
@@ -24,10 +24,10 @@ export const bankingRouter = trpc.router({
     .meta(oapi({method: 'GET', path: '/category'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.category)}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 
-export type BankingAdapter<TInstance> = ProviderFromRouter<
+export type BankingAdapter<TInstance> = AdapterFromRouter<
   typeof bankingRouter,
   TInstance
 >

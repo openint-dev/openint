@@ -10,7 +10,7 @@ import {
   NotFoundError,
   uniqBy,
 } from '@openint/vdk'
-import type {CRMProvider} from '../../router'
+import type {CRMAdapter} from '../../router'
 import type {
   HSAssociation,
   HSAssociations,
@@ -494,7 +494,7 @@ const _batchReadObjectThenMap = async <TIn, TOut extends BaseRecord>(
   return res.data.results.map(mapper.parse)
 }
 
-export const hubspotProvider = {
+export const hubspotAdapter = {
   __init__: ({proxyLinks}) =>
     initHubspotSDK({
       headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
@@ -794,4 +794,4 @@ export const hubspotProvider = {
       },
     }
   },
-} satisfies CRMProvider<HubspotSDK>
+} satisfies CRMAdapter<HubspotSDK>

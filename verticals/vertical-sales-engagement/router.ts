@@ -1,6 +1,6 @@
-import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
-import {proxyCallProvider, trpc, verticalProcedure, z} from '@openint/vdk'
-import providers from './providers'
+import type {AdapterFromRouter, RouterMeta} from '@openint/vdk'
+import {proxyCallAdapter, trpc, verticalProcedure, z} from '@openint/vdk'
+import adapters from './adapters'
 import * as unified from './unifiedModels'
 
 export {unified}
@@ -9,7 +9,7 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
   return {openapi: {...meta, path: `/verticals/sales-engagement${meta.path}`}}
 }
 
-const procedure = verticalProcedure(providers)
+const procedure = verticalProcedure(adapters)
 
 export const salesEngagementRouter = trpc.router({
   listContacts: procedure
@@ -21,7 +21,7 @@ export const salesEngagementRouter = trpc.router({
         items: z.array(unified.contact),
       }),
     )
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listSequences: procedure
     .meta(oapi({method: 'GET', path: '/sequence'}))
     .input(z.object({cursor: z.string().nullish()}))
@@ -31,7 +31,7 @@ export const salesEngagementRouter = trpc.router({
         items: z.array(unified.sequence),
       }),
     )
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listSequenceStates: procedure
     .meta(oapi({method: 'GET', path: '/sequence_state'}))
     .input(z.object({cursor: z.string().nullish()}))
@@ -41,7 +41,7 @@ export const salesEngagementRouter = trpc.router({
         items: z.array(unified.sequenceState),
       }),
     )
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listUsers: procedure
     .meta(oapi({method: 'GET', path: '/user'}))
     .input(z.object({cursor: z.string().nullish()}))
@@ -51,7 +51,7 @@ export const salesEngagementRouter = trpc.router({
         items: z.array(unified.user),
       }),
     )
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listAccounts: procedure
     .meta(oapi({method: 'GET', path: '/account'}))
     .input(z.object({cursor: z.string().nullish()}))
@@ -61,7 +61,7 @@ export const salesEngagementRouter = trpc.router({
         items: z.array(unified.account),
       }),
     )
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listMailboxes: procedure
     .meta(oapi({method: 'GET', path: '/mailbox'}))
     .input(z.object({cursor: z.string().nullish()}))
@@ -71,7 +71,7 @@ export const salesEngagementRouter = trpc.router({
         items: z.array(unified.mailbox),
       }),
     )
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   upsertAccount: procedure
     .meta(oapi({method: 'POST', path: '/account/_upsert'}))
     .input(
@@ -104,7 +104,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .output(z.object({record: z.object({id: z.string()}).optional()}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   upsertContact: procedure
     .meta(oapi({method: 'POST', path: '/contact/_upsert'}))
     .input(
@@ -189,7 +189,7 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .output(z.object({record: z.object({id: z.string()}).optional()}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   insertSequenceState: procedure
     .meta(oapi({method: 'POST', path: '/sequence_state'}))
     .input(
@@ -212,10 +212,10 @@ export const salesEngagementRouter = trpc.router({
       }),
     )
     .output(z.object({record: z.object({id: z.string()}).optional()}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 
-export type SalesEngagementProvider<TInstance> = ProviderFromRouter<
+export type SalesEngagementAdapter<TInstance> = AdapterFromRouter<
   typeof salesEngagementRouter,
   TInstance
 >

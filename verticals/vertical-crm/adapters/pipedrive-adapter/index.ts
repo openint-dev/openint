@@ -1,7 +1,7 @@
 import {initPipedriveSDK, type PipedriveSDK} from '@opensdks/sdk-pipedrive'
 import type {BaseRecord} from '@openint/vdk'
 import {NotAuthorizedError} from '@openint/vdk'
-import type {CRMProvider} from '../../router'
+import type {CRMAdapter} from '../../router'
 import {mappers, zErrorPayload} from './mappers'
 
 const _listEntityFullThenMap = async <TIn, TOut extends BaseRecord>(
@@ -42,7 +42,7 @@ const _listEntityFullThenMap = async <TIn, TOut extends BaseRecord>(
   }
 }
 
-export const pipedriveProvider = {
+export const pipedriveAdapter = {
   __init__: ({proxyLinks, ctx}) =>
     initPipedriveSDK({
       headers: {authorization: 'Bearer ...'}, // This will be populated by Nango, or you can populate your own...
@@ -105,4 +105,4 @@ export const pipedriveProvider = {
   getAccount: async ({}) => {
     throw new Error('Not implemented yet')
   },
-} satisfies CRMProvider<PipedriveSDK>
+} satisfies CRMAdapter<PipedriveSDK>

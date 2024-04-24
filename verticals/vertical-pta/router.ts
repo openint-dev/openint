@@ -1,6 +1,6 @@
-import type {ProviderFromRouter, RouterMeta} from '@openint/vdk'
+import type {AdapterFromRouter, RouterMeta} from '@openint/vdk'
 import {
-  proxyCallProvider,
+  proxyCallAdapter,
   trpc,
   verticalProcedure,
   z,
@@ -24,20 +24,20 @@ export const ptaRouter = trpc.router({
     .meta(oapi({method: 'GET', path: '/account'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.account)}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listTransactions: procedure
     .meta(oapi({method: 'GET', path: '/transaction'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.transaction)}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listCommodities: procedure
     .meta(oapi({method: 'GET', path: '/commodity'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.commodity)}))
-    .query(async ({input, ctx}) => proxyCallProvider({input, ctx})),
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 
-export type PtaAdapter<TInstance> = ProviderFromRouter<
+export type PtaAdapter<TInstance> = AdapterFromRouter<
   typeof ptaRouter,
   TInstance
 >
