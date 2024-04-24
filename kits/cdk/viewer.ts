@@ -6,6 +6,7 @@ import type {EndUserId, ExtEndUserId, Id, UserId} from './id.types'
 import {zEndUserId, zId, zUserId} from './id.types'
 
 export const zRole = z.enum(['anon', 'end_user', 'user', 'org', 'system'])
+export {ExtEndUserId}
 
 export const zViewer = z
   .discriminatedUnion('role', [

@@ -1,9 +1,9 @@
 import type {OpenApiMeta} from '@lilyrose2798/trpc-openapi'
 import {z} from '@opensdks/util-zod'
 import {initTRPC, TRPCError} from '@trpc/server'
-import type {ExtEndUserId, Viewer, ViewerRole} from '@openint/cdk'
-import type {RouterContext} from '@openint/engine-backend'
 import {proxyRequired} from '@openint/env'
+import type {ExtEndUserId, Viewer, ViewerRole} from '../../kits/cdk/viewer'
+import type {RouterContext} from '../engine-backend/context'
 import {BadRequestError} from './errors'
 
 /** @deprecated. Dedupe me from cdk hasRole function */
