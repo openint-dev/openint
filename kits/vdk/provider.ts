@@ -40,6 +40,10 @@ export interface _Provider<TInitOpts, TInstance = unknown> {
   __init__: (opts: TInitOpts) => TInstance
 }
 
+export interface Vertical {
+  [k: string]: Provider
+}
+
 /** To be refactored out of vdk probably...  */
 export interface ExtraInitOpts {
   proxyLinks: FetchLink[]

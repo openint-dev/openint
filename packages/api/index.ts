@@ -4,7 +4,6 @@ import {isHttpError} from '@openint/vdk'
 import {appRouter} from './appRouter'
 
 export * from './appRouter'
-export * from './createContext'
 
 export function createAppHandler({
   endpoint = '/api',
