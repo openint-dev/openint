@@ -3,11 +3,11 @@ import {z} from '@opensdks/util-zod'
 import {initTRPC, TRPCError} from '@trpc/server'
 import type {ExtEndUserId, Viewer, ViewerRole} from '@openint/cdk'
 import type {RouterContext} from '@openint/engine-backend'
-import {env, MGMT_PROVIDER_NAME, proxyRequired} from '@openint/env'
+import {proxyRequired} from '@openint/env'
 import {BadRequestError} from './errors'
 
 /** @deprecated. Dedupe me from cdk hasRole function */
-export function hasRole<R extends ViewerRole>(
+function hasRole<R extends ViewerRole>(
   viewer: Viewer,
   roles: R[],
 ): viewer is Viewer<R> {
@@ -109,8 +109,6 @@ export const zByosHeaders = z.object({
   'x-nango-secret-key': z.string().nullish(),
   /** Supaglue API key */
   'x-api-key': z.string().nullish(),
-  /** Will use nangoPostgres instead of supaglue */
-  'x-mgmt-provider-name': MGMT_PROVIDER_NAME.optional(),
 })
 export type ByosHeaders = z.infer<typeof zByosHeaders>
 
@@ -123,12 +121,8 @@ export const publicProcedure = trpc.procedure.use(async ({next, ctx, path}) => {
     formatError: (key) => new BadRequestError(`${key} header is required`),
   })
 
-  // Defaulting to supaglue here for now but worker defaults to nango
-  const mgmtProviderName =
-    optional['x-mgmt-provider-name'] ?? env.MGMT_PROVIDER_NAME
-
   return next({
-    ctx: {...ctx, path, optional, required, mgmtProviderName},
+    ctx: {...ctx, path, optional, required},
   })
 })
 

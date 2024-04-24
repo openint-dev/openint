@@ -7,9 +7,11 @@ import * as unified from './unifiedModels'
 
 export {unified}
 
+const mgmtProviderName = 'nango'
+
 export const mgmtProcedure = publicProcedure.use(async ({next, ctx}) => {
   const provider: _Provider<InitOpts> =
-    ctx.mgmtProviderName === 'nango' ? nangoPostgresProvider : supaglueProvider
+    mgmtProviderName === 'nango' ? nangoPostgresProvider : supaglueProvider
   return next({ctx: {...ctx, provider}})
 })
 
@@ -138,7 +140,7 @@ async function mgmtProxyCallProvider({
 
   if (typeof implementation !== 'function') {
     throw new NotImplementedError(
-      `${ctx.mgmtProviderName} provider does not implement ${ctx.path}`,
+      `${mgmtProviderName} provider does not implement ${ctx.path}`,
     )
   }
 
