@@ -1,5 +1,5 @@
 import {type GreenhouseSDK} from '@openint/connector-greenhouse'
-import type {ATSAdapter} from '../router'
+import type {ATSAdapter} from '../../router'
 import {mappers} from './mappers'
 
 export const greenhouseAdapter = {

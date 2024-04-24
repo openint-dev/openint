@@ -1,6 +1,6 @@
 import {type GreenhouseObjectType} from '@openint/connector-greenhouse'
 import {mapper, zCast} from '@openint/vdk'
-import * as unified from '../../unifiedModels'
+import * as unified from '../../../unifiedModels'
 
 export const candidate = mapper(
   zCast<GreenhouseObjectType['candidate']>(),

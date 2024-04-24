@@ -1,5 +1,5 @@
 import type {AdapterMap} from '@openint/vdk'
-import {greenhouseAdapter} from './greenhouse-adapter'
+import {greenhouseAdapter} from './greenhouse'
 
 export default {
   greenhouse: greenhouseAdapter,
