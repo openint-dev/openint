@@ -1,4 +1,3 @@
-import {TRPCError} from '@trpc/server'
 import {
   extractConnectorName,
   extractId,
@@ -8,10 +7,11 @@ import {
   zId,
   zRaw,
 } from '@openint/cdk'
+import {TRPCError} from '@openint/trpc'
 import {makeUlid, z} from '@openint/util'
 import {adminProcedure, protectedProcedure, trpc} from './_base'
 
-export {type inferProcedureInput} from '@trpc/server'
+export {type inferProcedureInput} from '@openint/trpc'
 
 const tags = ['Core']
 

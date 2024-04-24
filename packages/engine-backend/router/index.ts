@@ -1,4 +1,3 @@
-import type {inferRouterInputs, inferRouterOutputs} from '@trpc/server'
 // import {accountingRouter} from './verticals/accounting'
 
 import {
@@ -9,6 +8,7 @@ import {
   qboAdapter,
   xeroAdapter,
 } from '@openint/cdk/verticals'
+import type {inferRouterInputs, inferRouterOutputs} from '@openint/trpc'
 import {remoteProcedure, trpc} from './_base'
 import {adminRouter} from './adminRouter'
 import {connectorConfigRouter} from './connectorConfigRouter'
@@ -83,4 +83,4 @@ export type FlatRouter = typeof flatRouter
 export type RouterInput = inferRouterInputs<typeof flatRouter>
 export type RouterOutput = inferRouterOutputs<typeof flatRouter>
 
-export type {AnyRouter} from '@trpc/server'
+export type {AnyRouter} from '@openint/trpc'

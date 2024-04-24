@@ -1,4 +1,3 @@
-import type {RouterContext} from '@openint/vdk'
 import {
   hubspotProvider,
   msDynamics365SalesProvider,
@@ -11,7 +10,7 @@ import {
   salesloftProvider,
 } from '@openint/vertical-sales-engagement'
 
-const providerByName = {
+export const providerByName = {
   apollo: apolloProvider,
   salesloft: salesloftProvider,
   outreach: outreachProvider,
@@ -19,10 +18,4 @@ const providerByName = {
   salesforce: salesforceProvider,
   pipedrive: pipedriveProvider,
   ms_dynamics_365_sales: msDynamics365SalesProvider,
-}
-
-export function createContext(
-  opts: Omit<RouterContext, 'providerByName'>,
-): RouterContext {
-  return {...opts, providerByName}
 }

@@ -1,6 +1,6 @@
-import {TRPCError} from '@trpc/server'
 import type {AnyConnectorImpl, Id, IDS, ZRaw} from '@openint/cdk'
 import {extractId, zRaw} from '@openint/cdk'
+import {TRPCError} from '@openint/trpc'
 import type {ObjectPartialDeep} from '@openint/util'
 import {deepMerge, z} from '@openint/util'
 import {makeMetaLinks} from './makeMetaLinks'

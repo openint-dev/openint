@@ -1,5 +1,5 @@
-import {TRPCError} from '@trpc/server'
 import {metaForConnector} from '@openint/cdk'
+import {TRPCError} from '@openint/trpc'
 import {R, z} from '@openint/util'
 import {zodToOas31Schema} from '@openint/zod'
 import {publicProcedure, trpc} from './_base'

@@ -1,4 +1,3 @@
-import {TRPCError} from '@trpc/server'
 import type {ResourceUpdate, ZRaw} from '@openint/cdk'
 import {
   extractId,
@@ -10,6 +9,7 @@ import {
   zPassthroughInput,
   zRaw,
 } from '@openint/cdk'
+import {TRPCError} from '@openint/trpc'
 import {joinPath, makeUlid, Rx, rxjs, z} from '@openint/util'
 import {inngest} from '../events'
 import {parseWebhookRequest} from '../parseWebhookRequest'
@@ -17,7 +17,7 @@ import {zSyncOptions} from '../types'
 import {protectedProcedure, remoteProcedure, trpc} from './_base'
 import {zListParams} from './_schemas'
 
-export {type inferProcedureInput} from '@trpc/server'
+export {type inferProcedureInput} from '@openint/trpc'
 
 const tags = ['Core']
 

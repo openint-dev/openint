@@ -2,3 +2,12 @@
 export * from './errors'
 export * from './trpc'
 // codegen:end
+
+export {TRPCError} from '@trpc/server'
+export type {
+  AnyRouter,
+  inferProcedureInput,
+  inferProcedureOutput,
+  inferRouterInputs,
+  inferRouterOutputs,
+} from '@trpc/server'

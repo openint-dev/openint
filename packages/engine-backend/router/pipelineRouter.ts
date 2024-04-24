@@ -6,7 +6,7 @@ import {zSyncOptions} from '../types'
 import {protectedProcedure, trpc} from './_base'
 import {zListParams} from './_schemas'
 
-export {type inferProcedureInput} from '@trpc/server'
+export {type inferProcedureInput} from '@openint/trpc'
 
 const tags = ['Core']
 
@@ -99,7 +99,6 @@ export const pipelineRouter = trpc.router({
           ...standardReso,
           id: reso.id,
           displayName:
-             
             reso.displayName ||
             standardReso?.displayName ||
             standardInt?.name ||

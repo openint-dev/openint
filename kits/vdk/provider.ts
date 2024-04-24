@@ -18,9 +18,11 @@ import {
 } from './nangoProxyLink'
 import {supaglueProxyLink} from './supaglueProxyLink'
 
+// TODO: Fix this remote procedure
 export const remoteProcedure = publicProcedure.use(async ({next, ctx}) => {
   const {'x-customer-id': customerId, 'x-provider-name': providerName} =
     ctx.required
+  // @ts-expect-error
   const provider = ctx.providerByName[
     ctx.required['x-provider-name']
   ] as Provider

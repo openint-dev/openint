@@ -1,4 +1,3 @@
-import {TRPCError} from '@trpc/server'
 import type {
   EndUserId,
   OauthBaseTypes,
@@ -13,12 +12,13 @@ import {
   zId,
   zPostConnectOptions,
 } from '@openint/cdk'
+import {TRPCError} from '@openint/trpc'
 import {joinPath, z} from '@openint/util'
 import {inngest} from '../events'
 import {parseWebhookRequest} from '../parseWebhookRequest'
 import {protectedProcedure, trpc} from './_base'
 
-export {type inferProcedureInput} from '@trpc/server'
+export {type inferProcedureInput} from '@openint/trpc'
 
 export const zConnectTokenPayload = z.object({
   endUserId: zEndUserId

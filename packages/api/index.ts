@@ -2,7 +2,6 @@ import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
 import {env} from '@openint/env'
 import {isHttpError} from '@openint/vdk'
 import {appRouter} from './appRouter'
-import {createContext} from './createContext'
 
 export * from './appRouter'
 export * from './createContext'
@@ -37,7 +36,8 @@ export function createAppHandler({
           //   'x-nango-secret-key': req.headers.get('x-nango-secret-key'),
           // })
         }
-        return createContext({headers: req.headers}) as never
+        return {} as never
+        // return createContext({headers: req.headers}) as never
       },
       // onError, // can only have side effect and not modify response error status code unfortunately...
       responseMeta: ({errors, ctx: _ctx}) => {

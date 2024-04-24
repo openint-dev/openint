@@ -12,5 +12,7 @@
     "@opensdks/util-zod": "0.0.15",
     "@trpc/server": "10.40.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@openint/engine-backend": "workspace:*"
+  }
 }

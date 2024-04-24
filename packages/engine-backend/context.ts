@@ -1,5 +1,4 @@
 import type {clerkClient} from '@clerk/nextjs'
-import {TRPCError} from '@trpc/server'
 import type {
   AnyConnectorImpl,
   EndUserId,
@@ -10,6 +9,7 @@ import type {
 import {makeNangoClient} from '@openint/cdk'
 import type {JWTClient, Viewer, ViewerRole} from '@openint/cdk/viewer'
 import {makeJwtClient, zViewerFromJwtPayload} from '@openint/cdk/viewer'
+import {TRPCError} from '@openint/trpc'
 import {R} from '@openint/util'
 import type {Env} from '../../apps/app-config/env'
 import {makeServices as _makeServices} from './services'
@@ -19,6 +19,8 @@ import type {MetaService} from './services/metaService'
 
 type Services = ReturnType<typeof _makeServices>
 export interface RouterContext {
+  /** Not used at the moment... Comment out to discover issues */
+  headers?: Headers
   // Viewer-dependent
   viewer: Viewer
   /** Helpers with the designated permission level */

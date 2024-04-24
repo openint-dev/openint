@@ -1,10 +1,10 @@
-import {TRPCError} from '@trpc/server'
 import {extractId, zStandard} from '@openint/cdk'
+import {TRPCError} from '@openint/trpc'
 import {R, z} from '@openint/util'
 import {inngest, zEvent} from '../events'
 import {protectedProcedure, trpc} from './_base'
 
-export {type inferProcedureInput} from '@trpc/server'
+export {type inferProcedureInput} from '@openint/trpc'
 
 export const protectedRouter = trpc.router({
   dispatch: protectedProcedure.input(zEvent).mutation(async ({input}) => {
