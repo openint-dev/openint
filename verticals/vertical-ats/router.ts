@@ -20,22 +20,22 @@ const procedure = verticalProcedure(adapters)
 
 export const atsRouter = trpc.router({
   listJobs: procedure
-    .meta(oapi({method: 'GET', path: '/jobs'}))
+    .meta(oapi({method: 'GET', path: '/job'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.job)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listOffers: procedure
-    .meta(oapi({method: 'GET', path: '/offers'}))
+    .meta(oapi({method: 'GET', path: '/offer'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.offer)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listCandidates: procedure
-    .meta(oapi({method: 'GET', path: '/candidates'}))
+    .meta(oapi({method: 'GET', path: '/candidate'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.candidate)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listDepartments: procedure
-    .meta(oapi({method: 'GET', path: '/departments'}))
+    .meta(oapi({method: 'GET', path: '/department'}))
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.department)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
