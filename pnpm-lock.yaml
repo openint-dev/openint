@@ -901,8 +901,8 @@ importers:
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-greenhouse':
-        specifier: ^0.0.1
-        version: 0.0.1
+        specifier: ^0.0.2
+        version: 0.0.2
 
   connectors/connector-heron:
     dependencies:
@@ -2133,6 +2133,15 @@ importers:
       '@openint/connector-qbo':
         specifier: workspace:*
         version: link:../../connectors/connector-qbo
+      '@openint/vdk':
+        specifier: workspace:*
+        version: link:../../kits/vdk
+
+  verticals/vertical-ats:
+    dependencies:
+      '@openint/connector-greenhouse':
+        specifier: workspace:*
+        version: link:../../connectors/connector-greenhouse
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
@@ -5243,8 +5252,8 @@ packages:
     resolution: {integrity: sha512-fbKPSitxFIcCnb3v2kczLAeMuNTOqzT7IEY3O+vRtpRrFVwBjzs8m1ritQyX5nH4uWJiwfNOEPtz+iuTTzYlOw==}
     dev: false
 
-  /@opensdks/sdk-greenhouse@0.0.1:
-    resolution: {integrity: sha512-4z0DM4/tuStPOE1tkbQCZlaEzBnthfJFk1CVQYfjB1BUPjxRIUl40qpRcPkjVv64e9d0SKfPjp7k7Bm8rbDrig==}
+  /@opensdks/sdk-greenhouse@0.0.2:
+    resolution: {integrity: sha512-pXOXLMnt/pvX09+RTXTwsLzlKtB+kWlA0DN4cXRvWb33ekp96DUxkoJ2sm9z+/9+lBBcRdy2zuAlHwM+TPUW3A==}
     dependencies:
       '@opensdks/runtime': 0.0.19
     dev: false
