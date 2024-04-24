@@ -1,0 +1,8 @@
+{
+  "name": "@openint/vertical-ats",
+  "dependencies": {
+    "@openint/connector-greenhouse": "workspace:*",
+    "@openint/vdk": "workspace:*"
+  },
+  "devDependencies": {}
+}
