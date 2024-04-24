@@ -3539,7 +3539,7 @@
         }
       }
     },
-    "/verticals/crm/account/batch_read": {
+    "/verticals/crm/account/_batch_read": {
       "post": {
         "operationId": "crm-batchReadAccounts",
         "requestBody": {

@@ -150,7 +150,7 @@ export interface paths {
     get: operations['crm-getAccount']
     patch: operations['crm-updateAccount']
   }
-  '/verticals/crm/account/batch_read': {
+  '/verticals/crm/account/_batch_read': {
     post: operations['crm-batchReadAccounts']
   }
   '/verticals/crm/account/_upsert': {

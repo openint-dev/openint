@@ -38,7 +38,7 @@ export const crmRouter = trpc.router({
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 
   batchReadAccounts: procedure
-    .meta(oapi({method: 'POST', path: '/account/batch_read'}))
+    .meta(oapi({method: 'POST', path: '/account/_batch_read'}))
     .input(
       z.object({ids: z.array(z.string()), properties: z.array(z.string())}),
     )
