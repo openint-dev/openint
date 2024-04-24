@@ -2159,16 +2159,6 @@ importers:
         specifier: 1.6.1
         version: 1.6.1
 
-  verticals/vertical-investment:
-    dependencies:
-      '@openint/vdk':
-        specifier: workspace:*
-        version: link:../../kits/vdk
-    devDependencies:
-      '@openint/connector-plaid':
-        specifier: workspace:*
-        version: link:../../connectors/connector-plaid
-
   verticals/vertical-pta:
     dependencies:
       '@openint/vdk':

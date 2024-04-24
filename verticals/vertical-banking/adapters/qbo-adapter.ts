@@ -1,31 +1,52 @@
 import type {QBOSDK, QBOSDKTypes} from '@openint/connector-qbo'
-import {mapper, z, zCast} from '@openint/vdk'
-import type {VerticalBanking} from '../banking'
-import {zBanking} from '../banking'
+import {mapper, zCast} from '@openint/vdk'
+import type {BankingAdapter} from '../router'
+import {unified} from '../router'
 
 type QBO = QBOSDKTypes['oas']['components']['schemas']
 
-const mappers = {
-  category: mapper(
-    zCast<QBO['Account']>(),
-    zBanking.category.extend({_raw: z.unknown().optional()}),
-    {
-      id: 'Id',
-      name: 'FullyQualifiedName',
-      _raw: (a) => a,
-    },
-  ),
+export const mappers = {
+  purchase: mapper(zCast<QBO['Purchase']>(), unified.transaction, {
+    id: 'Id',
+    amount: 'TotalAmt',
+    currency: 'CurrencyRef.value',
+    date: 'TxnDate',
+    account_id: 'AccountRef.value',
+    account_name: 'AccountRef.name',
+    // This is a significant approximation, as there can also be ItemBasedLineDetail as well as
+    // multiple lines... However we sit with it for now...
+    category_id: (p) =>
+      p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.value,
+    category_name: (p) =>
+      p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.name,
+    description: (p) => p.Line[0]?.Description,
+    merchant_id: 'EntityRef.value',
+    merchant_name: 'EntityRef.name',
+  }),
+  account: mapper(zCast<QBO['Account']>(), unified.account, {
+    id: 'Id',
+    name: 'FullyQualifiedName',
+  }),
+  category: mapper(zCast<QBO['Account']>(), unified.category, {
+    id: 'Id',
+    name: 'FullyQualifiedName',
+  }),
+  vendor: mapper(zCast<QBO['Vendor']>(), unified.merchant, {
+    id: 'Id',
+    name: 'DisplayName',
+  }),
 }
 
 export const qboAdapter = {
+  __init__: () => null as never,
   listCategories: async ({instance}) => {
     const res = await instance.query(
       // QBO API does not support OR in SQL query...
       "SELECT * FROM Account WHERE Classification IN ('Revenue', 'Expense') MAXRESULTS 1000",
     )
     return {
-      hasNextPage: false,
+      has_next_page: false,
       items: (res.Account ?? []).map(mappers.category),
     }
   },
-} satisfies VerticalBanking<{instance: QBOSDK}>
+} satisfies BankingAdapter<QBOSDK>

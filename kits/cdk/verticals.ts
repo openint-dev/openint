@@ -1,10 +1,7 @@
-// TODO: Refactor vertical specific logic out of connectors and thus cdk
-// Should be self-contained inside each vertical instead.
-
+// TODO: Deprecate all of these...
 import type * as Pta from '../../verticals/vertical-pta/pta-types'
 
-export * from '../../verticals/vertical-banking'
-
-// TODO: Deprecate all of these...
 export type {Pta}
 export * from '../../verticals/vertical-pta/pta-utils'
+
+export {bankingLink} from '../../verticals/vertical-banking/bankingLink'

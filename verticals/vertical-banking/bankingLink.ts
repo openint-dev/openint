@@ -5,65 +5,11 @@ import type {PlaidSDKTypes} from '@openint/connector-plaid'
 import type {postgresHelpers} from '@openint/connector-postgres'
 import type {QBO} from '@openint/connector-qbo'
 import type {Oas_accounting} from '@openint/connector-xero'
-import type {RouterMap, RouterMeta, VerticalRouterOpts} from '@openint/vdk'
-import {
-  applyMapper,
-  mapper,
-  proxyCallRemote,
-  z,
-  zCast,
-  zPaginationParams,
-} from '@openint/vdk'
+import {applyMapper} from '@openint/vdk'
+import * as adapters from './adapters'
 
 type Plaid = PlaidSDKTypes['oas']['components']
 type Xero = Oas_accounting['components']['schemas']
-
-export const zBanking = {
-  transaction: z
-    .object({
-      id: z.string(),
-      date: z.string().datetime(),
-      description: z.string().nullish(),
-      category_id: z.string().nullish(),
-      category_name: z.string().nullish(),
-      amount: z.number(),
-      currency: z.string(),
-      merchant_id: z.string().nullish(),
-      merchant_name: z.string().nullish(),
-      account_id: z.string().nullish(),
-      account_name: z.string().nullish(),
-    })
-    .openapi({ref: 'banking.transaction'}),
-  account: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-      current_balance: z.number().optional(),
-      currency: z.string().optional(),
-    })
-    .openapi({ref: 'banking.account'}),
-  merchant: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-      url: z.string().nullish(),
-    })
-    .openapi({ref: 'banking.merchant'}),
-  category: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .openapi({ref: 'banking.category'}),
-}
-
-export const zBankingEntityName = z.enum(
-  Object.keys(zBanking) as [keyof typeof zBanking],
-)
-
-export type ZBanking = {
-  [k in keyof typeof zBanking]: z.infer<(typeof zBanking)[k]>
-}
 
 type PostgresInputPayload =
   (typeof postgresHelpers)['_types']['destinationInputEntity']
@@ -90,7 +36,7 @@ export function bankingLink(ctx: {
         const entity = op.data.entity as Xero['Account']
         if (entity.Class === 'REVENUE' || entity.Class === 'EXPENSE') {
           const mapped = applyMapper(
-            mappers.xero.category,
+            adapters.xero.mappers.category,
             op.data.entity as Xero['Account'],
           )
           return rxjs.of({
@@ -103,7 +49,7 @@ export function bankingLink(ctx: {
           })
         } else {
           const mapped = applyMapper(
-            mappers.xero.account,
+            adapters.xero.mappers.account,
             op.data.entity as Xero['Account'],
           )
           return rxjs.of({
@@ -119,7 +65,7 @@ export function bankingLink(ctx: {
       if (op.data.entityName === 'BankTransaction') {
         // TODO: Dedupe from  qbo.purchase later
         const mapped = applyMapper(
-          mappers.xero.bank_transaction,
+          adapters.xero.mappers.bank_transaction,
           op.data.entity as Xero['BankTransaction'],
         )
         // TODO: Make this better, should at the minimum apply to both Plaid & QBO, options are
@@ -156,7 +102,7 @@ export function bankingLink(ctx: {
     if (ctx.source.connectorConfig.connectorName === 'qbo') {
       if (op.data.entityName === 'purchase') {
         const mapped = applyMapper(
-          mappers.qbo.purchase,
+          adapters.qbo.mappers.purchase,
           op.data.entity as QBO['Purchase'],
         )
         // TODO: Make this better, should at the minimum apply to both Plaid & QBO, options are
@@ -196,7 +142,7 @@ export function bankingLink(ctx: {
           entity.Classification === 'Expense'
         ) {
           const mapped = applyMapper(
-            mappers.qbo.category,
+            adapters.qbo.mappers.category,
             op.data.entity as QBO['Account'],
           )
           return rxjs.of({
@@ -209,7 +155,7 @@ export function bankingLink(ctx: {
           })
         } else {
           const mapped = applyMapper(
-            mappers.qbo.account,
+            adapters.qbo.mappers.account,
             op.data.entity as QBO['Account'],
           )
           return rxjs.of({
@@ -224,7 +170,7 @@ export function bankingLink(ctx: {
       }
       if (op.data.entityName === 'vendor') {
         const mapped = applyMapper(
-          mappers.qbo.vendor,
+          adapters.qbo.mappers.vendor,
           op.data.entity as QBO['Vendor'],
         )
         return rxjs.of({
@@ -240,7 +186,7 @@ export function bankingLink(ctx: {
     if (ctx.source.connectorConfig.connectorName === 'plaid') {
       if (op.data.entityName === 'transaction') {
         const mapped = applyMapper(
-          mappers.plaid.transaction,
+          adapters.plaid.mappers.transaction,
           op.data.entity as Plaid['schemas']['Transaction'],
         )
         return rxjs.of({
@@ -254,7 +200,7 @@ export function bankingLink(ctx: {
       }
       if (op.data.entityName === 'account') {
         const mapped = applyMapper(
-          mappers.plaid.account,
+          adapters.plaid.mappers.account,
           op.data.entity as Plaid['schemas']['AccountBase'],
         )
         return rxjs.of({
@@ -271,126 +217,3 @@ export function bankingLink(ctx: {
     return rxjs.EMPTY
   })
 }
-
-const mappers = {
-  xero: {
-    account: mapper(zCast<Xero['Account']>(), zBanking.account, {
-      id: 'AccountID',
-      name: 'Name',
-    }),
-    category: mapper(zCast<Xero['Account']>(), zBanking.account, {
-      id: 'AccountID',
-      name: 'Name',
-    }),
-    bank_transaction: mapper(
-      zCast<Xero['BankTransaction']>(),
-      zBanking.transaction,
-      {
-        id: 'BankTransactionID',
-        amount: 'Total',
-        currency: 'CurrencyCode',
-        date: 'DateString' as 'Date', // empirically works https://share.cleanshot.com/0c6dlNsF
-        account_id: 'BankAccount.AccountID',
-        account_name: 'BankAccount.Name',
-        merchant_id: 'Contact.ContactID',
-        merchant_name: 'Contact.Name',
-        category_id: (t) => t.LineItems[0]?.AccountID ?? '',
-        description: (t) => t.LineItems[0]?.Description ?? '',
-        // Don't have data readily available for these...
-        // category_name is not readily available, only ID is provided
-      },
-    ),
-  },
-  // Should be able to have input and output entity types in here also.
-  qbo: {
-    purchase: mapper(zCast<QBO['Purchase']>(), zBanking.transaction, {
-      id: 'Id',
-      amount: 'TotalAmt',
-      currency: 'CurrencyRef.value',
-      date: 'TxnDate',
-      account_id: 'AccountRef.value',
-      account_name: 'AccountRef.name',
-      // This is a significant approximation, as there can also be ItemBasedLineDetail as well as
-      // multiple lines... However we sit with it for now...
-      category_id: (p) =>
-        p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.value,
-      category_name: (p) =>
-        p.Line[0]?.AccountBasedExpenseLineDetail?.AccountRef.name,
-      description: (p) => p.Line[0]?.Description,
-      merchant_id: 'EntityRef.value',
-      merchant_name: 'EntityRef.name',
-    }),
-    account: mapper(zCast<QBO['Account']>(), zBanking.account, {
-      id: 'Id',
-      name: 'FullyQualifiedName',
-    }),
-    category: mapper(zCast<QBO['Account']>(), zBanking.category, {
-      id: 'Id',
-      name: 'FullyQualifiedName',
-    }),
-    vendor: mapper(zCast<QBO['Vendor']>(), zBanking.merchant, {
-      id: 'Id',
-      name: 'DisplayName',
-    }),
-  },
-  plaid: {
-    transaction: mapper(
-      zCast<Plaid['schemas']['Transaction']>(),
-      zBanking.transaction,
-      {
-        id: 'transaction_id',
-        amount: 'amount',
-        currency: 'iso_currency_code',
-        date: 'date',
-        account_id: 'account_id',
-        category_name: (p) =>
-          [
-            p.personal_finance_category?.primary,
-            p.personal_finance_category?.detailed,
-          ]
-            .filter((c) => !!c)
-            .join('/'),
-        description: 'original_description',
-        merchant_id: 'merchant_entity_id',
-        merchant_name: 'merchant_name',
-      },
-    ),
-    account: mapper(
-      zCast<Plaid['schemas']['AccountBase']>(),
-      zBanking.account,
-      {
-        id: 'account_id',
-        name: 'name',
-        current_balance: (a) => a.balances.current ?? undefined,
-        currency: (a) => a.balances.iso_currency_code ?? undefined,
-      },
-    ),
-  },
-}
-
-function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
-  const vertical = 'banking'
-  return {openapi: {...meta, path: `/verticals/${vertical}${meta.path}`}}
-}
-
-export function createBankingRouter(opts: VerticalRouterOpts) {
-  const router = opts.trpc.router({
-    listCategories: opts.remoteProcedure
-      .meta(oapi({method: 'GET', path: '/category'}))
-      .input(zPaginationParams.nullish())
-      .output(
-        z.object({
-          hasNextPage: z.boolean(),
-          items: z.array(
-            zBanking.category.extend({_raw: z.unknown().optional()}),
-          ),
-        }),
-      )
-      .query(async ({input, ctx}) => proxyCallRemote({input, ctx, opts})),
-  })
-
-  return router
-}
-
-export type BankingRouter = ReturnType<typeof createBankingRouter>
-export type VerticalBanking<TOpts> = RouterMap<BankingRouter, TOpts>

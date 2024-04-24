@@ -1,23 +1,41 @@
 import type {Oas_accounting, XeroSDK} from 'connectors/connector-xero'
-import {mapper, z, zCast} from '@openint/vdk'
-import type {VerticalBanking} from '../banking'
-import {zBanking} from '../banking'
+import {mapper, zCast} from '@openint/vdk'
+import type {BankingAdapter} from '../router'
+import {unified} from '../router'
 
 type Xero = Oas_accounting['components']['schemas']
 
-const mappers = {
-  category: mapper(
-    zCast<Xero['Account']>(),
-    zBanking.category.extend({_raw: z.unknown().optional()}),
+export const mappers = {
+  account: mapper(zCast<Xero['Account']>(), unified.account, {
+    id: 'AccountID',
+    name: 'Name',
+  }),
+  category: mapper(zCast<Xero['Account']>(), unified.account, {
+    id: 'AccountID',
+    name: 'Name',
+  }),
+  bank_transaction: mapper(
+    zCast<Xero['BankTransaction']>(),
+    unified.transaction,
     {
-      id: 'AccountID',
-      name: 'Name',
-      _raw: (a) => a,
+      id: 'BankTransactionID',
+      amount: 'Total',
+      currency: 'CurrencyCode',
+      date: 'DateString' as 'Date', // empirically works https://share.cleanshot.com/0c6dlNsF
+      account_id: 'BankAccount.AccountID',
+      account_name: 'BankAccount.Name',
+      merchant_id: 'Contact.ContactID',
+      merchant_name: 'Contact.Name',
+      category_id: (t) => t.LineItems[0]?.AccountID ?? '',
+      description: (t) => t.LineItems[0]?.Description ?? '',
+      // Don't have data readily available for these...
+      // category_name is not readily available, only ID is provided
     },
   ),
 }
 
 export const xeroAdapter = {
+  __init__: () => null as never,
   listCategories: async ({instance}) => {
     // TODO: Abstract this away please...
     const tenantId = await instance.identity
@@ -38,8 +56,8 @@ export const xeroAdapter = {
       },
     })
     return {
-      hasNextPage: false,
+      has_next_page: false,
       items: (res.data.Accounts ?? []).map(mappers.category),
     }
   },
-} satisfies VerticalBanking<{instance: XeroSDK}>
+} satisfies BankingAdapter<XeroSDK>

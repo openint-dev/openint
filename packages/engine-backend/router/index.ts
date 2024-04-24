@@ -1,12 +1,7 @@
 // import {accountingRouter} from './verticals/accounting'
 
-import {
-  createBankingRouter,
-  qboAdapter,
-  xeroAdapter,
-} from '@openint/cdk/verticals'
 import type {inferRouterInputs, inferRouterOutputs} from '@openint/trpc'
-import {remoteProcedure, trpc} from './_base'
+import {trpc} from './_base'
 import {adminRouter} from './adminRouter'
 import {connectorConfigRouter} from './connectorConfigRouter'
 import {connectorRouter} from './connectorRouter'
@@ -16,12 +11,6 @@ import {protectedRouter} from './protectedRouter'
 import {publicRouter} from './publicRouter'
 import {resourceRouter} from './resourceRouter'
 import {systemRouter} from './systemRouter'
-
-const bankingRouter = createBankingRouter({
-  trpc,
-  remoteProcedure,
-  adapterByName: {qbo: qboAdapter, xero: xeroAdapter},
-})
 
 // accountingRouter._def.procedures.listAccounts._def.meta?.openapi?.path += '/accounting/'
 
@@ -35,8 +24,6 @@ export const routers = {
   resource: resourceRouter,
   pipeline: pipelineRouter,
   connector: connectorRouter,
-  /// @deprecated
-  banking: bankingRouter,
 }
 
 // Which one is best?
@@ -52,11 +39,6 @@ export const flatRouter = trpc.mergeRouters(
   connectorConfigRouter,
   connectorRouter,
   pipelineRouter,
-  trpc.router({
-    verticals: trpc.router({
-      banking: bankingRouter,
-    }),
-  }),
 )
 
 export type FlatRouter = typeof flatRouter
