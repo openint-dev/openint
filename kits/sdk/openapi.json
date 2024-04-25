@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api/v0"
+      "url": "https://tonyx.ngrok.dev/api/v0"
     }
   ],
   "paths": {
@@ -5089,6 +5089,92 @@
         }
       }
     },
+    "/verticals/banking/transaction": {
+      "get": {
+        "operationId": "banking-listTransactions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {
+              "type": "string",
+              "enum": ["full", "incremental"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": ["string", "null"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {
+                      "type": ["string", "null"]
+                    },
+                    "has_next_page": {
+                      "type": "boolean"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/banking.transaction"
+                      }
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/verticals/accounting/account": {
       "get": {
         "operationId": "accounting-listAccounts",
@@ -7806,6 +7892,46 @@
           }
         },
         "required": ["id", "name"]
+      },
+      "banking.transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": ["string", "null"]
+          },
+          "category_id": {
+            "type": ["string", "null"]
+          },
+          "category_name": {
+            "type": ["string", "null"]
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "merchant_id": {
+            "type": ["string", "null"]
+          },
+          "merchant_name": {
+            "type": ["string", "null"]
+          },
+          "account_id": {
+            "type": ["string", "null"]
+          },
+          "account_name": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": ["id", "date", "amount", "currency"]
       }
     }
   },

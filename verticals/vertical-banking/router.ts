@@ -25,6 +25,11 @@ export const bankingRouter = trpc.router({
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.category)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  listTransactions: procedure
+    .meta(oapi({method: 'GET', path: '/transaction'}))
+    .input(zPaginationParams.nullish())
+    .output(zPaginatedResult.extend({items: z.array(unified.transaction)}))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 
 export type BankingAdapter<TInstance> = AdapterFromRouter<

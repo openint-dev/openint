@@ -206,6 +206,9 @@ export interface paths {
   '/verticals/banking/category': {
     get: operations['banking-listCategories']
   }
+  '/verticals/banking/transaction': {
+    get: operations['banking-listTransactions']
+  }
   '/verticals/accounting/account': {
     get: operations['accounting-listAccounts']
   }
@@ -512,21 +515,15 @@ export interface components {
         type: string
         schema?: string | null
       } | null
-      unified_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
-      standard_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
-      custom_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
+      unified_objects?: Array<{
+        object: string
+      }> | null
+      standard_objects?: Array<{
+        object: string
+      }> | null
+      custom_objects?: Array<{
+        object: string
+      }> | null
     }
     'sales-engagement.contact': {
       id: string
@@ -536,8 +533,12 @@ export interface components {
       account_id?: string
       job_title: string
       address: components['schemas']['sales-engagement.address']
-      email_addresses: Array<components['schemas']['sales-engagement.email_address']>
-      phone_numbers: Array<components['schemas']['sales-engagement.phone_number']>
+      email_addresses: Array<
+        components['schemas']['sales-engagement.email_address']
+      >
+      phone_numbers: Array<
+        components['schemas']['sales-engagement.phone_number']
+      >
       open_count: number
       click_count: number
       reply_count: number
@@ -658,12 +659,10 @@ export interface components {
       /** @description date-time */
       last_activity_at?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       last_modified_at?: string | null
     }
@@ -698,12 +697,10 @@ export interface components {
       number_of_employees?: number | null
       website?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       owner_id?: string | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       passthrough_fields?: {
@@ -754,12 +751,10 @@ export interface components {
       converted_contact_id?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
       email_addresses?: Array<components['schemas']['crm.email_address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       created_at?: string | null
       is_deleted?: boolean | null
       last_modified_at?: string | null
@@ -909,6 +904,20 @@ export interface components {
     'banking.category': {
       id: string
       name: string
+    }
+    'banking.transaction': {
+      id: string
+      /** Format: date-time */
+      date: string
+      description?: string | null
+      category_id?: string | null
+      category_name?: string | null
+      amount: number
+      currency: string
+      merchant_id?: string | null
+      merchant_name?: string | null
+      account_id?: string | null
+      account_name?: string | null
     }
   }
   responses: never
@@ -2227,21 +2236,15 @@ export interface operations {
             type: string
             schema?: string | null
           } | null
-          unified_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
-          standard_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
-          custom_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
+          unified_objects?: Array<{
+            object: string
+          }> | null
+          standard_objects?: Array<{
+            object: string
+          }> | null
+          custom_objects?: Array<{
+            object: string
+          }> | null
         }
       }
     }
@@ -2356,7 +2359,9 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.sequenceState']>
+            items: Array<
+              components['schemas']['sales-engagement.sequenceState']
+            >
           }
         }
       }
@@ -3613,6 +3618,45 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<components['schemas']['banking.category']>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'banking-listTransactions': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<components['schemas']['banking.transaction']>
           }
         }
       }

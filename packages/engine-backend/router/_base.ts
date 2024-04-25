@@ -7,4 +7,7 @@ export {
   trpc,
 } from '@openint/trpc'
 
-export {remoteProcedure, RemoteProcedureContext} from '@openint/cdk/internal'
+export {
+  remoteProcedure,
+  type RemoteProcedureContext,
+} from '@openint/cdk/internal'

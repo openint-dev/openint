@@ -1060,6 +1060,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@opensdks/fetch-links':
+        specifier: 0.0.18
+        version: 0.0.18
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16

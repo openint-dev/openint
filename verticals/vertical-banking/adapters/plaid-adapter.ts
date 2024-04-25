@@ -1,5 +1,6 @@
-import type {PlaidSDKTypes} from '@openint/connector-plaid'
+import type {PlaidSDK, PlaidSDKTypes} from '@openint/connector-plaid'
 import {mapper, zCast} from '@openint/vdk'
+import type {BankingAdapter} from '../router'
 import * as unified from '../unifiedModels'
 
 type Plaid = PlaidSDKTypes['oas']['components']
@@ -32,4 +33,31 @@ export const mappers = {
     current_balance: (a) => a.balances.current ?? undefined,
     currency: (a) => a.balances.iso_currency_code ?? undefined,
   }),
+  category: mapper(zCast<Plaid['schemas']['Category']>(), unified.category, {
+    id: 'category_id',
+    name: (c) => c.hierarchy.join('/'),
+  }),
 }
+
+export const plaidAdapter = {
+  listCategories: async ({instance}) => {
+    // TODO: use the new personal finance categories , but not supported by this endpoint
+    // so will need to figure it out.
+    // Also this endpoint does not even require authentication...
+    const res = await instance.POST('/categories/get', {body: {}})
+    return {
+      has_next_page: false,
+      items: (res.data.categories ?? []).map(mappers.category),
+    }
+  },
+  listTransactions: async ({instance}) => {
+    const res = await instance.POST('/transactions/sync', {
+      body: {access_token: instance.accessToken},
+    })
+    // TODO: Fully implement this...
+    return {
+      has_next_page: false,
+      items: (res.data.added ?? []).map(mappers.transaction),
+    }
+  },
+} satisfies BankingAdapter<PlaidSDK & {accessToken: string}>

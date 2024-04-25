@@ -2,7 +2,7 @@ import plaidClientConnector from './client'
 import plaidDef from './def'
 import plaidServerConnector from './server'
 
-export {PlaidSDKTypes} from '@opensdks/sdk-plaid'
+export {PlaidSDKTypes, plaidSdkDef} from '@opensdks/sdk-plaid'
 
 export const plaidProvider = {
   ...plaidDef,

@@ -3,7 +3,7 @@ import {z} from '@openint/vdk'
 export const transaction = z
   .object({
     id: z.string(),
-    date: z.string().datetime(),
+    date: z.string(), // .datetime(),
     description: z.string().nullish(),
     category_id: z.string().nullish(),
     category_name: z.string().nullish(),

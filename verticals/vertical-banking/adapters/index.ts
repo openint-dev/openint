@@ -8,4 +8,5 @@ export {plaid, qbo, xero}
 export default {
   qbo: qbo.qboAdapter,
   xero: xero.xeroAdapter,
+  plaid: plaid.plaidAdapter,
 } satisfies AdapterMap

@@ -1,26 +1,21 @@
-import type {paths} from '@opensdks/sdk-plaid/plaid.oas.types'
+import {initSDK} from '@opensdks/runtime'
+import type {PlaidSDKTypes} from '@opensdks/sdk-plaid'
+import {plaidSdkDef} from '@opensdks/sdk-plaid'
 import type {PlaidApi, PlaidError} from 'plaid'
 import * as plaid from 'plaid'
 import {CountryCode, Products} from 'plaid'
 import type {ConnectorServer} from '@openint/cdk'
-import type {
-  DurationObjectUnits,
-  IAxiosError,
-  InfoFromPaths,
-} from '@openint/util'
-import {
-  DateTime,
-  makeOpenApiClient,
-  R,
-  RateLimit,
-  Rx,
-  rxjs,
-  safeJSONParse,
-} from '@openint/util'
+import type {DurationObjectUnits, IAxiosError} from '@openint/util'
+import {DateTime, R, RateLimit, Rx, rxjs} from '@openint/util'
 import type {plaidSchemas} from './def'
 import {helpers as def} from './def'
 import {inferPlaidEnvFromToken} from './plaid-utils'
 import {getPlatformConfig, makePlaidClient, zWebhook} from './PlaidClient'
+
+export function initPlaidSDK(options: PlaidSDKTypes['options']) {
+  return initSDK(plaidSdkDef, options)
+}
+export type PlaidSDK = ReturnType<typeof initPlaidSDK>
 
 export const plaidServerConnector = {
   // TODO: Do we actually need the preConnect and postConnect phase at all?
@@ -475,45 +470,45 @@ export const plaidServerConnector = {
     const env = inferPlaidEnvFromToken(settings.accessToken)
     // https://plaid.com/docs/api/#api-host
     const creds = config.credentials ?? getPlatformConfig(env)
-    return makeOpenApiClient<InfoFromPaths<paths>>({
+    const sdk = initSDK(plaidSdkDef, {
       baseUrl: `https://${env}.plaid.com`,
-      middleware: (url, init) => {
-        if (init?.method?.toLowerCase() === 'post') {
-          const body =
-            typeof init?.body === 'string' ? safeJSONParse(init.body) : {}
-          if (typeof body === 'object') {
-            return [
-              url,
-              {
-                ...init,
-                body: JSON.stringify({
-                  ...body,
-                  access_token: settings.accessToken,
-                }),
-                headers: {
-                  ...init.headers,
-                  'Content-Type': 'application/json',
-                  'PLAID-CLIENT-ID': creds.clientId,
-                  'PLAID-SECRET': creds.clientSecret,
-                },
-              },
-            ]
-          }
-        }
-        return [url, init]
+      headers: {
+        'PLAID-CLIENT-ID': creds.clientId,
+        'PLAID-SECRET': creds.clientSecret,
+        'Content-Type': 'application/json',
       },
+      // TODO: Solve this with link
+      // links: (defaultLinks) => {
+      //   const links: FetchLink[] = [
+      //     (req, next) =>
+      //       next(
+      //         modifyRequest(req, {
+      //           duplex: 'half',
+      //             body: JSON.stringify({
+      //               ...body,
+      //               access_token: settings.accessToken,
+      // }),
+      //         }),
+      //       ),
+
+      //     ...defaultLinks,
+      //   ]
+      //   return Array.isArray(opts.links)
+      //     ? opts.links
+      //     : opts.links
+      //       ? opts.links(links)
+      //       : links
+      // },
     })
+    return {...sdk, accessToken: settings.accessToken}
   },
   passthrough: (instance, input) =>
-    instance._request(input.method, input.path, {
-      header: input.headers,
-      query: input.query,
-      bodyJson: input.body,
+    instance.request(input.method, input.path, {
+      params: {query: input.query},
+      headers: new Headers((input.headers ?? {}) as Record<string, string>),
+      body: input.body,
     }),
-} satisfies ConnectorServer<
-  typeof plaidSchemas,
-  ReturnType<typeof makeOpenApiClient<InfoFromPaths<paths>>>
->
+} satisfies ConnectorServer<typeof plaidSchemas, PlaidSDK>
 
 // Per client limit.
 // TODO: Account for different rate limits for sandbox vs development & prduction
