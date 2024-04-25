@@ -3,9 +3,8 @@ import {clerkClient} from '@clerk/nextjs'
 import {backendEnv, makePostgresClient} from '@openint/app-config/backendConfig'
 import {kApikeyMetadata} from '@openint/app-config/constants'
 import type {Viewer} from '@openint/cdk'
-import {hasRole} from '@openint/cdk'
+import {encodeApiKey, hasRole} from '@openint/cdk'
 import {makeUlid} from '@openint/util'
-import {encodeApiKey} from '@/lib-server'
 
 export const {getPool, sql} = makePostgresClient({
   databaseUrl: backendEnv.POSTGRES_OR_WEBHOOK_URL,

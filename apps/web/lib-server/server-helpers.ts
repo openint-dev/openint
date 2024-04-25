@@ -22,7 +22,7 @@ import {
   kApikeyUrlParam,
 } from '@openint/app-config/constants'
 import type {Id, UserId, Viewer} from '@openint/cdk'
-import {makeJwtClient} from '@openint/cdk'
+import {decodeApikey, makeJwtClient} from '@openint/cdk'
 import {flatRouter} from '@openint/engine-backend'
 import {fromMaybeArray} from '@openint/util'
 
@@ -91,6 +91,8 @@ export async function createSSRHelpers(context: NextContext) {
  * TODO: Figure out how to have the result of this function cached for the duration of the request
  * much like we cache
  */
+// TODO: Dedupe by calling out to viewerFromRequest. Probably best to call this
+// viewerFromNextContext
 export async function serverGetViewer(
   context: NextContext,
   // This is a hack for not knowing how else to return accessToken...
@@ -131,7 +133,7 @@ export async function serverGetViewer(
 
   // personal access token via query param or header
   const apikey =
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+     
     fromMaybeArray(searchParams[kApikeyUrlParam] || headers[kApikeyHeader])[0]
 
   // No more api keys, gotta fix me here.
@@ -217,32 +219,4 @@ export function trpcErrorResponse(err: TRPCError) {
     {error: {message: err.message, code: err.code}},
     {status},
   )
-}
-
-export function decodeApikey(apikey: string) {
-  try {
-    const [id, key, ...rest] = atob(apikey).split(':')
-    if (!id || !key || rest.length > 0) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Invalid API Key format',
-      })
-    }
-    return [id, key] as const
-  } catch (err) {
-    if (`${err}`.includes('InvalidCharacterError')) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Invalid API Key format',
-      })
-    }
-    throw new TRPCError({
-      code: 'INTERNAL_SERVER_ERROR',
-      message: `${err}`,
-    })
-  }
-}
-
-export function encodeApiKey(id: string, key: string) {
-  return btoa(`${id}:${key}`)
 }

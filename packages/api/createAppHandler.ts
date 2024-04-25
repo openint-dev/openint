@@ -1,11 +1,85 @@
+import {clerkClient} from '@clerk/nextjs'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
-import {env} from '@openint/env'
+import {backendEnv, contextFactory} from '@openint/app-config/backendConfig'
+import {
+  kAccessToken,
+  kApikeyHeader,
+  kApikeyMetadata,
+  kApikeyUrlParam,
+} from '@openint/app-config/constants'
+import type {Id, Viewer} from '@openint/cdk'
+import {decodeApikey, makeJwtClient} from '@openint/cdk'
 import {isHttpError} from '@openint/vdk'
 import {appRouter} from './appRouter'
 
+/** Determine the current viewer in this order
+ * access token via query param
+ * access token via header
+ * apiKey via query param
+ * api key via header
+ * next.js cookie
+ * fall back to anon viewer
+ * TODO: Figure out how to have the result of this function cached for the duration of the request
+ * much like we cache
+ */
+export async function viewerFromRequest(
+  req: Request,
+  // This is a hack for not knowing how else to return accessToken...
+  // and not wanting it to add it to the super simple viewer interface just yet
+  // Fwiw this is only used for the /connect experience and not generally otherwise
+): Promise<Viewer & {accessToken?: string | null}> {
+  const jwt = makeJwtClient({
+    secretOrPublicKey: backendEnv.JWT_SECRET_OR_PUBLIC_KEY,
+  })
+
+  // console.log('headers', headers)
+  // console.log('searchParams', searchParams)
+
+  const url = new URL(req.url)
+
+  // access token via query param
+  let accessToken = url.searchParams.get(kAccessToken) ?? undefined
+
+  let viewer = jwt.verifyViewer(accessToken)
+  if (viewer.role !== 'anon') {
+    return {...viewer, accessToken}
+  }
+  // access token via header
+  accessToken = req.headers.get('authorization')?.match(/^Bearer (.+)/)?.[1]
+  viewer = jwt.verifyViewer(accessToken)
+  if (viewer.role !== 'anon') {
+    return {...viewer, accessToken}
+  }
+
+  // personal access token via query param or header
+  const apikey =
+    url.searchParams.get(kApikeyUrlParam) || req.headers.get(kApikeyHeader)
+
+  // No more api keys, gotta fix me here.
+  if (apikey) {
+    const [id, key] = decodeApikey(apikey)
+
+    const res = id.startsWith('user_')
+      ? await clerkClient.users.getUser(id)
+      : id.startsWith('org_')
+        ? await clerkClient.organizations.getOrganization({organizationId: id})
+        : null
+
+    // console.log('apikey', {apiKey: apikey, id, key, res})
+
+    if (res?.privateMetadata?.[kApikeyMetadata] === key) {
+      return res.id.startsWith('user_')
+        ? {role: 'user', userId: res.id as Id['user']}
+        : {role: 'org', orgId: res.id as Id['org']}
+    }
+    // console.warn('Invalid api key, ignoroing', {apiKey: apikey, id, key, res})
+  }
+  return {role: 'anon'}
+}
+
 // TODO: Make me work
 export function createAppHandler({
-  endpoint = '/api',
+  endpoint = '/api/v0',
 }: {
   endpoint?: `/${string}`
 } = {}) {
@@ -14,29 +88,16 @@ export function createAppHandler({
       endpoint,
       req,
       router: appRouter,
-      createContext: (): never => {
-        if (1 === 1) {
-          throw new Error('Not Implemented')
+      createContext: async ({req}) => {
+        const viewer = await viewerFromRequest(req)
+        console.log('[trpc.createContext]', {url: req.url, viewer})
+        return {
+          ...contextFactory.fromViewer(viewer),
+          remoteResourceId:
+            (req.headers.get('x-resource-id') as Id['reso']) ?? null,
         }
-        // Temporary workaround to automatically set nango secret key based on supaglue API key
-        if (
-          req.headers.get('x-api-key') === env['SUPAGLUE_API_KEY'] &&
-          !req.headers.get('x-nango-secret-key') &&
-          env['NANGO_SECRET_KEY']
-        ) {
-          // console.log('Will set x-nango-secret-key header')
-          req.headers.set('x-nango-secret-key', env['NANGO_SECRET_KEY'])
-        } else {
-          // console.log('Not setting x-nango-secret-key header', {
-          //   SUPAGLUE_API_KEY: env['SUPAGLUE_API_KEY'],
-          //   NANGO_SECRET_KEY: env['NANGO_SECRET_KEY'],
-          //   'x-api-key': req.headers.get('x-api-key'),
-          //   'x-nango-secret-key': req.headers.get('x-nango-secret-key'),
-          // })
-        }
-        return {} as never
-        // return createContext({headers: req.headers}) as never
       },
+      // TODO: handle error status code from passthrough endpoints
       // onError, // can only have side effect and not modify response error status code unfortunately...
       responseMeta: ({errors, ctx: _ctx}) => {
         // Pass the status along
