@@ -6,12 +6,13 @@
   "module": "./index.ts",
   "scripts": {},
   "dependencies": {
-    "@opensdks/sdk-nango": "0.0.4",
-    "@opensdks/sdk-supaglue": "0.0.3",
+    "@openint/cdk": "workspace:*",
     "@openint/db": "workspace:*",
     "@openint/env": "workspace:*",
     "@openint/events": "workspace:*",
     "@openint/vdk": "workspace:*",
+    "@opensdks/sdk-nango": "0.0.4",
+    "@opensdks/sdk-supaglue": "0.0.3",
     "cookie": "^0.6.0"
   },
   "devDependencies": {

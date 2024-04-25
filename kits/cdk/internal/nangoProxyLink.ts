@@ -2,8 +2,7 @@ import type {Link as FetchLink} from '@opensdks/fetch-links'
 import {mergeHeaders, modifyRequest} from '@opensdks/fetch-links'
 import {initNangoSDK} from '@opensdks/sdk-nango'
 import {z} from '@opensdks/util-zod'
-import {env} from '@openint/env'
-import {isHttpError, NotAuthenticatedError} from '../../packages/trpc/errors'
+import {isHttpError, NotAuthenticatedError} from '@openint/trpc'
 
 const kBaseUrlOverride = 'base-url-override'
 
@@ -107,7 +106,7 @@ export function getBaseUrl(urlStr: string) {
 
 // TODO: Move these into mgmt once we are able to move proxyLinks out of vdk
 
-const noPrefix = env.NANGO_NO_ID_PREFIX === 'true'
+const noPrefix = true // env.NANGO_NO_ID_PREFIX === 'true'
 
 /** Support a single connector config aka nango provider per provider name for now */
 export function toNangoProviderConfigKey(provider: string) {

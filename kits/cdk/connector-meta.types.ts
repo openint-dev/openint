@@ -4,7 +4,7 @@ import {z} from '@openint/zod'
 import type {ConnHelpers} from './connector.types'
 import type {EndUserId, ExtEndUserId, ExternalId, Id} from './id.types'
 import {zExternalId} from './id.types'
-import type {NangoProvider} from './nango/NangoClient'
+import type {NangoProvider} from './internal/NangoClient'
 import type {AnyEntityPayload, ResoUpdateData, Source} from './protocol'
 
 // aka verticals

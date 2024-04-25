@@ -36,15 +36,7 @@ export const resourceRouter = trpc.router({
           message: `${ctx.remote.connectorName} does not implement passthrough`,
         })
       }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const instance = ctx.remote.connector.newInstance?.({
-        config: ctx.remote.config,
-        settings: ctx.remote.settings,
-        fetchLinks: ctx.remote.fetchLinks,
-        onSettingsChange: () => {}, // not implemented
-      })
-      return await ctx.remote.connector.passthrough(instance, input)
+      return await ctx.remote.connector.passthrough(ctx.remote.instance, input)
     }),
 
   sourceSync: protectedProcedure

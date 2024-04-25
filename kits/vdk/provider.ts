@@ -1,5 +1,3 @@
-import type {Link as FetchLink} from '@opensdks/fetch-links'
-import {initNangoSDK} from '@opensdks/sdk-nango'
 import {
   TRPCError,
   type AnyProcedure,
@@ -8,13 +6,8 @@ import {
   type inferProcedureOutput,
   type MaybePromise,
 } from '@trpc/server'
-import {BadRequestError, remoteProcedure} from '@openint/trpc'
-import {
-  nangoConnectionWithCredentials,
-  nangoProxyLink,
-  toNangoConnectionId,
-  toNangoProviderConfigKey,
-} from './nangoProxyLink'
+import {remoteProcedure} from '@openint/cdk/internal'
+import {BadRequestError} from '@openint/trpc'
 
 export function verticalProcedure(adapterMap: AdapterMap) {
   return remoteProcedure.use(async ({next, ctx}) => {
@@ -36,17 +29,7 @@ export interface AdapterMap {
 }
 
 /** To be refactored out of vdk probably...  */
-export interface ExtraInitOpts {
-  proxyLinks: FetchLink[]
-  /** Used to get the raw credentails in case proxyLink doesn't work (e.g. SOAP calls). Hard coded to rest for now... */
-  getCredentials: () => Promise<{
-    access_token: string
-    // refresh_token: string
-    // expires_at: string
-    /** For salesforce */
-    instance_url: string | null | undefined
-  }>
-}
+
 export type Adapter = Record<string, (...args: any[]) => any>
 
 export type AdapterFromRouter<
@@ -80,56 +63,6 @@ export async function proxyCallAdapter({
   input: unknown
   ctx: VerticalProcedureContext
 }) {
-  // This should probably be in mgmt package rather than vdk with some dependency injection involved
-  const extraInitOpts = ((): ExtraInitOpts => {
-    const connectionId = toNangoConnectionId(ctx.remote.id) // ctx.customerId
-    const providerConfigKey = toNangoProviderConfigKey(
-      ctx.remote.connectorConfigId, // ctx.providerName
-    )
-    return {
-      getCredentials: async () => {
-        const nango = initNangoSDK({
-          headers: {
-            authorization: `Bearer ${
-              ctx.env.NANGO_SECRET_KEY
-              // ctx.required['x-nango-secret-key']
-            }`,
-          },
-        })
-        const conn = await nango
-          .GET('/connection/{connectionId}', {
-            params: {
-              path: {connectionId},
-              query: {provider_config_key: providerConfigKey},
-            },
-          })
-          .then((r) => nangoConnectionWithCredentials.parse(r.data))
-        return {
-          access_token: conn.credentials.access_token,
-          instance_url: conn.connection_config?.instance_url,
-        }
-      },
-      proxyLinks: [
-        nangoProxyLink({
-          secretKey: ctx.env.NANGO_SECRET_KEY,
-          connectionId,
-          providerConfigKey,
-        }),
-      ],
-    }
-  })()
-
-  const instance: unknown = ctx.remote.connector.newInstance?.({
-    config: ctx.remote.config,
-    settings: ctx.remote.settings,
-    fetchLinks: ctx.remote.fetchLinks,
-    onSettingsChange: (settings) =>
-      ctx.services.metaLinks.patch('resource', ctx.remote.id, {
-        settings,
-        ...extraInitOpts,
-      }),
-  })
-
   const methodName = ctx.path.split('.').pop() ?? ''
   const implementation = ctx.adapter?.[methodName] as Function
 
@@ -141,7 +74,7 @@ export async function proxyCallAdapter({
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const out = await implementation({instance, input, ctx})
+  const out = await implementation({instance: ctx.remote.instance, input, ctx})
   // console.log('[proxyCallRemote] output', out)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return out

@@ -1,13 +1,13 @@
-import {envRequired} from '@openint/env'
-import {inngest} from '@openint/events'
-import {z} from '@openint/vdk'
+import cookie from 'cookie'
 import {
   fromNangoConnectionId,
   fromNangoProviderConfigKey,
   toNangoConnectionId,
   toNangoProviderConfigKey,
-} from '@openint/vdk/nangoProxyLink'
-import cookie from 'cookie'
+} from '@openint/cdk/internal'
+import {envRequired} from '@openint/env'
+import {inngest} from '@openint/events'
+import {z} from '@openint/vdk'
 
 const zOauthInitParams = z.object({
   customer_id: z.string(),

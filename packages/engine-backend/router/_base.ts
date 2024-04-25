@@ -1,10 +1,10 @@
 // TODO: Remove this file. redundant now.
 export {
-  RemoteProcedureContext,
   adminProcedure,
   protectedProcedure,
   publicProcedure,
-  remoteProcedure,
   systemProcedure,
   trpc,
 } from '@openint/trpc'
+
+export {remoteProcedure, RemoteProcedureContext} from '@openint/cdk/internal'

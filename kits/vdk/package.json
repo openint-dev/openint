@@ -3,18 +3,14 @@
   "description": "Unified API Vertical Development Kit",
   "dependencies": {
     "@jsonurl/jsonurl": "^1.1.7",
+    "@openint/cdk": "workspace:*",
     "@openint/env": "workspace:*",
     "@openint/trpc": "workspace:*",
     "@opensdks/fetch-links": "0.0.18",
-    "@opensdks/sdk-nango": "0.0.4",
-    "@opensdks/sdk-supaglue": "0.0.3",
     "@opensdks/util-zod": "0.0.15",
     "remeda": "1.6.1"
   },
   "devDependencies": {
-    "@opensdks/runtime": "0.0.19",
-    "@opensdks/sdk-apollo": "0.0.21",
-    "@opensdks/sdk-outreach": "0.0.16",
     "openapi-typescript-helpers": "^0.0.6"
   }
 }

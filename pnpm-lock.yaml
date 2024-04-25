@@ -1396,15 +1396,30 @@ importers:
 
   kits/cdk:
     dependencies:
+      '@openint/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
       '@openint/zod':
         specifier: workspace:*
         version: link:../../utils/zod
+      '@opensdks/fetch-links':
+        specifier: 0.0.18
+        version: 0.0.18
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
+      '@opensdks/sdk-nango':
+        specifier: 0.0.4
+        version: 0.0.4
+      '@opensdks/sdk-supaglue':
+        specifier: 0.0.3
+        version: 0.0.3
+      '@opensdks/util-zod':
+        specifier: 0.0.15
+        version: 0.0.15
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
@@ -1417,6 +1432,9 @@ importers:
       react-script-hook:
         specifier: 1.7.2
         version: 1.7.2(react-dom@18.2.0)(react@18.2.0)
+      remeda:
+        specifier: 1.6.1
+        version: 1.6.1
     devDependencies:
       '@lilyrose2798/trpc-openapi':
         specifier: 1.3.10
@@ -1424,6 +1442,15 @@ importers:
       '@nangohq/frontend':
         specifier: 0.33.8
         version: 0.33.8(patch_hash=cscdyzeu5adridjxg5g7kdqy6q)
+      '@openint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
+      '@opensdks/sdk-apollo':
+        specifier: 0.0.21
+        version: 0.0.21
+      '@opensdks/sdk-outreach':
+        specifier: 0.0.16
+        version: 0.0.16
       '@opensdks/sdk-qbo':
         specifier: 0.0.11
         version: 0.0.11
@@ -1468,6 +1495,9 @@ importers:
       '@jsonurl/jsonurl':
         specifier: ^1.1.7
         version: 1.1.7(patch_hash=wymar43eprx3gdqsv4laq3u2ei)
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../cdk
       '@openint/env':
         specifier: workspace:*
         version: link:../../packages/env
@@ -1477,12 +1507,6 @@ importers:
       '@opensdks/fetch-links':
         specifier: 0.0.18
         version: 0.0.18
-      '@opensdks/sdk-nango':
-        specifier: 0.0.4
-        version: 0.0.4
-      '@opensdks/sdk-supaglue':
-        specifier: 0.0.3
-        version: 0.0.3
       '@opensdks/util-zod':
         specifier: 0.0.15
         version: 0.0.15
@@ -1490,15 +1514,6 @@ importers:
         specifier: 1.6.1
         version: 1.6.1
     devDependencies:
-      '@opensdks/runtime':
-        specifier: 0.0.19
-        version: 0.0.19
-      '@opensdks/sdk-apollo':
-        specifier: 0.0.21
-        version: 0.0.21
-      '@opensdks/sdk-outreach':
-        specifier: 0.0.16
-        version: 0.0.16
       openapi-typescript-helpers:
         specifier: ^0.0.6
         version: 0.0.6
@@ -2044,6 +2059,9 @@ importers:
 
   tbd/mgmt:
     dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
       '@openint/db':
         specifier: workspace:*
         version: link:../db

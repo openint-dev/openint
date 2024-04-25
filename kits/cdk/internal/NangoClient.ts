@@ -1,3 +1,4 @@
+// @deprecated Move this into openSDKs
 /** TODO: Move this into @opensdks */
 import type {Endpoints, InfoFromEndpoints} from '@openint/util'
 import {makeOpenApiClient} from '@openint/util'
@@ -279,6 +280,7 @@ export const zNangoConfig = z.object({
 
 export const NANGO_API_HOST = 'https://api.nango.dev'
 
+/** @deprecated Use sdk-nango */
 export function makeNangoClient(config: z.infer<typeof zNangoConfig>) {
   const client = makeOpenApiClient<InfoFromEndpoints<typeof endpoints>>({
     baseUrl: NANGO_API_HOST,

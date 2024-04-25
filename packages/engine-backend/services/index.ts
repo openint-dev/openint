@@ -21,6 +21,7 @@ export function makeServices({
     metaService,
     connectorMap,
   })
+  /** @deprecated. Should use remoteProcedure */
   function getFetchLinks(reso: _ResourceExpanded) {
     return R.compact([
       logLink(),

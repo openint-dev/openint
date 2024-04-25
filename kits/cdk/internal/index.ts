@@ -2,4 +2,6 @@
 export * from './NangoClient'
 export * from './nangoProxyLink'
 export * from './oauthConnector'
+export * from './remote-procedure'
+export * from './supaglueProxyLink'
 // codegen:end
