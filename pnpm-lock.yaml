@@ -901,8 +901,8 @@ importers:
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-greenhouse':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
 
   connectors/connector-heron:
     dependencies:
@@ -5279,8 +5279,8 @@ packages:
     resolution: {integrity: sha512-fbKPSitxFIcCnb3v2kczLAeMuNTOqzT7IEY3O+vRtpRrFVwBjzs8m1ritQyX5nH4uWJiwfNOEPtz+iuTTzYlOw==}
     dev: false
 
-  /@opensdks/sdk-greenhouse@0.0.2:
-    resolution: {integrity: sha512-pXOXLMnt/pvX09+RTXTwsLzlKtB+kWlA0DN4cXRvWb33ekp96DUxkoJ2sm9z+/9+lBBcRdy2zuAlHwM+TPUW3A==}
+  /@opensdks/sdk-greenhouse@0.0.3:
+    resolution: {integrity: sha512-MVWuKC5JXN3lgZ1djSq3hITQutwBC/gLSF6UYY2I0U8QVkWVi8YNdWTrROqlGmlZG6VrG/uKht+gyNDmIZmScA==}
     dependencies:
       '@opensdks/runtime': 0.0.19
     dev: false

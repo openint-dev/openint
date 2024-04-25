@@ -7900,8 +7900,7 @@
             "type": "string"
           },
           "date": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           },
           "description": {
             "type": ["string", "null"]
