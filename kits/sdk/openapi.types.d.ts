@@ -224,6 +224,18 @@ export interface paths {
   '/verticals/pta/commodity': {
     get: operations['pta-listCommodities']
   }
+  '/verticals/ats/job': {
+    get: operations['ats-listJobs']
+  }
+  '/verticals/ats/offer': {
+    get: operations['ats-listOffers']
+  }
+  '/verticals/ats/candidate': {
+    get: operations['ats-listCandidates']
+  }
+  '/verticals/ats/department': {
+    get: operations['ats-listDepartments']
+  }
 }
 
 export interface webhooks {
@@ -3849,6 +3861,215 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<Record<string, never>>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'ats-listJobs': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              /** Format: uuid */
+              id: string
+              created_at: string
+              modified_at: string
+              name: string
+              confidential: boolean
+              departments: string[]
+              offices: string[]
+              hiring_managers: string[]
+              recruiters: string[]
+            }>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'ats-listOffers': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              /** Format: uuid */
+              id: string
+              created_at: string
+              modified_at: string
+              /** Format: uuid */
+              application: string
+              closed_at: string
+              sent_at: string
+              start_date: string
+              status: string
+            }>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'ats-listCandidates': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              /** Format: uuid */
+              id: string
+              created_at: string
+              modified_at: string
+              first_name: string
+              last_name: string
+              company: string
+              title: string
+              last_interaction_at: string
+              is_private: boolean
+              can_email: boolean
+              locations: string[]
+              phone_numbers: Array<{
+                value: string
+                phone_number_type: string
+              }>
+              email_addresses: Array<{
+                /** Format: email */
+                value: string
+                email_address_type: string
+              }>
+              tags: string[]
+              applications: string[]
+              attachments: string[]
+            }>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'ats-listDepartments': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              /** Format: uuid */
+              id: string
+              created_at?: string | null
+              modified_at?: string | null
+              name: string
+            }>
           }
         }
       }
