@@ -1,6 +1,8 @@
+import {createAppHandler} from '@openint/api'
 import {initOpenIntSDK} from '@openint/sdk'
 
 const openint = initOpenIntSDK({
+  links: [createAppHandler()], // This bypasses the entire server-stack! And handles request directly in memory for easy testing.
   baseUrl: process.env['_VENICE_API_HOST'],
   headers: {
     'x-apikey': process.env['_VENICE_API_KEY'],
