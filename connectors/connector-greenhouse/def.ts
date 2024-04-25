@@ -4,7 +4,7 @@ import {z} from '@openint/util'
 
 export const greenhouseSchema = {
   name: z.literal('greenhouse'),
-  connectorConfig: z.object({apiKey: z.string()}),
+  resourceSettings: z.object({apiKey: z.string()}),
 } satisfies ConnectorSchemas
 
 export const greenhouseHelpers = connHelpers(greenhouseSchema)
@@ -17,7 +17,6 @@ export const greenhouseDef = {
     stage: 'beta',
     categories: ['ats'],
     logoUrl: '/_assets/logo-greenhouse.png',
-    nangoProvider: 'greenhouse',
   },
 } satisfies ConnectorDef<typeof greenhouseSchema>
 
