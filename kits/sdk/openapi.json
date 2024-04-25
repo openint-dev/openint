@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://tonyx.ngrok.dev/api/v0"
+      "url": "http://localhost:3000/api/v0"
     }
   ],
   "paths": {
