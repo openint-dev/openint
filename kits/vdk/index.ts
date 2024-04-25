@@ -7,12 +7,13 @@ import type {
 
 export * from './mapper'
 export * from './pagination'
-export * from './provider'
+export * from './adapter'
 export * from './type-utils/PathsOf'
 export * from './type-utils/StrictObj'
 
 export * from '@opensdks/fetch-links'
 export * from '@opensdks/util-zod'
+export * from '@openint/trpc'
 
 export type {
   OperationRequestBodyContent,
@@ -32,8 +33,6 @@ export type ResponseFrom<
       : never
   >
 >
-
-export * from '@openint/trpc'
 
 // re-exporting utiltities
 
