@@ -1,13 +1,13 @@
+import {remoteProcedure} from '@openint/cdk/internal'
 import {
+  BadRequestError,
   TRPCError,
   type AnyProcedure,
   type AnyRouter,
   type inferProcedureInput,
   type inferProcedureOutput,
   type MaybePromise,
-} from '@trpc/server'
-import {remoteProcedure} from '@openint/cdk/internal'
-import {BadRequestError} from '@openint/trpc'
+} from '@openint/trpc'
 
 export function verticalProcedure(adapterMap: AdapterMap) {
   return remoteProcedure.use(async ({next, ctx}) => {

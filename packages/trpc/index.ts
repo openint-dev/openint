@@ -10,4 +10,6 @@ export type {
   inferProcedureOutput,
   inferRouterInputs,
   inferRouterOutputs,
+  MaybePromise,
+  AnyProcedure,
 } from '@trpc/server'

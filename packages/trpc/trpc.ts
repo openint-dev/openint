@@ -1,10 +1,8 @@
 import type {OpenApiMeta} from '@lilyrose2798/trpc-openapi'
-import {z} from '@opensdks/util-zod'
 import {initTRPC, TRPCError} from '@trpc/server'
-import {proxyRequired} from '@openint/env'
+// FIXME: We should not be hacking imports like this.
 import type {ExtEndUserId, Viewer, ViewerRole} from '../../kits/cdk/viewer'
 import type {RouterContext} from '../engine-backend/context'
-import {BadRequestError} from './errors'
 
 /** @deprecated. Dedupe me from cdk hasRole function */
 function hasRole<R extends ViewerRole>(
@@ -103,28 +101,10 @@ export const trpc = initTRPC
     // },
   })
 
-export const zByosHeaders = z.object({
-  'x-customer-id': z.string().nullish(),
-  'x-provider-name': z.string().nullish(),
-  'x-nango-secret-key': z.string().nullish(),
-  /** Supaglue API key */
-  'x-api-key': z.string().nullish(),
-})
-export type ByosHeaders = z.infer<typeof zByosHeaders>
-
 // All the headers we accept here...
-export const publicProcedure = trpc.procedure.use(async ({next, ctx, path}) => {
-  const optional = zByosHeaders.parse(
-    Object.fromEntries(ctx.headers?.entries() ?? []),
-  )
-  const required = proxyRequired(optional, {
-    formatError: (key) => new BadRequestError(`${key} header is required`),
-  })
-
-  return next({
-    ctx: {...ctx, path, optional, required},
-  })
-})
+export const publicProcedure = trpc.procedure.use(async ({next, ctx, path}) =>
+  next({ctx: {...ctx, path}}),
+)
 
 export const protectedProcedure = publicProcedure.use(({next, ctx}) => {
   console.log('DEBUG', ctx.viewer)

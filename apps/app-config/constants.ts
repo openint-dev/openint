@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import type {GetServerSidePropsContext} from 'next'
 
 export function getServerUrl(req: GetServerSidePropsContext['req'] | null) {
@@ -26,12 +25,12 @@ export const getGraphqlEndpoint = (
 export const getRestEndpoint = (req: GetServerSidePropsContext['req'] | null) =>
   new URL('/api/rest', getServerUrl(req))
 
-export const kApikeyUrlParam = 'apikey'
-export const kApikeyMetadata = 'apikey'
-export const kWebhookUrlMetadata = 'webhook_url'
-export const kApikeyHeader = 'x-apikey'
+export const kApikeyUrlParam = 'apikey' as const
+export const kApikeyMetadata = 'apikey' as const
+export const kWebhookUrlMetadata = 'webhook_url' as const
+export const kApikeyHeader = 'x-apikey' as const
 
-export const kAcceptUrlParam = '_accept'
+export const kAcceptUrlParam = '_accept' as const
 
 export const kAccessToken = '_token' as const
 

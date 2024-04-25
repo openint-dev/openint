@@ -9,8 +9,18 @@ import {
 } from '@openint/app-config/constants'
 import type {Id, Viewer} from '@openint/cdk'
 import {decodeApikey, makeJwtClient} from '@openint/cdk'
-import {isHttpError} from '@openint/vdk'
+import {isHttpError, z} from '@openint/vdk'
 import {appRouter} from './appRouter'
+
+export const zOpenIntHeaders = z
+  .object({
+    [kApikeyHeader]: z.string().nullish(),
+    'x-resource-id': z.string().nullish(),
+    authorization: z.string().nullish(), // `Bearer ${string}`
+  })
+  .catchall(z.string().nullish())
+
+export type OpenIntHeaders = z.infer<typeof zOpenIntHeaders>
 
 /** Determine the current viewer in this order
  * access token via query param
@@ -119,5 +129,3 @@ export function createAppHandler({
       },
     })
 }
-
-export {zByosHeaders, type ByosHeaders} from '@openint/vdk'

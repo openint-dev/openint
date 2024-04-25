@@ -1,6 +1,5 @@
 import type {Get} from 'type-fest'
 import type {z} from 'zod'
-
 import type {
   HttpClientOptions,
   HTTPMethod,

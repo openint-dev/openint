@@ -1,6 +1,13 @@
 import {and, db, eq, schema} from '@openint/db'
+import {proxyRequired} from '@openint/env'
 import type {Adapter, AdapterFromRouter} from '@openint/vdk'
-import {NotImplementedError, publicProcedure, trpc, z} from '@openint/vdk'
+import {
+  BadRequestError,
+  NotImplementedError,
+  publicProcedure,
+  trpc,
+  z,
+} from '@openint/vdk'
 import {nangoPostgresProvider} from './providers/nango-postgres-provider'
 import {supaglueProvider} from './providers/supaglue-provider'
 import * as unified from './unifiedModels'
@@ -8,11 +15,24 @@ import * as unified from './unifiedModels'
 export {unified}
 
 const mgmtProviderName = 'nango'
+const zMgmtHeaders = z.object({
+  'x-customer-id': z.string().nullish(),
+  'x-provider-name': z.string().nullish(),
+  'x-nango-secret-key': z.string().nullish(),
+  /** Supaglue API key */
+  'x-api-key': z.string().nullish(),
+})
 
 export const mgmtProcedure = publicProcedure.use(async ({next, ctx}) => {
+  const optional = zMgmtHeaders.parse(
+    Object.fromEntries(ctx.headers?.entries() ?? []),
+  )
+  const required = proxyRequired(optional, {
+    formatError: (key) => new BadRequestError(`${key} header is required`),
+  })
   const provider: Adapter =
     mgmtProviderName === 'nango' ? nangoPostgresProvider : supaglueProvider
-  return next({ctx: {...ctx, provider}})
+  return next({ctx: {...ctx, provider, optional, required}})
 })
 
 type MgmtProcedureContext = ReturnType<
@@ -23,7 +43,8 @@ type MgmtProcedureContext = ReturnType<
 
 export type MgmtProvider<TInstance> = AdapterFromRouter<
   typeof mgmtRouter,
-  TInstance
+  TInstance,
+  MgmtProcedureContext
 >
 
 // Should the mgmt router be refactored into its own package outside of API?
