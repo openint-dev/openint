@@ -20,6 +20,7 @@
     "@openint/mgmt": "workspace:*",
     "@openint/vdk": "workspace:*",
     "@openint/vertical-accounting": "workspace:*",
+    "@openint/vertical-ats": "workspace:*",
     "@openint/vertical-banking": "workspace:*",
     "@openint/vertical-crm": "workspace:*",
     "@openint/vertical-pta": "workspace:*",

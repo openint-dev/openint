@@ -1535,6 +1535,9 @@ importers:
       '@openint/vertical-accounting':
         specifier: workspace:*
         version: link:../../verticals/vertical-accounting
+      '@openint/vertical-ats':
+        specifier: workspace:*
+        version: link:../../verticals/vertical-ats
       '@openint/vertical-banking':
         specifier: workspace:*
         version: link:../../verticals/vertical-banking
