@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://tonyx.ngrok.dev/api/v0"
+      "url": "https://app.openint.dev/api/v0"
     }
   ],
   "paths": {
@@ -7900,8 +7900,7 @@
             "type": "string"
           },
           "date": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           },
           "description": {
             "type": ["string", "null"]
