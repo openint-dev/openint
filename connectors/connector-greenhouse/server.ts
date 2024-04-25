@@ -9,11 +9,11 @@ export type GreenhouseTypes = greenhouseTypes
 export type GreenhouseObjectType = GreenhouseTypes['components']['schemas']
 
 export const greenhouseServer = {
-  newInstance: ({config}) => {
+  newInstance: ({config, settings}) => {
     const greenhouse = initGreenhouseSDK({
       auth: {
         basic: {
-          username: config.apiKey,
+          username: settings.apiKey,
           password: '',
         },
       },
