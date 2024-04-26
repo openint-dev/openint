@@ -1,62 +1,63 @@
 import {z} from '@openint/vdk'
 
 export const offer = z.object({
-  id: z.string().uuid(),
-  created_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  modified_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  application: z.string().uuid(),
-  closed_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  sent_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
+  id: z.string(),
+  created_at: z.string(),
+  modified_at: z.string(),
+  application: z.string(),
+  closed_at: z.string(),
+  sent_at: z.string(),
+  start_date: z.string(),
   status: z.string(),
 })
-
-export const job = z.object({
-  id: z.string().uuid(),
-  created_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  modified_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  name: z.string(),
-  confidential: z.boolean(),
-  departments: z.array(z.string().uuid()),
-  offices: z.array(z.string().uuid()),
-  hiring_managers: z.array(z.string().uuid()),
-  recruiters: z.array(z.string().uuid()),
-})
-
-const phoneNumberSchema = z.object({
-  value: z.string(),
-  phone_number_type: z.string(),
-})
-
-const emailAddressSchema = z.object({
-  value: z.string().email(),
-  email_address_type: z.string(),
-})
-
-export const candidate = z.object({
-  id: z.string().uuid(),
-  created_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  modified_at: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  first_name: z.string(),
-  last_name: z.string(),
-  company: z.string(),
-  title: z.string(),
-  last_interaction_at: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/),
-  is_private: z.boolean(),
-  can_email: z.boolean(),
-  locations: z.array(z.string()),
-  phone_numbers: z.array(phoneNumberSchema),
-  email_addresses: z.array(emailAddressSchema),
-  tags: z.array(z.string()),
-  applications: z.array(z.string().uuid()),
-  attachments: z.array(z.string().uuid()),
-})
-
 export const department = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   created_at: z.string().nullish(),
   modified_at: z.string().nullish(),
   name: z.string(),
+  parent_id: z.string().nullish(),
+  parent_department_external_id: z.string().nullish(),
+  child_ids: z.array(z.string().nullish()),
+  child_department_external_ids: z.array(z.string().nullish()),
+})
+
+export const job = z.object({
+  id: z.string(),
+  created_at: z.string(),
+  modified_at: z.string(),
+  name: z.string(),
+  confidential: z.boolean(),
+  departments: z.array(department),
+  offices: z.array(z.unknown()),
+  hiring_managers: z.array(z.unknown()),
+  recruiters: z.array(z.unknown()),
+})
+
+const phoneNumberSchema = z.object({
+  value: z.string().nullish(),
+  phone_number_type: z.string().nullish(),
+})
+
+const emailAddressSchema = z.object({
+  value: z.string().email().nullish(),
+  email_address_type: z.string().nullish(),
+})
+
+export const candidate = z.object({
+  id: z.string(),
+  created_at: z.string(),
+  modified_at: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+  company: z.string().nullable(),
+  title: z.string().nullable(),
+  last_interaction_at: z.string(),
+  is_private: z.boolean(),
+  can_email: z.boolean(),
+  locations: z.array(z.unknown()),
+  phone_numbers: z.array(phoneNumberSchema),
+  email_addresses: z.array(emailAddressSchema),
+  tags: z.array(z.string()),
+  applications: z.array(z.unknown()),
+  attachments: z.array(z.unknown()),
 })

@@ -6,10 +6,14 @@ export const department = mapper(
   zCast<GreenhouseObjectType['department']>(),
   unified.department,
   {
-    id: 'id',
+    id: (record) => String(record.id),
     // NOTE: Greenhouse doesn't support the timestamp fields
     // created_at: '',
     // modified_at: '',
     name: 'name',
+    parent_id: 'parent_id',
+    parent_department_external_id: 'parent_department_external_ids',
+    child_ids: 'child_ids',
+    child_department_external_ids: 'child_department_external_ids',
   },
 )
