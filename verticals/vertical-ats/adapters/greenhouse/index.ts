@@ -4,6 +4,7 @@ import {mappers} from './mappers'
 
 export const greenhouseAdapter = {
   listJobs: async ({instance, input}) => {
+    const include_raw_data = input?.include_raw_data === 'true'
     const cursor =
       input?.cursor && Number(input?.cursor) > 0
         ? Number(input?.cursor)
@@ -20,14 +21,18 @@ export const greenhouseAdapter = {
     if (input?.page_size && res.data?.length === input?.page_size) {
       nextCursor = (cursor || 0) + input.page_size
     }
-
     return {
       has_next_page: !!nextCursor,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
-      items: res.data?.map(mappers.job) ?? [],
+      items:
+        res.data?.map(mappers.job).map((d) => ({
+          ...d,
+          raw_data: include_raw_data ? d.raw_data : undefined,
+        })) ?? [],
     }
   },
   listOffers: async ({instance, input}) => {
+    const include_raw_data = input?.include_raw_data === 'true'
     const cursor =
       input?.cursor && Number(input?.cursor) > 0
         ? Number(input?.cursor)
@@ -47,10 +52,15 @@ export const greenhouseAdapter = {
     return {
       has_next_page: !!nextCursor,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
-      items: res.data?.map(mappers.offer) ?? [],
+      items:
+        res.data?.map(mappers.offer).map((d) => ({
+          ...d,
+          raw_data: include_raw_data ? d.raw_data : undefined,
+        })) ?? [],
     }
   },
   listCandidates: async ({instance, input}) => {
+    const include_raw_data = input?.include_raw_data === 'true'
     const cursor =
       input?.cursor && Number(input?.cursor) > 0
         ? Number(input?.cursor)
@@ -70,10 +80,15 @@ export const greenhouseAdapter = {
     return {
       has_next_page: !!nextCursor,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
-      items: res.data?.map(mappers.candidate) ?? [],
+      items:
+        res.data?.map(mappers.candidate).map((d) => ({
+          ...d,
+          raw_data: include_raw_data ? d.raw_data : undefined,
+        })) ?? [],
     }
   },
   listDepartments: async ({instance, input}) => {
+    const include_raw_data = input?.include_raw_data === 'true'
     const cursor =
       input?.cursor && Number(input?.cursor) > 0
         ? Number(input?.cursor)
@@ -93,7 +108,11 @@ export const greenhouseAdapter = {
     return {
       has_next_page: !!nextCursor,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
-      items: res.data?.map(mappers.department) ?? [],
+      items:
+        res.data?.map(mappers.department).map((d) => ({
+          ...d,
+          raw_data: include_raw_data ? d.raw_data : undefined,
+        })) ?? [],
     }
   },
 } satisfies ATSAdapter<GreenhouseSDK>

@@ -9,7 +9,9 @@ export const offer = z.object({
   sent_at: z.string(),
   start_date: z.string(),
   status: z.string(),
+  raw_data: z.unknown().nullish(),
 })
+
 export const department = z.object({
   id: z.string(),
   created_at: z.string().nullish(),
@@ -19,6 +21,7 @@ export const department = z.object({
   parent_department_external_id: z.string().nullish(),
   child_ids: z.array(z.string().nullish()),
   child_department_external_ids: z.array(z.string().nullish()),
+  raw_data: z.unknown().nullish(),
 })
 
 export const job = z.object({
@@ -31,6 +34,7 @@ export const job = z.object({
   offices: z.array(z.unknown()),
   hiring_managers: z.array(z.unknown()),
   recruiters: z.array(z.unknown()),
+  raw_data: z.unknown().nullish(),
 })
 
 const phoneNumberSchema = z.object({
@@ -60,4 +64,5 @@ export const candidate = z.object({
   tags: z.array(z.string()),
   applications: z.array(z.unknown()),
   attachments: z.array(z.unknown()),
+  raw_data: z.unknown().nullish(),
 })
