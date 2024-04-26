@@ -1393,6 +1393,12 @@ importers:
       '@openint/sdk':
         specifier: workspace:*
         version: link:../kits/sdk
+      '@openint/vertical-banking':
+        specifier: workspace:*
+        version: link:../verticals/vertical-banking
+      '@openint/vertical-etl':
+        specifier: workspace:*
+        version: link:../verticals/vertical-etl
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16

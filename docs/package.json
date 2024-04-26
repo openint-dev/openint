@@ -10,6 +10,8 @@
     "@openint/api": "workspace:*",
     "@openint/loopback-link": "workspace:*",
     "@openint/sdk": "workspace:*",
+    "@openint/vertical-banking": "workspace:*",
+    "@openint/vertical-etl": "workspace:*",
     "@opensdks/runtime": "^0.0.16",
     "@opensdks/sdk-discord": "^0.0.14",
     "@opensdks/sdk-openai": "^0.0.14",

@@ -9,8 +9,8 @@ import {
 } from '@openint/app-config/constants'
 import type {Id, Viewer} from '@openint/cdk'
 import {decodeApikey, makeJwtClient} from '@openint/cdk'
-import {isHttpError, z} from '@openint/vdk'
-import {appRouter} from './appRouter'
+import {isHttpError, z, type AnyRouter} from '@openint/vdk'
+import type {AppRouter} from './appRouter'
 
 export const zOpenIntHeaders = z
   .object({
@@ -87,17 +87,18 @@ export async function viewerFromRequest(
   return {role: 'anon'}
 }
 
-// TODO: Make me work
-export function createAppHandler({
+export function createHandler({
   endpoint = '/api/v0',
+  router,
 }: {
   endpoint?: `/${string}`
-} = {}) {
+  router: AnyRouter
+}) {
   return (req: Request) =>
     createOpenApiFetchHandler({
       endpoint,
       req,
-      router: appRouter,
+      router: router as AppRouter,
       createContext: async ({req}) => {
         const viewer = await viewerFromRequest(req)
         console.log('[trpc.createContext]', {url: req.url, viewer})

@@ -1,14 +1,21 @@
-import {createAppHandler} from '@openint/api'
+import {createHandler} from '@openint/api'
 import {loopbackLink} from '@openint/loopback-link'
 import {initOpenIntSDK} from '@openint/sdk'
+import bankingRouter from '@openint/vertical-banking'
 
 const openint = initOpenIntSDK({
-  links: [loopbackLink({port: 3999}), createAppHandler()], // This bypasses the entire server-stack! And handles request directly in memory for easy testing.
+  links: [
+    loopbackLink({port: 3999}),
+    // This can be used for code splitting, such that every router gets bundled into its own
+    // separate serverless function, vastly improving startup times during both development and production
+    // Will require a bit of code-generation to turn them into separate files so next.js knows to bundle
+    // separate entry points
+    createHandler({router: bankingRouter}),
+  ], // This bypasses the entire server-stack! And handles request directly in memory for easy testing.
   baseUrl: process.env['_VENICE_API_HOST'],
   headers: {
     'x-apikey': process.env['_VENICE_API_KEY'],
     'x-resource-id': process.env['_XERO_RESOURCE_ID'],
-
     // resourceId: process.env['_QBO_RESOURCE_ID'],
   },
 })
