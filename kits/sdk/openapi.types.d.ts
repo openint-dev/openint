@@ -239,6 +239,9 @@ export interface paths {
   '/verticals/ats/department': {
     get: operations['ats-listDepartments']
   }
+  '/verticals/etl/read/{stream}': {
+    get: operations['etl-readStream']
+  }
   '/verticals/etl/discover': {
     get: operations['etl-discover']
   }
@@ -4134,6 +4137,49 @@ export interface operations {
               modified_at?: string | null
               name: string
             }>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'etl-readStream': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+        fields?: string[]
+      }
+      path: {
+        stream: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: unknown[]
           }
         }
       }

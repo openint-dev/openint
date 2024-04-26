@@ -12,8 +12,10 @@ export const stream = z.object({
   source_defined_primary_key: z.array(keyPath).optional(),
 })
 
+export const record_data = z.unknown()
+
 export const record = z.object({
-  data: z.unknown(),
+  data: record_data,
   stream: z.string(),
 })
 

@@ -1,5 +1,12 @@
 import type {AdapterFromRouter, RouterMeta} from '@openint/vdk'
-import {proxyCallAdapter, trpc, verticalProcedure, z} from '@openint/vdk'
+import {
+  proxyCallAdapter,
+  trpc,
+  verticalProcedure,
+  z,
+  zPaginatedResult,
+  zPaginationParams,
+} from '@openint/vdk'
 import adapters from './adapters'
 import * as unified from './unifiedModels'
 
@@ -13,6 +20,17 @@ const procedure = verticalProcedure(adapters)
 
 export const router = trpc.router({
   // We are gonna start with a simplified pipeline
+
+  readStream: procedure
+    .meta(oapi({method: 'GET', path: '/read/{stream}'}))
+    .input(
+      zPaginationParams.extend({
+        stream: z.string(),
+        fields: z.array(z.string()).optional(),
+      }),
+    )
+    .output(zPaginatedResult.extend({items: z.array(unified.record_data)}))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 
   // We could technically implement the airbyte protocol, but this is rather complicated
   discover: procedure
