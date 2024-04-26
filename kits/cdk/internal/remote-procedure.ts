@@ -94,7 +94,7 @@ export async function getRemoteContext(ctx: ProtectedContext) {
 }
 
 export const remoteProcedure = protectedProcedure.use(async ({next, ctx}) =>
-  next({ctx: getRemoteContext(ctx)}),
+  next({ctx: await getRemoteContext(ctx)}),
 )
 
 export type RemoteProcedureContext = ReturnType<
