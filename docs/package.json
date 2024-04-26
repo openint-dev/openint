@@ -8,6 +8,7 @@
   "devDependencies": {
     "@mintlify/scraping": "^3.0.64",
     "@openint/api": "workspace:*",
+    "@openint/loopback-link": "workspace:*",
     "@openint/sdk": "workspace:*",
     "@opensdks/runtime": "^0.0.16",
     "@opensdks/sdk-discord": "^0.0.14",

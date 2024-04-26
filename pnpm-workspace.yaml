@@ -1,6 +1,7 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+  - 'dev-packages/*'
   - 'tbd/*'
   - 'connectors/*'
   - 'verticals/*'

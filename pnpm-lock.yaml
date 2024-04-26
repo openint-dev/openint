@@ -568,8 +568,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
       '@opensdks/fetch-links':
-        specifier: 0.0.16
-        version: 0.0.16
+        specifier: 0.0.18
+        version: 0.0.18
       '@sentry/nextjs':
         specifier: 7.53.0
         version: 7.53.0(next@14.0.2)(react@18.2.0)(webpack@5.74.0)
@@ -1370,6 +1370,15 @@ importers:
         specifier: 7.0.8
         version: 7.0.8
 
+  dev-packages/loopback-link:
+    dependencies:
+      '@hono/node-server':
+        specifier: ^1.11.0
+        version: 1.11.0
+      '@opensdks/fetch-links':
+        specifier: 0.0.18
+        version: 0.0.18
+
   docs:
     devDependencies:
       '@mintlify/scraping':
@@ -1378,6 +1387,9 @@ importers:
       '@openint/api':
         specifier: workspace:*
         version: link:../packages/api
+      '@openint/loopback-link':
+        specifier: workspace:*
+        version: link:../dev-packages/loopback-link
       '@openint/sdk':
         specifier: workspace:*
         version: link:../kits/sdk
@@ -4271,6 +4283,11 @@ packages:
       yargs: 16.2.0
     dev: false
 
+  /@hono/node-server@1.11.0:
+    resolution: {integrity: sha512-TLIJq9TMtD1NEG1mVoqNUn1Ita0qSaB5XboZErjFBcO/GJYXwWY4dVdTi9G0lbxtu0x+hJXDItcLaFHb7rlFTw==}
+    engines: {node: '>=18.14.1'}
+    dev: false
+
   /@humanwhocodes/config-array@0.10.7:
     resolution: {integrity: sha512-MDl6D6sBsaV452/QSdX+4CXIjZhIcI0PELsxUjk4U828yd58vk3bTIvk/6w5FY+4hIy9sLW0sfrV7K7Kc++j/w==}
     engines: {node: '>=10.10.0'}
@@ -5250,10 +5267,6 @@ packages:
     dependencies:
       '@octokit/openapi-types': 18.1.1
     dev: true
-
-  /@opensdks/fetch-links@0.0.16:
-    resolution: {integrity: sha512-q+wmJWdQ/gn0DehhQBG3Vipt0PuqEitEeEfR/oK0CsdWaGZnYLI70GAdmSRfUQhXJtqfC+gFC1F1egOmPBByhA==}
-    dev: false
 
   /@opensdks/fetch-links@0.0.17:
     resolution: {integrity: sha512-BUomrnpFtlu085W1wOY0k52Kf6qkJwBDifQxFoSHkfjyjS81AkpOTPsBTYS5HffAXS8rgoBBJF+7fu2NSYipFw==}
