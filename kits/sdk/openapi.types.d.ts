@@ -448,6 +448,12 @@ export interface components {
       sourceState?: {
         [key: string]: unknown
       }
+      streams?: {
+        [key: string]: {
+          disabled?: boolean
+          fields?: string[]
+        }
+      } | null
       /** @description Must start with 'reso_' */
       destinationId?: string
       destinationState?: {
@@ -1831,6 +1837,12 @@ export interface operations {
           disabled?: boolean
           /** @description Must start with 'reso_' */
           sourceId?: string
+          streams?: {
+            [key: string]: {
+              disabled?: boolean
+              fields?: string[]
+            }
+          } | null
           /** @description Must start with 'reso_' */
           destinationId?: string
         }
@@ -1907,6 +1919,12 @@ export interface operations {
            */
           metadata?: unknown
           disabled?: boolean
+          streams?: {
+            [key: string]: {
+              disabled?: boolean
+              fields?: string[]
+            }
+          } | null
         }
       }
     }

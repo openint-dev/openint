@@ -1601,6 +1601,23 @@
                     "type": "string",
                     "description": "Must start with 'reso_'"
                   },
+                  "streams": {
+                    "type": ["object", "null"],
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "disabled": {
+                          "type": "boolean"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
                   "destinationId": {
                     "type": "string",
                     "description": "Must start with 'reso_'"
@@ -1672,6 +1689,23 @@
                   },
                   "disabled": {
                     "type": "boolean"
+                  },
+                  "streams": {
+                    "type": ["object", "null"],
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "disabled": {
+                          "type": "boolean"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -7096,6 +7130,23 @@
           "sourceState": {
             "type": "object",
             "additionalProperties": {}
+          },
+          "streams": {
+            "type": ["object", "null"],
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "disabled": {
+                  "type": "boolean"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           },
           "destinationId": {
             "type": "string",

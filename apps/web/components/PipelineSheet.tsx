@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import {zId} from '@openint/cdk'
+import {zId, zStreamsV2} from '@openint/cdk'
 import {_trpcReact} from '@openint/engine-frontend'
 import type {SchemaSheetRef} from '@openint/ui'
 import {SchemaSheet} from '@openint/ui'
@@ -32,6 +32,7 @@ export const PipelineSheet = React.forwardRef(function PipelineSheet(
     destinationId: zResoId,
     sourceState: z.record(z.any()).optional(),
     destinationState: z.record(z.any()).optional(),
+    streams: zStreamsV2.optional(),
   })
 
   const upsertPipeline = _trpcReact.adminUpsertPipeline.useMutation()
