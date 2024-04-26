@@ -1,3 +1,6 @@
+-- 2024-04-26_0646 The has of this migration file has changed though semantically should not have changed
+-- Therefore will have to repair the hash of this migration
+
 --- Clean up previous ---
 
 DROP POLICY IF EXISTS admin_access ON raw_transaction;
@@ -70,9 +73,9 @@ BEGIN
    ELSE
       -- We should probably stop depending on objects built into the supabase schema at some point
       -- For now we do this for the test environment
-      CREATE ROLE "authenticated";
-      CREATE ROLE "authenticator";
-      GRANT "authenticated" TO "postgres";
+      CREATE ROLE "authenticated" WITH PASSWORD 'thex0hDD123b1!';
+      CREATE ROLE "authenticator" WITH PASSWORD 'thex0hDD123b1!';
+      GRANT "authenticated" TO CURRENT_USER; -- "postgres";
       GRANT "authenticated" TO "authenticator";
       GRANT USAGE ON SCHEMA public TO "authenticated";
    END IF;
@@ -117,8 +120,8 @@ CREATE POLICY org_member_access ON "public"."pipeline" TO authenticated
 
 --- End user policies ---
 
-CREATE ROLE "end_user";
-GRANT "end_user" TO "postgres";
+CREATE ROLE "end_user" with PASSWORD 'thex0hDD123b1!';-- Irrelevant pw work around neon, no login allowed
+GRANT "end_user" TO CURRENT_USER; -- "postgres"
 GRANT "end_user" TO "authenticator";
 GRANT USAGE ON SCHEMA public TO "end_user";
 
@@ -159,8 +162,8 @@ CREATE POLICY end_user_access ON public.pipeline TO end_user
 
 --- Organization policies ---
 
-CREATE ROLE "org";
-GRANT "org" TO "postgres";
+CREATE ROLE "org" WITH PASSWORD 'thex0hDD123b1!'; -- Irrelevant pw, no login allowed
+GRANT "org" TO CURRENT_USER; --  "postgres";
 GRANT "end_user" TO "authenticator";
 GRANT USAGE ON SCHEMA public TO "org";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO "org";
