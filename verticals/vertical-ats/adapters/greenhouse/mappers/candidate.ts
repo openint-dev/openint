@@ -6,7 +6,7 @@ export const candidate = mapper(
   zCast<GreenhouseObjectType['candidate']>(),
   unified.candidate,
   {
-    id: 'id',
+    id: (record) => String(record.id),
     created_at: 'created_at',
     modified_at: 'updated_at',
     first_name: 'first_name',
