@@ -6374,8 +6374,103 @@
       }
     },
     "/verticals/etl/read": {
-      "get": {
+      "post": {
         "operationId": "etl-read",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "catalog": {
+                    "type": "object",
+                    "properties": {
+                      "streams": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "stream": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "json_schema": {
+                                  "type": "object",
+                                  "additionalProperties": {}
+                                },
+                                "source_defined_primary_key": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "required": ["name", "json_schema"]
+                            },
+                            "sync_mode": {
+                              "type": "string",
+                              "enum": ["full_refresh", "incremental"]
+                            },
+                            "additional_fields": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": ["stream", "sync_mode"]
+                        }
+                      }
+                    },
+                    "required": ["streams"]
+                  },
+                  "state": {
+                    "type": "object",
+                    "properties": {
+                      "shared_state": {
+                        "type": "object",
+                        "additionalProperties": {}
+                      },
+                      "stream_states": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "stream_description": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "namespace": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": ["name", "namespace"]
+                            },
+                            "stream_state": {
+                              "type": "object",
+                              "additionalProperties": {}
+                            }
+                          },
+                          "required": ["stream_description", "stream_state"]
+                        }
+                      }
+                    },
+                    "required": ["stream_states"]
+                  }
+                },
+                "required": ["catalog", "state"]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful response",
@@ -6413,16 +6508,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/error.BAD_REQUEST"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/error.NOT_FOUND"
                 }
               }
             }

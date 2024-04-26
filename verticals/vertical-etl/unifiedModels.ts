@@ -3,6 +3,7 @@ import {z} from '@openint/vdk'
 // This is a simplified version of the airbyte protocol
 
 const keyPath = z.array(z.string())
+export const sync_mode = z.enum(['full_refresh', 'incremental'])
 
 export const stream = z.object({
   name: z.string(),
@@ -16,17 +17,38 @@ export const record = z.object({
   stream: z.string(),
 })
 
-export const messageCatalog = z.object({
+export const message_catalog = z.object({
   streams: z.array(stream),
   type: z.literal('CATALOG'),
 })
 
-export const messageRecord = z.object({
+export const message_record = z.object({
   record,
   type: z.literal('RECORD'),
 })
 
 export const message = z.discriminatedUnion('type', [
-  messageCatalog,
-  messageRecord,
+  message_catalog,
+  message_record,
 ])
+
+export const configured_stream = z.object({
+  stream,
+  sync_mode,
+  // TODO: figure out how airbyte does column selection during replication
+  additional_fields: z.array(z.string()).optional(),
+})
+
+export const configured_catalog = z.object({
+  streams: z.array(configured_stream),
+})
+
+export const stream_state = z.object({
+  stream_description: z.object({name: z.string(), namespace: z.string()}),
+  stream_state: z.record(z.unknown()),
+})
+
+export const global_state = z.object({
+  shared_state: z.record(z.unknown()).optional(),
+  stream_states: z.array(stream_state),
+})

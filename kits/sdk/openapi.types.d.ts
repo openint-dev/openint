@@ -243,7 +243,7 @@ export interface paths {
     get: operations['etl-discover']
   }
   '/verticals/etl/read': {
-    get: operations['etl-read']
+    post: operations['etl-read']
   }
   '/verticals/etl/write': {
     post: operations['etl-write']
@@ -4184,6 +4184,40 @@ export interface operations {
     }
   }
   'etl-read': {
+    requestBody: {
+      content: {
+        'application/json': {
+          catalog: {
+            streams: Array<{
+              stream: {
+                name: string
+                json_schema: {
+                  [key: string]: unknown
+                }
+                source_defined_primary_key?: string[][]
+              }
+              /** @enum {string} */
+              sync_mode: 'full_refresh' | 'incremental'
+              additional_fields?: string[]
+            }>
+          }
+          state: {
+            shared_state?: {
+              [key: string]: unknown
+            }
+            stream_states: Array<{
+              stream_description: {
+                name: string
+                namespace: string
+              }
+              stream_state: {
+                [key: string]: unknown
+              }
+            }>
+          }
+        }
+      }
+    }
     responses: {
       /** @description Successful response */
       200: {
@@ -4202,12 +4236,6 @@ export interface operations {
       400: {
         content: {
           'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
         }
       }
       /** @description Internal server error */

@@ -12,19 +12,28 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
 const procedure = verticalProcedure(adapters)
 
 export const router = trpc.router({
+  // We are gonna start with a simplified pipeline
+
+  // We could technically implement the airbyte protocol, but this is rather complicated
   discover: procedure
     .meta(oapi({method: 'GET', path: '/discover'}))
     .input(z.void())
-    .output(unified.messageCatalog)
+    .output(unified.message_catalog)
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   read: procedure
-    .meta(oapi({method: 'GET', path: '/read'}))
-    .input(z.object({}))
-    .output(z.array(unified.messageRecord))
+    .meta(oapi({method: 'POST', path: '/read'}))
+    .input(
+      z.object({
+        // config is already implicitly via resource itself
+        catalog: unified.configured_catalog,
+        state: unified.global_state,
+      }),
+    )
+    .output(z.array(unified.message_record))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   write: procedure
     .meta(oapi({method: 'POST', path: '/write'}))
-    .input(z.array(unified.messageRecord))
+    .input(z.array(unified.message_record))
     .output(z.array(unified.message))
     .mutation(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
