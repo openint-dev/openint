@@ -30,6 +30,7 @@ export const pipelineRouter = trpc.router({
         id: true,
         metadata: true,
         disabled: true,
+        streams: true,
       }),
     )
     .output(zRaw.pipeline)
@@ -44,6 +45,7 @@ export const pipelineRouter = trpc.router({
         metadata: true,
         disabled: true,
         sourceId: true,
+        streams: true,
         destinationId: true,
       }),
     )

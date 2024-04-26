@@ -182,7 +182,12 @@ export interface ConnectorServer<
       instance: TInstance
       endUser: {id: EndUserId} | null | undefined
       /* Enabled streams */
-      streams: {[k in T['_streamName']]?: boolean | null}
+      streams: {
+        [k in T['_streamName']]?:
+          | boolean
+          | null
+          | {disabled?: boolean; fields?: string[]}
+      }
       state: T['_types']['sourceState']
       /** @deprecated, use `instance` instead */
       config: T['_types']['connectorConfig']

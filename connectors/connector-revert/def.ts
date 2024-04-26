@@ -18,19 +18,6 @@ export const revertSchemas = {
       .describe(
         "x-revert-t-id header. This is the end user, aka Revert's customer's customer",
       ),
-    temp_pipe_out_streams: z
-      .record(
-        z.enum(['company', 'contact', 'deal']),
-        // z.union([
-        z.object({
-          fields: z.array(z.string()).describe('List of fields to retrieve'),
-        }),
-        // // FIXME(@tony): Caused the app to crash with: "Error: Unknown schema ZodUndefined. Please assign it a manual 'type'."
-        // z.undefined().describe('Disabled'),
-        // ]),
-      )
-      .optional()
-      .describe('This will be moved to the pipeline object'),
   }),
   sourceOutputEntities: {
     company: zCast<components['schemas']['commonCompany']>(),

@@ -101,6 +101,17 @@ const zBase = z.object({
   updatedAt: z.date(), // should be string but slonik returns date
 })
 
+export const zStreamsV2 = z.record(
+  z.object({
+    disabled: z.boolean().optional(),
+    fields: z.array(z.string()).optional(),
+  }),
+)
+export type StreamsV2 = z.infer<typeof zStreamsV2>
+
+export const zStreamsV1 = z.record(z.boolean())
+export type StreamsV1 = z.infer<typeof zStreamsV1>
+
 /** TODO: Add other links / gather the schema from various links here */
 export const zLink = z.enum(['banking']).openapi({ref: 'Link'})
 
@@ -169,6 +180,7 @@ export const zRaw = {
       // TODO: Remove nullish now that pipelines are more fixed
       sourceId: zId('reso').optional(),
       sourceState: z.record(z.unknown()).optional(),
+      streams: zStreamsV2.nullish(),
       destinationId: zId('reso').optional(),
       destinationState: z.record(z.unknown()).optional(),
       linkOptions: z

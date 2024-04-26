@@ -7,6 +7,8 @@ import type {
   Link,
   ResourceUpdate,
   Source,
+  StreamsV1,
+  StreamsV2,
 } from '@openint/cdk'
 import {bankingLink, logLink, makeId, sync} from '@openint/cdk'
 import type {z} from '@openint/util'
@@ -172,7 +174,7 @@ export function makeSyncService({
     src: _ResourceExpanded
     state: unknown
     endUser?: {id: EndUserId} | null | undefined
-    streams?: Record<string, boolean>
+    streams?: StreamsV1 | StreamsV2
     opts: {fullResync?: boolean | null}
   }) => {
     const defaultSource$ = () =>
@@ -279,7 +281,13 @@ export function makeSyncService({
     const endUserId = src.endUserId ?? dest.endUserId
     const endUser = endUserId ? {id: endUserId} : null
 
-    const _source$ = sourceSync({opts, src, state: pipe.sourceState, endUser})
+    const _source$ = sourceSync({
+      opts,
+      src,
+      state: pipe.sourceState,
+      endUser,
+      streams: pipeline.streams ?? undefined,
+    })
 
     const source$ = opts.source$
       ? opts.source$ConcatDefault
