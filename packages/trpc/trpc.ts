@@ -106,7 +106,7 @@ export const publicProcedure = trpc.procedure.use(async ({next, ctx, path}) =>
   next({ctx: {...ctx, path}}),
 )
 
-export const protectedProcedure = publicProcedure.use(({next, ctx}) => {
+export function getProtectedContext(ctx: RouterContext) {
   console.log('DEBUG', ctx.viewer)
   if (!hasRole(ctx.viewer, ['end_user', 'user', 'org', 'system'])) {
     throw new TRPCError({
@@ -118,8 +118,14 @@ export const protectedProcedure = publicProcedure.use(({next, ctx}) => {
       ? ctx.as('org', {orgId: ctx.viewer.orgId})
       : ctx.services
   const extEndUserId = getExtEndUserId(ctx.viewer)
-  return next({ctx: {...ctx, viewer: ctx.viewer, asOrgIfNeeded, extEndUserId}})
-})
+  return {...ctx, viewer: ctx.viewer, asOrgIfNeeded, extEndUserId}
+}
+
+export type ProtectedContext = ReturnType<typeof getProtectedContext>
+
+export const protectedProcedure = publicProcedure.use(({next, ctx}) =>
+  next({ctx: getProtectedContext(ctx)}),
+)
 
 export const adminProcedure = publicProcedure.use(({next, ctx}) => {
   if (!hasRole(ctx.viewer, ['user', 'org', 'system'])) {

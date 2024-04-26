@@ -1,5 +1,6 @@
 import {clerkClient} from '@clerk/nextjs'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
+import type {RouterContext} from 'packages/engine-backend'
 import {backendEnv, contextFactory} from '@openint/app-config/backendConfig'
 import {
   kAccessToken,
@@ -87,7 +88,20 @@ export async function viewerFromRequest(
   return {role: 'anon'}
 }
 
-export function createHandler({
+export const contextFromRequest = async ({
+  req,
+}: {
+  req: Request
+}): Promise<RouterContext> => {
+  const viewer = await viewerFromRequest(req)
+  console.log('[trpc.createContext]', {url: req.url, viewer})
+  return {
+    ...contextFactory.fromViewer(viewer),
+    remoteResourceId: (req.headers.get('x-resource-id') as Id['reso']) ?? null,
+  }
+}
+
+export function createRouterHandler({
   endpoint = '/api/v0',
   router,
 }: {
@@ -99,15 +113,7 @@ export function createHandler({
       endpoint,
       req,
       router: router as AppRouter,
-      createContext: async ({req}) => {
-        const viewer = await viewerFromRequest(req)
-        console.log('[trpc.createContext]', {url: req.url, viewer})
-        return {
-          ...contextFactory.fromViewer(viewer),
-          remoteResourceId:
-            (req.headers.get('x-resource-id') as Id['reso']) ?? null,
-        }
-      },
+      createContext: contextFromRequest,
       // TODO: handle error status code from passthrough endpoints
       // onError, // can only have side effect and not modify response error status code unfortunately...
       responseMeta: ({errors, ctx: _ctx}) => {

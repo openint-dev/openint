@@ -54,6 +54,15 @@ export const revertServer = {
       .from(iterateRecords())
       .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, helpers._op('commit')])))
   },
+
+  proxy: (instance, req) => {
+    const url = new URL(req.url)
+    const prefix = url.protocol + '//' + url.host + '/api/proxy'
+    // TODO: Add a .fetch function to the http client.
+    return instance
+      .request(req.method as 'GET', req.url.replace(prefix, ''), req)
+      .then((r) => r.response)
+  },
   passthrough: (instance, input) =>
     instance.request(input.method, input.path, {
       params: {query: input.query},

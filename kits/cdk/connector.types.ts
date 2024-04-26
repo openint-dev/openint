@@ -41,13 +41,19 @@ export interface ConnectorSchemas {
   /** aka postConnectInput... Should we rename? */
   connectOutput?: z.ZodTypeAny
   /** Maybe can be derived from webhookInput | postConnOutput | inlineInput? */
+
+  // MARK: @deprecated. Use the etl vertical instead
+
+  /** @deprecated. Use the etl vertical instead */
   sourceState?: z.ZodTypeAny
 
-  /** @deprecated. Should use sourceOutputEntities for the future... */
+  /** @deprecated. Use the etl vertical instead */
   sourceOutputEntity?: z.ZodTypeAny
+  /** @deprecated. Use the etl vertical instead */
   sourceOutputEntities?: Record<string, z.ZodTypeAny>
-
+  /** @deprecated. Use the etl vertical instead */
   destinationState?: z.ZodTypeAny
+  /** @deprecated. Use the etl vertical instead */
   destinationInputEntity?: z.ZodTypeAny
 }
 
@@ -243,6 +249,9 @@ export interface ConnectorServer<
       newSettings: T['_types']['resourceSettings'],
     ) => MaybePromise<void>
   }) => TInstance
+
+  /** Passthrough request proxy */
+  proxy?: (instance: TInstance, req: Request) => Promise<Response>
 
   passthrough?: (
     instance: TInstance,

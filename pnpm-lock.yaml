@@ -1562,6 +1562,9 @@ importers:
       '@openint/mgmt':
         specifier: workspace:*
         version: link:../../tbd/mgmt
+      '@openint/trpc':
+        specifier: workspace:*
+        version: link:../trpc
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk

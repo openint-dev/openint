@@ -1,4 +1,4 @@
-import {createHandler} from '@openint/api'
+import {createRouterHandler} from '@openint/api'
 import {loopbackLink} from '@openint/loopback-link'
 import {initOpenIntSDK} from '@openint/sdk'
 import bankingRouter from '@openint/vertical-banking'
@@ -10,7 +10,7 @@ const openint = initOpenIntSDK({
     // separate serverless function, vastly improving startup times during both development and production
     // Will require a bit of code-generation to turn them into separate files so next.js knows to bundle
     // separate entry points
-    createHandler({router: bankingRouter}),
+    createRouterHandler({router: bankingRouter}),
   ], // This bypasses the entire server-stack! And handles request directly in memory for easy testing.
   baseUrl: process.env['_VENICE_API_HOST'],
   headers: {
