@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://app.openint.dev/api/v0"
+      "url": "https://tonyx.ngrok.dev/api/v0"
     }
   ],
   "paths": {
@@ -6297,6 +6297,255 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/verticals/etl/discover": {
+      "get": {
+        "operationId": "etl-discover",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "streams": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "json_schema": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "source_defined_primary_key": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "required": ["name", "json_schema"]
+                      }
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["CATALOG"]
+                    }
+                  },
+                  "required": ["streams", "type"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/verticals/etl/read": {
+      "get": {
+        "operationId": "etl-read",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "record": {
+                        "type": "object",
+                        "properties": {
+                          "data": {},
+                          "stream": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["stream"]
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": ["RECORD"]
+                      }
+                    },
+                    "required": ["record", "type"]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/verticals/etl/write": {
+      "post": {
+        "operationId": "etl-write",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "record": {
+                    "type": "object",
+                    "properties": {
+                      "data": {},
+                      "stream": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["stream"]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["RECORD"]
+                  }
+                },
+                "required": ["record", "type"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "streams": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "json_schema": {
+                                  "type": "object",
+                                  "additionalProperties": {}
+                                },
+                                "source_defined_primary_key": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "required": ["name", "json_schema"]
+                            }
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": ["CATALOG"]
+                          }
+                        },
+                        "required": ["streams", "type"]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "record": {
+                            "type": "object",
+                            "properties": {
+                              "data": {},
+                              "stream": {
+                                "type": "string"
+                              }
+                            },
+                            "required": ["stream"]
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": ["RECORD"]
+                          }
+                        },
+                        "required": ["record", "type"]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
                 }
               }
             }

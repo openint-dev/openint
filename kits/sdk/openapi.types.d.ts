@@ -239,6 +239,15 @@ export interface paths {
   '/verticals/ats/department': {
     get: operations['ats-listDepartments']
   }
+  '/verticals/etl/discover': {
+    get: operations['etl-discover']
+  }
+  '/verticals/etl/read': {
+    get: operations['etl-read']
+  }
+  '/verticals/etl/write': {
+    post: operations['etl-write']
+  }
 }
 
 export interface webhooks {
@@ -4138,6 +4147,123 @@ export interface operations {
       404: {
         content: {
           'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'etl-discover': {
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            streams: Array<{
+              name: string
+              json_schema: {
+                [key: string]: unknown
+              }
+              source_defined_primary_key?: string[][]
+            }>
+            /** @enum {string} */
+            type: 'CATALOG'
+          }
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'etl-read': {
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': Array<{
+            record: {
+              data?: unknown
+              stream: string
+            }
+            /** @enum {string} */
+            type: 'RECORD'
+          }>
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'etl-write': {
+    requestBody: {
+      content: {
+        'application/json': {
+          record: {
+            data?: unknown
+            stream: string
+          }
+          /** @enum {string} */
+          type: 'RECORD'
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': Array<OneOf<
+            [
+              {
+                streams: Array<{
+                  name: string
+                  json_schema: {
+                    [key: string]: unknown
+                  }
+                  source_defined_primary_key?: string[][]
+                }>
+                /** @enum {string} */
+                type: 'CATALOG'
+              },
+              {
+                record: {
+                  data?: unknown
+                  stream: string
+                }
+                /** @enum {string} */
+                type: 'RECORD'
+              },
+            ]
+          >>
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
         }
       }
       /** @description Internal server error */

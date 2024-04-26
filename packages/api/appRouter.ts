@@ -12,6 +12,7 @@ import accountingRouter from '@openint/vertical-accounting'
 import atsRouter from '@openint/vertical-ats'
 import bankingRouter from '@openint/vertical-banking'
 import {crmRouter} from '@openint/vertical-crm'
+import eltRouter from '@openint/vertical-etl'
 import ptaRouter from '@openint/vertical-pta'
 import {salesEngagementRouter} from '@openint/vertical-sales-engagement'
 import {authRouter} from './authRouter'
@@ -35,6 +36,7 @@ export const _appRouter = trpc.router({
   accounting: accountingRouter,
   pta: ptaRouter,
   ats: atsRouter,
+  etl: eltRouter,
 })
 
 export const appRouter = trpc.mergeRouters(flatRouter, authRouter, _appRouter)

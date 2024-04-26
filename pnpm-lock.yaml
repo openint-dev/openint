@@ -1565,6 +1565,9 @@ importers:
       '@openint/vertical-crm':
         specifier: workspace:*
         version: link:../../verticals/vertical-crm
+      '@openint/vertical-etl':
+        specifier: workspace:*
+        version: link:../../verticals/vertical-etl
       '@openint/vertical-pta':
         specifier: workspace:*
         version: link:../../verticals/vertical-pta
@@ -2224,6 +2227,15 @@ importers:
       remeda:
         specifier: 1.6.1
         version: 1.6.1
+
+  verticals/vertical-etl:
+    dependencies:
+      '@openint/connector-revert':
+        specifier: workspace:*
+        version: link:../../connectors/connector-revert
+      '@openint/vdk':
+        specifier: workspace:*
+        version: link:../../kits/vdk
 
   verticals/vertical-pta:
     dependencies:
