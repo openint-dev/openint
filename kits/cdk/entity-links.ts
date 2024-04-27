@@ -1,3 +1,4 @@
+import type {EntityPayload, Link, StdSyncOperation} from '@openint/sync'
 import type {AmountMap, WritableDraft} from '@openint/util'
 import {
   A,
@@ -12,7 +13,6 @@ import {
 } from '@openint/util'
 import {z} from '@openint/zod'
 import {handlersLink, transformLink} from './base-links'
-import type {EntityPayload, Link, StdSyncOperation} from './protocol'
 import type {Pta} from './verticals'
 
 // TODO: Move into entityLink

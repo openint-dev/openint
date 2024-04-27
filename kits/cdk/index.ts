@@ -11,8 +11,9 @@ export * from './id.types'
 export * from './internal/index'
 export * from './metaForConnector'
 export * from './models'
-export * from './protocol'
-export * from './sync'
 export * from './verticals'
 export * from './viewer'
 // codegen:end
+
+// @deprecated. Packages should import sync directly
+export * from '@openint/sync'

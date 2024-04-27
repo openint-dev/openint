@@ -6,6 +6,7 @@
   "sideEffects": false,
   "module": "./index.ts",
   "dependencies": {
+    "@openint/sync": "workspace:*",
     "@openint/trpc": "workspace:*",
     "@openint/util": "workspace:*",
     "@openint/zod": "workspace:*",

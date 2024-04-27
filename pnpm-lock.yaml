@@ -1414,6 +1414,9 @@ importers:
 
   kits/cdk:
     dependencies:
+      '@openint/sync':
+        specifier: workspace:*
+        version: link:../sync
       '@openint/trpc':
         specifier: workspace:*
         version: link:../../packages/trpc
@@ -1507,6 +1510,12 @@ importers:
       '@openint/api':
         specifier: workspace:*
         version: link:../../packages/api
+
+  kits/sync:
+    dependencies:
+      '@opensdks/util-zod':
+        specifier: 0.0.15
+        version: 0.0.15
 
   kits/vdk:
     dependencies:

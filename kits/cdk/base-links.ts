@@ -1,12 +1,12 @@
-import type {WritableDraft} from '@openint/util'
-import {produce, R, Rx, rxjs} from '@openint/util'
 import type {
   AnyEntityPayload,
   Link,
   ResoUpdateData,
   StateUpdateData,
   SyncOperation,
-} from './protocol'
+} from '@openint/sync'
+import type {WritableDraft} from '@openint/util'
+import {produce, R, Rx, rxjs} from '@openint/util'
 
 type Data = AnyEntityPayload
 type OperationType = SyncOperation['type']

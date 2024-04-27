@@ -1,4 +1,12 @@
 import type {Link as FetchLink} from '@opensdks/runtime'
+import type {
+  Destination,
+  EntityPayload,
+  ResoUpdateData,
+  Source,
+  StateUpdateData,
+  SyncOperation,
+} from '@openint/sync'
 import type {MaybePromise} from '@openint/util'
 import {R} from '@openint/util'
 import type {z} from '@openint/zod'
@@ -16,14 +24,6 @@ import type {
 import type {EndUserId, Id} from './id.types'
 import {makeId} from './id.types'
 import type {ZStandard} from './models'
-import type {
-  Destination,
-  EntityPayload,
-  ResoUpdateData,
-  Source,
-  StateUpdateData,
-  SyncOperation,
-} from './protocol'
 
 /**
  * Equivalent to to airbyte's low code connector spec,

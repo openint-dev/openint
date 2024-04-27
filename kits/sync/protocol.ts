@@ -1,11 +1,12 @@
+import {z} from '@opensdks/util-zod'
 import type {
   NoInfer,
   NonDiscriminatedUnion,
   ObjectPartialDeep,
   rxjs,
 } from '@openint/util'
-import {z} from '@openint/zod'
-import type {ExternalId, Id} from './id.types'
+// HACK ALERT
+import type {ExternalId, Id} from '../cdk/id.types'
 
 /**
  * This will be standardized over time into either
