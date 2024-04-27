@@ -31,9 +31,16 @@ export const message_record = z.object({
 })
 export type MessageRecord = z.infer<typeof message_record>
 
+export const message_state = z.object({
+  state: z.unknown(),
+  type: z.literal('STATE'),
+})
+export type MessageState = z.infer<typeof message_state>
+
 export const message = z.discriminatedUnion('type', [
   message_catalog,
   message_record,
+  message_state,
 ])
 export type Message = z.infer<typeof message>
 
