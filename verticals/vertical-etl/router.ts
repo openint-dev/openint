@@ -51,7 +51,8 @@ export const router = trpc.router({
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   write: procedure
     .meta(oapi({method: 'POST', path: '/write'}))
-    .input(z.array(unified.message_record))
+    // NOTE: We array wrapped in object of a bug in trpc-openapi in generating array as POST body (array gets omitted)
+    .input(z.object({messages: z.array(unified.message_record)}))
     .output(z.array(unified.message))
     .mutation(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })

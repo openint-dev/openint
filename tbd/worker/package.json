@@ -10,13 +10,18 @@
     "@openint/env": "workspace:*",
     "@openint/events": "workspace:*",
     "@openint/sdk": "workspace:*",
+    "@openint/sync": "workspace:*",
+    "@openint/vertical-etl": "workspace:*",
     "@opensdks/sdk-supaglue": "0.0.3",
     "drizzle-orm": "^0.29.3",
     "inngest": "^3.12.0",
     "postgres": "^3.4.3",
+    "remeda": "1.6.1",
+    "rxjs": "7.5.6",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@openint/engine-backend": "workspace:*",
     "drizzle-kit": "^0.20.12"
   }
 }

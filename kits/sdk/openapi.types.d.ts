@@ -203,6 +203,12 @@ export interface paths {
   '/verticals/crm/metadata/associations': {
     post: operations['crm-metadataCreateAssociation']
   }
+  '/verticals/banking/account': {
+    get: operations['banking-listAccounts']
+  }
+  '/verticals/banking/merchant': {
+    get: operations['banking-listMerchants']
+  }
   '/verticals/banking/category': {
     get: operations['banking-listCategories']
   }
@@ -448,6 +454,7 @@ export interface components {
       sourceState?: {
         [key: string]: unknown
       }
+      sourceVertical?: string
       streams?: {
         [key: string]: {
           disabled?: boolean
@@ -459,6 +466,7 @@ export interface components {
       destinationState?: {
         [key: string]: unknown
       }
+      destinationVertical?: string
       linkOptions?: unknown[] | null
       lastSyncStartedAt?: string | null
       lastSyncCompletedAt?: string | null
@@ -926,6 +934,17 @@ export interface components {
       /** @example my_custom_object */
       target_object: string
       display_name: string
+    }
+    'banking.account': {
+      id: string
+      name: string
+      current_balance?: number
+      currency?: string
+    }
+    'banking.merchant': {
+      id: string
+      name: string
+      url?: string | null
     }
     'banking.category': {
       id: string
@@ -3643,6 +3662,84 @@ export interface operations {
       }
     }
   }
+  'banking-listAccounts': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<components['schemas']['banking.account']>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'banking-listMerchants': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<components['schemas']['banking.merchant']>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
   'banking-listCategories': {
     parameters: {
       query?: {
@@ -3985,16 +4082,24 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<{
-              /** Format: uuid */
               id: string
               created_at: string
               modified_at: string
               name: string
               confidential: boolean
-              departments: string[]
-              offices: string[]
-              hiring_managers: string[]
-              recruiters: string[]
+              departments: Array<{
+                id: string
+                created_at?: string | null
+                modified_at?: string | null
+                name: string
+                parent_id?: string | null
+                parent_department_external_id?: string | null
+                child_ids: Array<string | null>
+                child_department_external_ids: Array<string | null>
+              }>
+              offices: unknown[]
+              hiring_managers: unknown[]
+              recruiters: unknown[]
             }>
           }
         }
@@ -4035,11 +4140,9 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<{
-              /** Format: uuid */
               id: string
               created_at: string
               modified_at: string
-              /** Format: uuid */
               application: string
               closed_at: string
               sent_at: string
@@ -4085,30 +4188,29 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<{
-              /** Format: uuid */
               id: string
               created_at: string
               modified_at: string
               first_name: string
               last_name: string
-              company: string
-              title: string
+              company: string | null
+              title: string | null
               last_interaction_at: string
               is_private: boolean
               can_email: boolean
-              locations: string[]
+              locations: unknown[]
               phone_numbers: Array<{
-                value: string
-                phone_number_type: string
+                value?: string | null
+                phone_number_type?: string | null
               }>
               email_addresses: Array<{
                 /** Format: email */
-                value: string
-                email_address_type: string
+                value?: string | null
+                email_address_type?: string | null
               }>
               tags: string[]
-              applications: string[]
-              attachments: string[]
+              applications: unknown[]
+              attachments: unknown[]
             }>
           }
         }
@@ -4149,11 +4251,14 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<{
-              /** Format: uuid */
               id: string
               created_at?: string | null
               modified_at?: string | null
               name: string
+              parent_id?: string | null
+              parent_department_external_id?: string | null
+              child_ids: Array<string | null>
+              child_department_external_ids: Array<string | null>
             }>
           }
         }
@@ -4314,12 +4419,14 @@ export interface operations {
     requestBody: {
       content: {
         'application/json': {
-          record: {
-            data?: unknown
-            stream: string
-          }
-          /** @enum {string} */
-          type: 'RECORD'
+          messages: Array<{
+            record: {
+              data?: unknown
+              stream: string
+            }
+            /** @enum {string} */
+            type: 'RECORD'
+          }>
         }
       }
     }

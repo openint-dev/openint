@@ -23,16 +23,19 @@ export const message_catalog = z.object({
   streams: z.array(stream),
   type: z.literal('CATALOG'),
 })
+export type MessageCatalog = z.infer<typeof message_catalog>
 
 export const message_record = z.object({
   record,
   type: z.literal('RECORD'),
 })
+export type MessageRecord = z.infer<typeof message_record>
 
 export const message = z.discriminatedUnion('type', [
   message_catalog,
   message_record,
 ])
+export type Message = z.infer<typeof message>
 
 export const configured_stream = z.object({
   stream,

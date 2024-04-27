@@ -2138,6 +2138,12 @@ importers:
       '@openint/sdk':
         specifier: workspace:*
         version: link:../../kits/sdk
+      '@openint/sync':
+        specifier: workspace:*
+        version: link:../../kits/sync
+      '@openint/vertical-etl':
+        specifier: workspace:*
+        version: link:../../verticals/vertical-etl
       '@opensdks/sdk-supaglue':
         specifier: 0.0.3
         version: 0.0.3
@@ -2150,10 +2156,19 @@ importers:
       postgres:
         specifier: ^3.4.3
         version: 3.4.4
+      remeda:
+        specifier: 1.6.1
+        version: 1.6.1
+      rxjs:
+        specifier: 7.5.6
+        version: 7.5.6
       zod:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
+      '@openint/engine-backend':
+        specifier: workspace:*
+        version: link:../../packages/engine-backend
       drizzle-kit:
         specifier: ^0.20.12
         version: 0.20.14
