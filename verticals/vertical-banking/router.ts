@@ -19,7 +19,16 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
 const procedure = verticalProcedure(adapters)
 
 export const bankingRouter = trpc.router({
-  // MARK: - Account
+  listAccounts: procedure
+    .meta(oapi({method: 'GET', path: '/account'}))
+    .input(zPaginationParams.nullish())
+    .output(zPaginatedResult.extend({items: z.array(unified.account)}))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  listMerchants: procedure
+    .meta(oapi({method: 'GET', path: '/merchant'}))
+    .input(zPaginationParams.nullish())
+    .output(zPaginatedResult.extend({items: z.array(unified.merchant)}))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listCategories: procedure
     .meta(oapi({method: 'GET', path: '/category'}))
     .input(zPaginationParams.nullish())

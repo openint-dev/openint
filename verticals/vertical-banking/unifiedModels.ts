@@ -15,6 +15,7 @@ export const transaction = z
     account_name: z.string().nullish(),
   })
   .openapi({ref: 'banking.transaction'})
+
 export const account = z
   .object({
     id: z.string(),
@@ -23,6 +24,7 @@ export const account = z
     currency: z.string().optional(),
   })
   .openapi({ref: 'banking.account'})
+
 export const merchant = z
   .object({
     id: z.string(),
@@ -30,6 +32,7 @@ export const merchant = z
     url: z.string().nullish(),
   })
   .openapi({ref: 'banking.merchant'})
+
 export const category = z
   .object({
     id: z.string(),
