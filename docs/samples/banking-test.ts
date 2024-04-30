@@ -24,11 +24,13 @@ void openint.GET('/verticals/banking/category').then((r) => {
   console.log(r.data)
 })
 
-// void venice
-//   .POST('/core/resource/{id}/source_sync', {
-//     params: {path: {id: process.env['_APOLLO_RESOURCE_ID']!}},
-//     body: {streams: {contact: true}},
-//   })
-//   .then((r) => {
-//     console.log(r.data)
-//   })
+void openint
+  .POST('/core/pipeline', {
+    body: {
+      id: '',
+      streams: {contact: {fields: ['name', 'email'], disabled: true}},
+    },
+  })
+  .then((r) => {
+    console.log(r.data)
+  })
