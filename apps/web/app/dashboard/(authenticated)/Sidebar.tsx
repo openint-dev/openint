@@ -27,12 +27,12 @@ const sectionedLinks: Array<{
       // },
       {
         title: 'Magic Link',
-        href: '/magic-link',
+        href: '/dashboard/magic-link',
         icon: 'Wand',
       },
       __DEBUG__ && {
         title: 'Metrics',
-        href: '/metrics',
+        href: '/dashboard/metrics',
         icon: 'BarChart2',
       },
     ]),
@@ -42,22 +42,22 @@ const sectionedLinks: Array<{
     items: [
       {
         title: 'End users',
-        href: '/end-users',
+        href: '/dashboard/end-users',
         icon: 'Users',
       },
       {
         title: 'Pipelines',
-        href: '/pipelines',
+        href: '/dashboard/pipelines',
         icon: 'ArrowLeftRight',
       },
       {
         title: 'Resources',
-        href: '/resources',
+        href: '/dashboard/resources',
         icon: 'Box',
       },
       {
         title: 'Connector Configs',
-        href: '/connector-configs',
+        href: '/dashboard/connector-configs',
         icon: 'Layers',
       },
     ],
@@ -67,18 +67,18 @@ const sectionedLinks: Array<{
     items: [
       // {
       //   title: 'Logs',
-      //   href: '/logs',
+      //   href: '/dashboard/logs',
       //   icon: 'Footprints',
       // },
       {
         title: 'API',
-        href: '/api-access',
+        href: '/dashboard/api-access',
         icon: 'Key',
       },
       // Nothing interesting in here anymore
       // {
       //   title: 'Settings',
-      //   href: '/settings',
+      //   href: '/dashboard/settings',
       //   icon: 'Settings',
       // },
     ],

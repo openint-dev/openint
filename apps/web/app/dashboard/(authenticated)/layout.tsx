@@ -2,11 +2,9 @@
 
 import {OrganizationSwitcher, useAuth, UserButton} from '@clerk/nextjs'
 import NextTopLoader from 'nextjs-toploader'
-
 import {NoSSR} from '@/components/NoSSR'
 import {RedirectToNext13} from '@/components/RedirectTo'
 import {VCommandBar} from '@/vcommands/vcommand-components'
-
 import {Sidebar} from './Sidebar'
 
 export default function AuthedLayout({children}: {children: React.ReactNode}) {
@@ -17,7 +15,7 @@ export default function AuthedLayout({children}: {children: React.ReactNode}) {
   // const orgs = useOrganizationList()
 
   if (auth.isLoaded && !auth.isSignedIn) {
-    return <RedirectToNext13 url="/sign-in" />
+    return <RedirectToNext13 url="/dashboard/sign-in" />
   }
 
   // useEffect(() => {
@@ -40,7 +38,7 @@ export default function AuthedLayout({children}: {children: React.ReactNode}) {
   // }
   // // if (!auth.isSignedIn) {
   // //   console.log('[AuthedLayout] redirect to sign in ')
-  // //   return <RedirectToNext13 url="/sign-in" />
+  // //   return <RedirectToNext13 url="/dashboard/sign-in" />
   // // }
   // if (!orgs.isLoaded) {
   //   // console.log('[AuthedLayout] orgs not loaded', auth, orgs)

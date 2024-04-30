@@ -65,7 +65,7 @@ export default function OrgLayoutClient({
   }
 
   if (auth.isLoaded && !auth.isSignedIn) {
-    return <RedirectToNext13 url="/sign-in" />
+    return <RedirectToNext13 url="/dashboard/sign-in" />
   }
 
   return (

@@ -2,6 +2,7 @@
 // import {createServerComponentHelpers} from '@/server/server-component-helpers'
 
 import ResourcePage from './ResourcesPage'
+
 export default ResourcePage
 
 // export default async function ResourcesPageContainer() {

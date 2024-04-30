@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 import {cn} from '@/lib-client/ui-utils'
 
 const links: Array<{href: string; title: string}> = [
