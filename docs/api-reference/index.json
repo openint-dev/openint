@@ -91,6 +91,8 @@
   "api-reference/post-verticalscrmmetadataobjects",
   "api-reference/get-verticalscrmmetadataobjects-properties",
   "api-reference/post-verticalscrmmetadataassociations",
+  "api-reference/get-verticalsbankingaccount",
+  "api-reference/get-verticalsbankingmerchant",
   "api-reference/get-verticalsbankingcategory",
   "api-reference/get-verticalsbankingtransaction",
   "api-reference/get-verticalsaccountingaccount",

@@ -7,7 +7,6 @@ export const offer = mapper(
   unified.offer,
   {
     id: (record) => String(record.id),
-    remote_id: (record) => String(record.id),
     created_at: 'created_at',
     modified_at: 'updated_at',
     application: (record) => String(record.application_id),

@@ -37,7 +37,7 @@ const mintConfig: MintConfig = {
     },
     {
       name: 'OpenAPI.json',
-      url: 'https://raw.githubusercontent.com/openint-dev/openint/main/kits/sdk/openint.oas.json',
+      url: 'https://raw.githubusercontent.com/openint-dev/openint/main/kits/sdk/openapi.json',
     },
   ],
   navigation: [

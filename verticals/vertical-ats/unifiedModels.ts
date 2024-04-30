@@ -2,7 +2,6 @@ import {z} from '@openint/vdk'
 
 export const offer = z.object({
   id: z.string(),
-  remote_id: z.string(),
   created_at: z.string(),
   modified_at: z.string(),
   application: z.string(),
@@ -15,7 +14,6 @@ export const offer = z.object({
 
 export const department = z.object({
   id: z.string(),
-  remote_id: z.string(),
   created_at: z.string().nullish(),
   modified_at: z.string().nullish(),
   name: z.string(),
@@ -28,7 +26,6 @@ export const department = z.object({
 
 export const job = z.object({
   id: z.string(),
-  remote_id: z.string(),
   created_at: z.string(),
   modified_at: z.string(),
   name: z.string(),
@@ -52,7 +49,6 @@ const emailAddressSchema = z.object({
 
 export const candidate = z.object({
   id: z.string(),
-  remote_id: z.string(),
   created_at: z.string(),
   modified_at: z.string(),
   first_name: z.string(),

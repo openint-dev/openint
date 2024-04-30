@@ -14,9 +14,7 @@
       "get": {
         "operationId": "health",
         "summary": "Health check",
-        "tags": [
-          "Internal"
-        ],
+        "tags": ["Internal"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -45,9 +43,7 @@
       "get": {
         "operationId": "getRawSchemas",
         "description": "Get raw schemas",
-        "tags": [
-          "Internal"
-        ],
+        "tags": ["Internal"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -73,9 +69,7 @@
     "/connect/token": {
       "post": {
         "operationId": "createConnectToken",
-        "tags": [
-          "Connect"
-        ],
+        "tags": ["Connect"],
         "requestBody": {
           "required": true,
           "content": {
@@ -110,9 +104,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "token"
-                  ]
+                  "required": ["token"]
                 }
               }
             }
@@ -143,9 +135,7 @@
     "/connect/magic-link": {
       "post": {
         "operationId": "createMagicLink",
-        "tags": [
-          "Connect"
-        ],
+        "tags": ["Connect"],
         "requestBody": {
           "required": true,
           "content": {
@@ -164,31 +154,19 @@
                     "description": "How long the magic link will be valid for (in seconds) before it expires"
                   },
                   "displayName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "What to call user by"
                   },
                   "redirectUrl": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "Where to send user to after connect / if they press back button"
                   },
                   "connectorName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "Filter connector config by connector name"
                   },
                   "connectorConfigDisplayName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "Filter connector config by displayName "
                   },
                   "connectorConfigId": {
@@ -216,9 +194,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "url"
-                  ]
+                  "required": ["url"]
                 }
               }
             }
@@ -249,9 +225,7 @@
     "/passthrough": {
       "post": {
         "operationId": "passthrough",
-        "tags": [
-          "Internal"
-        ],
+        "tags": ["Internal"],
         "requestBody": {
           "required": true,
           "content": {
@@ -261,14 +235,7 @@
                 "properties": {
                   "method": {
                     "type": "string",
-                    "enum": [
-                      "GET",
-                      "POST",
-                      "PUT",
-                      "PATCH",
-                      "DELETE",
-                      "OPTIONS"
-                    ]
+                    "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
                   },
                   "path": {
                     "type": "string"
@@ -286,10 +253,7 @@
                     "additionalProperties": {}
                   }
                 },
-                "required": [
-                  "method",
-                  "path"
-                ]
+                "required": ["method", "path"]
               }
             }
           }
@@ -330,9 +294,7 @@
       "post": {
         "operationId": "sourceSync",
         "description": "Return records that would have otherwise been emitted during a sync and return it instead",
-        "tags": [
-          "Internal"
-        ],
+        "tags": ["Internal"],
         "parameters": [
           {
             "in": "path",
@@ -407,9 +369,7 @@
     "/core/resource": {
       "post": {
         "operationId": "createResource",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "requestBody": {
           "required": true,
           "content": {
@@ -422,23 +382,14 @@
                     "description": "Must start with 'ccfg_'"
                   },
                   "settings": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "additionalProperties": {}
                   },
                   "displayName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": ["string", "null"]
                   },
                   "endUserId": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "minLength": 1
                   },
                   "disabled": {
@@ -448,16 +399,11 @@
                     "description": "\n  JSON object can can be used to associate arbitrary metadata to\n  avoid needing a separate 1-1 table just for simple key values in your application.\n  During updates this object will be shallowly merged\n"
                   },
                   "integrationId": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "Must start with 'int_'"
                   }
                 },
-                "required": [
-                  "connectorConfigId"
-                ]
+                "required": ["connectorConfigId"]
               }
             }
           }
@@ -497,9 +443,7 @@
       },
       "get": {
         "operationId": "listResources",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "query",
@@ -519,10 +463,7 @@
             "in": "query",
             "name": "endUserId",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ],
+              "type": ["string", "null"],
               "minLength": 1
             }
           },
@@ -530,10 +471,7 @@
             "in": "query",
             "name": "connectorConfigId",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ],
+              "type": ["string", "null"],
               "description": "Must start with 'ccfg_'"
             }
           },
@@ -541,10 +479,7 @@
             "in": "query",
             "name": "connectorName",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -598,9 +533,7 @@
     "/core/resource/{id}": {
       "patch": {
         "operationId": "updateResource",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -620,17 +553,11 @@
                 "type": "object",
                 "properties": {
                   "settings": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "additionalProperties": {}
                   },
                   "displayName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": ["string", "null"]
                   },
                   "metadata": {
                     "description": "\n  JSON object can can be used to associate arbitrary metadata to\n  avoid needing a separate 1-1 table just for simple key values in your application.\n  During updates this object will be shallowly merged\n"
@@ -639,17 +566,11 @@
                     "type": "boolean"
                   },
                   "endUserId": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "minLength": 1
                   },
                   "integrationId": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "Must start with 'int_'"
                   }
                 }
@@ -702,9 +623,7 @@
       },
       "delete": {
         "operationId": "deleteResource",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -766,9 +685,7 @@
       },
       "get": {
         "operationId": "getResource",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -827,9 +744,7 @@
     "/core/resource/{id}/_sync": {
       "post": {
         "operationId": "syncResource",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -849,38 +764,23 @@
                 "type": "object",
                 "properties": {
                   "async": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "Run sync in the background, not compatible with other options for now..."
                   },
                   "metaOnly": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "Only sync resource metadata and skip pipelines "
                   },
                   "fullResync": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "Remove `state` of pipeline and trigger a full resync"
                   },
                   "todo_upstreamRefresh": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "\n    Triggers provider to refresh data from its source\n    https://plaid.com/docs/api/products/transactions/#transactionsrefresh\n    This may also load historical transactions. For example,\n    Finicity treats historical transaction as premium service.\n  "
                   },
                   "todo_removeUnsyncedData": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "\n    See coda's implmementation. Requires adding a new message to the sync protocol\n    to remove all data from a particular source_id"
                   }
                 }
@@ -923,9 +823,7 @@
     "/core/connector_config": {
       "get": {
         "operationId": "adminListConnectorConfigs",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -954,9 +852,7 @@
       },
       "post": {
         "operationId": "adminUpsertConnectorConfig",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "requestBody": {
           "required": true,
           "content": {
@@ -976,38 +872,23 @@
                     "description": "Must start with 'org_'"
                   },
                   "config": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "additionalProperties": {}
                   },
                   "displayName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": ["string", "null"]
                   },
                   "defaultPipeOut": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "properties": {
                       "streams": {
-                        "type": [
-                          "object",
-                          "null"
-                        ],
+                        "type": ["object", "null"],
                         "additionalProperties": {
                           "type": "boolean"
                         }
                       },
                       "links": {
-                        "type": [
-                          "array",
-                          "null"
-                        ],
+                        "type": ["array", "null"],
                         "items": {
                           "$ref": "#/components/schemas/Link"
                         },
@@ -1018,22 +899,14 @@
                         "description": "Must start with 'reso_'"
                       }
                     },
-                    "required": [
-                      "destination_id"
-                    ],
+                    "required": ["destination_id"],
                     "description": "Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL"
                   },
                   "defaultPipeIn": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "properties": {
                       "links": {
-                        "type": [
-                          "array",
-                          "null"
-                        ],
+                        "type": ["array", "null"],
                         "items": {
                           "$ref": "#/components/schemas/Link"
                         },
@@ -1044,15 +917,11 @@
                         "description": "Must start with 'reso_'"
                       }
                     },
-                    "required": [
-                      "source_id"
-                    ],
+                    "required": ["source_id"],
                     "description": "Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL"
                   }
                 },
-                "required": [
-                  "orgId"
-                ]
+                "required": ["orgId"]
               }
             }
           }
@@ -1094,9 +963,7 @@
     "/core/connector_config/{id}": {
       "patch": {
         "operationId": "adminUpdateConnectorConfig",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -1119,10 +986,7 @@
                     "description": "\n  JSON object can can be used to associate arbitrary metadata to\n  avoid needing a separate 1-1 table just for simple key values in your application.\n  During updates this object will be shallowly merged\n"
                   },
                   "displayName": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": ["string", "null"]
                   },
                   "disabled": {
                     "type": "boolean"
@@ -1177,9 +1041,7 @@
       },
       "delete": {
         "operationId": "adminDeleteConnectorConfig",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -1234,9 +1096,7 @@
       },
       "get": {
         "operationId": "adminGetConnectorConfig",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -1295,32 +1155,21 @@
     "/core/connector_config_info": {
       "get": {
         "operationId": "listConnectorConfigInfos",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "query",
             "name": "type",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "enum": [
-                "source",
-                "destination"
-              ]
+              "type": ["string", "null"],
+              "enum": ["source", "destination"]
             }
           },
           {
             "in": "query",
             "name": "id",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ],
+              "type": ["string", "null"],
               "description": "Must start with 'ccfg_'"
             }
           },
@@ -1328,10 +1177,7 @@
             "in": "query",
             "name": "connectorName",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -1350,16 +1196,10 @@
                         "description": "Must start with 'ccfg_'"
                       },
                       "envName": {
-                        "type": [
-                          "string",
-                          "null"
-                        ]
+                        "type": ["string", "null"]
                       },
                       "displayName": {
-                        "type": [
-                          "string",
-                          "null"
-                        ]
+                        "type": ["string", "null"]
                       },
                       "connectorName": {
                         "type": "string"
@@ -1419,9 +1259,7 @@
       "get": {
         "operationId": "listConnectorMetas",
         "description": "Get catalog of all available connectors",
-        "tags": [
-          "Connectors"
-        ],
+        "tags": ["Connectors"],
         "parameters": [
           {
             "in": "query",
@@ -1476,9 +1314,7 @@
     "/connector/{name}": {
       "get": {
         "operationId": "getConnectorMeta",
-        "tags": [
-          "Connectors"
-        ],
+        "tags": ["Connectors"],
         "parameters": [
           {
             "in": "path",
@@ -1541,9 +1377,7 @@
     "/connector/{name}/oas": {
       "get": {
         "operationId": "getConnectorOpenApiSpec",
-        "tags": [
-          "Connectors"
-        ],
+        "tags": ["Connectors"],
         "parameters": [
           {
             "in": "path",
@@ -1606,9 +1440,7 @@
     "/connector/{name}/schemas": {
       "get": {
         "operationId": "getConnectorSchemas",
-        "tags": [
-          "Connectors"
-        ],
+        "tags": ["Connectors"],
         "parameters": [
           {
             "in": "path",
@@ -1671,9 +1503,7 @@
     "/core/pipeline": {
       "get": {
         "operationId": "listPipelines",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "query",
@@ -1749,9 +1579,7 @@
       },
       "post": {
         "operationId": "createPipeline",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "requestBody": {
           "required": true,
           "content": {
@@ -1774,10 +1602,7 @@
                     "description": "Must start with 'reso_'"
                   },
                   "streams": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "additionalProperties": {
                       "type": "object",
                       "properties": {
@@ -1798,9 +1623,7 @@
                     "description": "Must start with 'reso_'"
                   }
                 },
-                "required": [
-                  "id"
-                ]
+                "required": ["id"]
               }
             }
           }
@@ -1842,9 +1665,7 @@
     "/core/pipeline/{id}": {
       "patch": {
         "operationId": "updatePipeline",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -1870,10 +1691,7 @@
                     "type": "boolean"
                   },
                   "streams": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "additionalProperties": {
                       "type": "object",
                       "properties": {
@@ -1939,9 +1757,7 @@
       },
       "delete": {
         "operationId": "deletePipeline",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -1960,9 +1776,7 @@
               "application/json": {
                 "schema": {
                   "type": "boolean",
-                  "enum": [
-                    true
-                  ]
+                  "enum": [true]
                 }
               }
             }
@@ -2003,9 +1817,7 @@
     "/core/pipeline/{id}/_sync": {
       "post": {
         "operationId": "syncPipeline",
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "parameters": [
           {
             "in": "path",
@@ -2025,38 +1837,23 @@
                 "type": "object",
                 "properties": {
                   "async": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "Run sync in the background, not compatible with other options for now..."
                   },
                   "metaOnly": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "Only sync resource metadata and skip pipelines "
                   },
                   "fullResync": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "Remove `state` of pipeline and trigger a full resync"
                   },
                   "todo_upstreamRefresh": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "\n    Triggers provider to refresh data from its source\n    https://plaid.com/docs/api/products/transactions/#transactionsrefresh\n    This may also load historical transactions. For example,\n    Finicity treats historical transaction as premium service.\n  "
                   },
                   "todo_removeUnsyncedData": {
-                    "type": [
-                      "boolean",
-                      "null"
-                    ],
+                    "type": ["boolean", "null"],
                     "description": "\n    See coda's implmementation. Requires adding a new message to the sync protocol\n    to remove all data from a particular source_id"
                   }
                 }
@@ -2257,16 +2054,10 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": ["string", "null"]
                   },
                   "email": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": ["string", "null"],
                     "description": "Email, but not validated as data from Supaglue has invalid emails for now"
                   }
                 }
@@ -2570,30 +2361,19 @@
                 "type": "object",
                 "properties": {
                   "destination_config": {
-                    "type": [
-                      "object",
-                      "null"
-                    ],
+                    "type": ["object", "null"],
                     "properties": {
                       "type": {
                         "type": "string"
                       },
                       "schema": {
-                        "type": [
-                          "string",
-                          "null"
-                        ]
+                        "type": ["string", "null"]
                       }
                     },
-                    "required": [
-                      "type"
-                    ]
+                    "required": ["type"]
                   },
                   "unified_objects": {
-                    "type": [
-                      "array",
-                      "null"
-                    ],
+                    "type": ["array", "null"],
                     "items": {
                       "type": "object",
                       "properties": {
@@ -2601,16 +2381,11 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "object"
-                      ]
+                      "required": ["object"]
                     }
                   },
                   "standard_objects": {
-                    "type": [
-                      "array",
-                      "null"
-                    ],
+                    "type": ["array", "null"],
                     "items": {
                       "type": "object",
                       "properties": {
@@ -2618,16 +2393,11 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "object"
-                      ]
+                      "required": ["object"]
                     }
                   },
                   "custom_objects": {
-                    "type": [
-                      "array",
-                      "null"
-                    ],
+                    "type": ["array", "null"],
                     "items": {
                       "type": "object",
                       "properties": {
@@ -2635,9 +2405,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "object"
-                      ]
+                      "required": ["object"]
                     }
                   }
                 }
@@ -2697,10 +2465,7 @@
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -2713,10 +2478,7 @@
                   "type": "object",
                   "properties": {
                     "next_page_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "items": {
                       "type": "array",
@@ -2725,9 +2487,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "items"
-                  ]
+                  "required": ["items"]
                 }
               }
             }
@@ -2773,10 +2533,7 @@
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -2789,10 +2546,7 @@
                   "type": "object",
                   "properties": {
                     "next_page_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "items": {
                       "type": "array",
@@ -2801,9 +2555,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "items"
-                  ]
+                  "required": ["items"]
                 }
               }
             }
@@ -2849,10 +2601,7 @@
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -2865,10 +2614,7 @@
                   "type": "object",
                   "properties": {
                     "next_page_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "items": {
                       "type": "array",
@@ -2877,9 +2623,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "items"
-                  ]
+                  "required": ["items"]
                 }
               }
             }
@@ -2941,23 +2685,14 @@
                         "example": "b854e510-1c40-4ef6-ade4-8eb35f49d331"
                       },
                       "user_id": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "c590dc63-8e43-48a4-8154-1fbb00ac936b"
                       }
                     },
-                    "required": [
-                      "contact_id",
-                      "mailbox_id",
-                      "sequence_id"
-                    ]
+                    "required": ["contact_id", "mailbox_id", "sequence_id"]
                   }
                 },
-                "required": [
-                  "record"
-                ]
+                "required": ["record"]
               }
             }
           }
@@ -2977,9 +2712,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "id"
-                      ]
+                      "required": ["id"]
                     }
                   }
                 }
@@ -3017,10 +2750,7 @@
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -3033,10 +2763,7 @@
                   "type": "object",
                   "properties": {
                     "next_page_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "items": {
                       "type": "array",
@@ -3045,9 +2772,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "items"
-                  ]
+                  "required": ["items"]
                 }
               }
             }
@@ -3093,10 +2818,7 @@
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -3109,10 +2831,7 @@
                   "type": "object",
                   "properties": {
                     "next_page_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "items": {
                       "type": "array",
@@ -3121,9 +2840,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "items"
-                  ]
+                  "required": ["items"]
                 }
               }
             }
@@ -3169,10 +2886,7 @@
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           }
         ],
@@ -3185,10 +2899,7 @@
                   "type": "object",
                   "properties": {
                     "next_page_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "items": {
                       "type": "array",
@@ -3197,9 +2908,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "items"
-                  ]
+                  "required": ["items"]
                 }
               }
             }
@@ -3251,38 +2960,23 @@
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "My Company"
                       },
                       "domain": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "mycompany.com"
                       },
                       "owner_id": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "9f3e97fd-4d5d-4efc-959d-bbebfac079f5"
                       },
                       "account_id": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "ae4be028-9078-4850-a0bf-d2112b7c4d11"
                       },
                       "custom_fields": {
-                        "type": [
-                          "object",
-                          "null"
-                        ],
+                        "type": ["object", "null"],
                         "additionalProperties": {}
                       }
                     }
@@ -3301,10 +2995,7 @@
                     }
                   }
                 },
-                "required": [
-                  "record",
-                  "upsert_on"
-                ]
+                "required": ["record", "upsert_on"]
               }
             }
           }
@@ -3324,9 +3015,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "id"
-                      ]
+                      "required": ["id"]
                     }
                   }
                 }
@@ -3370,64 +3059,37 @@
                     "type": "object",
                     "properties": {
                       "first_name": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "James"
                       },
                       "last_name": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "Smith"
                       },
                       "job_title": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "CEO"
                       },
                       "address": {
                         "type": "object",
                         "properties": {
                           "city": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "country": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "postal_code": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "state": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "street_1": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "street_2": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           }
                         },
                         "example": {
@@ -3448,20 +3110,11 @@
                               "type": "string"
                             },
                             "email_address_type": {
-                              "type": [
-                                "string",
-                                "null"
-                              ],
-                              "enum": [
-                                "primary",
-                                "personal",
-                                "work"
-                              ]
+                              "type": ["string", "null"],
+                              "enum": ["primary", "personal", "work"]
                             }
                           },
-                          "required": [
-                            "email_address"
-                          ]
+                          "required": ["email_address"]
                         },
                         "example": [
                           {
@@ -3489,10 +3142,7 @@
                               ]
                             }
                           },
-                          "required": [
-                            "phone_number",
-                            "phone_number_type"
-                          ]
+                          "required": ["phone_number", "phone_number_type"]
                         },
                         "example": [
                           {
@@ -3502,32 +3152,19 @@
                         ]
                       },
                       "owner_id": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "9f3e97fd-4d5d-4efc-959d-bbebfac079f5"
                       },
                       "account_id": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
+                        "type": ["string", "null"],
                         "example": "ae4be028-9078-4850-a0bf-d2112b7c4d11"
                       },
                       "custom_fields": {
-                        "type": [
-                          "object",
-                          "null"
-                        ],
+                        "type": ["object", "null"],
                         "additionalProperties": {}
                       }
                     },
-                    "required": [
-                      "address",
-                      "email_addresses",
-                      "phone_numbers"
-                    ]
+                    "required": ["address", "email_addresses", "phone_numbers"]
                   },
                   "upsert_on": {
                     "type": "object",
@@ -3539,10 +3176,7 @@
                     }
                   }
                 },
-                "required": [
-                  "record",
-                  "upsert_on"
-                ]
+                "required": ["record", "upsert_on"]
               }
             }
           }
@@ -3562,9 +3196,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "id"
-                      ]
+                      "required": ["id"]
                     }
                   }
                 }
@@ -3619,9 +3251,7 @@
                       "type": "number"
                     }
                   },
-                  "required": [
-                    "count"
-                  ]
+                  "required": ["count"]
                 }
               }
             }
@@ -3668,20 +3298,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -3701,10 +3325,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -3716,10 +3337,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -3769,9 +3387,7 @@
                     "$ref": "#/components/schemas/crm.account_input"
                   }
                 },
-                "required": [
-                  "record"
-                ]
+                "required": ["record"]
               }
             }
           }
@@ -3788,9 +3404,7 @@
                       "$ref": "#/components/schemas/crm.account"
                     }
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -3844,9 +3458,7 @@
                     },
                     "raw": {}
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -3906,9 +3518,7 @@
                     "$ref": "#/components/schemas/crm.account_input"
                   }
                 },
-                "required": [
-                  "record"
-                ]
+                "required": ["record"]
               }
             }
           }
@@ -3925,9 +3535,7 @@
                       "$ref": "#/components/schemas/crm.account"
                     }
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -3988,10 +3596,7 @@
                     }
                   }
                 },
-                "required": [
-                  "ids",
-                  "properties"
-                ]
+                "required": ["ids", "properties"]
               }
             }
           }
@@ -4048,10 +3653,7 @@
                     "properties": {
                       "key": {
                         "type": "string",
-                        "enum": [
-                          "domain",
-                          "website"
-                        ],
+                        "enum": ["domain", "website"],
                         "description": "The key to upsert on. Only `website` is supported for Salesforce, while both `domain` and `website` are supported for Hubspot."
                       },
                       "values": {
@@ -4062,19 +3664,13 @@
                         "description": "The values to upsert on. If more than one value is provided, it will act as a logical OR. If more than one account is found that matches, then an error will be thrown."
                       }
                     },
-                    "required": [
-                      "key",
-                      "values"
-                    ]
+                    "required": ["key", "values"]
                   },
                   "record": {
                     "$ref": "#/components/schemas/crm.account_input"
                   }
                 },
-                "required": [
-                  "upsert_on",
-                  "record"
-                ]
+                "required": ["upsert_on", "record"]
               }
             }
           }
@@ -4091,9 +3687,7 @@
                       "$ref": "#/components/schemas/crm.account"
                     }
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4130,20 +3724,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -4163,10 +3751,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -4178,10 +3763,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -4231,9 +3813,7 @@
                     "$ref": "#/components/schemas/crm.contact_input"
                   }
                 },
-                "required": [
-                  "record"
-                ]
+                "required": ["record"]
               }
             }
           }
@@ -4250,9 +3830,7 @@
                       "$ref": "#/components/schemas/crm.contact"
                     }
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4306,9 +3884,7 @@
                     },
                     "raw": {}
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4368,9 +3944,7 @@
                     "$ref": "#/components/schemas/crm.contact_input"
                   }
                 },
-                "required": [
-                  "record"
-                ]
+                "required": ["record"]
               }
             }
           }
@@ -4387,9 +3961,7 @@
                       "$ref": "#/components/schemas/crm.contact"
                     }
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4450,10 +4022,7 @@
                     }
                   }
                 },
-                "required": [
-                  "ids",
-                  "properties"
-                ]
+                "required": ["ids", "properties"]
               }
             }
           }
@@ -4510,9 +4079,7 @@
                     "properties": {
                       "key": {
                         "type": "string",
-                        "enum": [
-                          "email"
-                        ],
+                        "enum": ["email"],
                         "description": "The key to upsert on. Only `email` is supported for all providers."
                       },
                       "values": {
@@ -4523,19 +4090,13 @@
                         "description": "The values to upsert on. If more than one value is provided, it will act as a logical OR. If more than one record is found that matches, then an error will be thrown."
                       }
                     },
-                    "required": [
-                      "key",
-                      "values"
-                    ]
+                    "required": ["key", "values"]
                   },
                   "record": {
                     "$ref": "#/components/schemas/crm.contact_input"
                   }
                 },
-                "required": [
-                  "upsert_on",
-                  "record"
-                ]
+                "required": ["upsert_on", "record"]
               }
             }
           }
@@ -4552,9 +4113,7 @@
                       "$ref": "#/components/schemas/crm.contact"
                     }
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4591,20 +4150,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -4624,10 +4177,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -4639,10 +4189,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -4706,9 +4253,7 @@
                     },
                     "raw": {}
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4755,20 +4300,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -4788,10 +4327,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -4803,10 +4339,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -4870,9 +4403,7 @@
                     },
                     "raw": {}
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -4919,20 +4450,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -4952,10 +4477,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -4967,10 +4489,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -5034,9 +4553,7 @@
                     },
                     "raw": {}
                   },
-                  "required": [
-                    "record"
-                  ]
+                  "required": ["record"]
                 }
               }
             }
@@ -5091,20 +4608,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -5124,10 +4635,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -5137,10 +4645,7 @@
                       "items": {}
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -5201,9 +4706,7 @@
                     "additionalProperties": {}
                   }
                 },
-                "required": [
-                  "record"
-                ]
+                "required": ["record"]
               }
             }
           }
@@ -5260,10 +4763,7 @@
             "name": "type",
             "schema": {
               "type": "string",
-              "enum": [
-                "standard",
-                "custom"
-              ]
+              "enum": ["standard", "custom"]
             }
           }
         ],
@@ -5327,10 +4827,7 @@
                     "type": "string"
                   },
                   "description": {
-                    "type": [
-                      "string",
-                      "null"
-                    ]
+                    "type": ["string", "null"]
                   },
                   "labels": {
                     "type": "object",
@@ -5342,10 +4839,7 @@
                         "type": "string"
                       }
                     },
-                    "required": [
-                      "singular",
-                      "plural"
-                    ]
+                    "required": ["singular", "plural"]
                   },
                   "primary_field_id": {
                     "type": "string"
@@ -5515,9 +5009,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "association_schema"
-                  ]
+                  "required": ["association_schema"]
                 }
               }
             }
@@ -5554,20 +5046,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -5587,10 +5073,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -5602,10 +5085,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -5652,20 +5132,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -5685,10 +5159,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -5700,10 +5171,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -5750,20 +5218,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -5783,10 +5245,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -5798,10 +5257,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -5848,20 +5304,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -5881,10 +5331,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -5896,10 +5343,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -5946,20 +5390,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -5979,10 +5417,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -5996,10 +5431,7 @@
                             "type": "string"
                           },
                           "number": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "name": {
                             "type": "string"
@@ -6008,18 +5440,11 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "name",
-                          "type"
-                        ]
+                        "required": ["id", "name", "type"]
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6066,20 +5491,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6099,10 +5518,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6134,10 +5550,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6184,20 +5597,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6217,10 +5624,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6240,18 +5644,11 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "name",
-                          "url"
-                        ]
+                        "required": ["id", "name", "url"]
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6298,20 +5695,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6331,10 +5722,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6347,10 +5735,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6397,20 +5782,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6430,10 +5809,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6446,10 +5822,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6496,20 +5869,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6529,10 +5896,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6545,10 +5909,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6595,20 +5956,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6628,10 +5983,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6642,9 +5994,6 @@
                         "type": "object",
                         "properties": {
                           "id": {
-                            "type": "string"
-                          },
-                          "remote_id": {
                             "type": "string"
                           },
                           "created_at": {
@@ -6667,52 +6016,31 @@
                                 "id": {
                                   "type": "string"
                                 },
-                                "remote_id": {
-                                  "type": "string"
-                                },
                                 "created_at": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 },
                                 "modified_at": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 },
                                 "name": {
                                   "type": "string"
                                 },
                                 "parent_id": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 },
                                 "parent_department_external_id": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 },
                                 "child_ids": {
                                   "type": "array",
                                   "items": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
+                                    "type": ["string", "null"]
                                   }
                                 },
                                 "child_department_external_ids": {
                                   "type": "array",
                                   "items": {
-                                    "type": [
-                                      "string",
-                                      "null"
-                                    ]
+                                    "type": ["string", "null"]
                                   }
                                 },
                                 "raw_data": {
@@ -6722,7 +6050,6 @@
                               },
                               "required": [
                                 "id",
-                                "remote_id",
                                 "name",
                                 "child_ids",
                                 "child_department_external_ids"
@@ -6757,7 +6084,6 @@
                         },
                         "required": [
                           "id",
-                          "remote_id",
                           "created_at",
                           "modified_at",
                           "name",
@@ -6770,10 +6096,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6820,20 +6143,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6853,10 +6170,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -6867,9 +6181,6 @@
                         "type": "object",
                         "properties": {
                           "id": {
-                            "type": "string"
-                          },
-                          "remote_id": {
                             "type": "string"
                           },
                           "created_at": {
@@ -6900,7 +6211,6 @@
                         },
                         "required": [
                           "id",
-                          "remote_id",
                           "created_at",
                           "modified_at",
                           "application",
@@ -6912,10 +6222,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -6962,20 +6269,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -6995,10 +6296,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -7009,9 +6307,6 @@
                         "type": "object",
                         "properties": {
                           "id": {
-                            "type": "string"
-                          },
-                          "remote_id": {
                             "type": "string"
                           },
                           "created_at": {
@@ -7027,16 +6322,10 @@
                             "type": "string"
                           },
                           "company": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "title": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "last_interaction_at": {
                             "type": "string"
@@ -7057,16 +6346,10 @@
                               "type": "object",
                               "properties": {
                                 "value": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 },
                                 "phone_number_type": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 }
                               }
                             }
@@ -7077,17 +6360,11 @@
                               "type": "object",
                               "properties": {
                                 "value": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ],
+                                  "type": ["string", "null"],
                                   "format": "email"
                                 },
                                 "email_address_type": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
+                                  "type": ["string", "null"]
                                 }
                               }
                             }
@@ -7113,7 +6390,6 @@
                         },
                         "required": [
                           "id",
-                          "remote_id",
                           "created_at",
                           "modified_at",
                           "first_name",
@@ -7133,10 +6409,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -7183,20 +6456,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -7216,10 +6483,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -7232,52 +6496,31 @@
                           "id": {
                             "type": "string"
                           },
-                          "remote_id": {
-                            "type": "string"
-                          },
                           "created_at": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "modified_at": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "name": {
                             "type": "string"
                           },
                           "parent_id": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "parent_department_external_id": {
-                            "type": [
-                              "string",
-                              "null"
-                            ]
+                            "type": ["string", "null"]
                           },
                           "child_ids": {
                             "type": "array",
                             "items": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
+                              "type": ["string", "null"]
                             }
                           },
                           "child_department_external_ids": {
                             "type": "array",
                             "items": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
+                              "type": ["string", "null"]
                             }
                           },
                           "raw_data": {
@@ -7287,7 +6530,6 @@
                         },
                         "required": [
                           "id",
-                          "remote_id",
                           "name",
                           "child_ids",
                           "child_department_external_ids"
@@ -7295,10 +6537,7 @@
                       }
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -7353,20 +6592,14 @@
             "name": "sync_mode",
             "schema": {
               "type": "string",
-              "enum": [
-                "full",
-                "incremental"
-              ]
+              "enum": ["full", "incremental"]
             }
           },
           {
             "in": "query",
             "name": "cursor",
             "schema": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
           {
@@ -7396,10 +6629,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": ["string", "null"]
                     },
                     "has_next_page": {
                       "type": "boolean"
@@ -7409,10 +6639,7 @@
                       "items": {}
                     }
                   },
-                  "required": [
-                    "has_next_page",
-                    "items"
-                  ]
+                  "required": ["has_next_page", "items"]
                 }
               }
             }
@@ -7483,23 +6710,15 @@
                             }
                           }
                         },
-                        "required": [
-                          "name",
-                          "json_schema"
-                        ]
+                        "required": ["name", "json_schema"]
                       }
                     },
                     "type": {
                       "type": "string",
-                      "enum": [
-                        "CATALOG"
-                      ]
+                      "enum": ["CATALOG"]
                     }
                   },
-                  "required": [
-                    "streams",
-                    "type"
-                  ]
+                  "required": ["streams", "type"]
                 }
               }
             }
@@ -7555,17 +6774,11 @@
                                   }
                                 }
                               },
-                              "required": [
-                                "name",
-                                "json_schema"
-                              ]
+                              "required": ["name", "json_schema"]
                             },
                             "sync_mode": {
                               "type": "string",
-                              "enum": [
-                                "full_refresh",
-                                "incremental"
-                              ]
+                              "enum": ["full_refresh", "incremental"]
                             },
                             "additional_fields": {
                               "type": "array",
@@ -7574,16 +6787,11 @@
                               }
                             }
                           },
-                          "required": [
-                            "stream",
-                            "sync_mode"
-                          ]
+                          "required": ["stream", "sync_mode"]
                         }
                       }
                     },
-                    "required": [
-                      "streams"
-                    ]
+                    "required": ["streams"]
                   },
                   "state": {
                     "type": "object",
@@ -7607,32 +6815,21 @@
                                   "type": "string"
                                 }
                               },
-                              "required": [
-                                "name",
-                                "namespace"
-                              ]
+                              "required": ["name", "namespace"]
                             },
                             "stream_state": {
                               "type": "object",
                               "additionalProperties": {}
                             }
                           },
-                          "required": [
-                            "stream_description",
-                            "stream_state"
-                          ]
+                          "required": ["stream_description", "stream_state"]
                         }
                       }
                     },
-                    "required": [
-                      "stream_states"
-                    ]
+                    "required": ["stream_states"]
                   }
                 },
-                "required": [
-                  "catalog",
-                  "state"
-                ]
+                "required": ["catalog", "state"]
               }
             }
           }
@@ -7655,21 +6852,14 @@
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "stream"
-                        ]
+                        "required": ["stream"]
                       },
                       "type": {
                         "type": "string",
-                        "enum": [
-                          "RECORD"
-                        ]
+                        "enum": ["RECORD"]
                       }
                     },
-                    "required": [
-                      "record",
-                      "type"
-                    ]
+                    "required": ["record", "type"]
                   }
                 }
               }
@@ -7721,27 +6911,18 @@
                               "type": "string"
                             }
                           },
-                          "required": [
-                            "stream"
-                          ]
+                          "required": ["stream"]
                         },
                         "type": {
                           "type": "string",
-                          "enum": [
-                            "RECORD"
-                          ]
+                          "enum": ["RECORD"]
                         }
                       },
-                      "required": [
-                        "record",
-                        "type"
-                      ]
+                      "required": ["record", "type"]
                     }
                   }
                 },
-                "required": [
-                  "messages"
-                ]
+                "required": ["messages"]
               }
             }
           }
@@ -7780,23 +6961,15 @@
                                   }
                                 }
                               },
-                              "required": [
-                                "name",
-                                "json_schema"
-                              ]
+                              "required": ["name", "json_schema"]
                             }
                           },
                           "type": {
                             "type": "string",
-                            "enum": [
-                              "CATALOG"
-                            ]
+                            "enum": ["CATALOG"]
                           }
                         },
-                        "required": [
-                          "streams",
-                          "type"
-                        ]
+                        "required": ["streams", "type"]
                       },
                       {
                         "type": "object",
@@ -7809,21 +6982,14 @@
                                 "type": "string"
                               }
                             },
-                            "required": [
-                              "stream"
-                            ]
+                            "required": ["stream"]
                           },
                           "type": {
                             "type": "string",
-                            "enum": [
-                              "RECORD"
-                            ]
+                            "enum": ["RECORD"]
                           }
                         },
-                        "required": [
-                          "record",
-                          "type"
-                        ]
+                        "required": ["record", "type"]
                       },
                       {
                         "type": "object",
@@ -7831,14 +6997,10 @@
                           "state": {},
                           "type": {
                             "type": "string",
-                            "enum": [
-                              "STATE"
-                            ]
+                            "enum": ["STATE"]
                           }
                         },
-                        "required": [
-                          "type"
-                        ]
+                        "required": ["type"]
                       }
                     ]
                   }
@@ -7914,26 +7076,17 @@
                 "description": "Must start with 'reso_'"
               }
             },
-            "required": [
-              "pipeline_id",
-              "source_id",
-              "destination_id"
-            ]
+            "required": ["pipeline_id", "source_id", "destination_id"]
           },
           "name": {
             "type": "string",
-            "enum": [
-              "sync.completed"
-            ]
+            "enum": ["sync.completed"]
           },
           "id": {
             "type": "string"
           }
         },
-        "required": [
-          "data",
-          "name"
-        ]
+        "required": ["data", "name"]
       },
       "error.INTERNAL_SERVER_ERROR": {
         "type": "object",
@@ -7957,18 +7110,13 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "message"
-              ]
+              "required": ["message"]
             },
             "description": "An array of issues that were responsible for the error",
             "example": []
           }
         },
-        "required": [
-          "message",
-          "code"
-        ],
+        "required": ["message", "code"],
         "title": "Error",
         "description": "The error information",
         "example": {
@@ -7999,18 +7147,13 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "message"
-              ]
+              "required": ["message"]
             },
             "description": "An array of issues that were responsible for the error",
             "example": []
           }
         },
-        "required": [
-          "message",
-          "code"
-        ],
+        "required": ["message", "code"],
         "title": "Error",
         "description": "The error information",
         "example": {
@@ -8037,16 +7180,10 @@
             "description": "Unique name of the connector"
           },
           "displayName": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "endUserId": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "minLength": 1
           },
           "connectorConfigId": {
@@ -8054,45 +7191,25 @@
             "description": "Must start with 'ccfg_'"
           },
           "integrationId": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Must start with 'int_'"
           },
           "settings": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "additionalProperties": {}
           },
           "standard": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "properties": {
               "displayName": {
                 "type": "string"
               },
               "status": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "enum": [
-                  "healthy",
-                  "disconnected",
-                  "error",
-                  "manual"
-                ]
+                "type": ["string", "null"],
+                "enum": ["healthy", "disconnected", "error", "manual"]
               },
               "statusMessage": {
-                "type": [
-                  "string",
-                  "null"
-                ]
+                "type": ["string", "null"]
               },
               "labels": {
                 "type": "array",
@@ -8101,9 +7218,7 @@
                 }
               }
             },
-            "required": [
-              "displayName"
-            ]
+            "required": ["displayName"]
           },
           "disabled": {
             "type": "boolean"
@@ -8142,18 +7257,13 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "message"
-              ]
+              "required": ["message"]
             },
             "description": "An array of issues that were responsible for the error",
             "example": []
           }
         },
-        "required": [
-          "message",
-          "code"
-        ],
+        "required": ["message", "code"],
         "title": "Error",
         "description": "The error information",
         "example": {
@@ -8179,10 +7289,7 @@
             "type": "string"
           },
           "config": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "additionalProperties": {}
           },
           "orgId": {
@@ -8190,34 +7297,22 @@
             "description": "Must start with 'org_'"
           },
           "displayName": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "disabled": {
             "type": "boolean"
           },
           "defaultPipeOut": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "properties": {
               "streams": {
-                "type": [
-                  "object",
-                  "null"
-                ],
+                "type": ["object", "null"],
                 "additionalProperties": {
                   "type": "boolean"
                 }
               },
               "links": {
-                "type": [
-                  "array",
-                  "null"
-                ],
+                "type": ["array", "null"],
                 "items": {
                   "$ref": "#/components/schemas/Link"
                 },
@@ -8228,22 +7323,14 @@
                 "description": "Must start with 'reso_'"
               }
             },
-            "required": [
-              "destination_id"
-            ],
+            "required": ["destination_id"],
             "description": "Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL"
           },
           "defaultPipeIn": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "properties": {
               "links": {
-                "type": [
-                  "array",
-                  "null"
-                ],
+                "type": ["array", "null"],
                 "items": {
                   "$ref": "#/components/schemas/Link"
                 },
@@ -8254,34 +7341,21 @@
                 "description": "Must start with 'reso_'"
               }
             },
-            "required": [
-              "source_id"
-            ],
+            "required": ["source_id"],
             "description": "Automatically sync data from any resources associated with this config to the destination resource, which is typically a Postgres database. Think ETL"
           },
           "envName": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "metadata": {
             "description": "\n  JSON object can can be used to associate arbitrary metadata to\n  avoid needing a separate 1-1 table just for simple key values in your application.\n  During updates this object will be shallowly merged\n"
           }
         },
-        "required": [
-          "createdAt",
-          "updatedAt",
-          "id",
-          "connectorName",
-          "orgId"
-        ]
+        "required": ["createdAt", "updatedAt", "id", "connectorName", "orgId"]
       },
       "Link": {
         "type": "string",
-        "enum": [
-          "banking"
-        ]
+        "enum": ["banking"]
       },
       "Pipeline": {
         "type": "object",
@@ -8308,10 +7382,7 @@
             "type": "string"
           },
           "streams": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "additionalProperties": {
               "type": "object",
               "properties": {
@@ -8339,23 +7410,14 @@
             "type": "string"
           },
           "linkOptions": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {}
           },
           "lastSyncStartedAt": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "lastSyncCompletedAt": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "disabled": {
             "type": "boolean"
@@ -8364,11 +7426,7 @@
             "description": "\n  JSON object can can be used to associate arbitrary metadata to\n  avoid needing a separate 1-1 table just for simple key values in your application.\n  During updates this object will be shallowly merged\n"
           }
         },
-        "required": [
-          "createdAt",
-          "updatedAt",
-          "id"
-        ]
+        "required": ["createdAt", "updatedAt", "id"]
       },
       "Viewer": {
         "oneOf": [
@@ -8377,23 +7435,17 @@
             "properties": {
               "role": {
                 "type": "string",
-                "enum": [
-                  "anon"
-                ]
+                "enum": ["anon"]
               }
             },
-            "required": [
-              "role"
-            ]
+            "required": ["role"]
           },
           {
             "type": "object",
             "properties": {
               "role": {
                 "type": "string",
-                "enum": [
-                  "end_user"
-                ]
+                "enum": ["end_user"]
               },
               "endUserId": {
                 "type": "string",
@@ -8404,30 +7456,21 @@
                 "description": "Must start with 'org_'"
               }
             },
-            "required": [
-              "role",
-              "endUserId",
-              "orgId"
-            ]
+            "required": ["role", "endUserId", "orgId"]
           },
           {
             "type": "object",
             "properties": {
               "role": {
                 "type": "string",
-                "enum": [
-                  "user"
-                ]
+                "enum": ["user"]
               },
               "userId": {
                 "type": "string",
                 "description": "Must start with 'user_'"
               },
               "orgId": {
-                "type": [
-                  "string",
-                  "null"
-                ],
+                "type": ["string", "null"],
                 "description": "Must start with 'org_'"
               },
               "extra": {
@@ -8436,19 +7479,14 @@
                 "description": "Currently clerk user"
               }
             },
-            "required": [
-              "role",
-              "userId"
-            ]
+            "required": ["role", "userId"]
           },
           {
             "type": "object",
             "properties": {
               "role": {
                 "type": "string",
-                "enum": [
-                  "org"
-                ]
+                "enum": ["org"]
               },
               "orgId": {
                 "type": "string",
@@ -8460,24 +7498,17 @@
                 "description": "Currently clerk organization"
               }
             },
-            "required": [
-              "role",
-              "orgId"
-            ]
+            "required": ["role", "orgId"]
           },
           {
             "type": "object",
             "properties": {
               "role": {
                 "type": "string",
-                "enum": [
-                  "system"
-                ]
+                "enum": ["system"]
               }
             },
-            "required": [
-              "role"
-            ]
+            "required": ["role"]
           }
         ]
       },
@@ -8488,22 +7519,14 @@
             "type": "string"
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "email": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Email, but not validated as data from Supaglue has invalid emails for now"
           }
         },
-        "required": [
-          "customer_id"
-        ]
+        "required": ["customer_id"]
       },
       "connection": {
         "type": "object",
@@ -8518,11 +7541,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "customer_id",
-          "provider_name"
-        ]
+        "required": ["id", "customer_id", "provider_name"]
       },
       "sync_config": {
         "allOf": [
@@ -8536,16 +7555,11 @@
                 "type": "string"
               },
               "auto_start_on_connection": {
-                "type": [
-                  "boolean",
-                  "null"
-                ],
+                "type": ["boolean", "null"],
                 "description": "If true, the sync will start automatically when the connection is created."
               }
             },
-            "required": [
-              "provider_name"
-            ]
+            "required": ["provider_name"]
           }
         ]
       },
@@ -8553,30 +7567,19 @@
         "type": "object",
         "properties": {
           "destination_config": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "properties": {
               "type": {
                 "type": "string"
               },
               "schema": {
-                "type": [
-                  "string",
-                  "null"
-                ]
+                "type": ["string", "null"]
               }
             },
-            "required": [
-              "type"
-            ]
+            "required": ["type"]
           },
           "unified_objects": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "properties": {
@@ -8584,16 +7587,11 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "object"
-              ]
+              "required": ["object"]
             }
           },
           "standard_objects": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "properties": {
@@ -8601,16 +7599,11 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "object"
-              ]
+              "required": ["object"]
             }
           },
           "custom_objects": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "properties": {
@@ -8618,9 +7611,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "object"
-              ]
+              "required": ["object"]
             }
           }
         }
@@ -8749,18 +7740,10 @@
           },
           "email_address_type": {
             "type": "string",
-            "enum": [
-              "primary",
-              "personal",
-              "work",
-              "other"
-            ]
+            "enum": ["primary", "personal", "work", "other"]
           }
         },
-        "required": [
-          "email_address",
-          "email_address_type"
-        ]
+        "required": ["email_address", "email_address_type"]
       },
       "sales-engagement.phone_number": {
         "type": "object",
@@ -8770,19 +7753,10 @@
           },
           "phone_number_type": {
             "type": "string",
-            "enum": [
-              "primary",
-              "work",
-              "home",
-              "mobile",
-              "other"
-            ]
+            "enum": ["primary", "work", "home", "mobile", "other"]
           }
         },
-        "required": [
-          "phone_number",
-          "phone_number_type"
-        ]
+        "required": ["phone_number", "phone_number_type"]
       },
       "sales-engagement.sequence": {
         "type": "object",
@@ -9038,92 +8012,53 @@
             "additionalProperties": {}
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "is_deleted": {
-            "type": [
-              "boolean",
-              "null"
-            ]
+            "type": ["boolean", "null"]
           },
           "website": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "industry": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "number_of_employees": {
-            "type": [
-              "number",
-              "null"
-            ]
+            "type": ["number", "null"]
           },
           "owner_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "created_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "example": "Integration API"
           },
           "last_activity_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "date-time"
           },
           "addresses": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "$ref": "#/components/schemas/crm.address"
             }
           },
           "phone_numbers": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "properties": {
                 "phone_number": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
+                  "type": ["string", "null"]
                 },
                 "phone_number_type": {
                   "$ref": "#/components/schemas/crm.phone_number_type"
                 }
               },
-              "required": [
-                "phone_number",
-                "phone_number_type"
-              ]
+              "required": ["phone_number", "phone_number_type"]
             }
           },
           "lifecycle_stage": {
@@ -9137,16 +8072,10 @@
             ]
           },
           "last_modified_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
-        "required": [
-          "id",
-          "updated_at"
-        ]
+        "required": ["id", "updated_at"]
       },
       "crm.address": {
         "type": "object",
@@ -9155,40 +8084,22 @@
             "$ref": "#/components/schemas/crm.address_type"
           },
           "city": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "country": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "postal_code": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "state": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "street_1": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "street_2": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
         "required": [
@@ -9203,22 +8114,11 @@
       },
       "crm.address_type": {
         "type": "string",
-        "enum": [
-          "primary",
-          "mailing",
-          "other",
-          "billing",
-          "shipping"
-        ]
+        "enum": ["primary", "mailing", "other", "billing", "shipping"]
       },
       "crm.phone_number_type": {
         "type": "string",
-        "enum": [
-          "primary",
-          "mobile",
-          "fax",
-          "other"
-        ]
+        "enum": ["primary", "mobile", "fax", "other"]
       },
       "crm.lifecycle_stage": {
         "type": "string",
@@ -9237,74 +8137,44 @@
         "type": "object",
         "properties": {
           "description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "example": "Integration API"
           },
           "industry": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "number_of_employees": {
-            "type": [
-              "number",
-              "null"
-            ]
+            "type": ["number", "null"]
           },
           "website": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "addresses": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "$ref": "#/components/schemas/crm.address"
             }
           },
           "phone_numbers": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "properties": {
                 "phone_number": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
+                  "type": ["string", "null"]
                 },
                 "phone_number_type": {
                   "$ref": "#/components/schemas/crm.phone_number_type"
                 }
               },
-              "required": [
-                "phone_number",
-                "phone_number_type"
-              ]
+              "required": ["phone_number", "phone_number_type"]
             }
           },
           "owner_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "lifecycle_stage": {
             "oneOf": [
@@ -9317,10 +8187,7 @@
             ]
           },
           "passthrough_fields": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "additionalProperties": {}
           }
         }
@@ -9340,71 +8207,41 @@
             "additionalProperties": {}
           },
           "first_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "last_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "email": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Primary email address"
           },
           "phone": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Primary phone number"
           }
         },
-        "required": [
-          "id",
-          "updated_at"
-        ]
+        "required": ["id", "updated_at"]
       },
       "crm.contact_input": {
         "type": "object",
         "properties": {
           "first_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "last_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "email": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Primary email address"
           },
           "phone": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Primary phone number"
           },
           "passthrough_fields": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": ["object", "null"],
             "additionalProperties": {}
           }
         }
@@ -9424,130 +8261,73 @@
             "additionalProperties": {}
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "first_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "last_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "owner_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "title": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "company": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "converted_date": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "lead_source": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "converted_account_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "converted_contact_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "addresses": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "$ref": "#/components/schemas/crm.address"
             }
           },
           "email_addresses": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "$ref": "#/components/schemas/crm.email_address"
             }
           },
           "phone_numbers": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "properties": {
                 "phone_number": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
+                  "type": ["string", "null"]
                 },
                 "phone_number_type": {
                   "$ref": "#/components/schemas/crm.phone_number_type"
                 }
               },
-              "required": [
-                "phone_number",
-                "phone_number_type"
-              ]
+              "required": ["phone_number", "phone_number_type"]
             }
           },
           "created_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "is_deleted": {
-            "type": [
-              "boolean",
-              "null"
-            ]
+            "type": ["boolean", "null"]
           },
           "last_modified_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
-        "required": [
-          "id",
-          "updated_at"
-        ]
+        "required": ["id", "updated_at"]
       },
       "crm.email_address": {
         "type": "object",
@@ -9559,18 +8339,11 @@
             "$ref": "#/components/schemas/crm.email_address_type"
           }
         },
-        "required": [
-          "email_address",
-          "email_address_type"
-        ]
+        "required": ["email_address", "email_address_type"]
       },
       "crm.email_address_type": {
         "type": "string",
-        "enum": [
-          "primary",
-          "work",
-          "other"
-        ]
+        "enum": ["primary", "work", "other"]
       },
       "crm.opportunity": {
         "type": "object",
@@ -9587,22 +8360,13 @@
             "additionalProperties": {}
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "owner_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "status": {
             "oneOf": [
@@ -9615,72 +8379,38 @@
             ]
           },
           "stage": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "close_date": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "account_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "pipeline": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "amount": {
-            "type": [
-              "number",
-              "null"
-            ]
+            "type": ["number", "null"]
           },
           "last_activity_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "created_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "is_deleted": {
-            "type": [
-              "boolean",
-              "null"
-            ]
+            "type": ["boolean", "null"]
           },
           "last_modified_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
-        "required": [
-          "id",
-          "updated_at"
-        ]
+        "required": ["id", "updated_at"]
       },
       "crm.opportunity_status": {
         "type": "string",
-        "enum": [
-          "OPEN",
-          "WON",
-          "LOST"
-        ]
+        "enum": ["OPEN", "WON", "LOST"]
       },
       "crm.user": {
         "type": "object",
@@ -9697,46 +8427,25 @@
             "additionalProperties": {}
           },
           "name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "email": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "is_active": {
-            "type": [
-              "boolean",
-              "null"
-            ]
+            "type": ["boolean", "null"]
           },
           "created_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "is_deleted": {
-            "type": [
-              "boolean",
-              "null"
-            ]
+            "type": ["boolean", "null"]
           },
           "last_modified_at": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
-        "required": [
-          "id",
-          "updated_at"
-        ]
+        "required": ["id", "updated_at"]
       },
       "warning": {
         "type": "object",
@@ -9762,10 +8471,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name"
-        ]
+        "required": ["id", "name"]
       },
       "crm.meta.custom_object_field": {
         "type": "object",
@@ -9829,11 +8535,7 @@
             "description": "The raw details of the property as provided by the third-party Provider, if available."
           }
         },
-        "required": [
-          "id",
-          "label",
-          "type"
-        ]
+        "required": ["id", "label", "type"]
       },
       "crm.meta.property_type": {
         "type": "string",
@@ -9870,10 +8572,7 @@
             "description": "Defaults to false."
           }
         },
-        "required": [
-          "label",
-          "value"
-        ]
+        "required": ["label", "value"]
       },
       "crm.meta.property": {
         "type": "object",
@@ -9900,10 +8599,7 @@
             "example": {}
           }
         },
-        "required": [
-          "id",
-          "label"
-        ]
+        "required": ["id", "label"]
       },
       "crm.meta.association_schema": {
         "type": "object",
@@ -9923,12 +8619,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "source_object",
-          "target_object",
-          "display_name"
-        ]
+        "required": ["id", "source_object", "target_object", "display_name"]
       },
       "banking.account": {
         "type": "object",
@@ -9946,10 +8637,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name"
-        ]
+        "required": ["id", "name"]
       },
       "banking.merchant": {
         "type": "object",
@@ -9961,16 +8649,10 @@
             "type": "string"
           },
           "url": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
-        "required": [
-          "id",
-          "name"
-        ]
+        "required": ["id", "name"]
       },
       "banking.category": {
         "type": "object",
@@ -9982,10 +8664,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name"
-        ]
+        "required": ["id", "name"]
       },
       "banking.transaction": {
         "type": "object",
@@ -9997,22 +8676,13 @@
             "type": "string"
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "category_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "category_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "amount": {
             "type": "number"
@@ -10021,36 +8691,19 @@
             "type": "string"
           },
           "merchant_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "merchant_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "account_id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           },
           "account_name": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
-        "required": [
-          "id",
-          "date",
-          "amount",
-          "currency"
-        ]
+        "required": ["id", "date", "amount", "currency"]
       }
     }
   },
