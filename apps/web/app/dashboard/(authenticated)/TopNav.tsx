@@ -4,23 +4,23 @@ import {cn} from '@/lib-client/ui-utils'
 const links: Array<{href: string; title: string}> = [
   {
     title: 'Magic Link',
-    href: '/magic-link',
+    href: '/dashboard/magic-link',
   },
   {
     title: 'End users',
-    href: '/end-users',
+    href: '/dashboard/end-users',
   },
   {
     title: 'Connector Configs',
-    href: '/connector-configs',
+    href: '/dashboard/connector-configs',
   },
   {
     title: 'Resources',
-    href: '/resources',
+    href: '/dashboard/resources',
   },
   {
     title: 'Pipelines',
-    href: '/pipelines',
+    href: '/dashboard/pipelines',
   },
 ]
 
