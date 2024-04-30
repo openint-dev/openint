@@ -1,38 +1,33 @@
 import apiPages from './api-reference/index.json'
 
 const mintConfig: MintConfig = {
-  name: 'Venice',
+  name: 'OpenInt',
   openapi: './openint.oas.json',
   logo: {
-    light: '/images/logo/venice-black-logo.svg',
-    dark: '/images/logo/venice-white-logo.svg',
+    light: '/images/logo/openint-logo.png',
+    dark: '/images/logo/openint-logo-dark.webp',
   },
-  favicon: '/images/favicon.png',
+  favicon: '/images/logo/openint-logo.png',
   colors: {
-    primary: '#12B886',
-    light: '#12B886',
-    dark: '#12B886',
+    primary: '#0f2a3f',
+    light: '#8b9cac',
+    dark: '#8b9cac',
   },
   topbarLinks: [
     {
       name: 'Contact us',
-      url: 'mailto:hi@venice.is',
+      url: 'mailto:hi@openint.dev',
     },
   ],
   topbarCtaButton: {
     name: 'Sign up',
-    url: 'https://www.venice.is',
+    url: 'https://www.openint.dev',
   },
   anchors: [
     {
-      name: 'Community',
-      icon: 'discord',
-      url: 'https://discord.gg/gTMch6Gn2u',
-    },
-    {
       name: 'GitHub',
       icon: 'github',
-      url: 'https://github.com/usevenice/venice',
+      url: 'https://github.com/openint-dev/openint',
     },
   ],
   tabs: [
@@ -42,7 +37,7 @@ const mintConfig: MintConfig = {
     },
     {
       name: 'OpenAPI.json',
-      url: 'https://raw.githubusercontent.com/useVenice/venice/main/kits/sdk/openint.oas.json',
+      url: 'https://raw.githubusercontent.com/openint-dev/openint/main/kits/sdk/openint.oas.json',
     },
   ],
   navigation: [
@@ -55,32 +50,13 @@ const mintConfig: MintConfig = {
       ],
     },
     {
-      group: 'Technical',
-      pages: [
-        'technical/data-models',
-        'technical/architecture',
-        'technical/apis',
-        'technical/open-source',
-        'technical/deploy-locally',
-      ],
-    },
-    {
-      group: 'Support',
-      pages: [
-        'support/faq',
-        'support/custom-integration',
-        'support/contact-us',
-        'support/attribution',
-      ],
-    },
-    {
       group: 'API Reference',
       pages: apiPages,
     },
   ],
   backgroundImage: '/images/background.png',
   footerSocials: {
-    github: 'https://github.com/usevenice/venice',
+    github: 'https://github.com/openint-dev/openint',
     discord: 'https://discord.gg/gTMch6Gn2u',
     twitter: 'https://twitter.com/use_venice',
   },

@@ -23,6 +23,5 @@ export const candidate = mapper(
     tags: 'tags',
     applications: 'applications',
     attachments: 'attachments',
-    raw_data: (record) => record,
   },
 )

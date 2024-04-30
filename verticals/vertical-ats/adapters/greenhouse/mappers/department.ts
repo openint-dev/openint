@@ -16,6 +16,5 @@ export const department = mapper(
     parent_department_external_id: 'parent_department_external_ids',
     child_ids: 'child_ids',
     child_department_external_ids: 'child_department_external_ids',
-    raw_data: (record) => record,
   },
 )

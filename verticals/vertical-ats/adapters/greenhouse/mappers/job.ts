@@ -14,5 +14,4 @@ export const job = mapper(zCast<GreenhouseObjectType['job']>(), unified.job, {
   offices: 'offices',
   hiring_managers: 'hiring_team.hiring_managers',
   recruiters: 'hiring_team.recruiters',
-  raw_data: (record) => record,
 })

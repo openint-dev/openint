@@ -15,6 +15,5 @@ export const offer = mapper(
     sent_at: 'sent_at',
     start_date: 'starts_at',
     status: 'status',
-    raw_data: (record) => record,
   },
 )

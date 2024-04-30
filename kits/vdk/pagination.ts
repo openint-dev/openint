@@ -12,7 +12,6 @@ export const zPaginationParams = z.object({
     ),
   cursor: z.string().nullish(),
   page_size: z.number().optional(),
-  include_raw_data: z.enum(['true', 'false']).optional(),
 })
 export type Pagination = z.infer<typeof zPaginationParams>
 
