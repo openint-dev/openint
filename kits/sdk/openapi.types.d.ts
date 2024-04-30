@@ -4096,10 +4096,22 @@ export interface operations {
                 parent_department_external_id?: string | null
                 child_ids: Array<string | null>
                 child_department_external_ids: Array<string | null>
+                raw_data?: {
+                  [key: string]: unknown
+                }
               }>
-              offices: unknown[]
-              hiring_managers: unknown[]
-              recruiters: unknown[]
+              offices: Array<{
+                [key: string]: unknown
+              }>
+              hiring_managers: Array<{
+                [key: string]: unknown
+              }>
+              recruiters: Array<{
+                [key: string]: unknown
+              }>
+              raw_data?: {
+                [key: string]: unknown
+              }
             }>
           }
         }
@@ -4148,6 +4160,9 @@ export interface operations {
               sent_at: string
               start_date: string
               status: string
+              raw_data?: {
+                [key: string]: unknown
+              }
             }>
           }
         }
@@ -4211,6 +4226,9 @@ export interface operations {
               tags: string[]
               applications: unknown[]
               attachments: unknown[]
+              raw_data?: {
+                [key: string]: unknown
+              }
             }>
           }
         }
@@ -4259,6 +4277,9 @@ export interface operations {
               parent_department_external_id?: string | null
               child_ids: Array<string | null>
               child_department_external_ids: Array<string | null>
+              raw_data?: {
+                [key: string]: unknown
+              }
             }>
           }
         }
@@ -4454,6 +4475,11 @@ export interface operations {
                 }
                 /** @enum {string} */
                 type: 'RECORD'
+              },
+              {
+                state?: unknown
+                /** @enum {string} */
+                type: 'STATE'
               },
             ]
           >>

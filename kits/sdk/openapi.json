@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://tonyx.ngrok.dev/api/v0"
+      "url": "https://app.openint.dev/api/v0"
     }
   ],
   "paths": {
@@ -6042,6 +6042,10 @@
                                   "items": {
                                     "type": ["string", "null"]
                                   }
+                                },
+                                "raw_data": {
+                                  "type": "object",
+                                  "additionalProperties": {}
                                 }
                               },
                               "required": [
@@ -6054,15 +6058,28 @@
                           },
                           "offices": {
                             "type": "array",
-                            "items": {}
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {}
+                            }
                           },
                           "hiring_managers": {
                             "type": "array",
-                            "items": {}
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {}
+                            }
                           },
                           "recruiters": {
                             "type": "array",
-                            "items": {}
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": {}
+                            }
+                          },
+                          "raw_data": {
+                            "type": "object",
+                            "additionalProperties": {}
                           }
                         },
                         "required": [
@@ -6186,6 +6203,10 @@
                           },
                           "status": {
                             "type": "string"
+                          },
+                          "raw_data": {
+                            "type": "object",
+                            "additionalProperties": {}
                           }
                         },
                         "required": [
@@ -6361,6 +6382,10 @@
                           "attachments": {
                             "type": "array",
                             "items": {}
+                          },
+                          "raw_data": {
+                            "type": "object",
+                            "additionalProperties": {}
                           }
                         },
                         "required": [
@@ -6497,6 +6522,10 @@
                             "items": {
                               "type": ["string", "null"]
                             }
+                          },
+                          "raw_data": {
+                            "type": "object",
+                            "additionalProperties": {}
                           }
                         },
                         "required": [
@@ -6961,6 +6990,17 @@
                           }
                         },
                         "required": ["record", "type"]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "state": {},
+                          "type": {
+                            "type": "string",
+                            "enum": ["STATE"]
+                          }
+                        },
+                        "required": ["type"]
                       }
                     ]
                   }
