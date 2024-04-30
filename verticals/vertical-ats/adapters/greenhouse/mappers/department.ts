@@ -7,6 +7,7 @@ export const department = mapper(
   unified.department,
   {
     id: (record) => String(record.id),
+    remote_id: (record) => String(record.id),
     // NOTE: Greenhouse doesn't support the timestamp fields
     // created_at: '',
     // modified_at: '',
