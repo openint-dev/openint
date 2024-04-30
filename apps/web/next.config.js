@@ -46,6 +46,7 @@ const nextConfig = {
       destination: 'https://usevenice.readme.io/:p*',
       permanent: false,
     },
+    {source: '/', destination: '/dashboard', permanent: false},
   ],
   swcMinify: true,
   typescript: {ignoreBuildErrors: true},
