@@ -1,5 +1,3 @@
-import {env} from '@openint/env'
-import type {ErrorType} from '@openint/vdk'
 import {sql} from 'drizzle-orm'
 import {
   customType,
@@ -12,6 +10,8 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
+import {env} from '@openint/env'
+import type {ErrorType} from '@openint/vdk'
 
 /**
  * WARNING: expression is not escaped and not safe for dynamic table construction from user input!
@@ -41,7 +41,7 @@ const generated = <T = undefined>(
     },
   })(name)
 
-const schema = env['CONFIG_SCHEMA'] ? pgSchema(env['CONFIG_SCHEMA']) : null
+const schema = env['POSTGRES_SCHEMA'] ? pgSchema(env['POSTGRES_SCHEMA']) : null
 
 const table = schema?.table ?? pgTable
 

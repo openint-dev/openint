@@ -4,12 +4,12 @@ import {jest} from '@jest/globals'
 import {initSDK, logLink} from '@opensdks/runtime'
 import apolloSdkDef from '@opensdks/sdk-apollo'
 import outreachSdkDef from '@opensdks/sdk-outreach'
-import {env} from '@openint/env'
+import {testEnv} from '@openint/env'
 import {supaglueProxyLink} from './supaglueProxyLink'
 
 jest.setTimeout(30 * 1000)
 
-const maybeTest = env.SUPAGLUE_API_KEY ? test : test.skip
+const maybeTest = testEnv.SUPAGLUE_API_KEY ? test : test.skip
 
 maybeTest('get outreach accounts', async () => {
   const client = initSDK(outreachSdkDef, {
@@ -18,8 +18,8 @@ maybeTest('get outreach accounts', async () => {
     links: (defaultLinks) => [
       logLink(),
       supaglueProxyLink({
-        apiKey: env.SUPAGLUE_API_KEY!,
-        customerId: env.CUSTOMER_ID!,
+        apiKey: testEnv.SUPAGLUE_API_KEY!,
+        customerId: testEnv.CUSTOMER_ID!,
         providerName: 'outreach',
       }),
       ...defaultLinks,
@@ -38,8 +38,8 @@ maybeTest('get apollo accounts', async () => {
       ...defaultLinks.slice(0, -1),
       // Suapglue proxy link should be the final link before terminating link
       supaglueProxyLink({
-        apiKey: env.SUPAGLUE_API_KEY!,
-        customerId: env.CUSTOMER_ID!,
+        apiKey: testEnv.SUPAGLUE_API_KEY!,
+        customerId: testEnv.CUSTOMER_ID!,
         providerName: 'apollo',
       }),
       // Only want the final terminating link here

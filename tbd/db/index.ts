@@ -1,8 +1,8 @@
-import {env} from '@openint/env'
 import {sql} from 'drizzle-orm'
 import {drizzle} from 'drizzle-orm/postgres-js'
 import {migrate} from 'drizzle-orm/postgres-js/migrator'
 import postgres from 'postgres'
+import {env} from '@openint/env'
 import * as schema from './schema'
 
 export * from './schema-dynamic'
@@ -41,7 +41,7 @@ export async function runMigration(opts?: {keepAlive?: boolean}) {
   // const fs = await import('node:fs')
   // const url = await import('node:url')
 
-  const schema = env['CONFIG_SCHEMA']
+  const schema = env['POSTGRES_SCHEMA']
   if (schema) {
     await ensureSchema(db, schema)
     await db.execute(sql`

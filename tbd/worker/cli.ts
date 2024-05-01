@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {parseArgs} from 'node:util'
 import {and, db, desc, eq, pgClient, schema} from '@openint/db'
-import {env} from '@openint/env'
+import {testEnv} from '@openint/env'
 import type {Events} from '@openint/events'
 import * as routines from './functions'
 
@@ -30,8 +30,8 @@ switch (cmd) {
       event: {
         name: 'sync.completed',
         data: {
-          customer_id: env['CUSTOMER_ID']!,
-          provider_name: env['PROVIDER_NAME']!,
+          customer_id: testEnv['CUSTOMER_ID']!,
+          provider_name: testEnv['PROVIDER_NAME']!,
         },
       },
       step,
@@ -43,11 +43,11 @@ switch (cmd) {
         event: {
           name: 'scheduler.requested',
           data: {
-            provider_names: env.PROVIDER_NAME
-              ? [env.PROVIDER_NAME]
+            provider_names: testEnv.PROVIDER_NAME
+              ? [testEnv.PROVIDER_NAME]
               : ['hubspot', 'salesforce'],
-            sync_mode: env.SYNC_MODE ?? 'incremental',
-            vertical: env.VERTICAL ?? 'crm',
+            sync_mode: testEnv.SYNC_MODE ?? 'incremental',
+            vertical: testEnv.VERTICAL ?? 'crm',
           },
         },
         step,
@@ -61,16 +61,16 @@ switch (cmd) {
           name: 'sync.requested',
           data: {
             // customer_id: 'outreach1', provider_name: 'outreach'
-            customer_id: env['CUSTOMER_ID']!,
-            provider_name: env['PROVIDER_NAME']!,
-            vertical: env['VERTICAL']! as 'crm',
-            unified_objects: env['UNIFIED_OBJECT']
-              ? [env['UNIFIED_OBJECT']]
+            customer_id: testEnv['CUSTOMER_ID']!,
+            provider_name: testEnv['PROVIDER_NAME']!,
+            vertical: testEnv['VERTICAL']! as 'crm',
+            unified_objects: testEnv['UNIFIED_OBJECT']
+              ? [testEnv['UNIFIED_OBJECT']]
               : ['account', 'contact', 'opportunity', 'lead', 'user'],
-            sync_mode: env['SYNC_MODE'],
-            destination_schema: env['DESTINATION_SCHEMA'],
-            page_size: env['PAGE_SIZE']
-              ? Number.parseInt(env['PAGE_SIZE'])
+            sync_mode: testEnv['SYNC_MODE'],
+            destination_schema: testEnv['DESTINATION_SCHEMA'],
+            page_size: testEnv['PAGE_SIZE']
+              ? Number.parseInt(testEnv['PAGE_SIZE'])
               : undefined,
           },
         },
@@ -91,11 +91,11 @@ async function runBackfill() {
   await routines.scheduleSyncs({
     event: {
       data: {
-        provider_names: env.PROVIDER_NAME
-          ? [env.PROVIDER_NAME]
+        provider_names: testEnv.PROVIDER_NAME
+          ? [testEnv.PROVIDER_NAME]
           : ['hubspot', 'salesforce'],
-        sync_mode: env.SYNC_MODE ?? 'incremental',
-        vertical: env.VERTICAL ?? 'crm',
+        sync_mode: testEnv.SYNC_MODE ?? 'incremental',
+        vertical: testEnv.VERTICAL ?? 'crm',
       },
       name: 'scheduler.requested',
     },
@@ -143,14 +143,14 @@ async function runBackfill() {
         ...event,
         data: {
           ...event.data,
-          ...(env['UNIFIED_OBJECT'] && {
-            unified_objects: [env['UNIFIED_OBJECT']],
+          ...(testEnv['UNIFIED_OBJECT'] && {
+            unified_objects: [testEnv['UNIFIED_OBJECT']],
           }),
-          ...(env['SYNC_MODE'] && {
-            sync_mode: env['SYNC_MODE'],
+          ...(testEnv['SYNC_MODE'] && {
+            sync_mode: testEnv['SYNC_MODE'],
           }),
-          ...(env['DESTINATION_SCHEMA'] && {
-            destination_schema: env['DESTINATION_SCHEMA']!,
+          ...(testEnv['DESTINATION_SCHEMA'] && {
+            destination_schema: testEnv['DESTINATION_SCHEMA'],
           }),
         },
       },

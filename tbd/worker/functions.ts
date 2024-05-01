@@ -9,7 +9,7 @@ import {
   schema,
   stripNullByte,
 } from '@openint/db'
-import {env} from '@openint/env'
+import {testEnv as env} from '@openint/env'
 import type {Events} from '@openint/events'
 import {initOpenIntSDK} from '@openint/sdk'
 import {HTTPError, parseErrorInfo} from '../../packages/trpc/errors'

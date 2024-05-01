@@ -3,7 +3,7 @@
 import {initSDK, logLink} from '@opensdks/runtime'
 import outreachSdkDef from '@opensdks/sdk-outreach'
 import qboSdkDef from '@opensdks/sdk-qbo'
-import {env} from '@openint/env'
+import {testEnv} from '@openint/env'
 import {getBaseUrl, nangoProxyLink} from './nangoProxyLink'
 
 const maybeTest = process.env['_NANGO_SECRET_KEY'] ? test : test.skip
@@ -68,9 +68,9 @@ maybeTest('get outreach accounts', async () => {
         return next(req)
       },
       nangoProxyLink({
-        secretKey: env.NANGO_SECRET_KEY!,
-        connectionId: env.CONNECTION_ID!,
-        providerConfigKey: env.PROVIDER_CONFIG_KEY!,
+        secretKey: testEnv.NANGO_SECRET_KEY!,
+        connectionId: testEnv.CONNECTION_ID!,
+        providerConfigKey: testEnv.PROVIDER_CONFIG_KEY!,
       }),
       ...defaultLinks,
     ],
