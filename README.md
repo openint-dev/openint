@@ -14,6 +14,21 @@ Open source integrations with a vision
 - Extensible
 - Self hostable
 
+## Deployment checklist
+
+First setup dependencies
+- Postgres (recommend Vercel postgres)
+- Clerk (will be made optional later)
+  - Setup JWT Template -> Supabase
+    - Use `pwgen 32 -1 | pbcopy` for jwt secret
+  - Enable organizations
+  - (Use the development env is enough for private use )
+- Nango (should be but not yet optional if oauth connections are not used)
+- Inngest (optional if sync is desired)
+
+Then deploy
+- Vercel
+
 ## Contributors
 
 <img src="https://contributors-img.web.app/image?repo=openint-dev/openint"/>
