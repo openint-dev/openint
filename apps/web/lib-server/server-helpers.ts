@@ -14,13 +14,14 @@ import type {ReadonlyRequestCookies} from 'next/dist/server/web/spec-extension/a
 import {NextResponse} from 'next/server'
 import superjson from 'superjson'
 import type {SuperJSONResult} from 'superjson/dist/types'
-import {backendEnv, contextFactory} from '@openint/app-config/backendConfig'
+import {contextFactory} from '@openint/app-config/backendConfig'
 import {
   kAccessToken,
   kApikeyHeader,
   kApikeyMetadata,
   kApikeyUrlParam,
 } from '@openint/app-config/constants'
+import {envRequired} from '@openint/app-config/env'
 import type {Id, UserId, Viewer} from '@openint/cdk'
 import {decodeApikey, makeJwtClient} from '@openint/cdk'
 import {flatRouter} from '@openint/engine-backend'
@@ -100,7 +101,7 @@ export async function serverGetViewer(
   // Fwiw this is only used for the /connect experience and not generally otherwise
 ): Promise<Viewer & {accessToken?: string | null}> {
   const jwt = makeJwtClient({
-    secretOrPublicKey: backendEnv.JWT_SECRET_OR_PUBLIC_KEY,
+    secretOrPublicKey: envRequired.JWT_SECRET,
   })
   const headers =
     'req' in context
@@ -132,9 +133,9 @@ export async function serverGetViewer(
   }
 
   // personal access token via query param or header
-  const apikey =
-     
-    fromMaybeArray(searchParams[kApikeyUrlParam] || headers[kApikeyHeader])[0]
+  const apikey = fromMaybeArray(
+    searchParams[kApikeyUrlParam] || headers[kApikeyHeader],
+  )[0]
 
   // No more api keys, gotta fix me here.
   if (apikey) {

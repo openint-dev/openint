@@ -1,13 +1,14 @@
 // import '@openint/app-config/register.node'
 import {clerkClient} from '@clerk/nextjs'
-import {backendEnv, makePostgresClient} from '@openint/app-config/backendConfig'
+import {makePostgresClient} from '@openint/app-config/backendConfig'
 import {kApikeyMetadata} from '@openint/app-config/constants'
+import {envRequired} from '@openint/app-config/env'
 import type {Viewer} from '@openint/cdk'
 import {encodeApiKey, hasRole} from '@openint/cdk'
 import {makeUlid} from '@openint/util'
 
 export const {getPool, sql} = makePostgresClient({
-  databaseUrl: backendEnv.POSTGRES_OR_WEBHOOK_URL,
+  databaseUrl: envRequired.POSTGRES_URL,
   transformFieldNames: false,
 })
 

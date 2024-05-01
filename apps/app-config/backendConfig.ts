@@ -7,7 +7,7 @@ import {makePostgresMetaService} from '@openint/meta-service-postgres'
 import {joinPath} from '@openint/util'
 import {mergedConnectors} from './connectors/connectors.merged'
 import {getServerUrl} from './constants'
-import {env} from './env'
+import {env, envRequired} from './env'
 
 export {
   DatabaseError,
@@ -42,14 +42,14 @@ export const contextFactory = getContextFactory({
   apiUrl: joinPath(getServerUrl(null), '/api/trpc'),
   // TODO: Clean up the duplication .env and .env.NANGO_SECRET_KEY etc.
   env,
-  jwtSecret: env.JWT_SECRET_OR_PUBLIC_KEY,
-  nangoSecretKey: env.NANGO_SECRET_KEY,
+  jwtSecret: envRequired.JWT_SECRET,
+  nangoSecretKey: envRequired.NANGO_SECRET_KEY,
   // TODO: Remove this now that we use nango for redirects?
   // Although updating nangoUrl right now happens by hand which is not ideal
   getRedirectUrl: (_, _ctx) => joinPath(getServerUrl(null), '/'),
   // TODO: Do we realy need to support anything other than postgres?
   getMetaService: (viewer) =>
-    makePostgresMetaService({databaseUrl: env.POSTGRES_OR_WEBHOOK_URL, viewer}),
+    makePostgresMetaService({databaseUrl: envRequired.POSTGRES_URL, viewer}),
   // TODO: This probably needs to be internal to the engine-backend or even cdk
   // because of the need to support integration metadata specifying their desired links
   // aka transfomrations

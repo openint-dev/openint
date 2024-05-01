@@ -315,6 +315,9 @@ importers:
       '@openint/engine-frontend':
         specifier: workspace:*
         version: link:../../packages/engine-frontend
+      '@openint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@openint/meta-service-postgres':
         specifier: workspace:*
         version: link:../../packages/meta-service-postgres

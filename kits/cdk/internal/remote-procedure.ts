@@ -40,6 +40,7 @@ export async function getRemoteContext(ctx: ProtectedContext) {
     fetchLinks: compact([
       logLink(),
       resource.connectorConfig.connector.metadata?.nangoProvider &&
+        ctx.env.NANGO_SECRET_KEY &&
         nangoProxyLink({
           secretKey: ctx.env.NANGO_SECRET_KEY,
           connectionId,

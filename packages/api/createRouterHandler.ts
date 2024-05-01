@@ -1,7 +1,7 @@
 import {clerkClient} from '@clerk/nextjs'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
 import type {RouterContext} from 'packages/engine-backend'
-import {backendEnv, contextFactory} from '@openint/app-config/backendConfig'
+import {contextFactory} from '@openint/app-config/backendConfig'
 import {
   kAccessToken,
   kApikeyHeader,
@@ -10,6 +10,7 @@ import {
 } from '@openint/app-config/constants'
 import type {Id, Viewer} from '@openint/cdk'
 import {decodeApikey, makeJwtClient} from '@openint/cdk'
+import {envRequired} from '@openint/env'
 import {isHttpError, z, type AnyRouter} from '@openint/vdk'
 import type {AppRouter} from './appRouter'
 
@@ -40,7 +41,7 @@ export async function viewerFromRequest(
   // Fwiw this is only used for the /connect experience and not generally otherwise
 ): Promise<Viewer & {accessToken?: string | null}> {
   const jwt = makeJwtClient({
-    secretOrPublicKey: backendEnv.JWT_SECRET_OR_PUBLIC_KEY,
+    secretOrPublicKey: envRequired.JWT_SECRET,
   })
 
   // console.log('headers', headers)

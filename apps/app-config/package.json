@@ -58,6 +58,7 @@
     "@openint/connector-yodlee": "workspace:*",
     "@openint/engine-backend": "workspace:*",
     "@openint/engine-frontend": "workspace:*",
+    "@openint/env": "workspace:*",
     "@openint/meta-service-postgres": "workspace:*",
     "@openint/util": "workspace:*",
     "@t3-oss/env-nextjs": "0.3.1",

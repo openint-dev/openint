@@ -38,7 +38,7 @@ if (getEnvVar('DEBUG_ZOD')) {
 
 function env() {
   process.env['_SKIP_ENV_VALIDATION'] = 'true'
-   
+
   return require('@openint/app-config/env')
     .env as (typeof import('@openint/app-config/env'))['env']
 }
@@ -62,12 +62,11 @@ if (require.main === module) {
       ...R.mapValues(parseConnectorConfigsFromRawEnv(), (v) => () => v),
       '': () => parseConnectorConfigsFromRawEnv(),
     }),
-    jwt: () =>
-      makeJwtClient({secretOrPublicKey: env().JWT_SECRET_OR_PUBLIC_KEY}),
-    pg: () => makePostgresClient({databaseUrl: env().POSTGRES_OR_WEBHOOK_URL}),
+    jwt: () => makeJwtClient({secretOrPublicKey: env().JWT_SECRET!}),
+    pg: () => makePostgresClient({databaseUrl: env().POSTGRES_URL}),
     pgMeta: () =>
       makePostgresMetaService({
-        databaseUrl: env().POSTGRES_OR_WEBHOOK_URL,
+        databaseUrl: env().POSTGRES_URL,
         viewer: {role: 'system'},
       }) as {},
     plaid: () => makePlaidClient(intConfig('plaid')) as {},

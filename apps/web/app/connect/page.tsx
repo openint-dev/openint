@@ -2,7 +2,7 @@ import {clerkClient} from '@clerk/nextjs'
 import Image from 'next/image'
 import {defConnectors} from '@openint/app-config/connectors/connectors.def'
 import {kAccessToken} from '@openint/app-config/constants'
-import {env} from '@openint/app-config/env'
+import {envRequired} from '@openint/app-config/env'
 import type {ConnectorDef} from '@openint/cdk'
 import {
   extractConnectorName,
@@ -91,10 +91,10 @@ export default async function ConnectPageContainer({
     ] as ConnectorDef
 
     if (intDef.metadata?.nangoProvider) {
-      const nango = makeNangoClient({secretKey: env.NANGO_SECRET_KEY})
+      const nango = makeNangoClient({secretKey: envRequired.NANGO_SECRET_KEY})
       const resourceId = makeId('reso', connectorName, makeUlid())
       const url = await nango.getOauthConnectUrl({
-        public_key: env.NEXT_PUBLIC_NANGO_PUBLIC_KEY,
+        public_key: envRequired.NEXT_PUBLIC_NANGO_PUBLIC_KEY,
         connection_id: resourceId,
         provider_config_key: connectorConfigId,
         // Consider using hookdeck so we can work with any number of urls

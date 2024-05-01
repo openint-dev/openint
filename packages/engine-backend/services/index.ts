@@ -14,7 +14,7 @@ export function makeServices({
 }: {
   metaService: MetaService
   connectorMap: Record<string, AnyConnectorImpl>
-  env: {NANGO_SECRET_KEY: string}
+  env: {NANGO_SECRET_KEY?: string}
   // TODO: Fix any type
 }) {
   const dbService = makeDBService({
@@ -26,6 +26,7 @@ export function makeServices({
     return R.compact([
       logLink(),
       reso.connectorConfig.connector.metadata?.nangoProvider &&
+        env.NANGO_SECRET_KEY &&
         nangoProxyLink({
           secretKey: env.NANGO_SECRET_KEY,
           connectionId: reso.id,

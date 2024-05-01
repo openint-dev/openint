@@ -3,7 +3,7 @@
 import type {RealtimePostgresChangesPayload} from '@supabase/realtime-js'
 import {RealtimeClient} from '@supabase/realtime-js'
 import React from 'react'
-import {env} from '@openint/app-config/env'
+import {envRequired} from '@openint/app-config/env'
 import {_trpcReact} from '@openint/engine-frontend'
 import {joinPath} from '@openint/util'
 import type {Database} from '../supabase/supabase.gen'
@@ -14,10 +14,10 @@ import type {Database} from '../supabase/supabase.gen'
 export function createRealtimeClient() {
   return new RealtimeClient(
     joinPath(
-      env.NEXT_PUBLIC_SUPABASE_URL.replace('https', 'wss'),
+      envRequired.NEXT_PUBLIC_SUPABASE_URL.replace('https', 'wss'),
       'realtime/v1',
     ),
-    {params: {apikey: env.NEXT_PUBLIC_SUPABASE_ANON_KEY}},
+    {params: {apikey: envRequired.NEXT_PUBLIC_SUPABASE_ANON_KEY}},
   )
 }
 

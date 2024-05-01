@@ -1,7 +1,7 @@
 import '@openint/app-config/register.node'
 import {cookies} from 'next/headers'
 import {kAccessToken} from '@openint/app-config/constants'
-import {env} from '@openint/app-config/env'
+import {envRequired} from '@openint/app-config/env'
 import type {Id} from '@openint/cdk'
 import {makeNangoClient} from '@openint/cdk'
 import type {FrameMessage} from '@openint/connect'
@@ -31,7 +31,7 @@ export default async function ConnectCallback({
 }) {
   const msg = await (async (): Promise<FrameMessage | null> => {
     try {
-      const nango = makeNangoClient({secretKey: env.NANGO_SECRET_KEY})
+      const nango = makeNangoClient({secretKey: envRequired.NANGO_SECRET_KEY})
       const res = await nango.doOauthCallback(searchParams)
 
       if (!res) {
