@@ -45,7 +45,7 @@ function getSource(name: string) {
         ...getInstance(postgresProvider, {
           config: {},
           settings: {
-            databaseUrl: process.env['POSTGRES_OR_WEBHOOK_URL'] ?? '',
+            databaseUrl: process.env['POSTGRES_URL'] ?? '',
             sourceQueries: {
               invoice: `
               SELECT

@@ -76,12 +76,12 @@ jobs:
         # TODO: Figure out a pattern to make environment variables parsed / required on demand rather than on startup time
         # Ideally have a way to switch between the two... Where we can also choose proactive parsing for sanity checking...
       - name: Run health check
-        run: SKIP_ENV_VALIDATION=1 JWT_SECRET_OR_PUBLIC_KEY=NOOP POSTGRES_OR_WEBHOOK_URL=noop npx tsx ./bin/venice.ts health
+        run: JWT_SECRET=NOOP POSTGRES_URL=noop npx tsx ./bin/venice.ts health
 
       - name: Run migration check
-        run: POSTGRES_OR_WEBHOOK_URL=postgres://postgres:test@localhost:5432/test pnpm migration up
+        run: POSTGRES_URL=postgres://postgres:test@localhost:5432/test pnpm migration up
         # To test this with a locally install postgres, run
-        # psql postgres -c 'drop database if exists test;' && psql postgres -c 'create database test;' && POSTGRES_OR_WEBHOOK_URL=postgres://localhost:5432/test pnpm migration up
+        # psql postgres -c 'drop database if exists test;' && psql postgres -c 'create database test;' && POSTGRES_URL=postgres://localhost:5432/test pnpm migration up
 
       - name: Run lint
         run: pnpm run lint

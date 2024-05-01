@@ -86,10 +86,10 @@ const deployButton = makeVercelDeployButton({
   'root-directory': 'apps/web',
   'project-name': 'my-venice',
   env: [
-    'POSTGRES_OR_WEBHOOK_URL',
+    'POSTGRES_URL',
     'int_plaid__clientId',
     'int_plaid__secrets__sandbox',
-    'JWT_SECRET_OR_PUBLIC_KEY',
+    'JWT_SECRET',
   ].join(','),
   // Workaround for https://github.com/vercel/vercel/issues/8044
   // Remember to change `"packageManager": "pnpm@7.14.0",` setting to keep stuff in sync

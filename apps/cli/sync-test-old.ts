@@ -59,7 +59,7 @@ switch (process.argv[2]) {
         ...getInstance(postgresProvider, {
           config: {},
           settings: {
-            databaseUrl: process.env['POSTGRES_OR_WEBHOOK_URL'] ?? '',
+            databaseUrl: process.env['POSTGRES_URL'] ?? '',
             sourceQueries: {
               invoice: `
               SELECT
@@ -119,7 +119,7 @@ switch (process.argv[2]) {
       // @ts-expect-error
       source: postgresProvider.sourceSync({
         settings: {
-          databaseUrl: process.env['POSTGRES_OR_WEBHOOK_URL'] ?? '',
+          databaseUrl: process.env['POSTGRES_URL'] ?? '',
         },
       }),
       destination: heronImpl.destinationSync({

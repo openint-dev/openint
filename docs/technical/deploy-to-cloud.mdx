@@ -29,7 +29,7 @@ for more information on the expected environment keys and values.
 2. Create a repository on Vercel
 3. Go to [Supabase](https://supabase.com) and create a new project
 4. On Supabase, go to `Settings` > `Database` and scroll down to `Connection String` and click `URI`
-5. Copy that link and insert it as your `POSTGRES_OR_WEBHOOK_URL` in Vercel — remember to add your password to the URL when you paste it into Vercel
+5. Copy that link and insert it as your `POSTGRES_URL` in Vercel — remember to add your password to the URL when you paste it into Vercel
 6. On Supabase, Go to `Settings` > `API` and scroll down to get your JWT token. Copy this and paste it into Vercel
 7. Go to [Plaid](https://plaid.com) > `Team Settings` > `Keys` and copy the `Plaid ID` and `Sandbox Secret` key into Vercel
 8. Deploy Vercel
@@ -76,8 +76,8 @@ file you can use to deploy Venice locally to your machine.
 | :-------------------------------- | :----------------------------------------------------------------------- |
 | `NEXT_PUBLIC_Supabase_URL`        | (Required) The URL of the Supabase project to use (from their settings dashboard) |
 | `NEXT_PUBLIC_Supabase_ANON_KEY`   | (Required) The public anon key of the Supabase project to use. |
-| `POSTGRES_OR_WEBHOOK_URL`         | (Required) The URI of the database or webhook to sync data to.<br /><br />Pass a valid `postgres(ql)://` url for stateful mode. Will be used Primary database used for metadata and user data storage<br/><br />Pass a valid `http(s)://` url for stateless mode. Sync data and metadata be sent to provided URL and you are responsible for your own persistence |
-| `JWT_SECRET_OR_PUBLIC_KEY`        | (Required) The JavaScript Web Token (JWT) secret used for signing and verifying tokens (found within your Supabase project settings).<br /><br />Used for validating authenticity of access tokens |
+| `POSTGRES_URL`                    | (Required) The URI of the database or webhook to sync data to.<br /><br />Pass a valid `postgres(ql)://` url for stateful mode. Will be used Primary database used for metadata and user data storage<br/><br />Pass a valid `http(s)://` url for stateless mode. Sync data and metadata be sent to provided URL and you are responsible for your own persistence |
+| `JWT_SECRET`        | (Required) The JavaScript Web Token (JWT) secret used for signing and verifying tokens (found within your Supabase project settings).<br /><br />Used for validating authenticity of access tokens |
 
 ### Plaid
 
