@@ -1,3 +1,3 @@
-DROP TABLE raw_account;
-DROP TABLE raw_commodity;
-DROP TABLE raw_transaction;
+DROP TABLE IF EXISTS raw_account;
+DROP TABLE IF EXISTS raw_commodity;
+DROP TABLE IF EXISTS raw_transaction;
