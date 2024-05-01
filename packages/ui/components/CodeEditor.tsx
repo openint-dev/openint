@@ -29,9 +29,9 @@ export const CodeEditor = React.forwardRef(function CodeEditor(
     <MonacoEditor
       language={language}
       value={value}
-      // theme="venice"
+      // theme="openint"
       beforeMount={(monaco) => {
-        monaco.editor.defineTheme('venice', veniceEditorTheme)
+        monaco.editor.defineTheme('openint', openintEditorTheme)
         // @see https://stackoverflow.com/questions/66325637/how-to-format-format-a-piece-of-codes/66344338#66344338
         // define a document formatting provider
         // then you contextmenu will add an "Format Document" action
@@ -100,7 +100,7 @@ type IStandaloneThemeData = Parameters<Monaco['editor']['defineTheme']>[1]
 // - tokens: *, number
 // - selectionBackground
 // - pass theme via context
-const veniceEditorTheme: IStandaloneThemeData = {
+const openintEditorTheme: IStandaloneThemeData = {
   base: 'vs-dark',
   inherit: true,
   rules: [

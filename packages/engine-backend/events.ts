@@ -87,7 +87,7 @@ export type Events = Combine<
 >
 
 export const inngest = new Inngest({
-  id: 'Venice',
+  id: 'OpenInt',
   schemas: new EventSchemas().fromZod(eventMapForInngest),
   // TODO: have a dedicated browser inngest key
   eventKey: process.env['INNGEST_EVENT_KEY'] ?? 'local',
