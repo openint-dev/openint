@@ -28,6 +28,10 @@ First setup dependencies
 
 Then deploy
 - Vercel
+  - In addition env vars from the previous dependencies, set up
+    - `NEXT_PUBLIC_SERVER_URL` so that it is a nicer url that the unique per deployment URL that comes by default from Vercle
+      - For things like magic link generation
+  - Disable deployment protection is the simplest way to get Inngest branch environments to work
 
 ## Contributors
 
