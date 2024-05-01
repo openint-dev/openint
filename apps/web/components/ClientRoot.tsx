@@ -74,6 +74,10 @@ export function ClientRoot({
 
   // TODO: Gotta maintain real time connection over time...
   useEffect(() => {
+    if (!realtime) {
+      console.log('Skip Supabase realtime - not initalized')
+      return
+    }
     if (!realtime.isConnected()) {
       realtime.connect()
     }
@@ -107,7 +111,7 @@ export function ClientRoot({
         accessToken={
           trpcAccessToken !== undefined ? trpcAccessToken : accessToken
         }>
-        <InvalidateQueriesOnPostgresChanges client={realtime} />
+        {realtime && <InvalidateQueriesOnPostgresChanges client={realtime} />}
         <ViewerContext.Provider
           value={React.useMemo(
             () => ({accessToken, status, viewer}),
