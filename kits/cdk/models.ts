@@ -180,11 +180,11 @@ export const zRaw = {
       // TODO: Remove nullish now that pipelines are more fixed
       sourceId: zId('reso').optional(),
       sourceState: z.record(z.unknown()).optional(),
-      sourceVertical: z.string().optional(),
+      sourceVertical: z.string().optional().nullable(),
       streams: zStreamsV2.nullish(),
       destinationId: zId('reso').optional(),
       destinationState: z.record(z.unknown()).optional(),
-      destinationVertical: z.string().optional(),
+      destinationVertical: z.string().optional().nullable(),
       linkOptions: z
         .array(z.unknown())
         // z.union([
