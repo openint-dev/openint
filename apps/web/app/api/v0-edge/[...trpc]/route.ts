@@ -1,5 +1,7 @@
 import {modifyRequest, modifyResponse} from '@opensdks/fetch-links'
 
+// edge runtime does not have a max duration but must return response within 25 seconds then must begin streaming
+// This means we should explore running more things (like sync) on top fo the edge runtime and stream messages back
 export const runtime = 'edge'
 
 // Used to workaround issues where next.js node handler does not support incoming request with
