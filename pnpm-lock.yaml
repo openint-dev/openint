@@ -480,58 +480,6 @@ importers:
         specifier: ^0.0.17
         version: 0.0.17(@opensdks/runtime@0.0.19)
 
-  apps/gondola:
-    dependencies:
-      '@openint/connect':
-        specifier: workspace:*
-        version: link:../../kits/connect
-      '@openint/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@openint/util':
-        specifier: workspace:*
-        version: link:../../packages/util
-      next:
-        specifier: 14.0.2
-        version: 14.0.2(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
-      nextjs-toploader:
-        specifier: 1.4.2
-        version: 1.4.2(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@types/react':
-        specifier: 18.0.27
-        version: 18.0.27
-      '@types/react-dom':
-        specifier: 18.0.10
-        version: 18.0.10
-      autoprefixer:
-        specifier: '*'
-        version: 10.4.13(postcss@8.4.14)
-      jiti:
-        specifier: '*'
-        version: 1.18.2
-      node-loader:
-        specifier: 2.0.0
-        version: 2.0.0(webpack@5.74.0)
-      postcss:
-        specifier: '*'
-        version: 8.4.14
-      tailwindcss:
-        specifier: 3.3.2
-        version: 3.3.2
-      tailwindcss-animate:
-        specifier: ^1.0.5
-        version: 1.0.5(tailwindcss@3.3.2)
-      tailwindcss-radix:
-        specifier: 2.5.0
-        version: 2.5.0
-
   apps/web:
     dependencies:
       '@clerk/nextjs':
@@ -8696,22 +8644,6 @@ packages:
     resolution: {integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==}
     engines: {node: '>= 4.5.0'}
     hasBin: true
-    dev: true
-
-  /autoprefixer@10.4.13(postcss@8.4.14):
-    resolution: {integrity: sha512-49vKpMqcZYsJjwotvt4+h/BCjJVnhGwcLpDt5xkcaOG3eLrG/HUYLagrihYsQ+qrIBgIzX1Rw7a6L8I/ZA1Atg==}
-    engines: {node: ^10 || ^12 || >=14}
-    hasBin: true
-    peerDependencies:
-      postcss: ^8.1.0
-    dependencies:
-      browserslist: 4.21.4
-      caniuse-lite: 1.0.30001449
-      fraction.js: 4.2.0
-      normalize-range: 0.1.2
-      picocolors: 1.0.0
-      postcss: 8.4.14
-      postcss-value-parser: 4.2.0
     dev: true
 
   /autoprefixer@10.4.13(postcss@8.4.21):
@@ -17953,15 +17885,6 @@ packages:
 
   /postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
-    dev: true
-
-  /postcss@8.4.14:
-    resolution: {integrity: sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.4
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
     dev: true
 
   /postcss@8.4.21:
