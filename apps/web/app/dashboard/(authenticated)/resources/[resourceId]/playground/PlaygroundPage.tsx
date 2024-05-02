@@ -50,13 +50,15 @@ export function PlaygroundPage({
       <Breadcrumb className="p-4">
         <BreadcrumbItem>
           {/* We need typed routes... https://github.com/shadcn/ui/pull/133 */}
-          <BreadcrumbLink href="/resources">Resources</BreadcrumbLink>
+          <BreadcrumbLink href="/dashboard/resources">Resources</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink>{resourceId}</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink href={`/resources/${resourceId}/playground`}>
+          <BreadcrumbLink
+            // TODO: Get typecheck to catch bad routes
+            href={`/dashboard/resources/${resourceId}/playground`}>
             Playground
           </BreadcrumbLink>
         </BreadcrumbItem>

@@ -96,7 +96,7 @@ export const resourceCommands = {
     // Only show me for postgres resources
     execute: ({params: {resource}, ctx}) => {
       // TODO: Display loading indicator while this is happening...
-      ctx.router.push(`/resources/${resource.id}/sql`)
+      ctx.router.push(`/dashboard/resources/${resource.id}/sql`)
     },
   }),
   'resource:navigate_playground': cmd.identity({
@@ -105,7 +105,8 @@ export const resourceCommands = {
     title: 'Playground',
     // Only show me for postgres resources
     execute: ({params: {resource}, ctx}) => {
-      ctx.router.push(`/resources/${resource.id}/playground`)
+      // TODO: Get typecheck to catch bad routes
+      ctx.router.push(`/dashboard/resources/${resource.id}/playground`)
     },
   }),
 
