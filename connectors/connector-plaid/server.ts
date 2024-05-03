@@ -374,6 +374,29 @@ export const plaidServerConnector = {
       .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, def._op('commit')])))
   },
 
+  listIntegrations() {
+    const plaid = makePlaidClient({envName: 'production'})
+    return plaid
+      .institutionsGet({
+        country_codes: [CountryCode.Us],
+        count: 100,
+        offset: 0,
+        options: {include_optional_metadata: true},
+      })
+      .then((res) => ({
+        has_next_page: false,
+        items: res.data.institutions.map((ins) => ({
+          id: ins.institution_id,
+          name: ins.name,
+          logo_url: ins.logo ? `data:image/png;base64,${ins.logo}` : null,
+          updated_at: '',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          raw_data: ins as any,
+        })),
+        next_cursor: null,
+      }))
+  },
+
   metaSync: ({config}) => {
     // Rate limit is easily exceeded, so we will have to introduce
     // a management layer for that, which will be process-wide and

@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://app.openint.dev/api/v0"
+      "url": "https://tonyx.ngrok.dev/api/v0"
     }
   ],
   "paths": {
@@ -1464,6 +1464,121 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/{name}/integrations": {
+      "get": {
+        "operationId": "listConnectorIntegrations",
+        "tags": ["Connectors"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {
+              "type": "string",
+              "enum": ["full", "incremental"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": ["string", "null"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {
+                      "type": ["string", "null"]
+                    },
+                    "has_next_page": {
+                      "type": "boolean"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "description": "ISO8601 date string"
+                          },
+                          "raw_data": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "logo_url": {
+                            "type": ["string", "null"]
+                          }
+                        },
+                        "required": ["id", "updated_at", "name"]
+                      }
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
               }
             }
           },
@@ -7379,7 +7494,7 @@
             "additionalProperties": {}
           },
           "sourceVertical": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "streams": {
             "type": ["object", "null"],
@@ -7407,7 +7522,7 @@
             "additionalProperties": {}
           },
           "destinationVertical": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "linkOptions": {
             "type": ["array", "null"],

@@ -213,6 +213,21 @@ export interface ConnectorServer<
     }>,
   ) => Destination<T['_types']['destinationInputEntity']>
 
+  // pagination params
+  listIntegrations?: (params: unknown) => Promise<{
+    has_next_page: boolean
+    next_cursor: string | null
+    // Institution
+
+    items: Array<{
+      id: string
+      name: string
+      logo_url?: string | null
+      updated_at: string
+      raw_data: T['_intOpType']['data']
+    }>
+  }>
+
   metaSync?: (
     input: OmitNever<{
       config: T['_types']['connectorConfig']

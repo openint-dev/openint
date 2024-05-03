@@ -1,10 +1,16 @@
-import {metaForConnector} from '@openint/cdk'
+import {metaForConnector, zIntegrationCategory} from '@openint/cdk'
+import type {RouterMeta} from '@openint/trpc'
 import {TRPCError} from '@openint/trpc'
 import {R, z} from '@openint/util'
+import {zBaseRecord, zPaginatedResult, zPaginationParams} from '@openint/vdk'
 import {zodToOas31Schema} from '@openint/zod'
 import {publicProcedure, trpc} from './_base'
 
 const tags = ['Connectors']
+
+function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
+  return {openapi: {...meta, path: `${meta.path}`, tags}}
+}
 
 export const connectorRouter = trpc.router({
   listConnectorMetas: publicProcedure
@@ -95,5 +101,55 @@ export const connectorRouter = trpc.router({
       return R.mapValues(connector.schemas, (zodSchema) =>
         zodToOas31Schema(zodSchema as z.ZodTypeAny),
       )
+    }),
+  // how do we leverage proxycall here?
+  // Connectors itself is also a vertical, and
+  // it'd be nice to leverage the same primitive
+  listConnectorIntegrations: publicProcedure
+    .meta(oapi({method: 'GET', path: '/connector/{name}/integrations'}))
+    .input(zPaginationParams.extend({name: z.string()}))
+    // TODO: Add deterministic type for the output here
+    .output(
+      zPaginatedResult.extend({
+        items: z.array(
+          zBaseRecord.extend({
+            name: z.string(),
+            logo_url: z.string().nullish(),
+            login_url: z.string().nullish(),
+            categories: z.array(zIntegrationCategory).nullish(),
+          }),
+        ),
+      }),
+    )
+    .query(({ctx, input: {name, ...params}}) => {
+      const connector = ctx.connectorMap[name]
+      if (!connector) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `Connector ${name} not found`,
+        })
+      }
+      if (connector.listIntegrations) {
+        return connector.listIntegrations(params).then((res) => ({
+          ...res,
+          items: res.items.map((item) => ({
+            ...item,
+            id: `${name}_${item.id}`,
+          })),
+        }))
+      }
+      const meta = metaForConnector(connector)
+      return {
+        has_next_page: false,
+        items: [
+          {
+            id: name,
+            name: meta.displayName,
+            updated_at: new Date().toISOString(),
+            logo_url: meta.logoUrl,
+          },
+        ],
+        next_cursor: null,
+      }
     }),
 })

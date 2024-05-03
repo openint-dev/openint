@@ -73,6 +73,9 @@ export interface paths {
   '/connector/{name}/schemas': {
     get: operations['getConnectorSchemas']
   }
+  '/connector/{name}/integrations': {
+    get: operations['listConnectorIntegrations']
+  }
   '/core/pipeline': {
     get: operations['listPipelines']
     post: operations['createPipeline']
@@ -454,7 +457,7 @@ export interface components {
       sourceState?: {
         [key: string]: unknown
       }
-      sourceVertical?: string
+      sourceVertical?: string | null
       streams?: {
         [key: string]: {
           disabled?: boolean
@@ -466,7 +469,7 @@ export interface components {
       destinationState?: {
         [key: string]: unknown
       }
-      destinationVertical?: string
+      destinationVertical?: string | null
       linkOptions?: unknown[] | null
       lastSyncStartedAt?: string | null
       lastSyncCompletedAt?: string | null
@@ -1783,6 +1786,57 @@ export interface operations {
       200: {
         content: {
           'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  listConnectorIntegrations: {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      path: {
+        name: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              id: string
+              /** @description ISO8601 date string */
+              updated_at: string
+              raw_data?: {
+                [key: string]: unknown
+              }
+              name: string
+              logo_url?: string | null
+            }>
+          }
         }
       }
       /** @description Invalid input data */

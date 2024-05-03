@@ -1567,6 +1567,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../util
+      '@openint/vdk':
+        specifier: workspace:*
+        version: link:../../kits/vdk
       '@openint/zod':
         specifier: workspace:*
         version: link:../../utils/zod

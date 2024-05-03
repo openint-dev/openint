@@ -8,6 +8,7 @@
     "@openint/cdk": "workspace:*",
     "@openint/trpc": "workspace:*",
     "@openint/util": "workspace:*",
+    "@openint/vdk": "workspace:*",
     "@openint/zod": "workspace:*",
     "@trpc/server": "10.40.0",
     "inngest": "^3.16.0",
