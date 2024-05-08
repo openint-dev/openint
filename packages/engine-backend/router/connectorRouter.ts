@@ -17,6 +17,7 @@ const zIntegration = zBaseRecord.partial({updated_at: true}).extend({
   logo_url: z.string().nullish(),
   login_url: z.string().nullish(),
   categories: z.array(zIntegrationCategory).nullish(),
+  connector_name: z.string(),
 })
 
 // type Integration = z.infer<typeof zIntegration>
@@ -137,6 +138,7 @@ const _connectorRouter = trpc.router({
           items: res.items.map((item) => ({
             ...item,
             id: `${name}_${item.id}`,
+            connector_name: name,
           })),
         }))
       }
@@ -149,6 +151,7 @@ const _connectorRouter = trpc.router({
             name: meta.displayName,
             updated_at: new Date().toISOString(),
             logo_url: meta.logoUrl,
+            connector_name: name,
           },
         ],
         next_cursor: null,
@@ -159,6 +162,7 @@ const _connectorRouter = trpc.router({
 export const connectorRouter = trpc.mergeRouters(
   _connectorRouter,
   trpc.router({
+    // Rename this to listConfiguredIntegrations
     listIntegrations: publicProcedure
       .meta(oapi({method: 'GET', path: '/integrations'}))
       .input(

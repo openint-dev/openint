@@ -46,7 +46,11 @@ export const helpers = connHelpers(tellerSchemas)
 export const tellerDef = {
   name: 'teller',
   schemas: tellerSchemas,
-  metadata: {categories: ['banking'], logoUrl: '/_assets/logo-teller.svg'},
+  metadata: {
+    categories: ['banking'],
+    logoUrl: '/_assets/logo-teller.svg',
+    stage: 'beta',
+  },
 
   standardMappers: {
     resource: (settings) => ({

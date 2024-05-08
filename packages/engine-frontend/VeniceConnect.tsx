@@ -36,6 +36,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  IntegrationCard,
   ResourceCard,
   SchemaForm,
   useToast,
@@ -118,15 +119,25 @@ export function VeniceConnect(props: VeniceConnectProps) {
     id: props.connectorConfigId,
     connectorName: props.connectorName,
   })
+  const listIntegrationsRes = _trpcReact.listIntegrations.useQuery({
+    // id: props.connectorConfigId,
+    // connectorName: props.connectorName,
+    only_configured: true,
+  })
   const catalogRes = _trpcReact.listConnectorMetas.useQuery()
 
-  if (!listConnectorConfigsRes.data || !catalogRes.data) {
+  if (
+    !listConnectorConfigsRes.data ||
+    !listIntegrationsRes.data ||
+    !catalogRes.data
+  ) {
     return <div>Loading...</div>
   }
   return (
     <_VeniceConnect
       connectorConfigInfos={listConnectorConfigsRes.data ?? []}
       catalog={catalogRes.data}
+      integrations={listIntegrationsRes.data.items}
       {...props}
     />
   )
@@ -134,6 +145,7 @@ export function VeniceConnect(props: VeniceConnectProps) {
 
 type ConnectorConfigInfos = RouterOutput['listConnectorConfigInfos']
 type Catalog = RouterOutput['listConnectorMetas']
+type Integrations = RouterOutput['listIntegrations']['items']
 type ConnectorMeta = Catalog[string]
 
 // TODOD: Dedupe this with app-config/constants
@@ -148,11 +160,13 @@ export function _VeniceConnect({
   onEvent,
   showExisting,
   className,
-  connectorConfigInfos: connectorConfigInfos,
+  connectorConfigInfos,
+  integrations,
   ...uiProps
 }: VeniceConnectProps & {
   connectorConfigInfos: ConnectorConfigInfos
   catalog: Catalog
+  integrations: Integrations
 }) {
   const nangoPublicKey =
     _trpcReact.getPublicEnv.useQuery().data?.NEXT_PUBLIC_NANGO_PUBLIC_KEY
@@ -173,6 +187,7 @@ export function _VeniceConnect({
     {enabled: showExisting},
   )
 
+  console.log('[VeniceConnect] integrations', integrations)
   const connectorConfigs = connectorConfigInfos
     .map(({id, ...info}) => {
       const connector = catalog[extractConnectorName(id)]
@@ -300,6 +315,24 @@ export function _VeniceConnect({
             }}
           />
         </ConnectorConfigCard>
+      ))}
+      {integrations.map((int) => (
+        <IntegrationCard
+          {...uiProps}
+          key={int.id}
+          integration={{
+            ...int,
+            connectorName: int.connector_name,
+            // connectorConfigId: int.connector_config_id,
+          }}>
+          {/* <ProviderConnectButton
+            connectorConfig={int}
+            connectFn={connectFnMap[int.connector.name]}
+            onEvent={(e) => {
+              onEvent?.({type: e.type, ccfgId: int.id})
+            }}
+          /> */}
+        </IntegrationCard>
       ))}
     </div>
   )
