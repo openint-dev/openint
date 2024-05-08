@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://tonyx.ngrok.dev/api/v0"
+      "url": "https://openint.dev/api/v0"
     }
   ],
   "paths": {
@@ -1583,7 +1583,7 @@
                             }
                           }
                         },
-                        "required": ["id", "updated_at", "name"]
+                        "required": ["id", "name"]
                       }
                     }
                   },
@@ -1658,6 +1658,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "only_configured",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -1707,7 +1714,7 @@
                             }
                           }
                         },
-                        "required": ["id", "updated_at", "name"]
+                        "required": ["id", "name"]
                       }
                     }
                   },

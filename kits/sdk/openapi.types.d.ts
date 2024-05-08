@@ -1832,7 +1832,7 @@ export interface operations {
             items: Array<{
               id: string
               /** @description ISO8601 date string */
-              updated_at: string
+              updated_at?: string
               raw_data?: {
                 [key: string]: unknown
               }
@@ -1871,6 +1871,7 @@ export interface operations {
         cursor?: string | null
         page_size?: number
         query?: string
+        only_configured?: boolean
       }
     }
     responses: {
@@ -1883,7 +1884,7 @@ export interface operations {
             items: Array<{
               id: string
               /** @description ISO8601 date string */
-              updated_at: string
+              updated_at?: string
               raw_data?: {
                 [key: string]: unknown
               }

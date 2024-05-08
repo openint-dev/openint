@@ -4,7 +4,7 @@ import {Rx, rxjs} from '@openint/util'
 import type {tellerSchemas} from './def'
 import {helpers} from './def'
 import type {accountTellerSchema, transactionItemSchema} from './TellerClient'
-import {makeTellerClient} from './TellerClient'
+import {listTellerInstitutions, makeTellerClient} from './TellerClient'
 
 export const tellerServer = {
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -50,12 +50,18 @@ export const tellerServer = {
       .from(iterateEntities())
       .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, helpers._op('commit')])))
   },
-
-  metaSync: ({config}) => {
-    console.log('metaZSync teller', config)
-    return rxjs
-      .from(makeTellerClient(config).getInstitutions())
-      .pipe(Rx.map((ins) => helpers._intOpData(ins.id as ExternalId, ins)))
+  listIntegrations() {
+    return Promise.resolve({
+      items: listTellerInstitutions().map((ins) => ({
+        id: ins.id,
+        name: ins.name,
+        updated_at: new Date().toISOString(),
+        logo_url: ins.logoUrl,
+        raw_data: ins as any,
+      })),
+      has_next_page: false,
+      next_cursor: null,
+    })
   },
 } satisfies ConnectorServer<typeof tellerSchemas>
 

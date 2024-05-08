@@ -200,24 +200,23 @@ export const makeTellerClient = zFunction(zTellerConfig, (cfg) => {
         .get<unknown[]>(`/accounts/${params.id}/transactions`)
         .then((r) => r.data.map((d) => transactionItemSchema.parse(d))),
     ),
-
-    /**
-     * Teller institution endpoint does not seem to be documented AND doesn't return
-     * any logo urls of the institutions as of Sep 28, 2022. https://api.teller.io/institutions
-     * So we will do this for now
-     */
-    getInstitutions: zFunction([], z.array(zInstitution), () => {
-      const list = institutionsWsResponse.response.diff[6][0][0].d as Array<
-        [string, string, string, string]
-      >
-      return list.map(([, id, svg, name]) =>
-        zInstitution.parse({
-          id,
-          name,
-          // Courtesy of https://css-tricks.com/probably-dont-base64-svg/
-          logoUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(svg),
-        }),
-      )
-    }),
   }
 })
+/**
+ * Teller institution endpoint does not seem to be documented AND doesn't return
+ * any logo urls of the institutions as of Sep 28, 2022. https://api.teller.io/institutions
+ * So we will do this for now
+ */
+export function listTellerInstitutions() {
+  const list = institutionsWsResponse.response.diff[6][0][0].d as Array<
+    [string, string, string, string]
+  >
+  return list.map(([, id, svg, name]) =>
+    zInstitution.parse({
+      id,
+      name,
+      // Courtesy of https://css-tricks.com/probably-dont-base64-svg/
+      logoUrl: 'data:image/svg+xml;utf8,' + encodeURIComponent(svg),
+    }),
+  )
+}
