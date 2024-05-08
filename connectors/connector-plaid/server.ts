@@ -389,7 +389,7 @@ export const plaidServerConnector = {
           id: ins.institution_id,
           name: ins.name,
           logo_url: ins.logo ? `data:image/png;base64,${ins.logo}` : null,
-          updated_at: '',
+          updated_at: new Date().toISOString(),
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           raw_data: ins as any,
         })),

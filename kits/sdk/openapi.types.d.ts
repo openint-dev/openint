@@ -76,6 +76,9 @@ export interface paths {
   '/connector/{name}/integrations': {
     get: operations['listConnectorIntegrations']
   }
+  '/integrations': {
+    get: operations['listIntegrations']
+  }
   '/core/pipeline': {
     get: operations['listPipelines']
     post: operations['createPipeline']
@@ -1835,6 +1838,59 @@ export interface operations {
               }
               name: string
               logo_url?: string | null
+              login_url?: string | null
+              categories?: Array<'accounting' | 'banking' | 'hris'> | null
+            }>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  listIntegrations: {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+        query?: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              id: string
+              /** @description ISO8601 date string */
+              updated_at: string
+              raw_data?: {
+                [key: string]: unknown
+              }
+              name: string
+              logo_url?: string | null
+              login_url?: string | null
+              categories?: Array<'accounting' | 'banking' | 'hris'> | null
             }>
           }
         }

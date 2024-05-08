@@ -1,4 +1,4 @@
-import {metaForConnector, zIntegrationCategory} from '@openint/cdk'
+import {extractId, metaForConnector, zIntegrationCategory} from '@openint/cdk'
 import type {RouterMeta} from '@openint/trpc'
 import {TRPCError} from '@openint/trpc'
 import {R, z} from '@openint/util'
@@ -12,7 +12,16 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
   return {openapi: {...meta, path: `${meta.path}`, tags}}
 }
 
-export const connectorRouter = trpc.router({
+const zIntegration = zBaseRecord.partial({updated_at: true}).extend({
+  name: z.string(),
+  logo_url: z.string().nullish(),
+  login_url: z.string().nullish(),
+  categories: z.array(zIntegrationCategory).nullish(),
+})
+
+// type Integration = z.infer<typeof zIntegration>
+
+const _connectorRouter = trpc.router({
   listConnectorMetas: publicProcedure
     .meta({
       openapi: {
@@ -111,14 +120,7 @@ export const connectorRouter = trpc.router({
     // TODO: Add deterministic type for the output here
     .output(
       zPaginatedResult.extend({
-        items: z.array(
-          zBaseRecord.extend({
-            name: z.string(),
-            logo_url: z.string().nullish(),
-            login_url: z.string().nullish(),
-            categories: z.array(zIntegrationCategory).nullish(),
-          }),
-        ),
+        items: z.array(zIntegration),
       }),
     )
     .query(({ctx, input: {name, ...params}}) => {
@@ -153,3 +155,48 @@ export const connectorRouter = trpc.router({
       }
     }),
 })
+
+export const connectorRouter = trpc.mergeRouters(
+  _connectorRouter,
+  trpc.router({
+    listIntegrations: publicProcedure
+      .meta(oapi({method: 'GET', path: '/integrations'}))
+      .input(
+        zPaginationParams.extend({
+          query: z.string().optional(),
+          only_configured: z
+            .boolean()
+            .optional()
+            .describe('Only list integrations that have been configured'),
+        }),
+      )
+      .output(
+        zPaginatedResult.extend({
+          items: z.array(zIntegration),
+        }),
+      )
+      .query(async ({ctx, input}) => {
+        const names = input.only_configured
+          ? await ctx.services.metaService
+              .listConnectorConfigInfos()
+              .then((ccfgInfos) =>
+                ccfgInfos.map((ccfgInfo) => extractId(ccfgInfo.id)[1]),
+              )
+          : Object.keys(ctx.connectorMap)
+
+        const integrations = await Promise.all(
+          names.map((name) =>
+            _connectorRouter
+              .createCaller(ctx)
+              .listConnectorIntegrations({name}),
+          ),
+        )
+        // integration should have connector name...
+        return {
+          has_next_page: integrations.some((int) => int.has_next_page),
+          items: integrations.flatMap((int) => int.items),
+          next_cursor: null, // Implement me...
+        }
+      }),
+  }),
+)

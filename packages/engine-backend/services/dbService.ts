@@ -253,8 +253,8 @@ export function makeDBService({
   const listConnectorConfigs = () =>
     metaService.tables.connector_config
       .list({})
-      .then((ints) =>
-        Promise.all(ints.map((int) => getConnectorConfigOrFail(int.id))),
+      .then((ccfgs) =>
+        Promise.all(ccfgs.map((ccfg) => getConnectorConfigOrFail(ccfg.id))),
       )
 
   const metaLinks = makeMetaLinks(metaService)
