@@ -24,7 +24,7 @@ interface UIProps extends UIPropsNoChildren {
   children?: React.ReactNode
 }
 
-type Integration = RouterOutput['listIntegrations']['items'][number]
+type Integration = RouterOutput['listConfiguredIntegrations']['items'][number]
 
 export const IntegrationCard = ({
   integration: int,

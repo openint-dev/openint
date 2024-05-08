@@ -1581,9 +1581,12 @@
                               "type": "string",
                               "enum": ["accounting", "banking", "hris"]
                             }
+                          },
+                          "connector_name": {
+                            "type": "string"
                           }
                         },
-                        "required": ["id", "name"]
+                        "required": ["id", "name", "connector_name"]
                       }
                     }
                   },
@@ -1625,9 +1628,9 @@
         }
       }
     },
-    "/integrations": {
+    "/configured_integrations": {
       "get": {
-        "operationId": "listIntegrations",
+        "operationId": "listConfiguredIntegrations",
         "tags": ["Connectors"],
         "parameters": [
           {
@@ -1657,13 +1660,6 @@
             "name": "query",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "only_configured",
-            "schema": {
-              "type": "boolean"
             }
           }
         ],
@@ -1712,9 +1708,12 @@
                               "type": "string",
                               "enum": ["accounting", "banking", "hris"]
                             }
+                          },
+                          "connector_name": {
+                            "type": "string"
                           }
                         },
-                        "required": ["id", "name"]
+                        "required": ["id", "name", "connector_name"]
                       }
                     }
                   },

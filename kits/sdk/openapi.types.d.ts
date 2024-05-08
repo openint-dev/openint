@@ -76,8 +76,8 @@ export interface paths {
   '/connector/{name}/integrations': {
     get: operations['listConnectorIntegrations']
   }
-  '/integrations': {
-    get: operations['listIntegrations']
+  '/configured_integrations': {
+    get: operations['listConfiguredIntegrations']
   }
   '/core/pipeline': {
     get: operations['listPipelines']
@@ -547,21 +547,15 @@ export interface components {
         type: string
         schema?: string | null
       } | null
-      unified_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
-      standard_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
-      custom_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
+      unified_objects?: Array<{
+        object: string
+      }> | null
+      standard_objects?: Array<{
+        object: string
+      }> | null
+      custom_objects?: Array<{
+        object: string
+      }> | null
     }
     'sales-engagement.contact': {
       id: string
@@ -571,8 +565,12 @@ export interface components {
       account_id?: string
       job_title: string
       address: components['schemas']['sales-engagement.address']
-      email_addresses: Array<components['schemas']['sales-engagement.email_address']>
-      phone_numbers: Array<components['schemas']['sales-engagement.phone_number']>
+      email_addresses: Array<
+        components['schemas']['sales-engagement.email_address']
+      >
+      phone_numbers: Array<
+        components['schemas']['sales-engagement.phone_number']
+      >
       open_count: number
       click_count: number
       reply_count: number
@@ -693,12 +691,10 @@ export interface components {
       /** @description date-time */
       last_activity_at?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       last_modified_at?: string | null
     }
@@ -733,12 +729,10 @@ export interface components {
       number_of_employees?: number | null
       website?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       owner_id?: string | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       passthrough_fields?: {
@@ -789,12 +783,10 @@ export interface components {
       converted_contact_id?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
       email_addresses?: Array<components['schemas']['crm.email_address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       created_at?: string | null
       is_deleted?: boolean | null
       last_modified_at?: string | null
@@ -1840,6 +1832,7 @@ export interface operations {
               logo_url?: string | null
               login_url?: string | null
               categories?: Array<'accounting' | 'banking' | 'hris'> | null
+              connector_name: string
             }>
           }
         }
@@ -1864,14 +1857,13 @@ export interface operations {
       }
     }
   }
-  listIntegrations: {
+  listConfiguredIntegrations: {
     parameters: {
       query?: {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
         query?: string
-        only_configured?: boolean
       }
     }
     responses: {
@@ -1892,6 +1884,7 @@ export interface operations {
               logo_url?: string | null
               login_url?: string | null
               categories?: Array<'accounting' | 'banking' | 'hris'> | null
+              connector_name: string
             }>
           }
         }
@@ -2403,21 +2396,15 @@ export interface operations {
             type: string
             schema?: string | null
           } | null
-          unified_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
-          standard_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
-          custom_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
+          unified_objects?: Array<{
+            object: string
+          }> | null
+          standard_objects?: Array<{
+            object: string
+          }> | null
+          custom_objects?: Array<{
+            object: string
+          }> | null
         }
       }
     }
@@ -2532,7 +2519,9 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.sequenceState']>
+            items: Array<
+              components['schemas']['sales-engagement.sequenceState']
+            >
           }
         }
       }
@@ -4566,34 +4555,36 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<OneOf<
-            [
-              {
-                streams: Array<{
-                  name: string
-                  json_schema: {
-                    [key: string]: unknown
+          'application/json': Array<
+            OneOf<
+              [
+                {
+                  streams: Array<{
+                    name: string
+                    json_schema: {
+                      [key: string]: unknown
+                    }
+                    source_defined_primary_key?: string[][]
+                  }>
+                  /** @enum {string} */
+                  type: 'CATALOG'
+                },
+                {
+                  record: {
+                    data?: unknown
+                    stream: string
                   }
-                  source_defined_primary_key?: string[][]
-                }>
-                /** @enum {string} */
-                type: 'CATALOG'
-              },
-              {
-                record: {
-                  data?: unknown
-                  stream: string
-                }
-                /** @enum {string} */
-                type: 'RECORD'
-              },
-              {
-                state?: unknown
-                /** @enum {string} */
-                type: 'STATE'
-              },
-            ]
-          >>
+                  /** @enum {string} */
+                  type: 'RECORD'
+                },
+                {
+                  state?: unknown
+                  /** @enum {string} */
+                  type: 'STATE'
+                },
+              ]
+            >
+          >
         }
       }
       /** @description Invalid input data */

@@ -119,10 +119,9 @@ export function VeniceConnect(props: VeniceConnectProps) {
     id: props.connectorConfigId,
     connectorName: props.connectorName,
   })
-  const listIntegrationsRes = _trpcReact.listIntegrations.useQuery({
+  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({
     // id: props.connectorConfigId,
     // connectorName: props.connectorName,
-    only_configured: true,
   })
   const catalogRes = _trpcReact.listConnectorMetas.useQuery()
 
@@ -145,7 +144,7 @@ export function VeniceConnect(props: VeniceConnectProps) {
 
 type ConnectorConfigInfos = RouterOutput['listConnectorConfigInfos']
 type Catalog = RouterOutput['listConnectorMetas']
-type Integrations = RouterOutput['listIntegrations']['items']
+type Integrations = RouterOutput['listConfiguredIntegrations']['items']
 type ConnectorMeta = Catalog[string]
 
 // TODOD: Dedupe this with app-config/constants
@@ -162,11 +161,13 @@ export function _VeniceConnect({
   className,
   connectorConfigInfos,
   integrations,
+  debugConnectorConfigs,
   ...uiProps
 }: VeniceConnectProps & {
   connectorConfigInfos: ConnectorConfigInfos
   catalog: Catalog
   integrations: Integrations
+  debugConnectorConfigs?: boolean
 }) {
   const nangoPublicKey =
     _trpcReact.getPublicEnv.useQuery().data?.NEXT_PUBLIC_NANGO_PUBLIC_KEY
@@ -198,6 +199,16 @@ export function _VeniceConnect({
     })
     .filter((i): i is NonNullable<typeof i> => !!i)
   const connectorConfigById = R.mapToObj(connectorConfigs, (i) => [i.id, i])
+
+  const configuredIntegrations = integrations
+    .map((int) => {
+      const connector = catalog[extractConnectorName(int.connector_config_id)]
+      if (!connector) {
+        console.warn('Missing connectorMeta', int.connector_config_id)
+      }
+      return connector ? {...int, connector} : null
+    })
+    .filter((i): i is NonNullable<typeof i> => !!i)
 
   // TODO: seems that we are still displaying some data from cache, fix me here...
   // Also maybe connect should be deployed to a different domain to prevent unexpected state persistence
@@ -301,39 +312,44 @@ export function _VeniceConnect({
         </ResourceCard>
       ))}
       {/* Add new  */}
-      {connectorConfigs.map((ccfg) => (
-        <ConnectorConfigCard
-          {...uiProps}
-          key={ccfg.id}
-          connectorConfig={ccfg}
-          connector={ccfg.connector}>
-          <ProviderConnectButton
+      {debugConnectorConfigs &&
+        connectorConfigs.map((ccfg) => (
+          <ConnectorConfigCard
+            {...uiProps}
+            key={ccfg.id}
             connectorConfig={ccfg}
-            connectFn={connectFnMap[ccfg.connector.name]}
-            onEvent={(e) => {
-              onEvent?.({type: e.type, ccfgId: ccfg.id})
-            }}
-          />
-        </ConnectorConfigCard>
-      ))}
-      {integrations.map((int) => (
-        <IntegrationCard
-          {...uiProps}
-          key={int.id}
-          integration={{
-            ...int,
-            connectorName: int.connector_name,
-            // connectorConfigId: int.connector_config_id,
-          }}>
-          {/* <ProviderConnectButton
-            connectorConfig={int}
-            connectFn={connectFnMap[int.connector.name]}
-            onEvent={(e) => {
-              onEvent?.({type: e.type, ccfgId: int.id})
-            }}
-          /> */}
-        </IntegrationCard>
-      ))}
+            connector={ccfg.connector}>
+            <ProviderConnectButton
+              connectorConfig={ccfg}
+              connectFn={connectFnMap[ccfg.connector.name]}
+              onEvent={(e) => {
+                onEvent?.({type: e.type, ccfgId: ccfg.id})
+              }}
+            />
+          </ConnectorConfigCard>
+        ))}
+      {!debugConnectorConfigs &&
+        configuredIntegrations.map((int) => (
+          <IntegrationCard
+            {...uiProps}
+            key={int.id}
+            integration={{
+              ...int,
+              connectorName: int.connector_name,
+              // connectorConfigId: int.connector_config_id,
+            }}>
+            <ProviderConnectButton
+              connectorConfig={{
+                id: int.connector_config_id,
+                connector: int.connector,
+              }}
+              connectFn={connectFnMap[int.connector_name]}
+              onEvent={(e) => {
+                onEvent?.({type: e.type, ccfgId: int.connector_config_id})
+              }}
+            />
+          </IntegrationCard>
+        ))}
     </div>
   )
 }
