@@ -43,7 +43,7 @@ const nextConfig = {
   redirects: async () => [
     {
       source: '/docs/:p*',
-      destination: 'https://usevenice.readme.io/:p*',
+      destination: 'https://openint.docs.buildwithfern.com/:p*',
       permanent: false,
     },
     {source: '/', destination: '/dashboard', permanent: false},
