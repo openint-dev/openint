@@ -136,6 +136,15 @@ module.exports = [
     },
   },
   {
+    name: 'lever',
+    dirName: 'connector-lever',
+    varName: 'connectorLever',
+    imports: {
+      def: '@openint/connector-lever/def',
+      server: '@openint/connector-lever/server',
+    },
+  },
+  {
     name: 'lunchmoney',
     dirName: 'connector-lunchmoney',
     varName: 'connectorLunchmoney',

@@ -13,6 +13,7 @@ import {default as connectorGoogle} from '@openint/connector-google/server'
 import {default as connectorGreenhouse} from '@openint/connector-greenhouse/server'
 import {default as connectorHeron} from '@openint/connector-heron/server'
 import {default as connectorHubspot} from '@openint/connector-hubspot/server'
+import {default as connectorLever} from '@openint/connector-lever/server'
 import {default as connectorLunchmoney} from '@openint/connector-lunchmoney/server'
 import {default as connectorMerge} from '@openint/connector-merge/server'
 import {default as connectorMongodb} from '@openint/connector-mongodb/server'
@@ -54,6 +55,7 @@ export const serverConnectors = {
   greenhouse: connectorGreenhouse,
   heron: connectorHeron,
   hubspot: connectorHubspot,
+  lever: connectorLever,
   lunchmoney: connectorLunchmoney,
   merge: connectorMerge,
   mongodb: connectorMongodb,
