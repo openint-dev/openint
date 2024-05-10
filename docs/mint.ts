@@ -2,7 +2,8 @@ import apiPages from './api-reference/index.json'
 
 const mintConfig: MintConfig = {
   name: 'OpenInt',
-  openapi: './openint.oas.json',
+  openapi:
+    'https://raw.githubusercontent.com/openint-dev/openint/main/kits/sdk/openapi.json',
   logo: {
     light: '/images/logo/openint-logo.png',
     dark: '/images/logo/openint-logo-dark.webp',
