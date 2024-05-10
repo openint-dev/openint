@@ -225,6 +225,9 @@ importers:
       '@openint/connector-hubspot':
         specifier: workspace:*
         version: link:../../connectors/connector-hubspot
+      '@openint/connector-lever':
+        specifier: workspace:*
+        version: link:../../connectors/connector-lever
       '@openint/connector-lunchmoney':
         specifier: workspace:*
         version: link:../../connectors/connector-lunchmoney
@@ -876,6 +879,21 @@ importers:
       '@opensdks/sdk-hubspot':
         specifier: 0.0.6
         version: 0.0.6
+
+  connectors/connector-lever:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/runtime':
+        specifier: ^0.0.16
+        version: 0.0.16
+      '@opensdks/sdk-lever':
+        specifier: 0.0.1
+        version: 0.0.1
 
   connectors/connector-lunchmoney:
     dependencies:
@@ -5201,6 +5219,12 @@ packages:
 
   /@opensdks/sdk-hubspot@0.0.6:
     resolution: {integrity: sha512-UivI44M/g4XwoQvDq57b9PVdlGeiCYS+6zcFJq5HhEJLzYejg21oSJ+R3LC49TINfde88fZvV+wx/ism62C65A==}
+    dev: false
+
+  /@opensdks/sdk-lever@0.0.1:
+    resolution: {integrity: sha512-Wm3679nRj3N4av5+SSpWRtOZotUUXZIFy0YJpuhZwTHqWFzri1SFl80ssbu0GLfnRN9bF2FMnMgjF05jgMaOjg==}
+    dependencies:
+      '@opensdks/runtime': 0.0.19
     dev: false
 
   /@opensdks/sdk-nango@0.0.4:
