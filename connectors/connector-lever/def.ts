@@ -4,6 +4,9 @@ import {z} from '@openint/util'
 
 export const zConfig = oauthBaseSchema.connectorConfig
 
+/**
+ * Full list of OAuth scopes: https://hire.lever.co/developer/documentation#scopes
+ */
 const oReso = oauthBaseSchema.resourceSettings
 export const zSettings = oReso.extend({
   oauth: oReso.shape.oauth,
@@ -25,7 +28,7 @@ export const leverDef = {
     displayName: 'Lever',
     stage: 'beta',
     categories: ['ats'],
-    logoUrl: '/_assets/logo-lever.svg',
+    logoUrl: '/_assets/logo-lever.png',
   },
 } satisfies ConnectorDef<typeof leverSchemas>
 
