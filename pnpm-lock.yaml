@@ -892,8 +892,8 @@ importers:
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-lever':
-        specifier: 0.0.1
-        version: 0.0.1
+        specifier: 0.0.2
+        version: 0.0.2
 
   connectors/connector-lunchmoney:
     dependencies:
@@ -2183,6 +2183,9 @@ importers:
       '@openint/connector-greenhouse':
         specifier: workspace:*
         version: link:../../connectors/connector-greenhouse
+      '@openint/connector-lever':
+        specifier: workspace:*
+        version: link:../../connectors/connector-lever
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
@@ -5221,8 +5224,8 @@ packages:
     resolution: {integrity: sha512-UivI44M/g4XwoQvDq57b9PVdlGeiCYS+6zcFJq5HhEJLzYejg21oSJ+R3LC49TINfde88fZvV+wx/ism62C65A==}
     dev: false
 
-  /@opensdks/sdk-lever@0.0.1:
-    resolution: {integrity: sha512-Wm3679nRj3N4av5+SSpWRtOZotUUXZIFy0YJpuhZwTHqWFzri1SFl80ssbu0GLfnRN9bF2FMnMgjF05jgMaOjg==}
+  /@opensdks/sdk-lever@0.0.2:
+    resolution: {integrity: sha512-pVuI+G7ZFYqU9dul7Ux0M2LNfl5ZvRsPRFWg014VumhZhgxzONqtgslQW0gNAuM/4lZ3id4xVs73kem7J1lmGA==}
     dependencies:
       '@opensdks/runtime': 0.0.19
     dev: false
