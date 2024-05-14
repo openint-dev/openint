@@ -29,6 +29,7 @@ export const leverDef = {
     stage: 'beta',
     categories: ['ats'],
     logoUrl: '/_assets/logo-lever.png',
+    nangoProvider: 'lever',
   },
 } satisfies ConnectorDef<typeof leverSchemas>
 
