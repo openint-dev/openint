@@ -20,7 +20,7 @@ export const candidate = mapper(
     phone_numbers: 'phone_numbers',
     email_addresses: 'email_addresses',
     tags: 'tags',
-    applications: 'applications',
+    applications: (record) => record.application_ids,
     attachments: 'attachments',
   },
 )

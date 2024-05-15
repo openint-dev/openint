@@ -10,7 +10,7 @@ export const posting = mapper(
     created_at: 'createdAt',
     modified_at: 'updatedAt',
     name: 'text',
-    confidential: 'confidentiality',
+    confidential: (record) => record.confidentiality === 'confidential',
     departments: 'tags',
     // offices: 'offic',
     hiring_managers: 'hiringManager',

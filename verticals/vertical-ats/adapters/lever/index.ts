@@ -28,7 +28,7 @@ export const leverAdapter = {
       items: res.data?.data?.map((d) => applyMapper(mappers.posting, d)) ?? [],
     }
   },
-  // TODO: To implement
+  // TODO: To implement after clarity on implementation details
   listOffers: async ({instance, input}) => {
     const cursor =
       input?.cursor && Number(input?.cursor) > 0
@@ -43,6 +43,9 @@ export const leverAdapter = {
         // },
       },
     })
+
+    // TODO: Possible solution: Get all opportunites and then scan through their offers? Then return the offers object
+
     let nextCursor = undefined
     if (input?.page_size && res.data?.data?.length === input?.page_size) {
       nextCursor = (cursor || 0) + input.page_size
@@ -50,8 +53,8 @@ export const leverAdapter = {
     return {
       has_next_page: !!nextCursor,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
-      items:
-        res.data?.data?.map((d) => applyMapper(mappers.opportunity, d)) ?? [],
+      items: [],
+      // res.data?.data?.map((d) => applyMapper(mappers.opportunity, d)) ?? [],
     }
   },
   listCandidates: async ({instance, input}) => {
@@ -59,37 +62,25 @@ export const leverAdapter = {
       input?.cursor && Number(input?.cursor) > 0
         ? Number(input?.cursor)
         : undefined
-    const res = await instance.GET('/contacts/{id}', {
-      params: {
-        path: {
-          id: 'dummy', // TODO: Somehow get all contact ids here or use a different API to fetch all contacts.
-        },
-      },
-    })
+    const res = await instance.GET('/opportunities')
     let nextCursor = undefined
     if (input?.page_size && [res.data?.data].length === input?.page_size) {
       nextCursor = (cursor || 0) + input.page_size
     }
     return {
-      has_next_page: !!nextCursor,
+      has_next_page: !!res.data?.hasNext,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
       items:
-        [res.data?.data]?.map((d) => applyMapper(mappers.contact, d)) ?? [],
+        [res.data?.data]?.flatMap((d) =>
+          d.map((e) => applyMapper(mappers.opportunity, e)),
+        ) ?? [],
     }
   },
-  listDepartments: async ({instance, input}) => {
-    const cursor =
-      input?.cursor && Number(input?.cursor) > 0
-        ? Number(input?.cursor)
-        : undefined
+  // Note: API does not support pagination
+  listDepartments: async ({instance}) => {
     const res = await instance.GET('/tags')
-    let nextCursor = undefined
-    if (input?.page_size && res.data?.data?.length === input?.page_size) {
-      nextCursor = (cursor || 0) + input.page_size
-    }
     return {
-      has_next_page: !!nextCursor,
-      next_cursor: nextCursor ? String(nextCursor) : undefined,
+      has_next_page: false,
       items:
         res.data?.data?.flatMap(
           (d) => d.data?.map((d) => applyMapper(mappers.tag, d)),
