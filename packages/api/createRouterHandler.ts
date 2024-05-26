@@ -148,12 +148,14 @@ export function createRouterHandler({
   endpoint?: `/${string}`
   router: AnyRouter
 }) {
-  return (req: Request) =>
-    createOpenApiFetchHandler({
+  return async (req: Request) => {
+    const context = await contextFromRequest({req})
+    // More aptly named handleOpenApiFetchRequest as it returns a response already
+    const res = await createOpenApiFetchHandler({
       endpoint,
       req,
       router: router as AppRouter,
-      createContext: contextFromRequest,
+      createContext: () => context,
       // TODO: handle error status code from passthrough endpoints
       // onError, // can only have side effect and not modify response error status code unfortunately...
       responseMeta: ({errors, ctx: _ctx}) => {
@@ -175,4 +177,11 @@ export function createRouterHandler({
         return {}
       },
     })
+    // Pass the resourceId back to the client so there is certainly on which ID
+    // was used to fetch the data
+    if (context.remoteResourceId) {
+      res.headers.set('x-resource-id', context.remoteResourceId)
+    }
+    return res
+  }
 }
