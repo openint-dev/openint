@@ -94,13 +94,18 @@ export function getOpenAPISpec() {
         name: 'x-apikey',
         in: 'header',
       },
+      resourceId: {
+        type: 'apiKey',
+        name: 'x-resource-id',
+        in: 'header',
+      },
     },
     baseUrl: getServerUrl(null) + '/api/v0',
     webhooks,
     components,
   })
   // Unfortunately trpc-openapi is missing bunch of options...
-  oas.security = [{apikey: []}]
+  oas.security = [{apikey: [], resourceId: []}]
   return oas
 }
 
