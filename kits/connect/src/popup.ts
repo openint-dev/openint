@@ -1,7 +1,7 @@
 import type {FrameMessage} from './common'
 import {zFrameMessage} from './common'
 
-export const VeniceFrontend = {
+export const OpenIntFrontend = {
   openMagicLink: async ({url}: {url: string}) => {
     const features = {
       ...popupLayout(500, 600),

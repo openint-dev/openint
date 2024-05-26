@@ -1,4 +1,4 @@
-import {VeniceFrontend} from '@openint/connect'
+import {OpenIntFrontend} from '@openint/connect'
 import {initOpenIntSDK} from '@openint/sdk'
 
 const env = {
@@ -33,7 +33,7 @@ export async function example() {
       },
     })
     .then((r) =>
-      VeniceFrontend.openMagicLink({
+      OpenIntFrontend.openMagicLink({
         url: r.data.url,
       }),
     )
