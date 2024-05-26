@@ -14,9 +14,14 @@ Open source integrations with a vision
 - Extensible
 - Self hostable
 
+## Usage guide (WIP)
+
+- [Getting started code sample](./docs/samples/getting-started.ts)
+
 ## Deployment checklist
 
 First setup dependencies
+
 - Postgres (recommend Vercel postgres)
 - Clerk (will be made optional later)
   - Setup JWT Template -> Supabase
@@ -27,6 +32,7 @@ First setup dependencies
 - Inngest (optional if sync is desired)
 
 Then deploy
+
 - Vercel
   - In addition env vars from the previous dependencies, set up
     - `NEXT_PUBLIC_SERVER_URL` so that it is a nicer url that the unique per deployment URL that comes by default from Vercle
