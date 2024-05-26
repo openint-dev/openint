@@ -107,6 +107,9 @@ export const contextFromRequest = async ({
   )
   let resourceId = req.headers.get('x-resource-id') as Id['reso'] | undefined
   if (!resourceId) {
+    // TODO: How do we allow filtering for organization owned resources?
+    // Specifically making sure that endUserId = null?
+    // TODO: make sure this corresponds to the list resources api
     const resourceFilters = pickBy(
       {
         // endUserId shall be noop when we are in end User viewer as services
