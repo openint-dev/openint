@@ -12,6 +12,13 @@ export const zSettings = oReso.extend({
 export const hubspotSchemas = {
   name: z.literal('hubspot'),
   connectorConfig: zConfig,
+  // TODO: Replace nango with our own oauth handling to support platform credentials via env vars easily
+  // z.object({
+  //   oauth: z.union([
+  //     z.null().openapi({title: 'Use OpenInt platform credentials'}),
+  //     zConfig.shape.oauth.openapi({title: 'Use my own'}),
+  //   ]),
+  // }),
   resourceSettings: zSettings,
   connectOutput: oauthBaseSchema.connectOutput,
 } satisfies ConnectorSchemas

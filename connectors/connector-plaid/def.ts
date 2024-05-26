@@ -28,7 +28,7 @@ export const plaidSchemas = {
     credentials: z
       .union([
         // TODO: This should be z.literal('default') but it does not render well in the UI :/
-        z.null().openapi({title: 'Use Venice platform credentials'}),
+        z.null().openapi({title: 'Use OpenInt platform credentials'}),
         z
           .object({
             clientId: z.string(),
