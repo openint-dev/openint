@@ -1,6 +1,7 @@
 import {clerkClient} from '@clerk/nextjs'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
 import type {RouterContext} from 'packages/engine-backend'
+import {pickBy} from 'remeda'
 import {contextFactory} from '@openint/app-config/backendConfig'
 import {
   kAccessToken,
@@ -9,15 +10,20 @@ import {
   kApikeyUrlParam,
 } from '@openint/app-config/constants'
 import type {Id, Viewer} from '@openint/cdk'
-import {decodeApikey, makeJwtClient} from '@openint/cdk'
+import {decodeApikey, makeJwtClient, zEndUserId, zId} from '@openint/cdk'
 import {envRequired} from '@openint/env'
-import {isHttpError, z, type AnyRouter} from '@openint/vdk'
+import {BadRequestError, isHttpError, z, type AnyRouter} from '@openint/vdk'
 import type {AppRouter} from './appRouter'
 
 export const zOpenIntHeaders = z
   .object({
     [kApikeyHeader]: z.string().nullish(),
-    'x-resource-id': z.string().nullish(),
+    'x-resource-id': zId('reso').nullish(),
+    /** Alternative ways to pass the resource id, works in case there is a single connector */
+    'x-resource-connector-name': z.string().nullish(),
+    'x-resource-connector-config-id': zId('ccfg').nullish(),
+    /** Implied by authorization header when operating in end user mode */
+    'x-resource-end-user-id': zEndUserId.nullish(),
     authorization: z.string().nullish(), // `Bearer ${string}`
   })
   .catchall(z.string().nullish())
@@ -95,10 +101,40 @@ export const contextFromRequest = async ({
   req: Request
 }): Promise<RouterContext> => {
   const viewer = await viewerFromRequest(req)
-  console.log('[trpc.createContext]', {url: req.url, viewer})
+  const context = contextFactory.fromViewer(viewer)
+  const headers = zOpenIntHeaders.parse(
+    Object.fromEntries(req.headers.entries()),
+  )
+  let resourceId = req.headers.get('x-resource-id') as Id['reso'] | undefined
+  if (!resourceId) {
+    const resourceFilters = pickBy(
+      {
+        // endUserId shall be noop when we are in end User viewer as services
+        // are already secured by row level security
+        endUserId: headers['x-resource-end-user-id'],
+        connectorName: headers['x-resource-connector-name'],
+        connectorConfigId: headers['x-resource-connector-config-id'],
+      },
+      (v) => v !== null,
+    )
+    if (Object.keys(resourceFilters).length > 0) {
+      const resources = await context.services.metaService.tables.resource.list(
+        {...resourceFilters, limit: 2},
+      )
+      if (resources.length > 1) {
+        throw new BadRequestError(
+          `Multiple resources found for filter: ${JSON.stringify(
+            resourceFilters,
+          )}`,
+        )
+      }
+      resourceId = resources[0]?.id
+    }
+  }
+  console.log('[trpc.createContext]', {url: req.url, viewer, resourceId})
   return {
-    ...contextFactory.fromViewer(viewer),
-    remoteResourceId: (req.headers.get('x-resource-id') as Id['reso']) ?? null,
+    ...context,
+    remoteResourceId: resourceId ?? null,
   }
 }
 

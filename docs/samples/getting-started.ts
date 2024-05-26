@@ -45,7 +45,7 @@ export async function example() {
     headers: {
       // 'x-apikey': env.OPENINT_API_KEY,
       authorization: `Bearer ${endUserToken}`,
-      'x-resource-id': resourceId,
+      'x-resource-id': resourceId as `reso_${string}`,
     },
   })
 

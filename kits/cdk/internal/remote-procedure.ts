@@ -15,7 +15,7 @@ export async function getRemoteContext(ctx: ProtectedContext) {
   if (!ctx.remoteResourceId) {
     throw new TRPCError({
       code: 'BAD_REQUEST',
-      message: 'x-resource-id header is required',
+      message: 'remoteResourceId missing. Check your x-resource-* headers',
     })
   }
 
