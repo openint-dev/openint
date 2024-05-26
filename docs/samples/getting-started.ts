@@ -50,7 +50,7 @@ export async function example() {
   })
 
   const contacts = openint
-    .GET('/verticals/crm/contact')
+    .GET('/unified/crm/contact')
     .then((r) => r.data.items)
   console.log(contacts)
 }

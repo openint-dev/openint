@@ -72,7 +72,7 @@ export function verticalSource(pipe: _PipelineExpanded): Source {
   async function* iterateMessages() {
     for (const stream of streams) {
       const res = await sdk.GET(
-        `/verticals/${pipe.sourceVertical as 'crm'}/${
+        `/unified/${pipe.sourceVertical as 'crm'}/${
           stream.name as 'account'
         }`,
         {params: {query: {cursor: srcState[stream.name]?.cursor}}},
@@ -105,7 +105,7 @@ export function verticalDestination(pipe: _PipelineExpanded): Destination {
       (m): m is unified.MessageRecord => m.type === 'RECORD',
     )
     return sdk
-      .POST(`/verticals/${pipe.destinationVertical as 'etl'}/write`, {
+      .POST(`/unified/${pipe.destinationVertical as 'etl'}/write`, {
         body: {messages},
       })
       .then((r) => r.data as unified.Message[])

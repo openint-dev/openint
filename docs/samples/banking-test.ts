@@ -20,7 +20,7 @@ const openint = initOpenIntSDK({
   },
 })
 
-void openint.GET('/verticals/banking/category').then((r) => {
+void openint.GET('/unified/banking/category').then((r) => {
   console.log(r.data)
 })
 

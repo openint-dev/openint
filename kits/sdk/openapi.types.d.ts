@@ -3,6 +3,9 @@
  * Do not make direct changes to the file.
  */
 
+/** WithRequired type helpers */
+type WithRequired<T, K extends keyof T> = T & {[P in K]-?: T[P]}
+
 /** OneOf type helpers */
 type Without<T, U> = {[P in Exclude<keyof T, keyof U>]?: never}
 type XOR<T, U> = T | U extends object
@@ -120,147 +123,147 @@ export interface paths {
     get: operations['mgmt-getConnectionSyncConfig']
     put: operations['mgmt-upsertConnectionSyncConfig']
   }
-  '/verticals/sales-engagement/contact': {
+  '/unified/sales-engagement/contact': {
     get: operations['salesEngagement-listContacts']
   }
-  '/verticals/sales-engagement/sequence': {
+  '/unified/sales-engagement/sequence': {
     get: operations['salesEngagement-listSequences']
   }
-  '/verticals/sales-engagement/sequence_state': {
+  '/unified/sales-engagement/sequence_state': {
     get: operations['salesEngagement-listSequenceStates']
     post: operations['salesEngagement-insertSequenceState']
   }
-  '/verticals/sales-engagement/user': {
+  '/unified/sales-engagement/user': {
     get: operations['salesEngagement-listUsers']
   }
-  '/verticals/sales-engagement/account': {
+  '/unified/sales-engagement/account': {
     get: operations['salesEngagement-listAccounts']
   }
-  '/verticals/sales-engagement/mailbox': {
+  '/unified/sales-engagement/mailbox': {
     get: operations['salesEngagement-listMailboxes']
   }
-  '/verticals/sales-engagement/account/_upsert': {
+  '/unified/sales-engagement/account/_upsert': {
     post: operations['salesEngagement-upsertAccount']
   }
-  '/verticals/sales-engagement/contact/_upsert': {
+  '/unified/sales-engagement/contact/_upsert': {
     post: operations['salesEngagement-upsertContact']
   }
-  '/verticals/crm/{entity}/_count': {
+  '/unified/crm/{entity}/_count': {
     get: operations['crm-countEntity']
   }
-  '/verticals/crm/account': {
+  '/unified/crm/account': {
     get: operations['crm-listAccounts']
     post: operations['crm-createAccount']
   }
-  '/verticals/crm/account/{id}': {
+  '/unified/crm/account/{id}': {
     get: operations['crm-getAccount']
     patch: operations['crm-updateAccount']
   }
-  '/verticals/crm/account/_batch_read': {
+  '/unified/crm/account/_batch_read': {
     post: operations['crm-batchReadAccounts']
   }
-  '/verticals/crm/account/_upsert': {
+  '/unified/crm/account/_upsert': {
     post: operations['crm-upsertAccount']
   }
-  '/verticals/crm/contact': {
+  '/unified/crm/contact': {
     get: operations['crm-listContacts']
     post: operations['crm-createContact']
   }
-  '/verticals/crm/contact/{id}': {
+  '/unified/crm/contact/{id}': {
     get: operations['crm-getContact']
     patch: operations['crm-updateContact']
   }
-  '/verticals/crm/contact/_batch_read': {
+  '/unified/crm/contact/_batch_read': {
     post: operations['crm-batchReadContacts']
   }
-  '/verticals/crm/contact/_upsert': {
+  '/unified/crm/contact/_upsert': {
     post: operations['crm-upsertContact']
   }
-  '/verticals/crm/lead': {
+  '/unified/crm/lead': {
     get: operations['crm-listLeads']
   }
-  '/verticals/crm/lead/{id}': {
+  '/unified/crm/lead/{id}': {
     get: operations['crm-getLead']
   }
-  '/verticals/crm/opportunity': {
+  '/unified/crm/opportunity': {
     get: operations['crm-listOpportunities']
   }
-  '/verticals/crm/opportunity/{id}': {
+  '/unified/crm/opportunity/{id}': {
     get: operations['crm-getOpportunity']
   }
-  '/verticals/crm/user': {
+  '/unified/crm/user': {
     get: operations['crm-listUsers']
   }
-  '/verticals/crm/user/{id}': {
+  '/unified/crm/user/{id}': {
     get: operations['crm-getUser']
   }
-  '/verticals/crm/custom_objects/{object_name}': {
+  '/unified/crm/custom_objects/{object_name}': {
     get: operations['crm-listCustomObjectRecords']
     post: operations['crm-createCustomObjectRecord']
   }
-  '/verticals/crm/metadata/objects': {
+  '/unified/crm/metadata/objects': {
     get: operations['crm-metadataListObjects']
     /** @description Create custom object schema */
     post: operations['crm-metadataCreateObject']
   }
-  '/verticals/crm/metadata/objects/{object_name}/properties': {
+  '/unified/crm/metadata/objects/{object_name}/properties': {
     get: operations['crm-metadataListObjectProperties']
   }
-  '/verticals/crm/metadata/associations': {
+  '/unified/crm/metadata/associations': {
     post: operations['crm-metadataCreateAssociation']
   }
-  '/verticals/banking/account': {
+  '/unified/banking/account': {
     get: operations['banking-listAccounts']
   }
-  '/verticals/banking/merchant': {
+  '/unified/banking/merchant': {
     get: operations['banking-listMerchants']
   }
-  '/verticals/banking/category': {
+  '/unified/banking/category': {
     get: operations['banking-listCategories']
   }
-  '/verticals/banking/transaction': {
+  '/unified/banking/transaction': {
     get: operations['banking-listTransactions']
   }
-  '/verticals/accounting/account': {
+  '/unified/accounting/account': {
     get: operations['accounting-listAccounts']
   }
-  '/verticals/accounting/expense': {
+  '/unified/accounting/expense': {
     get: operations['accounting-listExpenses']
   }
-  '/verticals/accounting/vendor': {
+  '/unified/accounting/vendor': {
     get: operations['accounting-listVendors']
   }
-  '/verticals/pta/account': {
+  '/unified/pta/account': {
     get: operations['pta-listAccounts']
   }
-  '/verticals/pta/transaction': {
+  '/unified/pta/transaction': {
     get: operations['pta-listTransactions']
   }
-  '/verticals/pta/commodity': {
+  '/unified/pta/commodity': {
     get: operations['pta-listCommodities']
   }
-  '/verticals/ats/job': {
+  '/unified/ats/job': {
     get: operations['ats-listJobs']
   }
-  '/verticals/ats/offer': {
+  '/unified/ats/offer': {
     get: operations['ats-listOffers']
   }
-  '/verticals/ats/candidate': {
+  '/unified/ats/candidate': {
     get: operations['ats-listCandidates']
   }
-  '/verticals/ats/department': {
+  '/unified/ats/department': {
     get: operations['ats-listDepartments']
   }
-  '/verticals/etl/read/{stream}': {
+  '/unified/etl/read/{stream}': {
     get: operations['etl-readStream']
   }
-  '/verticals/etl/discover': {
+  '/unified/etl/discover': {
     get: operations['etl-discover']
   }
-  '/verticals/etl/read': {
+  '/unified/etl/read': {
     post: operations['etl-read']
   }
-  '/verticals/etl/write': {
+  '/unified/etl/write': {
     post: operations['etl-write']
   }
 }
@@ -450,6 +453,26 @@ export interface components {
     }
     /** @enum {string} */
     Link: 'banking'
+    'core.integration': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at?: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      name: string
+      logo_url?: string | null
+      login_url?: string | null
+      categories?: Array<'accounting' | 'banking' | 'hris'> | null
+      connector_name: string
+    }
+    'core.configured_integration': WithRequired<
+      {
+        /** @description Must start with 'ccfg_' */
+        connector_config_id: string
+      } & components['schemas']['core.integration'],
+      'connector_config_id'
+    >
     Pipeline: {
       createdAt: string
       updatedAt: string
@@ -547,15 +570,21 @@ export interface components {
         type: string
         schema?: string | null
       } | null
-      unified_objects?: Array<{
-        object: string
-      }> | null
-      standard_objects?: Array<{
-        object: string
-      }> | null
-      custom_objects?: Array<{
-        object: string
-      }> | null
+      unified_objects?:
+        | Array<{
+            object: string
+          }>
+        | null
+      standard_objects?:
+        | Array<{
+            object: string
+          }>
+        | null
+      custom_objects?:
+        | Array<{
+            object: string
+          }>
+        | null
     }
     'sales-engagement.contact': {
       id: string
@@ -565,12 +594,8 @@ export interface components {
       account_id?: string
       job_title: string
       address: components['schemas']['sales-engagement.address']
-      email_addresses: Array<
-        components['schemas']['sales-engagement.email_address']
-      >
-      phone_numbers: Array<
-        components['schemas']['sales-engagement.phone_number']
-      >
+      email_addresses: Array<components['schemas']['sales-engagement.email_address']>
+      phone_numbers: Array<components['schemas']['sales-engagement.phone_number']>
       open_count: number
       click_count: number
       reply_count: number
@@ -691,10 +716,12 @@ export interface components {
       /** @description date-time */
       last_activity_at?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?: Array<{
-        phone_number: string | null
-        phone_number_type: components['schemas']['crm.phone_number_type']
-      }> | null
+      phone_numbers?:
+        | Array<{
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }>
+        | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       last_modified_at?: string | null
     }
@@ -729,10 +756,12 @@ export interface components {
       number_of_employees?: number | null
       website?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?: Array<{
-        phone_number: string | null
-        phone_number_type: components['schemas']['crm.phone_number_type']
-      }> | null
+      phone_numbers?:
+        | Array<{
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }>
+        | null
       owner_id?: string | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       passthrough_fields?: {
@@ -783,10 +812,12 @@ export interface components {
       converted_contact_id?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
       email_addresses?: Array<components['schemas']['crm.email_address']> | null
-      phone_numbers?: Array<{
-        phone_number: string | null
-        phone_number_type: components['schemas']['crm.phone_number_type']
-      }> | null
+      phone_numbers?:
+        | Array<{
+            phone_number: string | null
+            phone_number_type: components['schemas']['crm.phone_number_type']
+          }>
+        | null
       created_at?: string | null
       is_deleted?: boolean | null
       last_modified_at?: string | null
@@ -1821,19 +1852,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<{
-              id: string
-              /** @description ISO8601 date string */
-              updated_at?: string
-              raw_data?: {
-                [key: string]: unknown
-              }
-              name: string
-              logo_url?: string | null
-              login_url?: string | null
-              categories?: Array<'accounting' | 'banking' | 'hris'> | null
-              connector_name: string
-            }>
+            items: Array<components['schemas']['core.integration']>
           }
         }
       }
@@ -1873,19 +1892,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: Array<{
-              id: string
-              /** @description ISO8601 date string */
-              updated_at?: string
-              raw_data?: {
-                [key: string]: unknown
-              }
-              name: string
-              logo_url?: string | null
-              login_url?: string | null
-              categories?: Array<'accounting' | 'banking' | 'hris'> | null
-              connector_name: string
-            }>
+            items: Array<components['schemas']['core.configured_integration']>
           }
         }
       }
@@ -2396,15 +2403,21 @@ export interface operations {
             type: string
             schema?: string | null
           } | null
-          unified_objects?: Array<{
-            object: string
-          }> | null
-          standard_objects?: Array<{
-            object: string
-          }> | null
-          custom_objects?: Array<{
-            object: string
-          }> | null
+          unified_objects?:
+            | Array<{
+                object: string
+              }>
+            | null
+          standard_objects?:
+            | Array<{
+                object: string
+              }>
+            | null
+          custom_objects?:
+            | Array<{
+                object: string
+              }>
+            | null
         }
       }
     }
@@ -2519,9 +2532,7 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<
-              components['schemas']['sales-engagement.sequenceState']
-            >
+            items: Array<components['schemas']['sales-engagement.sequenceState']>
           }
         }
       }
@@ -4555,36 +4566,34 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<
-            OneOf<
-              [
-                {
-                  streams: Array<{
-                    name: string
-                    json_schema: {
-                      [key: string]: unknown
-                    }
-                    source_defined_primary_key?: string[][]
-                  }>
-                  /** @enum {string} */
-                  type: 'CATALOG'
-                },
-                {
-                  record: {
-                    data?: unknown
-                    stream: string
+          'application/json': Array<OneOf<
+            [
+              {
+                streams: Array<{
+                  name: string
+                  json_schema: {
+                    [key: string]: unknown
                   }
-                  /** @enum {string} */
-                  type: 'RECORD'
-                },
-                {
-                  state?: unknown
-                  /** @enum {string} */
-                  type: 'STATE'
-                },
-              ]
-            >
-          >
+                  source_defined_primary_key?: string[][]
+                }>
+                /** @enum {string} */
+                type: 'CATALOG'
+              },
+              {
+                record: {
+                  data?: unknown
+                  stream: string
+                }
+                /** @enum {string} */
+                type: 'RECORD'
+              },
+              {
+                state?: unknown
+                /** @enum {string} */
+                type: 'STATE'
+              },
+            ]
+          >>
         }
       }
       /** @description Invalid input data */

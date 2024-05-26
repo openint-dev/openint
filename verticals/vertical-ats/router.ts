@@ -13,7 +13,7 @@ import * as unified from './unifiedModels'
 export {unified}
 
 function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
-  return {openapi: {...meta, path: `/verticals/ats${meta.path}`}}
+  return {openapi: {...meta, path: `/unified/ats${meta.path}`}}
 }
 
 const procedure = verticalProcedure(adapters)

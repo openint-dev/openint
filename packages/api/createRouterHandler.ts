@@ -149,6 +149,7 @@ export function createRouterHandler({
   router: AnyRouter
 }) {
   return async (req: Request) => {
+    console.log(req.url)
     const context = await contextFromRequest({req})
     // More aptly named handleOpenApiFetchRequest as it returns a response already
     const res = await createOpenApiFetchHandler({

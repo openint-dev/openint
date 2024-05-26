@@ -1553,40 +1553,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "description": "ISO8601 date string"
-                          },
-                          "raw_data": {
-                            "type": "object",
-                            "additionalProperties": {}
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "logo_url": {
-                            "type": ["string", "null"]
-                          },
-                          "login_url": {
-                            "type": ["string", "null"]
-                          },
-                          "categories": {
-                            "type": ["array", "null"],
-                            "items": {
-                              "type": "string",
-                              "enum": ["accounting", "banking", "hris"]
-                            }
-                          },
-                          "connector_name": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["id", "name", "connector_name"]
+                        "$ref": "#/components/schemas/core.integration"
                       }
                     }
                   },
@@ -1680,40 +1647,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "description": "ISO8601 date string"
-                          },
-                          "raw_data": {
-                            "type": "object",
-                            "additionalProperties": {}
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "logo_url": {
-                            "type": ["string", "null"]
-                          },
-                          "login_url": {
-                            "type": ["string", "null"]
-                          },
-                          "categories": {
-                            "type": ["array", "null"],
-                            "items": {
-                              "type": "string",
-                              "enum": ["accounting", "banking", "hris"]
-                            }
-                          },
-                          "connector_name": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["id", "name", "connector_name"]
+                        "$ref": "#/components/schemas/core.configured_integration"
                       }
                     }
                   },
@@ -2712,7 +2646,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/contact": {
+    "/unified/sales-engagement/contact": {
       "get": {
         "operationId": "salesEngagement-listContacts",
         "parameters": [
@@ -2780,7 +2714,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/sequence": {
+    "/unified/sales-engagement/sequence": {
       "get": {
         "operationId": "salesEngagement-listSequences",
         "parameters": [
@@ -2848,7 +2782,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/sequence_state": {
+    "/unified/sales-engagement/sequence_state": {
       "get": {
         "operationId": "salesEngagement-listSequenceStates",
         "parameters": [
@@ -2997,7 +2931,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/user": {
+    "/unified/sales-engagement/user": {
       "get": {
         "operationId": "salesEngagement-listUsers",
         "parameters": [
@@ -3065,7 +2999,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/account": {
+    "/unified/sales-engagement/account": {
       "get": {
         "operationId": "salesEngagement-listAccounts",
         "parameters": [
@@ -3133,7 +3067,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/mailbox": {
+    "/unified/sales-engagement/mailbox": {
       "get": {
         "operationId": "salesEngagement-listMailboxes",
         "parameters": [
@@ -3201,7 +3135,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/account/_upsert": {
+    "/unified/sales-engagement/account/_upsert": {
       "post": {
         "operationId": "salesEngagement-upsertAccount",
         "requestBody": {
@@ -3300,7 +3234,7 @@
         }
       }
     },
-    "/verticals/sales-engagement/contact/_upsert": {
+    "/unified/sales-engagement/contact/_upsert": {
       "post": {
         "operationId": "salesEngagement-upsertContact",
         "requestBody": {
@@ -3481,7 +3415,7 @@
         }
       }
     },
-    "/verticals/crm/{entity}/_count": {
+    "/unified/crm/{entity}/_count": {
       "get": {
         "operationId": "crm-countEntity",
         "parameters": [
@@ -3544,7 +3478,7 @@
         }
       }
     },
-    "/verticals/crm/account": {
+    "/unified/crm/account": {
       "get": {
         "operationId": "crm-listAccounts",
         "parameters": [
@@ -3687,7 +3621,7 @@
         }
       }
     },
-    "/verticals/crm/account/{id}": {
+    "/unified/crm/account/{id}": {
       "get": {
         "operationId": "crm-getAccount",
         "parameters": [
@@ -3828,7 +3762,7 @@
         }
       }
     },
-    "/verticals/crm/account/_batch_read": {
+    "/unified/crm/account/_batch_read": {
       "post": {
         "operationId": "crm-batchReadAccounts",
         "requestBody": {
@@ -3893,7 +3827,7 @@
         }
       }
     },
-    "/verticals/crm/account/_upsert": {
+    "/unified/crm/account/_upsert": {
       "post": {
         "operationId": "crm-upsertAccount",
         "requestBody": {
@@ -3970,7 +3904,7 @@
         }
       }
     },
-    "/verticals/crm/contact": {
+    "/unified/crm/contact": {
       "get": {
         "operationId": "crm-listContacts",
         "parameters": [
@@ -4113,7 +4047,7 @@
         }
       }
     },
-    "/verticals/crm/contact/{id}": {
+    "/unified/crm/contact/{id}": {
       "get": {
         "operationId": "crm-getContact",
         "parameters": [
@@ -4254,7 +4188,7 @@
         }
       }
     },
-    "/verticals/crm/contact/_batch_read": {
+    "/unified/crm/contact/_batch_read": {
       "post": {
         "operationId": "crm-batchReadContacts",
         "requestBody": {
@@ -4319,7 +4253,7 @@
         }
       }
     },
-    "/verticals/crm/contact/_upsert": {
+    "/unified/crm/contact/_upsert": {
       "post": {
         "operationId": "crm-upsertContact",
         "requestBody": {
@@ -4396,7 +4330,7 @@
         }
       }
     },
-    "/verticals/crm/lead": {
+    "/unified/crm/lead": {
       "get": {
         "operationId": "crm-listLeads",
         "parameters": [
@@ -4482,7 +4416,7 @@
         }
       }
     },
-    "/verticals/crm/lead/{id}": {
+    "/unified/crm/lead/{id}": {
       "get": {
         "operationId": "crm-getLead",
         "parameters": [
@@ -4546,7 +4480,7 @@
         }
       }
     },
-    "/verticals/crm/opportunity": {
+    "/unified/crm/opportunity": {
       "get": {
         "operationId": "crm-listOpportunities",
         "parameters": [
@@ -4632,7 +4566,7 @@
         }
       }
     },
-    "/verticals/crm/opportunity/{id}": {
+    "/unified/crm/opportunity/{id}": {
       "get": {
         "operationId": "crm-getOpportunity",
         "parameters": [
@@ -4696,7 +4630,7 @@
         }
       }
     },
-    "/verticals/crm/user": {
+    "/unified/crm/user": {
       "get": {
         "operationId": "crm-listUsers",
         "parameters": [
@@ -4782,7 +4716,7 @@
         }
       }
     },
-    "/verticals/crm/user/{id}": {
+    "/unified/crm/user/{id}": {
       "get": {
         "operationId": "crm-getUser",
         "parameters": [
@@ -4846,7 +4780,7 @@
         }
       }
     },
-    "/verticals/crm/custom_objects/{object_name}": {
+    "/unified/crm/custom_objects/{object_name}": {
       "get": {
         "operationId": "crm-listCustomObjectRecords",
         "parameters": [
@@ -5009,7 +4943,7 @@
         }
       }
     },
-    "/verticals/crm/metadata/objects": {
+    "/unified/crm/metadata/objects": {
       "get": {
         "operationId": "crm-metadataListObjects",
         "parameters": [
@@ -5152,7 +5086,7 @@
         }
       }
     },
-    "/verticals/crm/metadata/objects/{object_name}/properties": {
+    "/unified/crm/metadata/objects/{object_name}/properties": {
       "get": {
         "operationId": "crm-metadataListObjectProperties",
         "parameters": [
@@ -5212,7 +5146,7 @@
         }
       }
     },
-    "/verticals/crm/metadata/associations": {
+    "/unified/crm/metadata/associations": {
       "post": {
         "operationId": "crm-metadataCreateAssociation",
         "requestBody": {
@@ -5292,7 +5226,7 @@
         }
       }
     },
-    "/verticals/banking/account": {
+    "/unified/banking/account": {
       "get": {
         "operationId": "banking-listAccounts",
         "parameters": [
@@ -5378,7 +5312,7 @@
         }
       }
     },
-    "/verticals/banking/merchant": {
+    "/unified/banking/merchant": {
       "get": {
         "operationId": "banking-listMerchants",
         "parameters": [
@@ -5464,7 +5398,7 @@
         }
       }
     },
-    "/verticals/banking/category": {
+    "/unified/banking/category": {
       "get": {
         "operationId": "banking-listCategories",
         "parameters": [
@@ -5550,7 +5484,7 @@
         }
       }
     },
-    "/verticals/banking/transaction": {
+    "/unified/banking/transaction": {
       "get": {
         "operationId": "banking-listTransactions",
         "parameters": [
@@ -5636,7 +5570,7 @@
         }
       }
     },
-    "/verticals/accounting/account": {
+    "/unified/accounting/account": {
       "get": {
         "operationId": "accounting-listAccounts",
         "parameters": [
@@ -5737,7 +5671,7 @@
         }
       }
     },
-    "/verticals/accounting/expense": {
+    "/unified/accounting/expense": {
       "get": {
         "operationId": "accounting-listExpenses",
         "parameters": [
@@ -5843,7 +5777,7 @@
         }
       }
     },
-    "/verticals/accounting/vendor": {
+    "/unified/accounting/vendor": {
       "get": {
         "operationId": "accounting-listVendors",
         "parameters": [
@@ -5941,7 +5875,7 @@
         }
       }
     },
-    "/verticals/pta/account": {
+    "/unified/pta/account": {
       "get": {
         "operationId": "pta-listAccounts",
         "parameters": [
@@ -6028,7 +5962,7 @@
         }
       }
     },
-    "/verticals/pta/transaction": {
+    "/unified/pta/transaction": {
       "get": {
         "operationId": "pta-listTransactions",
         "parameters": [
@@ -6115,7 +6049,7 @@
         }
       }
     },
-    "/verticals/pta/commodity": {
+    "/unified/pta/commodity": {
       "get": {
         "operationId": "pta-listCommodities",
         "parameters": [
@@ -6202,7 +6136,7 @@
         }
       }
     },
-    "/verticals/ats/job": {
+    "/unified/ats/job": {
       "get": {
         "operationId": "ats-listJobs",
         "parameters": [
@@ -6389,7 +6323,7 @@
         }
       }
     },
-    "/verticals/ats/offer": {
+    "/unified/ats/offer": {
       "get": {
         "operationId": "ats-listOffers",
         "parameters": [
@@ -6515,7 +6449,7 @@
         }
       }
     },
-    "/verticals/ats/candidate": {
+    "/unified/ats/candidate": {
       "get": {
         "operationId": "ats-listCandidates",
         "parameters": [
@@ -6702,7 +6636,7 @@
         }
       }
     },
-    "/verticals/ats/department": {
+    "/unified/ats/department": {
       "get": {
         "operationId": "ats-listDepartments",
         "parameters": [
@@ -6830,7 +6764,7 @@
         }
       }
     },
-    "/verticals/etl/read/{stream}": {
+    "/unified/etl/read/{stream}": {
       "get": {
         "operationId": "etl-readStream",
         "parameters": [
@@ -6932,7 +6866,7 @@
         }
       }
     },
-    "/verticals/etl/discover": {
+    "/unified/etl/discover": {
       "get": {
         "operationId": "etl-discover",
         "responses": {
@@ -6991,7 +6925,7 @@
         }
       }
     },
-    "/verticals/etl/read": {
+    "/unified/etl/read": {
       "post": {
         "operationId": "etl-read",
         "requestBody": {
@@ -7143,7 +7077,7 @@
         }
       }
     },
-    "/verticals/etl/write": {
+    "/unified/etl/write": {
       "post": {
         "operationId": "etl-write",
         "requestBody": {
@@ -7308,6 +7242,11 @@
       "apikey": {
         "type": "apiKey",
         "name": "x-apikey",
+        "in": "header"
+      },
+      "resourceId": {
+        "type": "apiKey",
+        "name": "x-resource-id",
         "in": "header"
       }
     },
@@ -7611,6 +7550,57 @@
       "Link": {
         "type": "string",
         "enum": ["banking"]
+      },
+      "core.integration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "ISO8601 date string"
+          },
+          "raw_data": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo_url": {
+            "type": ["string", "null"]
+          },
+          "login_url": {
+            "type": ["string", "null"]
+          },
+          "categories": {
+            "type": ["array", "null"],
+            "items": {
+              "type": "string",
+              "enum": ["accounting", "banking", "hris"]
+            }
+          },
+          "connector_name": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name", "connector_name"]
+      },
+      "core.configured_integration": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/core.integration"
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "connector_config_id": {
+            "type": "string",
+            "description": "Must start with 'ccfg_'"
+          }
+        },
+        "required": ["connector_config_id"]
       },
       "Pipeline": {
         "type": "object",
@@ -8964,7 +8954,8 @@
   },
   "security": [
     {
-      "apikey": []
+      "apikey": [],
+      "resourceId": []
     }
   ]
 }
