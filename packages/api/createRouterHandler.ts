@@ -118,7 +118,7 @@ export const contextFromRequest = async ({
         connectorName: headers['x-resource-connector-name'],
         connectorConfigId: headers['x-resource-connector-config-id'],
       },
-      (v) => v !== null,
+      (v) => v != null,
     )
     if (Object.keys(resourceFilters).length > 0) {
       const resources = await context.services.metaService.tables.resource.list(
