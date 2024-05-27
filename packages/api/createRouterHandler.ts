@@ -149,7 +149,22 @@ export function createRouterHandler({
   router: AnyRouter
 }) {
   return async (req: Request) => {
-    console.log(req.url)
+    // Respond to CORS preflight requests
+    if (req.method.toUpperCase() === 'OPTIONS') {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          'Access-Control-Allow-Credentials': 'true',
+          // Need to use the request origin for credentials-mode "include" to work
+          'Access-Control-Allow-Origin': req.headers.get('origin') ?? '*',
+          // prettier-ignore
+          'Access-Control-Allow-Methods': req.headers.get('access-control-request-method') ?? '*',
+          // prettier-ignore
+          'Access-Control-Allow-Headers': req.headers.get('access-control-request-headers')?? '*',
+        },
+      })
+    }
+    // Now handle for reals
     const context = await contextFromRequest({req})
     // More aptly named handleOpenApiFetchRequest as it returns a response already
     const res = await createOpenApiFetchHandler({
