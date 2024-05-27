@@ -1,5 +1,6 @@
 import '@openint/app-config/register.node'
 import {cookies} from 'next/headers'
+import {redirect} from 'next/navigation'
 import {kAccessToken} from '@openint/app-config/constants'
 import {envRequired} from '@openint/app-config/env'
 import type {Id} from '@openint/cdk'
@@ -29,6 +30,17 @@ export default async function ConnectCallback({
   // @see https://github.com/vercel/next.js/issues/43704
   searchParams: Record<string, string | string[] | undefined>
 }) {
+  // TODO: Can we use cookies-next to read cookie in this environment?
+  const cookie = cookies().get(kConnectSession)
+  if (!cookie) {
+    // Temporary hack to redirect to the right place to accomodate for oauth url not fully changed yet
+    const url = new URL('https://app.venice.is/connect/callback')
+    for (const [key, value] of Object.entries(searchParams)) {
+      url.searchParams.append(key, value as string)
+    }
+    return redirect(url.toString())
+  }
+
   const msg = await (async (): Promise<FrameMessage | null> => {
     try {
       const nango = makeNangoClient({secretKey: envRequired.NANGO_SECRET_KEY})
@@ -39,8 +51,6 @@ export default async function ConnectCallback({
         return null
       }
 
-      // TODO: Can we use cookies-next to read cookie in this environment?
-      const cookie = cookies().get(kConnectSession)
       if (!cookie) {
         return {
           type: 'ERROR',
