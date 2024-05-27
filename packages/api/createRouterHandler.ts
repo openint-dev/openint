@@ -1,5 +1,6 @@
 import {clerkClient} from '@clerk/nextjs'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
+import {applyLinks, corsLink} from '@opensdks/fetch-links'
 import type {RouterContext} from 'packages/engine-backend'
 import {pickBy} from 'remeda'
 import {contextFactory} from '@openint/app-config/backendConfig'
@@ -148,7 +149,7 @@ export function createRouterHandler({
   endpoint?: `/${string}`
   router: AnyRouter
 }) {
-  return async (req: Request) => {
+  const openapiRouteHandler = async (req: Request) => {
     // Respond to CORS preflight requests
     // TODO: Turn this into a fetch link...
     const corsHeaders = {
@@ -202,4 +203,5 @@ export function createRouterHandler({
     }
     return res
   }
+  return (req: Request) => applyLinks(req, [corsLink(), openapiRouteHandler])
 }
