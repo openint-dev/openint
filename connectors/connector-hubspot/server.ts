@@ -3,9 +3,11 @@ import type {ConnectorServer} from '@openint/cdk'
 import type {hubspotSchemas} from './def'
 
 export const hubspotServer = {
-  newInstance: ({fetchLinks}) =>
+  newInstance: ({fetchLinks, settings}) =>
     initHubspotSDK({
-      headers: {authorization: 'Bearer ...'}, // This will be populated by auth provider
+      headers: {
+        authorization: `Bearer ${settings.oauth.credentials.access_token}`,
+      },
       links: (defaultLinks) => [...fetchLinks, ...defaultLinks],
     }),
   // passthrough: (instance, input) =>

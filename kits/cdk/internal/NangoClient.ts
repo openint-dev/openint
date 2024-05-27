@@ -172,7 +172,9 @@ export const zConnection = zConnectionShort.extend({
   provider_config_key: z.string(),
   credentials: z.object({
     type: zAuthMode,
-    access_token: z.string(),
+    /** For API key auth... */
+    api_key: z.string().nullish(),
+    access_token: z.string().optional(),
     refresh_token: z.string().optional(),
     expires_at: z.string().datetime(),
     raw: z.object({
@@ -186,7 +188,13 @@ export const zConnection = zConnectionShort.extend({
       scope: z.string().optional(),
     }),
   }),
-  connection_config: z.record(z.unknown()),
+  connection_config: z
+    .object({
+      portalId: z.number().nullish(),
+      instance_url: z.string().nullish(),
+    })
+    .catchall(z.unknown())
+    .nullish(),
   metadata: z.record(z.unknown()).nullable(),
   credentials_iv: z.string(),
   credentials_tag: z.string(),
