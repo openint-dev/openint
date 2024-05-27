@@ -76,15 +76,13 @@ export const leverAdapter = {
         ) ?? [],
     }
   },
-  // Note: API does not support pagination
+  // Note: Check if API does or does not support pagination
   listDepartments: async ({instance}) => {
     const res = await instance.GET('/tags')
-    return {
-      has_next_page: false,
-      items:
-        res.data?.data?.flatMap(
-          (d) => d.data?.map((d) => applyMapper(mappers.tag, d)),
-        ) ?? [],
+    const resp = {
+      has_next_page: !!res.data?.hasNext,
+      items: res.data?.data?.flatMap((d) => applyMapper(mappers.tag, d)) ?? [],
     }
+    return resp
   },
 } satisfies ATSAdapter<LeverSDKType>

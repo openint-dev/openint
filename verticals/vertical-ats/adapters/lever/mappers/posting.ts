@@ -7,8 +7,8 @@ export const posting = mapper(
   unified.job,
   {
     id: (record) => String(record.id),
-    created_at: 'createdAt',
-    modified_at: 'updatedAt',
+    created_at: (record) => String(record.createdAt),
+    modified_at: (record) => String(record.updatedAt),
     name: 'text',
     confidential: (record) => record.confidentiality === 'confidential',
     departments: 'tags',

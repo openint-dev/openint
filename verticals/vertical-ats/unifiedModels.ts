@@ -16,7 +16,7 @@ export const department = z.object({
   id: z.string().nullish(),
   created_at: z.string().nullish(),
   modified_at: z.string().nullish(),
-  name: z.string(),
+  name: z.string().nullish(),
   parent_id: z.string().nullish(),
   parent_department_external_id: z.string().nullish(),
   child_ids: z.array(z.string().nullish()).nullish(),
@@ -32,7 +32,7 @@ export const job = z.object({
   confidential: z.boolean(),
   departments: z.array(department),
   offices: z.array(z.record(z.unknown())).nullish(),
-  hiring_managers: z.array(z.record(z.unknown())),
+  hiring_managers: z.unknown(), // TODO: unify this w/ greenhouse if possible.
   recruiters: z.array(z.record(z.unknown())).nullish(),
   raw_data: z.record(z.unknown()).optional(),
 })
