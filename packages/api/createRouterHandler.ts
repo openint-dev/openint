@@ -150,19 +150,18 @@ export function createRouterHandler({
 }) {
   return async (req: Request) => {
     // Respond to CORS preflight requests
+    // TODO: Turn this into a fetch link...
+    const corsHeaders = {
+      'Access-Control-Allow-Credentials': 'true',
+      // Need to use the request origin for credentials-mode "include" to work
+      'Access-Control-Allow-Origin': req.headers.get('origin') ?? '*',
+      // prettier-ignore
+      'Access-Control-Allow-Methods': req.headers.get('access-control-request-method') ?? '*',
+      // prettier-ignore
+      'Access-Control-Allow-Headers': req.headers.get('access-control-request-headers')?? '*',
+    }
     if (req.method.toUpperCase() === 'OPTIONS') {
-      return new Response(null, {
-        status: 204,
-        headers: {
-          'Access-Control-Allow-Credentials': 'true',
-          // Need to use the request origin for credentials-mode "include" to work
-          'Access-Control-Allow-Origin': req.headers.get('origin') ?? '*',
-          // prettier-ignore
-          'Access-Control-Allow-Methods': req.headers.get('access-control-request-method') ?? '*',
-          // prettier-ignore
-          'Access-Control-Allow-Headers': req.headers.get('access-control-request-headers')?? '*',
-        },
-      })
+      return new Response(null, {status: 204, headers: corsHeaders})
     }
     // Now handle for reals
     const context = await contextFromRequest({req})
@@ -197,6 +196,9 @@ export function createRouterHandler({
     // was used to fetch the data
     if (context.remoteResourceId) {
       res.headers.set('x-resource-id', context.remoteResourceId)
+    }
+    for (const [k, v] of Object.entries(corsHeaders)) {
+      res.headers.set(k, v)
     }
     return res
   }
