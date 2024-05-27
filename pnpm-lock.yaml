@@ -892,8 +892,8 @@ importers:
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-lever':
-        specifier: 0.0.5
-        version: 0.0.5
+        specifier: 0.0.6
+        version: 0.0.6
 
   connectors/connector-lunchmoney:
     dependencies:
@@ -5224,8 +5224,8 @@ packages:
     resolution: {integrity: sha512-UivI44M/g4XwoQvDq57b9PVdlGeiCYS+6zcFJq5HhEJLzYejg21oSJ+R3LC49TINfde88fZvV+wx/ism62C65A==}
     dev: false
 
-  /@opensdks/sdk-lever@0.0.5:
-    resolution: {integrity: sha512-B2JWAuCIXS204QU1HXSe/xqQhPFGkH1ogz7/r0EdMfYIcBoP3VY6JidXqjVNCjkPV547dA/67OlxZ31M+M4Slg==}
+  /@opensdks/sdk-lever@0.0.6:
+    resolution: {integrity: sha512-LtNjds6serzQ8f9PZGrXPPVK0LqJshwY8HwFFk4LnVkTzdCAA83PC8XwSguA/+/prHuUDxc9usJIz4wRXllfRw==}
     dependencies:
       '@opensdks/runtime': 0.0.19
     dev: false

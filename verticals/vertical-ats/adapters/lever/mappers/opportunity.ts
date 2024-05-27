@@ -7,14 +7,14 @@ export const opportunity = mapper(
   unified.candidate,
   {
     id: (record) => String(record.id),
-    created_at: 'createdAt',
-    modified_at: 'updatedAt',
+    created_at: (record) => String(record.createdAt),
+    modified_at: (record) => String(record.updatedAt),
     name: 'name',
     company: 'headline',
     email_addresses: (record) => record.emails?.map((e) => ({value: e})), // No concept of type in Lever emails
     phone_numbers: (record) => record.phones?.map((e) => ({value: e})),
     is_private: (record) => record.confidentiality === 'confidential',
-    last_interaction_at: 'lastInteractionAt',
+    last_interaction_at: (record) => String(record.lastInteractionAt),
     tags: 'tags',
     applications: 'applications',
     locations: (record) => record.phones?.map((e) => ({value: e})),

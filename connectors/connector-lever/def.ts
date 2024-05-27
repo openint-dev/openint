@@ -2,7 +2,9 @@ import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
 import {connHelpers, oauthBaseSchema} from '@openint/cdk'
 import {z} from '@openint/util'
 
-export const zConfig = oauthBaseSchema.connectorConfig
+export const zConfig = oauthBaseSchema.connectorConfig.extend({
+  envName: z.enum(['sandbox', 'production']),
+})
 
 /**
  * Full list of OAuth scopes: https://hire.lever.co/developer/documentation#scopes
