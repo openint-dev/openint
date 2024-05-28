@@ -17,6 +17,7 @@ Open source integrations with a vision
 ## Usage guide (WIP)
 
 - [Getting started code sample](./docs/samples/getting-started.ts)
+- [Full next.js example](https://github.com/openint-dev/examples)
 
 ## Deployment checklist
 
@@ -38,6 +39,27 @@ Then deploy
     - `NEXT_PUBLIC_SERVER_URL` so that it is a nicer url that the unique per deployment URL that comes by default from Vercle
       - For things like magic link generation
   - Disable deployment protection is the simplest way to get Inngest branch environments to work
+
+## Development guide
+
+### Local https development
+
+Some services (e.g. Clerk, certain oauth redirect / webhooks) require HTTPS, which is a challenge for local development.
+
+One could use ngrok, but an alternative is to modify /etc/hosts along with a locally provisioned & trusted https certificate and handle SSL termination
+
+```sh
+# Hosts table modification
+echo '127.0.0.1       local.openint.dev' | sudo tee -a /etc/hosts
+# Provission certificate
+brew install mkcert
+mkcert -install # follow the installation instructions of mkcert if any
+cd ~/.ssh
+mkcert local.openint.dev
+# Local ssl terminiation
+npm install -g local-ssl-proxy
+local-ssl-proxy --source 443 --target 3000 --cert ~/.ssh/local.openint.dev.pem --key ~/.ssh/local.openint.dev-key.pem
+```
 
 ## Contributors
 
