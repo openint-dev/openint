@@ -257,8 +257,6 @@ export interface ConnectorServer<
     config: T['_types']['connectorConfig']
     settings: T['_types']['resourceSettings']
     fetchLinks: FetchLink[]
-    /** @deprecated Do not use for now */
-    getCredentials?: () => MaybePromise<Record<string, unknown>>
     /** @deprecated, use fetchLinks instead for things like token refreshes or connection status update */
     onSettingsChange: (
       newSettings: T['_types']['resourceSettings'],

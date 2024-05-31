@@ -6,7 +6,7 @@ import * as unified from './unifiedModels'
 export {unified}
 
 function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
-  return {openapi: {...meta, path: `/verticals/sales-engagement${meta.path}`}}
+  return {openapi: {...meta, path: `/unified/sales-engagement${meta.path}`}}
 }
 
 const procedure = verticalProcedure(adapters)

@@ -1,6 +1,8 @@
 import {clerkClient} from '@clerk/nextjs'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
+import {applyLinks, corsLink} from '@opensdks/fetch-links'
 import type {RouterContext} from 'packages/engine-backend'
+import {pickBy} from 'remeda'
 import {contextFactory} from '@openint/app-config/backendConfig'
 import {
   kAccessToken,
@@ -9,15 +11,20 @@ import {
   kApikeyUrlParam,
 } from '@openint/app-config/constants'
 import type {Id, Viewer} from '@openint/cdk'
-import {decodeApikey, makeJwtClient} from '@openint/cdk'
+import {decodeApikey, makeJwtClient, zEndUserId, zId} from '@openint/cdk'
 import {envRequired} from '@openint/env'
-import {isHttpError, z, type AnyRouter} from '@openint/vdk'
+import {BadRequestError, isHttpError, z, type AnyRouter} from '@openint/vdk'
 import type {AppRouter} from './appRouter'
 
 export const zOpenIntHeaders = z
   .object({
     [kApikeyHeader]: z.string().nullish(),
-    'x-resource-id': z.string().nullish(),
+    'x-resource-id': zId('reso').nullish(),
+    /** Alternative ways to pass the resource id, works in case there is a single connector */
+    'x-resource-connector-name': z.string().nullish(),
+    'x-resource-connector-config-id': zId('ccfg').nullish(),
+    /** Implied by authorization header when operating in end user mode */
+    'x-resource-end-user-id': zEndUserId.nullish(),
     authorization: z.string().nullish(), // `Bearer ${string}`
   })
   .catchall(z.string().nullish())
@@ -95,10 +102,43 @@ export const contextFromRequest = async ({
   req: Request
 }): Promise<RouterContext> => {
   const viewer = await viewerFromRequest(req)
-  console.log('[trpc.createContext]', {url: req.url, viewer})
+  const context = contextFactory.fromViewer(viewer)
+  const headers = zOpenIntHeaders.parse(
+    Object.fromEntries(req.headers.entries()),
+  )
+  let resourceId = req.headers.get('x-resource-id') as Id['reso'] | undefined
+  if (!resourceId) {
+    // TODO: How do we allow filtering for organization owned resources?
+    // Specifically making sure that endUserId = null?
+    // TODO: make sure this corresponds to the list resources api
+    const resourceFilters = pickBy(
+      {
+        // endUserId shall be noop when we are in end User viewer as services
+        // are already secured by row level security
+        endUserId: headers['x-resource-end-user-id'],
+        connectorName: headers['x-resource-connector-name'],
+        connectorConfigId: headers['x-resource-connector-config-id'],
+      },
+      (v) => v != null,
+    )
+    if (Object.keys(resourceFilters).length > 0) {
+      const resources = await context.services.metaService.tables.resource.list(
+        {...resourceFilters, limit: 2},
+      )
+      if (resources.length > 1) {
+        throw new BadRequestError(
+          `Multiple resources found for filter: ${JSON.stringify(
+            resourceFilters,
+          )}`,
+        )
+      }
+      resourceId = resources[0]?.id
+    }
+  }
+  console.log('[trpc.createContext]', {url: req.url, viewer, resourceId})
   return {
-    ...contextFactory.fromViewer(viewer),
-    remoteResourceId: (req.headers.get('x-resource-id') as Id['reso']) ?? null,
+    ...context,
+    remoteResourceId: resourceId ?? null,
   }
 }
 
@@ -109,12 +149,29 @@ export function createRouterHandler({
   endpoint?: `/${string}`
   router: AnyRouter
 }) {
-  return (req: Request) =>
-    createOpenApiFetchHandler({
+  const openapiRouteHandler = async (req: Request) => {
+    // Respond to CORS preflight requests
+    // TODO: Turn this into a fetch link...
+    const corsHeaders = {
+      'Access-Control-Allow-Credentials': 'true',
+      // Need to use the request origin for credentials-mode "include" to work
+      'Access-Control-Allow-Origin': req.headers.get('origin') ?? '*',
+      // prettier-ignore
+      'Access-Control-Allow-Methods': req.headers.get('access-control-request-method') ?? '*',
+      // prettier-ignore
+      'Access-Control-Allow-Headers': req.headers.get('access-control-request-headers')?? '*',
+    }
+    if (req.method.toUpperCase() === 'OPTIONS') {
+      return new Response(null, {status: 204, headers: corsHeaders})
+    }
+    // Now handle for reals
+    const context = await contextFromRequest({req})
+    // More aptly named handleOpenApiFetchRequest as it returns a response already
+    const res = await createOpenApiFetchHandler({
       endpoint,
       req,
       router: router as AppRouter,
-      createContext: contextFromRequest,
+      createContext: () => context,
       // TODO: handle error status code from passthrough endpoints
       // onError, // can only have side effect and not modify response error status code unfortunately...
       responseMeta: ({errors, ctx: _ctx}) => {
@@ -136,4 +193,15 @@ export function createRouterHandler({
         return {}
       },
     })
+    // Pass the resourceId back to the client so there is certainly on which ID
+    // was used to fetch the data
+    if (context.remoteResourceId) {
+      res.headers.set('x-resource-id', context.remoteResourceId)
+    }
+    for (const [k, v] of Object.entries(corsHeaders)) {
+      res.headers.set(k, v)
+    }
+    return res
+  }
+  return (req: Request) => applyLinks(req, [corsLink(), openapiRouteHandler])
 }

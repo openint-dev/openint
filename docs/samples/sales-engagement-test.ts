@@ -4,13 +4,13 @@ const openint = initOpenIntSDK({
   baseUrl: process.env['_VENICE_API_HOST'],
   headers: {
     'x-apikey': process.env['_VENICE_API_KEY'],
-    'x-resource-id': process.env['_APOLLO_RESOURCE_ID'],
+    'x-resource-id': process.env['_APOLLO_RESOURCE_ID'] as `reso_${string}`,
     // resourceId: process.env['_OUTREACH_RESOURCE_ID'],
     // resourceId: process.env['_SALESLOFT_RESOURCE_ID'],
   },
 })
 
-void openint.GET('/verticals/sales-engagement/contact').then((r) => {
+void openint.GET('/unified/sales-engagement/contact').then((r) => {
   console.log(r.data)
 })
 

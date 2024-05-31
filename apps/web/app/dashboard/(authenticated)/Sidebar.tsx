@@ -71,9 +71,14 @@ const sectionedLinks: Array<{
       //   icon: 'Footprints',
       // },
       {
-        title: 'API',
+        title: 'API Key',
         href: '/dashboard/api-access',
         icon: 'Key',
+      },
+      {
+        title: 'API Docs',
+        href: '/api/v0',
+        icon: 'Cpu',
       },
       // Nothing interesting in here anymore
       // {

@@ -15,12 +15,12 @@ const openint = initOpenIntSDK({
   baseUrl: process.env['_VENICE_API_HOST'],
   headers: {
     'x-apikey': process.env['_VENICE_API_KEY'],
-    'x-resource-id': process.env['_XERO_RESOURCE_ID'],
+    'x-resource-id': process.env['_XERO_RESOURCE_ID'] as `reso_${string}`,
     // resourceId: process.env['_QBO_RESOURCE_ID'],
   },
 })
 
-void openint.GET('/verticals/banking/category').then((r) => {
+void openint.GET('/unified/banking/category').then((r) => {
   console.log(r.data)
 })
 

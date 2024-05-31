@@ -519,8 +519,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
       '@opensdks/fetch-links':
-        specifier: 0.0.18
-        version: 0.0.18
+        specifier: ^0.0.19
+        version: 0.0.19
       '@sentry/nextjs':
         specifier: 7.53.0
         version: 7.53.0(next@14.0.2)(react@18.2.0)(webpack@5.74.0)
@@ -1024,8 +1024,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
       '@opensdks/fetch-links':
-        specifier: 0.0.18
-        version: 0.0.18
+        specifier: ^0.0.19
+        version: 0.0.19
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
@@ -1339,8 +1339,8 @@ importers:
         specifier: ^1.11.0
         version: 1.11.0
       '@opensdks/fetch-links':
-        specifier: 0.0.18
-        version: 0.0.18
+        specifier: ^0.0.19
+        version: 0.0.19
 
   docs:
     devDependencies:
@@ -1396,8 +1396,8 @@ importers:
         specifier: workspace:*
         version: link:../../utils/zod
       '@opensdks/fetch-links':
-        specifier: 0.0.18
-        version: 0.0.18
+        specifier: ^0.0.19
+        version: 0.0.19
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
@@ -1501,8 +1501,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/trpc
       '@opensdks/fetch-links':
-        specifier: 0.0.18
-        version: 0.0.18
+        specifier: ^0.0.19
+        version: 0.0.19
       '@opensdks/util-zod':
         specifier: 0.0.15
         version: 0.0.15
@@ -1567,6 +1567,9 @@ importers:
       '@openint/vertical-sales-engagement':
         specifier: workspace:*
         version: link:../../verticals/vertical-sales-engagement
+      '@opensdks/fetch-links':
+        specifier: ^0.0.19
+        version: 0.0.19
       '@opensdks/util-zod':
         specifier: 0.0.15
         version: 0.0.15
@@ -5183,6 +5186,10 @@ packages:
 
   /@opensdks/fetch-links@0.0.18:
     resolution: {integrity: sha512-EhBj92wLXoj3pF4ERxzoEhAlwlefIzQ31At0zaksSbA9zqMlod9DyfypQRX/6J8w4iZzraV33BtFEk7l98nsLA==}
+
+  /@opensdks/fetch-links@0.0.19:
+    resolution: {integrity: sha512-rGFjhN61qkLWVSrffEkYHGstCFT+3RQ/jUFHL2tpyJ9he6aNoX80ABsRxf9DCrQole5L/wWuq88luUeAnfTMBQ==}
+    dev: false
 
   /@opensdks/runtime@0.0.16:
     resolution: {integrity: sha512-aCRhxlWr2e+hB38quP2tLkaPGZNPMV9rBE+IoTwDoHS4mql2dyn7HvxRYisoU3XmdaMCLvbf8+H/7Nrj02tMpg==}

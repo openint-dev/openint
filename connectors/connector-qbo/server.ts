@@ -23,7 +23,7 @@ export const qboServer = {
       // Access token may be out of date, we are relying on fetchLinks to contain a middleware to
       // either refresh the token or proxy the request and with its own tokens
       // Which means that in practice this is probably not gonna be used...
-      accessToken: settings.oauth.credentials.access_token,
+      accessToken: settings.oauth.credentials.access_token!,
       links: (defaultLinks) => [
         (req, next) => {
           if (qbo.clientOptions.baseUrl) {

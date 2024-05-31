@@ -22,7 +22,7 @@
     "@openint/engine-frontend": "workspace:*",
     "@openint/ui": "workspace:*",
     "@openint/util": "workspace:*",
-    "@opensdks/fetch-links": "0.0.18",
+    "@opensdks/fetch-links": "^0.0.19",
     "@sentry/nextjs": "7.53.0",
     "@stoplight/elements": "7.7.10",
     "@supabase/realtime-js": "2.7.2",

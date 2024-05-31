@@ -5,7 +5,6 @@ import type {ProtectedContext} from '@openint/trpc'
 import {protectedProcedure, TRPCError} from '@openint/trpc'
 import {
   nangoConnectionWithCredentials,
-  nangoProxyLink,
   toNangoConnectionId,
   toNangoProviderConfigKey,
 } from './nangoProxyLink'
@@ -15,7 +14,7 @@ export async function getRemoteContext(ctx: ProtectedContext) {
   if (!ctx.remoteResourceId) {
     throw new TRPCError({
       code: 'BAD_REQUEST',
-      message: 'x-resource-id header is required',
+      message: 'remoteResourceId missing. Check your x-resource-* headers',
     })
   }
 
@@ -33,42 +32,38 @@ export async function getRemoteContext(ctx: ProtectedContext) {
   const providerConfigKey = toNangoProviderConfigKey(
     resource.connectorConfigId, // ctx.providerName
   )
-
-  const instance: unknown = resource.connectorConfig.connector.newInstance?.({
-    config: resource.connectorConfig.config,
-    settings: resource.settings,
-    fetchLinks: compact([
-      logLink(),
-      resource.connectorConfig.connector.metadata?.nangoProvider &&
-        ctx.env.NANGO_SECRET_KEY &&
-        nangoProxyLink({
-          secretKey: ctx.env.NANGO_SECRET_KEY,
-          connectionId,
-          providerConfigKey,
-        }),
-    ]),
-    getCredentials: async () => {
-      const nango = initNangoSDK({
-        headers: {
-          authorization: `Bearer ${
-            ctx.env.NANGO_SECRET_KEY
-            // ctx.required['x-nango-secret-key']
-          }`,
-        },
-      })
-      const conn = await nango
+  const nango = initNangoSDK({
+    headers: {authorization: `Bearer ${ctx.env.NANGO_SECRET_KEY}`},
+  })
+  const settings = {
+    ...resource.settings,
+    ...(resource.connectorConfig.connector.metadata?.nangoProvider && {
+      oauth: await nango
         .GET('/connection/{connectionId}', {
           params: {
             path: {connectionId},
             query: {provider_config_key: providerConfigKey},
           },
         })
-        .then((r) => nangoConnectionWithCredentials.parse(r.data))
-      return {
-        access_token: conn.credentials.access_token,
-        instance_url: conn.connection_config?.instance_url,
-      }
-    },
+        .then((r) => nangoConnectionWithCredentials.parse(r.data)),
+    }),
+  }
+
+  const instance: unknown = resource.connectorConfig.connector.newInstance?.({
+    config: resource.connectorConfig.config,
+    settings,
+    fetchLinks: compact([
+      logLink(),
+      // No more, has issues.
+      // resource.connectorConfig.connector.metadata?.nangoProvider &&
+      //   ctx.env.NANGO_SECRET_KEY &&
+      //   nangoProxyLink({
+      //     secretKey: ctx.env.NANGO_SECRET_KEY,
+      //     connectionId,
+      //     providerConfigKey,
+      //   }),
+    ]),
+
     onSettingsChange: (settings) =>
       ctx.services.metaLinks.patch('resource', resource.id, {settings}),
   })
