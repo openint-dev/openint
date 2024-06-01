@@ -1,5 +1,5 @@
 {
-  "name": "@openint/vertical-crm",
+  "name": "@openint/unified-crm",
   "dependencies": {
     "@openint/vdk": "workspace:*",
     "@opensdks/sdk-hubspot": "0.0.6",

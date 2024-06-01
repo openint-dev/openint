@@ -1,5 +1,5 @@
 {
-  "name": "@openint/vertical-ats",
+  "name": "@openint/unified-ats",
   "dependencies": {
     "@openint/connector-greenhouse": "workspace:*",
     "@openint/connector-lever": "workspace:*",

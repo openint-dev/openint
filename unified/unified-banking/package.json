@@ -1,5 +1,5 @@
 {
-  "name": "@openint/vertical-banking",
+  "name": "@openint/unified-banking",
   "dependencies": {
     "@openint/cdk": "workspace:*",
     "@openint/vdk": "workspace:*",

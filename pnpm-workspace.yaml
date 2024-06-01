@@ -4,7 +4,7 @@ packages:
   - 'dev-packages/*'
   - 'tbd/*'
   - 'connectors/*'
-  - 'verticals/*'
+  - 'unified/*'
   - 'kits/*'
   - 'utils/*'
   - 'docs/'

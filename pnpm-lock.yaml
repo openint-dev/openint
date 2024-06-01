@@ -1356,12 +1356,12 @@ importers:
       '@openint/sdk':
         specifier: workspace:*
         version: link:../kits/sdk
-      '@openint/vertical-banking':
+      '@openint/unified-banking':
         specifier: workspace:*
-        version: link:../verticals/vertical-banking
-      '@openint/vertical-etl':
+        version: link:../unified/unified-banking
+      '@openint/unified-etl':
         specifier: workspace:*
-        version: link:../verticals/vertical-etl
+        version: link:../unified/unified-etl
       '@opensdks/runtime':
         specifier: ^0.0.16
         version: 0.0.16
@@ -1543,30 +1543,30 @@ importers:
       '@openint/trpc':
         specifier: workspace:*
         version: link:../trpc
+      '@openint/unified-accounting':
+        specifier: workspace:*
+        version: link:../../unified/unified-accounting
+      '@openint/unified-ats':
+        specifier: workspace:*
+        version: link:../../unified/unified-ats
+      '@openint/unified-banking':
+        specifier: workspace:*
+        version: link:../../unified/unified-banking
+      '@openint/unified-crm':
+        specifier: workspace:*
+        version: link:../../unified/unified-crm
+      '@openint/unified-etl':
+        specifier: workspace:*
+        version: link:../../unified/unified-etl
+      '@openint/unified-pta':
+        specifier: workspace:*
+        version: link:../../unified/unified-pta
+      '@openint/unified-sales-engagement':
+        specifier: workspace:*
+        version: link:../../unified/unified-sales-engagement
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
-      '@openint/vertical-accounting':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-accounting
-      '@openint/vertical-ats':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-ats
-      '@openint/vertical-banking':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-banking
-      '@openint/vertical-crm':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-crm
-      '@openint/vertical-etl':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-etl
-      '@openint/vertical-pta':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-pta
-      '@openint/vertical-sales-engagement':
-        specifier: workspace:*
-        version: link:../../verticals/vertical-sales-engagement
       '@opensdks/fetch-links':
         specifier: ^0.0.19
         version: 0.0.19
@@ -2116,9 +2116,9 @@ importers:
       '@openint/sync':
         specifier: workspace:*
         version: link:../../kits/sync
-      '@openint/vertical-etl':
+      '@openint/unified-etl':
         specifier: workspace:*
-        version: link:../../verticals/vertical-etl
+        version: link:../../unified/unified-etl
       '@opensdks/sdk-supaglue':
         specifier: 0.0.3
         version: 0.0.3
@@ -2148,31 +2148,7 @@ importers:
         specifier: ^0.20.12
         version: 0.20.14
 
-  utils/openapi-client:
-    dependencies:
-      openapi-fetch:
-        specifier: 0.8.1
-        version: 0.8.1
-      openapi-typescript-helpers:
-        specifier: 0.0.4
-        version: 0.0.4
-
-  utils/types:
-    dependencies:
-      type-fest:
-        specifier: 4.8.2
-        version: 4.8.2
-
-  utils/zod:
-    dependencies:
-      zod:
-        specifier: 3.22.4
-        version: 3.22.4
-      zod-openapi:
-        specifier: 2.11.0
-        version: 2.11.0(zod@3.22.4)
-
-  verticals/vertical-accounting:
+  unified/unified-accounting:
     dependencies:
       '@openint/connector-qbo':
         specifier: workspace:*
@@ -2181,7 +2157,7 @@ importers:
         specifier: workspace:*
         version: link:../../kits/vdk
 
-  verticals/vertical-ats:
+  unified/unified-ats:
     dependencies:
       '@openint/connector-greenhouse':
         specifier: workspace:*
@@ -2193,7 +2169,7 @@ importers:
         specifier: workspace:*
         version: link:../../kits/vdk
 
-  verticals/vertical-banking:
+  unified/unified-banking:
     dependencies:
       '@openint/cdk':
         specifier: workspace:*
@@ -2221,7 +2197,7 @@ importers:
         specifier: workspace:*
         version: link:../../utils/types
 
-  verticals/vertical-crm:
+  unified/unified-crm:
     dependencies:
       '@openint/vdk':
         specifier: workspace:*
@@ -2245,7 +2221,7 @@ importers:
         specifier: 1.6.1
         version: 1.6.1
 
-  verticals/vertical-etl:
+  unified/unified-etl:
     dependencies:
       '@openint/connector-revert':
         specifier: workspace:*
@@ -2254,7 +2230,7 @@ importers:
         specifier: workspace:*
         version: link:../../kits/vdk
 
-  verticals/vertical-pta:
+  unified/unified-pta:
     dependencies:
       '@openint/vdk':
         specifier: workspace:*
@@ -2270,7 +2246,7 @@ importers:
         specifier: 2.3.2
         version: 2.3.2
 
-  verticals/vertical-sales-engagement:
+  unified/unified-sales-engagement:
     dependencies:
       '@openint/vdk':
         specifier: workspace:*
@@ -2284,6 +2260,30 @@ importers:
       '@opensdks/sdk-salesloft':
         specifier: 0.0.17
         version: 0.0.17
+
+  utils/openapi-client:
+    dependencies:
+      openapi-fetch:
+        specifier: 0.8.1
+        version: 0.8.1
+      openapi-typescript-helpers:
+        specifier: 0.0.4
+        version: 0.0.4
+
+  utils/types:
+    dependencies:
+      type-fest:
+        specifier: 4.8.2
+        version: 4.8.2
+
+  utils/zod:
+    dependencies:
+      zod:
+        specifier: 3.22.4
+        version: 3.22.4
+      zod-openapi:
+        specifier: 2.11.0
+        version: 2.11.0(zod@3.22.4)
 
 packages:
 

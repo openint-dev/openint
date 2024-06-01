@@ -1,5 +1,5 @@
 {
-  "name": "@openint/vertical-accounting",
+  "name": "@openint/unified-accounting",
   "dependencies": {
     "@openint/connector-qbo": "workspace:*",
     "@openint/vdk": "workspace:*"

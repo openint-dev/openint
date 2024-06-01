@@ -1,5 +1,5 @@
 {
-  "name": "@openint/vertical-pta",
+  "name": "@openint/unified-pta",
   "dependencies": {
     "@openint/vdk": "workspace:*",
     "luxon": "2.4.0"

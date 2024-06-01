@@ -1,5 +1,3 @@
-// import {accountingRouter} from './verticals/accounting'
-
 import type {inferRouterInputs, inferRouterOutputs} from '@openint/trpc'
 import {trpc} from './_base'
 import {adminRouter} from './adminRouter'

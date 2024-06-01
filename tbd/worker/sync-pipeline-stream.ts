@@ -1,7 +1,7 @@
 import {compact} from 'remeda'
 import type {_PipelineExpanded} from '@openint/engine-backend/services/dbService'
 import {initOpenIntSDK} from '@openint/sdk'
-import type {unified} from '@openint/vertical-etl'
+import type {unified} from '@openint/unified-etl'
 import {flatMap, noopWritable, streamFromIterable, tap} from './stream'
 
 type Source = ReadableStream<unified.Message>
@@ -72,9 +72,7 @@ export function verticalSource(pipe: _PipelineExpanded): Source {
   async function* iterateMessages() {
     for (const stream of streams) {
       const res = await sdk.GET(
-        `/unified/${pipe.sourceVertical as 'crm'}/${
-          stream.name as 'account'
-        }`,
+        `/unified/${pipe.sourceVertical as 'crm'}/${stream.name as 'account'}`,
         {params: {query: {cursor: srcState[stream.name]?.cursor}}},
       )
       yield res.data.items.map(

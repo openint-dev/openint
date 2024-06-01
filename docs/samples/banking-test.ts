@@ -1,7 +1,7 @@
 import {createRouterHandler} from '@openint/api'
 import {loopbackLink} from '@openint/loopback-link'
 import {initOpenIntSDK} from '@openint/sdk'
-import bankingRouter from '@openint/vertical-banking'
+import bankingRouter from '@openint/unified-banking'
 
 const openint = initOpenIntSDK({
   links: [

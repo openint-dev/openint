@@ -1,7 +1,7 @@
 // TODO: Deprecate all of these...
-import type * as Pta from '../../verticals/vertical-pta/pta-types'
+import type * as Pta from '../../unified/unified-pta/pta-types'
 
 export type {Pta}
-export * from '../../verticals/vertical-pta/pta-utils'
+export * from '../../unified/unified-pta/pta-utils'
 
-export {bankingLink} from '../../verticals/vertical-banking/bankingLink'
+export {bankingLink} from '../../unified/unified-banking/bankingLink'

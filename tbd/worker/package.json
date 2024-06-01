@@ -11,7 +11,7 @@
     "@openint/events": "workspace:*",
     "@openint/sdk": "workspace:*",
     "@openint/sync": "workspace:*",
-    "@openint/vertical-etl": "workspace:*",
+    "@openint/unified-etl": "workspace:*",
     "@opensdks/sdk-supaglue": "0.0.3",
     "drizzle-orm": "^0.29.3",
     "inngest": "^3.12.0",
