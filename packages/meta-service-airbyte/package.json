@@ -3,23 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "codegen": "openapi-typescript --redoc ./redocly.yaml",
     "download": "concurrently npm:download:*",
-    "download:api:connections": "curl --fail https://dash.readme.com/api/v1/api-registry/1fzx42nlmiamr92 > ./api/airbyte-api-connections.oas.json",
-    "download:api:destinations": "curl --fail https://dash.readme.com/api/v1/api-registry/gfcyn0jlmiapjvj > ./api/airbyte-api-destinations.oas.json",
-    "download:api:health": "curl --fail https://dash.readme.com/api/v1/api-registry/emmodlofvl1ak > ./api/airbyte-api-health.oas.json",
-    "download:api:jobs": "curl --fail https://dash.readme.com/api/v1/api-registry/53bc34lmianc5u > ./api/airbyte-api-jobs.oas.json",
-    "download:api:sources": "curl --fail https://dash.readme.com/api/v1/api-registry/fy7juyjlmianuz5 > ./api/airbyte-api-sources.oas.json",
-    "download:api:streams": "curl --fail https://dash.readme.com/api/v1/api-registry/16vf9n2rlmiap00w > ./api/airbyte-api-streams.oas.json",
-    "download:api:workspaces": "curl --fail https://dash.readme.com/api/v1/api-registry/8jsbe2vlplmiaoidp > ./api/airbyte-api-workspaces.oas.json",
     "download:low-code-connector": "curl --fail https://raw.githubusercontent.com/airbytehq/airbyte/master/airbyte-cdk/python/airbyte_cdk/sources/declarative/declarative_component_schema.yaml | ./bin/yaml2json.js -o ./protocol/low-code-connector.oas",
-    "download:private-api": "curl --fail https://raw.githubusercontent.com/airbytehq/airbyte/master/airbyte-cdk/java/airbyte-cdk/airbyte-api/src/main/openapi/config.yaml | ./bin/yaml2json.js -o ./api/airbyte-private-api.oas",
     "download:protocol": "curl --fail https://raw.githubusercontent.com/airbytehq/airbyte-protocol/main/protocol-models/src/main/resources/airbyte_protocol/airbyte_protocol.yaml | ./bin/yaml2json.js -o ./protocol/protocol.oas"
   },
   "dependencies": {
     "@openint/cdk": "workspace:*",
     "@openint/meta-service-postgres": "workspace:*",
     "@openint/util": "workspace:*",
+    "@opensdks/sdk-airbyte": "^0.0.1",
     "@trpc/server": "10.40.0",
     "@zodios/core": "10.9.6",
     "@zodios/fetch": "11.0.0-beta.19",
@@ -27,7 +19,6 @@
   },
   "devDependencies": {
     "@openint/engine-backend": "workspace:*",
-    "@redocly/cli": "1.4.0",
     "concurrently": "8.2.2",
     "openapi-fetch": "0.8.1",
     "openapi-typescript": "7.0.0-next.3",

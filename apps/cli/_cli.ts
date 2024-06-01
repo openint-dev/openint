@@ -21,7 +21,6 @@ import {makeTogglClient} from '@openint/connector-toggl'
 import {makeWiseClient} from '@openint/connector-wise'
 import {makeYodleeClient} from '@openint/connector-yodlee'
 import {getEnv} from '@openint/env'
-import {AirbytePublicSDK} from '@openint/meta-service-airbyte/airbyte-sdk'
 import {makePostgresMetaService} from '@openint/meta-service-postgres'
 import {initOpenIntSDK} from '@openint/sdk'
 import type {ZFunctionMap} from '@openint/util'
@@ -86,8 +85,6 @@ if (require.main === module) {
     saltedge: () => makeSaltedgeClient(intConfig('saltedge')),
     nango: () =>
       makeNangoClient({secretKey: process.env['_NANGO_SECRET_KEY']!}),
-    airbyte: () =>
-      AirbytePublicSDK({accessToken: process.env['_AIRBYTE_ACCESS_TOKEN']!}),
     sdk: () =>
       initOpenIntSDK({
         headers: {

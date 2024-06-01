@@ -1,18 +1,9 @@
-import createClient from 'openapi-fetch'
+import {initAirbyteSDK} from '@opensdks/sdk-airbyte'
 import {z} from 'zod'
 import type {MetaService} from '@openint/engine-backend'
 import {makePostgresMetaService} from '@openint/meta-service-postgres'
+
 // import {createApiClient} from './api/airbyte-private-api.gen'
-
-import type {InfoFromPaths} from '@openint/util'
-import {makeOpenApiClient} from '@openint/util'
-import type {paths} from './api/airbyte-private-api.gen'
-
-const http = createClient<paths>({baseUrl: 'https://platform.brexapis.com'})
-
-const client = makeOpenApiClient<InfoFromPaths<paths>>({
-  baseUrl: 'https://platform.brexapis.com', // TODO: get this from openAPI.json
-})
 
 const zAirbyteMetaConfig = z.object({
   postgresUrl: z.string(),
@@ -33,16 +24,16 @@ export const makeAirbyteMetaService = z
       viewer: {role: 'system'},
     })
 
-    // const client = createApiClient(cfg.apiUrl, {
-    //   // axiosConfig: {auth: cfg.auth},
-    // })
+    const airbyte = initAirbyteSDK({
+      headers: {authorization: `Bearer ${'TODO'}`},
+    })
 
-    void http
+    void airbyte.config
       .POST('/v1/connections/list', {
         body: {workspaceId: ''},
         // workspaceId: cfg._temp_workspaceId,
       })
-      .then((res) => res as any)
+      .then((res) => res.data as any)
 
     return {
       ...service,
@@ -51,14 +42,12 @@ export const makeAirbyteMetaService = z
         pipeline: {
           ...service.tables.pipeline,
           list: () =>
-            client
-              .post('/v1/connections/list', {
-                bodyJson: {
-                  workspaceId: '',
-                },
+            airbyte.config
+              .POST('/v1/connections/list', {
+                body: {workspaceId: ''},
                 // workspaceId: cfg._temp_workspaceId,
               })
-              .then((res) => res.connections as any),
+              .then((res) => res.data.connections as any),
         },
       },
     }
