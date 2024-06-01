@@ -4,23 +4,23 @@ export const offer = z.object({
   id: z.string(),
   created_at: z.string(),
   modified_at: z.string(),
-  application: z.string(),
-  closed_at: z.string(),
-  sent_at: z.string(),
-  start_date: z.string(),
-  status: z.string(),
+  application: z.string().nullish(),
+  closed_at: z.string().nullish(),
+  sent_at: z.string().nullish(),
+  start_date: z.string().nullish(),
+  status: z.string().nullish(),
   raw_data: z.record(z.unknown()).optional(),
 })
 
 export const department = z.object({
-  id: z.string(),
+  id: z.string().nullish(),
   created_at: z.string().nullish(),
   modified_at: z.string().nullish(),
-  name: z.string(),
+  name: z.string().nullish(),
   parent_id: z.string().nullish(),
   parent_department_external_id: z.string().nullish(),
-  child_ids: z.array(z.string().nullish()),
-  child_department_external_ids: z.array(z.string().nullish()),
+  child_ids: z.array(z.string().nullish()).nullish(),
+  child_department_external_ids: z.array(z.string().nullish()).nullish(),
   raw_data: z.record(z.unknown()).optional(),
 })
 
@@ -31,38 +31,39 @@ export const job = z.object({
   name: z.string(),
   confidential: z.boolean(),
   departments: z.array(department),
-  offices: z.array(z.record(z.unknown())),
-  hiring_managers: z.array(z.record(z.unknown())),
-  recruiters: z.array(z.record(z.unknown())),
+  offices: z.array(z.record(z.unknown())).nullish(),
+  hiring_managers: z.unknown(), // TODO: unify this w/ greenhouse if possible.
+  recruiters: z.array(z.record(z.unknown())).nullish(),
   raw_data: z.record(z.unknown()).optional(),
 })
 
-const phoneNumberSchema = z.object({
-  value: z.string().nullish(),
-  phone_number_type: z.string().nullish(),
-})
+// const phoneNumberSchema = z.object({
+//   value: z.string().nullish(),
+//   phone_number_type: z.string().nullish(),
+// })
 
-const emailAddressSchema = z.object({
-  value: z.string().email().nullish(),
-  email_address_type: z.string().nullish(),
-})
+// const emailAddressSchema = z.object({
+//   value: z.string().email().nullish(),
+//   email_address_type: z.string().nullish(),
+// })
 
 export const candidate = z.object({
   id: z.string(),
-  created_at: z.string(),
-  modified_at: z.string(),
-  first_name: z.string(),
-  last_name: z.string(),
-  company: z.string().nullable(),
-  title: z.string().nullable(),
-  last_interaction_at: z.string(),
-  is_private: z.boolean(),
-  can_email: z.boolean(),
-  locations: z.array(z.unknown()),
-  phone_numbers: z.array(phoneNumberSchema),
-  email_addresses: z.array(emailAddressSchema),
-  tags: z.array(z.string()),
-  applications: z.array(z.unknown()),
-  attachments: z.array(z.unknown()),
+  created_at: z.string().nullish(),
+  modified_at: z.string().nullish(),
+  name: z.string().nullish(),
+  first_name: z.string().nullish(),
+  last_name: z.string().nullish(),
+  company: z.string().nullish(),
+  title: z.string().nullish(),
+  last_interaction_at: z.string().nullish(),
+  is_private: z.boolean().nullish(),
+  can_email: z.boolean().nullish(),
+  locations: z.array(z.unknown()).nullish(),
+  phone_numbers: z.array(z.record(z.unknown())).nullish(),
+  email_addresses: z.array(z.record(z.unknown())).nullish(),
+  tags: z.array(z.string()).nullish(),
+  applications: z.array(z.unknown()).nullish(),
+  attachments: z.array(z.unknown()).nullish(),
   raw_data: z.record(z.unknown()).optional(),
 })

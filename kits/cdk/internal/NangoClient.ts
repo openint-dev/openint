@@ -143,6 +143,7 @@ const zNangoProvider = z.enum([
   'zoho-inventory',
   'zoho-invoice',
   'zoom',
+  'lever-sandbox',
 ])
 
 export const zAuthMode = z.enum(['OAUTH2', 'OAUTH1', 'BASIC', 'API_KEY'])
