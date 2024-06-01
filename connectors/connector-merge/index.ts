@@ -12,6 +12,5 @@ export const mergeImpl = {
 export * from './client'
 export * from './def'
 export * from './merge-logo.svg'
-export * from './MergeClient'
 export * from './server'
 // codegen:end

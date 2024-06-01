@@ -6,7 +6,6 @@ import {makeJwtClient, makeNangoClient} from '@openint/cdk'
 import {makeAlphavantageClient} from '@openint/connector-alphavantage'
 import {makeHeronClient} from '@openint/connector-heron'
 import {makeLunchmoneyClient} from '@openint/connector-lunchmoney'
-import {makeMergeClient} from '@openint/connector-merge'
 import {makeMootaClient} from '@openint/connector-moota'
 import {makeOneBrickClient} from '@openint/connector-onebrick'
 // Make this import dynamic at runtime, so we can do
@@ -89,17 +88,6 @@ if (require.main === module) {
     moota: () => makeMootaClient(intConfig('moota')),
     // qbo: () => makeQBOClient(intConfig('qbo')),
     saltedge: () => makeSaltedgeClient(intConfig('saltedge')),
-
-    'merge.accounting': () =>
-      makeMergeClient({
-        apiKey: process.env['_MERGE_TEST_API_KEY'] ?? '',
-        accountToken: process.env['_MERGE_TEST_LINKED_ACCOUNT_TOKEN'] ?? '',
-      }).accounting,
-    'merge.integrations': () =>
-      makeMergeClient({
-        apiKey: process.env['_MERGE_TEST_API_KEY'] ?? '',
-        accountToken: process.env['_MERGE_TEST_LINKED_ACCOUNT_TOKEN'] ?? '',
-      }).integrations,
     heron: () => makeHeronClient({apiKey: process.env['_HERON_API_KEY']!}),
     nango: () =>
       makeNangoClient({secretKey: process.env['_NANGO_SECRET_KEY']!}),

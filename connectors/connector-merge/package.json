@@ -4,12 +4,11 @@
   "private": true,
   "sideEffects": [],
   "module": "./index.ts",
-  "scripts": {
-    "codegen:next:accounting": "openapi-typescript https://api.merge.dev/api/accounting/v1/schema --make-paths-enum --output merge.accounting.gen.ts"
-  },
+  "scripts": {},
   "dependencies": {
     "@openint/cdk": "workspace:*",
-    "@openint/util": "workspace:*"
+    "@openint/util": "workspace:*",
+    "@opensdks/sdk-merge": "^0.0.6"
   },
   "devDependencies": {
     "@mergeapi/react-merge-link": "2.0.6",

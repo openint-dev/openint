@@ -925,6 +925,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@opensdks/sdk-merge':
+        specifier: ^0.0.6
+        version: 0.0.6
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -5235,6 +5238,10 @@ packages:
     resolution: {integrity: sha512-OXwSuFpU6ucIgEvvzHjl8ON6j5rKGZlyolAmvoOZfmM+L7klkHgZLHpBTuUU+ezmLrOBQ2n/3fkz1SWDsRSLug==}
     dependencies:
       '@opensdks/runtime': 0.0.19
+    dev: false
+
+  /@opensdks/sdk-merge@0.0.6:
+    resolution: {integrity: sha512-OJO+rJFpjh0ctqFH7Fq88sepjoVlGseN82MujNZfb7IPpoUIlAdM9dfj0kORfDgt4yFsqnz7TxhgQtNUvDemeg==}
     dev: false
 
   /@opensdks/sdk-nango@0.0.4:

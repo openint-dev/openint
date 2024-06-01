@@ -1,26 +1,30 @@
 /** Used for the side effect of window.MergeLink */
 
+import type {Oas, Oas_accounting} from '@opensdks/sdk-merge'
 import type {ConnectorDef, ConnectorSchemas, Pta} from '@openint/cdk'
 import {connHelpers} from '@openint/cdk'
 import {z, zCast} from '@openint/util'
 import {mergeLogoSvg} from './merge-logo.svg'
-import type {components} from './merge.accounting.gen'
-import {zCategory, zIntegration} from './MergeClient'
 
-// TODO: Split into 3 files... Def aka common / Client / Server
+type components = Oas_accounting['components']
+
+type Integration = Oas['components']['schemas']['integration']
+type Category = Oas['components']['schemas']['category']
 
 export const mergeSchemas = {
   name: z.literal('merge'),
   connectorConfig: z.object({
     apiKey: z.string(),
   }),
-  integrationData: zIntegration,
+
+  integrationData: zCast<Integration>(),
   resourceSettings: z.object({
     accountToken: z.string(),
     accountDetails: zCast<components['schemas']['AccountDetails']>().optional(),
   }),
   preConnectInput: z.object({
-    categories: z.array(zCategory),
+    // TODO: Use proper openapi spec rather than just a runtime type...
+    categories: z.array(zCast<Category>()),
     end_user_email_address: z.string().optional(),
     end_user_organization_name: z.string().optional(),
   }),
