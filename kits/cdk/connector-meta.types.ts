@@ -1,3 +1,4 @@
+import type {NangoProvider} from '@opensdks/sdk-nango/src/nango.oas'
 import type {oas30, oas31} from 'openapi3-ts'
 import type {AnyEntityPayload, ResoUpdateData, Source} from '@openint/sync'
 import {castIs} from '@openint/util'
@@ -5,7 +6,6 @@ import {z} from '@openint/zod'
 import type {ConnHelpers} from './connector.types'
 import type {EndUserId, ExtEndUserId, ExternalId, Id} from './id.types'
 import {zExternalId} from './id.types'
-import type {NangoProvider} from './internal/NangoClient'
 
 // aka verticals
 export const zConnectorVertical = z.enum([

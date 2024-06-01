@@ -4,9 +4,9 @@ import type {
   EndUserId,
   Id,
   LinkFactory,
-  NangoClient,
+  NangoSDK,
 } from '@openint/cdk'
-import {makeNangoClient} from '@openint/cdk'
+import {initNangoSDK} from '@openint/cdk'
 import type {JWTClient, Viewer, ViewerRole} from '@openint/cdk/viewer'
 import {makeJwtClient, zViewerFromJwtPayload} from '@openint/cdk/viewer'
 import {TRPCError} from '@openint/trpc'
@@ -33,7 +33,7 @@ export interface RouterContext {
   // Non-viewer dependent
   connectorMap: Record<string, AnyConnectorImpl>
   jwt: JWTClient
-  nango: NangoClient
+  nango: NangoSDK
   env: Env
   /**
    * Base url of the engine-backend router when deployed, e.g. `localhost:3000/api/usevenice`
@@ -95,7 +95,9 @@ export function getContextFactory<
       connectorMap,
       jwt,
       env,
-      nango: makeNangoClient({secretKey: config.nangoSecretKey}),
+      nango: initNangoSDK({
+        headers: {authorization: `Bearer ${config.nangoSecretKey}`},
+      }),
       apiUrl,
       getRedirectUrl,
       clerk: config.clerk,

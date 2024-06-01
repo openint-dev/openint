@@ -8,7 +8,7 @@ import {
   extractConnectorName,
   getViewerId,
   makeId,
-  makeNangoClient,
+  NangoConnect,
   zId,
 } from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
@@ -91,9 +91,8 @@ export default async function ConnectPageContainer({
     ] as ConnectorDef
 
     if (intDef.metadata?.nangoProvider) {
-      const nango = makeNangoClient({secretKey: envRequired.NANGO_SECRET_KEY})
       const resourceId = makeId('reso', connectorName, makeUlid())
-      const url = await nango.getOauthConnectUrl({
+      const url = await NangoConnect.getOauthConnectUrl({
         public_key: envRequired.NEXT_PUBLIC_NANGO_PUBLIC_KEY,
         connection_id: resourceId,
         provider_config_key: connectorConfigId,

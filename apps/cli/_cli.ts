@@ -2,7 +2,7 @@ import '@openint/app-config/register.node'
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {parseConnectorConfigsFromRawEnv} from '@openint/app-config/connector-envs'
 import type {defConnectors} from '@openint/app-config/connectors/connectors.def'
-import {makeJwtClient, makeNangoClient} from '@openint/cdk'
+import {makeJwtClient} from '@openint/cdk'
 import {makeAlphavantageClient} from '@openint/connector-alphavantage'
 import {makeLunchmoneyClient} from '@openint/connector-lunchmoney'
 import {makeMootaClient} from '@openint/connector-moota'
@@ -83,8 +83,6 @@ if (require.main === module) {
     moota: () => makeMootaClient(intConfig('moota')),
     // qbo: () => makeQBOClient(intConfig('qbo')),
     saltedge: () => makeSaltedgeClient(intConfig('saltedge')),
-    nango: () =>
-      makeNangoClient({secretKey: process.env['_NANGO_SECRET_KEY']!}),
     sdk: () =>
       initOpenIntSDK({
         headers: {

@@ -12,7 +12,7 @@
     "@openint/zod": "workspace:*",
     "@trpc/server": "10.40.0",
     "inngest": "^3.16.0",
-    "zod-openapi": "2.11.0"
+    "zod-openapi": "2.14.0"
   },
   "devDependencies": {
     "@clerk/nextjs": "4.29.3",

@@ -4,7 +4,7 @@ import {redirect} from 'next/navigation'
 import {kAccessToken} from '@openint/app-config/constants'
 import {envRequired} from '@openint/app-config/env'
 import type {Id} from '@openint/cdk'
-import {makeNangoClient} from '@openint/cdk'
+import {initNangoSDK, NangoConnect} from '@openint/cdk'
 import type {FrameMessage} from '@openint/connect'
 import {FullScreenCenter} from '@/components/FullScreenCenter'
 import {serverSideHelpersFromViewer} from '@/lib-server'
@@ -43,8 +43,7 @@ export default async function ConnectCallback({
 
   const msg = await (async (): Promise<FrameMessage | null> => {
     try {
-      const nango = makeNangoClient({secretKey: envRequired.NANGO_SECRET_KEY})
-      const res = await nango.doOauthCallback(searchParams)
+      const res = await NangoConnect.doOauthCallback(searchParams)
 
       if (!res) {
         // This means that we are using the @nango/frontend websocket client...
@@ -72,9 +71,14 @@ export default async function ConnectCallback({
       const resourceId = res.data.connectionId as Id['reso']
       if (session.resourceId !== resourceId) {
         console.warn('Revoking due to unmatched resourceId')
-        await nango.delete('/connection/{connection_id}', {
-          path: {connection_id: res.data.connectionId},
-          query: {provider_config_key: res.data.providerConfigKey},
+        const nango = initNangoSDK({
+          headers: {authorization: `Bearer ${envRequired.NANGO_SECRET_KEY}`},
+        })
+        await nango.DELETE('/connection/{connectionId}', {
+          params: {
+            path: {connectionId: res.data.connectionId},
+            query: {provider_config_key: res.data.providerConfigKey},
+          },
         })
         return {
           type: 'ERROR',

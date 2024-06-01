@@ -39,7 +39,7 @@
     "type-fest": "3.8.0",
     "ulidx": "0.4.0",
     "zod": "3.22.4",
-    "zod-openapi": "2.11.0"
+    "zod-openapi": "2.14.0"
   },
   "devDependencies": {
     "@types/accounting": "0.4.2",

@@ -1414,8 +1414,8 @@ importers:
         specifier: ^0.0.16
         version: 0.0.16
       '@opensdks/sdk-nango':
-        specifier: 0.0.4
-        version: 0.0.4
+        specifier: 0.0.6
+        version: 0.0.6
       '@opensdks/sdk-supaglue':
         specifier: 0.0.3
         version: 0.0.3
@@ -1613,8 +1613,8 @@ importers:
         specifier: ^3.16.0
         version: 3.16.0(typescript@5.4.5)
       zod-openapi:
-        specifier: 2.11.0
-        version: 2.11.0(zod@3.22.4)
+        specifier: 2.14.0
+        version: 2.14.0(zod@3.22.4)
     devDependencies:
       '@clerk/nextjs':
         specifier: 4.29.3
@@ -2003,8 +2003,8 @@ importers:
         specifier: 3.22.4
         version: 3.22.4
       zod-openapi:
-        specifier: 2.11.0
-        version: 2.11.0(zod@3.22.4)
+        specifier: 2.14.0
+        version: 2.14.0(zod@3.22.4)
     devDependencies:
       '@types/accounting':
         specifier: 0.4.2
@@ -2095,8 +2095,8 @@ importers:
         specifier: workspace:*
         version: link:../../kits/vdk
       '@opensdks/sdk-nango':
-        specifier: 0.0.4
-        version: 0.0.4
+        specifier: 0.0.6
+        version: 0.0.6
       '@opensdks/sdk-supaglue':
         specifier: 0.0.3
         version: 0.0.3
@@ -2294,8 +2294,8 @@ importers:
         specifier: 3.22.4
         version: 3.22.4
       zod-openapi:
-        specifier: 2.11.0
-        version: 2.11.0(zod@3.22.4)
+        specifier: 2.14.0
+        version: 2.14.0(zod@3.22.4)
 
 packages:
 
@@ -5251,8 +5251,8 @@ packages:
     resolution: {integrity: sha512-OJO+rJFpjh0ctqFH7Fq88sepjoVlGseN82MujNZfb7IPpoUIlAdM9dfj0kORfDgt4yFsqnz7TxhgQtNUvDemeg==}
     dev: false
 
-  /@opensdks/sdk-nango@0.0.4:
-    resolution: {integrity: sha512-5nOwaN5n65XXowpXD58NMjUrvHpeYjyDV2kbMzqHKIzvv5SpS4+AunaxqYTVJgUy2U0xz/Zb6ltNwKOADdi9HA==}
+  /@opensdks/sdk-nango@0.0.6:
+    resolution: {integrity: sha512-nlDbJzZZ9burlpHy85CHlK4UDzmMOv3gKS2zWHebYSj2x9qSM0W6WTL4+PZkFuYVh5sIdiizZhZsyrruHUk6Ig==}
     dev: false
 
   /@opensdks/sdk-openai@0.0.14:

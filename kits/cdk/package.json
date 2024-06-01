@@ -12,7 +12,7 @@
     "@openint/zod": "workspace:*",
     "@opensdks/fetch-links": "^0.0.19",
     "@opensdks/runtime": "^0.0.16",
-    "@opensdks/sdk-nango": "0.0.4",
+    "@opensdks/sdk-nango": "0.0.6",
     "@opensdks/sdk-supaglue": "0.0.3",
     "@opensdks/util-zod": "0.0.15",
     "@trpc/server": "10.40.0",

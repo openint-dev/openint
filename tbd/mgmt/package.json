@@ -11,7 +11,7 @@
     "@openint/env": "workspace:*",
     "@openint/events": "workspace:*",
     "@openint/vdk": "workspace:*",
-    "@opensdks/sdk-nango": "0.0.4",
+    "@opensdks/sdk-nango": "0.0.6",
     "@opensdks/sdk-supaglue": "0.0.3",
     "cookie": "^0.6.0"
   },

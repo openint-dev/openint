@@ -115,13 +115,12 @@ export const connectorConfigRouter = trpc.router({
       const provider = ctx.connectorMap[extractConnectorName(ccfgId)]
       if (provider?.metadata?.nangoProvider) {
         await ctx.nango
-          .delete('/config/{provider_config_key}', {
-            path: {provider_config_key: ccfgId},
+          .DELETE('/config/{providerConfigKey}', {
+            params: {path: {providerConfigKey: ccfgId}},
           })
           .catch(async (err) => {
-            await ctx.nango.get('/config/{provider_config_key}', {
-              path: {provider_config_key: ccfgId},
-              query: {},
+            await ctx.nango.GET('/config/{providerConfigKey}', {
+              params: {path: {providerConfigKey: ccfgId}, query: {}},
             })
             // What happens to error case? Do we get 404? Wish openAPI spec specifies this...
             throw err
