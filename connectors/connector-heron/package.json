@@ -4,12 +4,11 @@
   "private": true,
   "sideEffects": [],
   "module": "./index.ts",
-  "scripts": {
-    "codegen": "openapi-typescript https://app.herondata.io/swagger --make-paths-enum --output heron.gen.ts"
-  },
+  "scripts": {},
   "dependencies": {
     "@openint/cdk": "workspace:*",
-    "@openint/util": "workspace:*"
+    "@openint/util": "workspace:*",
+    "@opensdks/sdk-heron": "^0.0.1"
   },
   "devDependencies": {
     "openapi-typescript": "6.7.1"

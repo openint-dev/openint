@@ -4,12 +4,11 @@
   "private": true,
   "sideEffects": [],
   "module": "./index.ts",
-  "scripts": {
-    "codegen:transactions": "openapi-typescript __generated__/transactions.openapi.json --make-paths-enum --output __generated__/transactions.gen.ts"
-  },
+  "scripts": {},
   "dependencies": {
     "@openint/cdk": "workspace:*",
-    "@openint/util": "workspace:*"
+    "@openint/util": "workspace:*",
+    "@opensdks/sdk-brex": "^0.0.1"
   },
   "devDependencies": {
     "openapi-typescript": "6.7.1"

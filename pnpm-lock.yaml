@@ -702,6 +702,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@opensdks/sdk-brex':
+        specifier: ^0.0.1
+        version: 0.0.1
     devDependencies:
       openapi-typescript:
         specifier: 6.7.1
@@ -860,6 +863,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@opensdks/sdk-heron':
+        specifier: ^0.0.1
+        version: 0.0.1
     devDependencies:
       openapi-typescript:
         specifier: 6.7.1
@@ -1209,6 +1215,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@opensdks/sdk-stripe':
+        specifier: ^0.0.2
+        version: 0.0.2
     devDependencies:
       openapi-typescript:
         specifier: 6.7.1
@@ -5217,6 +5226,10 @@ packages:
   /@opensdks/sdk-apollo@0.0.21:
     resolution: {integrity: sha512-2vysmbvPH7lncmOoxqy870Pv3ZMeMK9bSxzyrJgWsUAFNn7Q6MjNHz+C2igDVnbaKnR5ow7eSl6lOr1/bI5P9g==}
 
+  /@opensdks/sdk-brex@0.0.1:
+    resolution: {integrity: sha512-4qNzNAyzHhmKAQlA71ofeU7eyJA4lfoPvOud9DM3bTAWZCX9msRte2kwL4/mIalJskk2UiBub3JeSdX3iqrnyA==}
+    dev: false
+
   /@opensdks/sdk-discord@0.0.14:
     resolution: {integrity: sha512-GvA3dEvhiy18Ddd2XTP68YJOheSwg2UFoOKb5nXr8WxWfOwW/o9RvJW+kMhZKKNM5R39oP90xMcIjtSp3GrozQ==}
 
@@ -5228,6 +5241,10 @@ packages:
     resolution: {integrity: sha512-MVWuKC5JXN3lgZ1djSq3hITQutwBC/gLSF6UYY2I0U8QVkWVi8YNdWTrROqlGmlZG6VrG/uKht+gyNDmIZmScA==}
     dependencies:
       '@opensdks/runtime': 0.0.19
+    dev: false
+
+  /@opensdks/sdk-heron@0.0.1:
+    resolution: {integrity: sha512-7DOFFlq5C8u060L9GJ6euwE/g8aqIClyZysio4jqYQ1W9rcYX/pZUsZ7NNPt6LQTX+coAz+8nieEi35ejiKbdg==}
     dev: false
 
   /@opensdks/sdk-hubspot@0.0.6:
@@ -5294,6 +5311,10 @@ packages:
   /@opensdks/sdk-slack@0.0.14:
     resolution: {integrity: sha512-//w9OelCjMc+wwCU12JD26cHxDp4RAwIcD246Lf+r0kRY9uMPiczgEnsdwN+5sy/4TP+JRRKyc14L3591Qr4fA==}
     dev: true
+
+  /@opensdks/sdk-stripe@0.0.2:
+    resolution: {integrity: sha512-DwOdSgXQv7MPdZPVU9i68w0FUaCFzZ0j+KZXA68SyiGvaoDWTu++76bUgQVzK4hmx23uC3DoXbJ18MFhwD2zAg==}
+    dev: false
 
   /@opensdks/sdk-supaglue@0.0.3:
     resolution: {integrity: sha512-SS9hQXC7ABvcps2kkEa7C7ocNlgJiUrdYDH+49MEwoIrOrESvMrvak1wJA+d7TNKR3eIW12ocxYqfO+fa41D5A==}

@@ -1,7 +1,9 @@
+import type {Oas_transactions} from '@opensdks/sdk-brex'
 import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
 import {connHelpers, zCcfgAuth} from '@openint/cdk'
 import {z, zCast} from '@openint/util'
-import type {components} from './__generated__/transactions.gen'
+
+type components = Oas_transactions['components']
 
 export const brexSchemas = {
   name: z.literal('brex'),

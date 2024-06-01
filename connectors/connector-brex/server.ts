@@ -1,24 +1,24 @@
 /** Used for the side effect of window.MergeLink */
+import initBrexSDK from '@opensdks/sdk-brex'
 import type {ConnectorServer} from '@openint/cdk'
 import {Rx, rxjs} from '@openint/util'
-import {makeBrexClient} from './BrexClient'
 import type {brexSchemas} from './def'
 import {helpers} from './def'
 
 export const brexServer = {
   sourceSync: ({settings}) => {
-    const client = makeBrexClient({
-      accessToken: settings.accessToken,
+    const brex = initBrexSDK({
+      headers: {authorization: `Bearer ${settings.accessToken}`},
     })
 
     // TODO: Paginate obviously
     return rxjs
       .from(
-        client.transactions
-          .get('/v2/transactions/card/primary', {})
+        brex.transactions
+          .GET('/v2/transactions/card/primary', {})
           .then(
             (res) =>
-              (res.items ?? [])?.map((txn) =>
+              (res.data.items ?? [])?.map((txn) =>
                 helpers._opData('transaction', txn.id ?? '', txn),
               ),
           ),

@@ -1,28 +1,36 @@
+import {initStripeSDK} from '@opensdks/sdk-stripe'
 import type {ConnectorServer} from '@openint/cdk'
 import {Rx, rxjs} from '@openint/util'
 import type {stripeSchemas} from './def'
 import {helpers} from './def'
-import {makeStripeClient} from './StripeClient'
 
 export const stripeServer = {
   sourceSync: ({settings, state}) => {
-    const client = makeStripeClient({apiKey: settings.secretKey})
+    const stripe = initStripeSDK({
+      headers: {authorization: `Basic ${btoa(`:${settings.secretKey}`)}`},
+    })
     async function* iterateEntities() {
-      const accountRes = await client.get('/v1/accounts', {})
+      const accountRes = await stripe
+        .GET('/v1/accounts', {})
+        .then((r) => r.data)
       // const balanceRes = await client.get('/v1/balance', {})
 
       yield accountRes.data.map((a) => helpers._opData('account', a.id, a))
 
       let starting_after = state.transactionSyncCursor ?? undefined
       while (true) {
-        const res2 = await client.get('/v1/balance_transactions', {
-          query: {
-            starting_after:
-              starting_after && starting_after.length > 0
-                ? starting_after
-                : undefined,
-          },
-        })
+        const res2 = await stripe
+          .GET('/v1/balance_transactions', {
+            params: {
+              query: {
+                starting_after:
+                  starting_after && starting_after.length > 0
+                    ? starting_after
+                    : undefined,
+              },
+            },
+          })
+          .then((r) => r.data)
         starting_after = res2.data[res2.data.length - 1]?.id ?? ''
         yield [...res2.data.map((t) => helpers._opData('transaction', t.id, t))]
         // TODO: Need to check what can we use for retrieving meta data

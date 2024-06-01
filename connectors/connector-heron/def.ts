@@ -1,7 +1,9 @@
+import type {HeronSDKTypes} from '@opensdks/sdk-heron'
 import type {ConnectorDef, ConnectorSchemas, EntityPayload} from '@openint/cdk'
 import {connHelpers} from '@openint/cdk'
 import {z, zCast} from '@openint/util'
-import type {components} from './heron.gen'
+
+type components = HeronSDKTypes['oas']['components']
 
 export const heronSchemas = {
   name: z.literal('heron'),

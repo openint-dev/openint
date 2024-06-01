@@ -1,7 +1,9 @@
+import type {StripeSDKTypes} from '@opensdks/sdk-stripe'
 import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
 import {connHelpers, makePostingsMap, zCcfgAuth} from '@openint/cdk'
 import {A, z, zCast} from '@openint/util'
-import type {components} from './stripe.gen'
+
+type components = StripeSDKTypes['oas']['components']
 
 export const stripeSchemas = {
   name: z.literal('stripe'),

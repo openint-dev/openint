@@ -1,10 +1,9 @@
+import '@openint/app-config/register.node'
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {parseConnectorConfigsFromRawEnv} from '@openint/app-config/connector-envs'
 import type {defConnectors} from '@openint/app-config/connectors/connectors.def'
-import '@openint/app-config/register.node'
 import {makeJwtClient, makeNangoClient} from '@openint/cdk'
 import {makeAlphavantageClient} from '@openint/connector-alphavantage'
-import {makeHeronClient} from '@openint/connector-heron'
 import {makeLunchmoneyClient} from '@openint/connector-lunchmoney'
 import {makeMootaClient} from '@openint/connector-moota'
 import {makeOneBrickClient} from '@openint/connector-onebrick'
@@ -17,7 +16,6 @@ import {makePlaidClient} from '@openint/connector-plaid'
 import {makePostgresClient} from '@openint/connector-postgres'
 import {makeRampClient} from '@openint/connector-ramp'
 import {makeSaltedgeClient} from '@openint/connector-saltedge'
-import {makeStripeClient} from '@openint/connector-stripe'
 import {makeTellerClient} from '@openint/connector-teller'
 import {makeTogglClient} from '@openint/connector-toggl'
 import {makeWiseClient} from '@openint/connector-wise'
@@ -71,8 +69,6 @@ if (require.main === module) {
     plaid: () => makePlaidClient(intConfig('plaid')) as {},
     onebrick: () => makeOneBrickClient(intConfig('onebrick')) as {},
     teller: () => makeTellerClient(intConfig('teller')),
-    stripe: () =>
-      makeStripeClient({apiKey: process.env['_STRIPE_TEST_SECRET_KEY']!}),
     ramp: () => makeRampClient(intConfig('ramp').oauth),
     wise: () => makeWiseClient(intConfig('wise')),
     toggl: () => makeTogglClient(intConfig('toggl')),
@@ -88,7 +84,6 @@ if (require.main === module) {
     moota: () => makeMootaClient(intConfig('moota')),
     // qbo: () => makeQBOClient(intConfig('qbo')),
     saltedge: () => makeSaltedgeClient(intConfig('saltedge')),
-    heron: () => makeHeronClient({apiKey: process.env['_HERON_API_KEY']!}),
     nango: () =>
       makeNangoClient({secretKey: process.env['_NANGO_SECRET_KEY']!}),
     airbyte: () =>
