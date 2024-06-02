@@ -1,5 +1,7 @@
+import type {YodleeSDKTypes} from '@opensdks/sdk-yodlee'
 import {z, zCast} from '@openint/util'
-import type {components} from './yodlee.oas'
+
+type components = YodleeSDKTypes['oas']['components']
 
 // TODO: Deprecate most of me and use the types generated from openAPI
 

@@ -1,9 +1,9 @@
 // @deprecated , directly use the new openapi client instead
 import {
-  createClient,
   formDataBodySerializer,
   HTTPError as OpenapiHTTPError,
-} from '@openint/openapi-client'
+} from '@opensdks/runtime'
+import {initYodleeSDK} from '@opensdks/sdk-yodlee'
 import {
   $makeProxyAgent,
   createHTTPClient,
@@ -15,7 +15,6 @@ import {
   zFunction,
   type HTTPError,
 } from '@openint/util'
-import type {paths} from './yodlee.oas'
 import type {YodleeAccount, YodleeTransaction} from './yodlee.types'
 
 export type YodleeEnvName = z.infer<typeof zYodleeEnvName>
@@ -118,7 +117,7 @@ export const makeYodleeClient = zFunction([zConfig, zCreds], (cfg, creds) => {
     },
     refreshAuth: {
       shouldProactiveRefresh: (req) => {
-        // eslint-disable-next-line @typescript-eslint/dot-notation, @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (req.headers.Authorization != null || req.headers['loginName']) {
           return false
         }
@@ -141,7 +140,8 @@ export const makeYodleeClient = zFunction([zConfig, zCreds], (cfg, creds) => {
       },
     },
   })
-  const api = createClient<paths>({
+
+  const api = initYodleeSDK({
     baseUrl: baseUrlFromEnvName(cfg.envName),
   })
 

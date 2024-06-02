@@ -18,7 +18,6 @@ import {
   $ensureDir,
   $execCommand,
   $fs,
-  $getFetchFn,
   $makeProxyAgent,
   $path,
   $readFile,
@@ -47,21 +46,9 @@ if (process.env['SILENT']) {
 
 console.log('[Dep] app-config/register.node')
 
-// Prefer crossfetch for agent aka tunneling support, though we not need it anymore when using Proxyman
-// @see https://undici.nodejs.org/#/docs/api/ProxyAgent
-// And https://github.com/nodejs/undici/issues/1489
-implementProxyFn($getFetchFn, () => crossFetch ?? globalThis.fetch, {
-  replaceExisting: true,
-})
-
 implementProxyFn(
   $makeProxyAgent,
   (input) => {
-    if ($getFetchFn() !== crossFetch) {
-      console.warn(
-        '[proxy] Using proxy agent with non-polyfilled fetch may not work',
-      )
-    }
     // Seems that the default value get overwritten by explicit undefined
     // value from envkey. Here we try to account for that
     // Would be nice if such hack is not required.
