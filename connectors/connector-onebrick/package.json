@@ -6,17 +6,14 @@
     "register.node.ts"
   ],
   "module": "./index.ts",
-  "scripts": {
-    "//": "Cannot use --make-paths-enum due to https://github.com/drwpow/openapi-typescript/issues/935",
-    "codegen:next": "openapi-typescript https://dash.readme.com/api/v1/api-registry/rwkfe1gl7puob14 --output onebrick.gen.ts"
-  },
+  "scripts": {},
   "dependencies": {
     "@openint/cdk": "workspace:*",
-    "@openint/util": "workspace:*"
+    "@openint/util": "workspace:*",
+    "@opensdks/sdk-onebrick": "^0.0.0"
   },
   "devDependencies": {
-    "@types/react": "*",
-    "openapi-typescript": "6.7.1"
+    "@types/react": "*"
   },
   "peerDependencies": {
     "react": "*"

@@ -9,8 +9,5 @@
     "@openint/cdk": "workspace:*",
     "@openint/util": "workspace:*",
     "@opensdks/sdk-brex": "^0.0.1"
-  },
-  "devDependencies": {
-    "openapi-typescript": "6.7.1"
   }
 }

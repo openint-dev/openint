@@ -11,8 +11,5 @@
     "@openint/cdk": "workspace:*",
     "@openint/util": "workspace:*",
     "@opensdks/sdk-stripe": "^0.0.2"
-  },
-  "devDependencies": {
-    "openapi-typescript": "6.7.1"
   }
 }

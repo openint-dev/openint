@@ -12,8 +12,7 @@
   },
   "devDependencies": {
     "@mergeapi/react-merge-link": "2.0.6",
-    "@types/react": "*",
-    "openapi-typescript": "6.7.1"
+    "@types/react": "*"
   },
   "peerDependencies": {
     "react": "*"

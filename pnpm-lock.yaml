@@ -141,9 +141,6 @@ importers:
       npm-run-all:
         specifier: 4.1.5
         version: 4.1.5
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
       prettier:
         specifier: 3.1.0
         version: 3.1.0
@@ -243,9 +240,6 @@ importers:
       '@openint/connector-moota':
         specifier: workspace:*
         version: link:../../connectors/connector-moota
-      '@openint/connector-notion':
-        specifier: workspace:*
-        version: link:../../connectors/connector-notion
       '@openint/connector-onebrick':
         specifier: workspace:*
         version: link:../../connectors/connector-onebrick
@@ -627,9 +621,6 @@ importers:
       node-loader:
         specifier: 2.0.0
         version: 2.0.0(webpack@5.74.0)
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
       postcss:
         specifier: '*'
         version: 8.4.21
@@ -705,10 +696,6 @@ importers:
       '@opensdks/sdk-brex':
         specifier: ^0.0.1
         version: 0.0.1
-    devDependencies:
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-copilot:
     dependencies:
@@ -866,10 +853,6 @@ importers:
       '@opensdks/sdk-heron':
         specifier: ^0.0.1
         version: 0.0.1
-    devDependencies:
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-hubspot:
     dependencies:
@@ -918,10 +901,6 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
-    devDependencies:
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-merge:
     dependencies:
@@ -944,9 +923,6 @@ importers:
       '@types/react':
         specifier: 18.0.27
         version: 18.0.27
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-mongodb:
     dependencies:
@@ -969,12 +945,6 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
 
-  connectors/connector-notion:
-    devDependencies:
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
-
   connectors/connector-onebrick:
     dependencies:
       '@openint/cdk':
@@ -983,6 +953,9 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@opensdks/sdk-onebrick':
+        specifier: ^0.0.0
+        version: 0.0.0
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -990,9 +963,6 @@ importers:
       '@types/react':
         specifier: 18.0.27
         version: 18.0.27
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-outreach:
     dependencies:
@@ -1218,10 +1188,6 @@ importers:
       '@opensdks/sdk-stripe':
         specifier: ^0.0.2
         version: 0.0.2
-    devDependencies:
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-teller:
     dependencies:
@@ -1274,12 +1240,6 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
-
-  connectors/connector-vercel:
-    devDependencies:
-      openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
 
   connectors/connector-webhook:
     dependencies:
@@ -1705,9 +1665,6 @@ importers:
       openapi-fetch:
         specifier: 0.8.1
         version: 0.8.1
-      openapi-typescript:
-        specifier: 7.0.0-next.3
-        version: 7.0.0-next.3
       yaml:
         specifier: 2.3.4
         version: 2.3.4
@@ -3447,11 +3404,6 @@ packages:
   /@faker-js/faker@5.5.3:
     resolution: {integrity: sha512-R11tGE6yIFwqpaIqcfkcg7AICXzFg14+5h5v0TfF/9+RMDL6jhzCy/pxHVOfbALGdtVYdt6JdR21tuxEgl34dw==}
     dev: false
-
-  /@fastify/busboy@2.0.0:
-    resolution: {integrity: sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==}
-    engines: {node: '>=14'}
-    dev: true
 
   /@firebase/analytics-compat@0.1.10(@firebase/app-compat@0.1.25)(@firebase/app@0.7.24):
     resolution: {integrity: sha512-7zfB+BBO5RbF7RSHOA4ZPyLvOEEvMOhRbfIjh5ZmizAQY2J6tZB8t+dwQ/q4hqZVGgw4ds4g0JYuRKZKYsWADg==}
@@ -5241,6 +5193,10 @@ packages:
     resolution: {integrity: sha512-nlDbJzZZ9burlpHy85CHlK4UDzmMOv3gKS2zWHebYSj2x9qSM0W6WTL4+PZkFuYVh5sIdiizZhZsyrruHUk6Ig==}
     dev: false
 
+  /@opensdks/sdk-onebrick@0.0.0:
+    resolution: {integrity: sha512-6x+X60ZKLZ7C9FVi9ZI4CTOOa0TSM+M3ou3ICYVJO/f5k8jFSvMpARS20m73Wa2nHdl4VC9lpe88RyWCd/rfbQ==}
+    dev: false
+
   /@opensdks/sdk-openai@0.0.14:
     resolution: {integrity: sha512-QqLiT2LAZnHZc5pyGNRyhBsk87QfDYUwAi3zE3VhGQSLnT88KiZ+TOpIJIyM1zqcQIlXPIy98H/DSWSWufDDQA==}
     dev: true
@@ -6344,33 +6300,6 @@ packages:
       '@react-types/shared': 3.17.0(react@18.2.0)
       react: 18.2.0
     dev: false
-
-  /@redocly/ajv@8.11.0:
-    resolution: {integrity: sha512-9GWx27t7xWhDIR02PA18nzBdLcKQRgc46xNQvjFkrYk4UOmvKhJ/dawwiX0cCOeetN5LcaaiqQbVOWYK62SGHw==}
-    dependencies:
-      fast-deep-equal: 3.1.3
-      json-schema-traverse: 1.0.0
-      require-from-string: 2.0.2
-      uri-js: 4.4.1
-    dev: true
-
-  /@redocly/openapi-core@1.4.0:
-    resolution: {integrity: sha512-M4f0H3XExPvJ0dwbEou7YKLzkpz2ZMS9JoNvrbEECO7WCwjGZ4AjbiUjp2p0ZzFMNIiNgTVUJJmkxGxsXW471Q==}
-    engines: {node: '>=14.19.0', npm: '>=7.0.0'}
-    dependencies:
-      '@redocly/ajv': 8.11.0
-      '@types/node': 14.18.31
-      colorette: 1.4.0
-      js-levenshtein: 1.1.6
-      js-yaml: 4.1.0
-      lodash.isequal: 4.5.0
-      minimatch: 5.1.0
-      node-fetch: 2.7.0
-      pluralize: 8.0.0
-      yaml-ast-parser: 0.0.43
-    transitivePeerDependencies:
-      - encoding
-    dev: true
 
   /@rehooks/component-size@1.0.3(react@18.2.0):
     resolution: {integrity: sha512-pnYld+8SSF2vXwdLOqBGUyOrv/SjzwLjIUcs/4c1JJgR0q4E9eBtBfuZMD6zUD51fvSehSsbnlQMzotSmPTXPg==}
@@ -7711,6 +7640,7 @@ packages:
 
   /@types/node@14.18.31:
     resolution: {integrity: sha512-vQAnaReSQkEDa8uwAyQby8bYGKu84R/deEc6mg5T8fX6gzCn8QW6rziSgsti1fNvsrswKUKPnVTi7uoB+u62Mw==}
+    dev: false
 
   /@types/node@16.18.6:
     resolution: {integrity: sha512-vmYJF0REqDyyU0gviezF/KHq/fYaUbFhkcNbQCuPGFQj6VTbXuHZoxs/Y7mutWe73C8AC6l9fFu8mSYiBAqkGA==}
@@ -8349,11 +8279,6 @@ packages:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
       uri-js: 4.4.1
-
-  /ansi-colors@4.1.3:
-    resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
-    engines: {node: '>=6'}
-    dev: true
 
   /ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
@@ -9643,10 +9568,6 @@ packages:
     dependencies:
       color-convert: 2.0.1
       color-string: 1.9.1
-    dev: true
-
-  /colorette@1.4.0:
-    resolution: {integrity: sha512-Y2oEozpomLn7Q3HFP7dpww7AtMJplbM9lGZP6RDfHqmbeRjiwRg4n6VM6j4KLmRke85uWEI7JqF17f3pqdRA0g==}
     dev: true
 
   /colorette@2.0.19:
@@ -14753,11 +14674,6 @@ packages:
     resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
     engines: {node: '>=12'}
 
-  /js-levenshtein@1.1.6:
-    resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
-    engines: {node: '>=0.10.0'}
-    dev: true
-
   /js-sha3@0.8.0:
     resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
     dev: false
@@ -15332,10 +15248,6 @@ packages:
   /lodash.isboolean@3.0.3:
     resolution: {integrity: sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==}
     dev: false
-
-  /lodash.isequal@4.5.0:
-    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
-    dev: true
 
   /lodash.isequalwith@4.4.0:
     resolution: {integrity: sha512-dcZON0IalGBpRmJBmMkaoV7d3I80R2O+FrzsZyHdNSFrANq/cgDqKQNmAHE8UEj4+QYWwwhkQOVdLHiAopzlsQ==}
@@ -17235,31 +17147,6 @@ packages:
 
   /openapi-typescript-helpers@0.0.6:
     resolution: {integrity: sha512-2d0qCzTcD8aADUMHjG/XOgti8/m857Z0q/Ix4y2jTGIpq5OLcE/KfTagcik8qkKDTowbvNo91XVxeZcni1twuQ==}
-    dev: true
-
-  /openapi-typescript@6.7.1:
-    resolution: {integrity: sha512-Q3Ltt0KUm2smcPrsaR8qKmSwQ1KM4yGDJVoQdpYa0yvKPeN8huDx5utMT7DvwvJastHHzUxajjivK3WN2+fobg==}
-    hasBin: true
-    dependencies:
-      ansi-colors: 4.1.3
-      fast-glob: 3.3.2
-      js-yaml: 4.1.0
-      supports-color: 9.4.0
-      undici: 5.27.2
-      yargs-parser: 21.1.1
-    dev: true
-
-  /openapi-typescript@7.0.0-next.3:
-    resolution: {integrity: sha512-MWbXwyagp00PcKBb/7pqwenCbYIuMhRsWo+fxT2Az4FJV/o39pizqxjHs+P4Nv/pJ0xMHS+uSeI/i6aGLmomNg==}
-    hasBin: true
-    dependencies:
-      '@redocly/openapi-core': 1.4.0
-      ansi-colors: 4.1.3
-      supports-color: 9.4.0
-      typescript: 5.2.2
-      yargs-parser: 21.1.1
-    transitivePeerDependencies:
-      - encoding
     dev: true
 
   /openapi3-ts@2.0.2:
@@ -20581,11 +20468,6 @@ packages:
     dependencies:
       has-flag: 4.0.0
 
-  /supports-color@9.4.0:
-    resolution: {integrity: sha512-VL+lNrEoIXww1coLPOmiEmK/0sGigko5COxI09KzHc2VJXJsQ37UaQ+8quuxjDeA7+KnLGTWRyOXSLLR2Wb4jw==}
-    engines: {node: '>=12'}
-    dev: true
-
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
@@ -21287,12 +21169,6 @@ packages:
     hasBin: true
     dev: true
 
-  /typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-    dev: true
-
   /typescript@5.4.5:
     resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
     engines: {node: '>=14.17'}
@@ -21345,13 +21221,6 @@ packages:
 
   /uncrypto@0.1.3:
     resolution: {integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==}
-
-  /undici@5.27.2:
-    resolution: {integrity: sha512-iS857PdOEy/y3wlM3yRp+6SNQQ6xU0mmZcwRSriqk+et/cwWAtwmIGf6WkoDN2EK/AMdCO/dfXzIwi+rFMrjjQ==}
-    engines: {node: '>=14.0'}
-    dependencies:
-      '@fastify/busboy': 2.0.0
-    dev: true
 
   /unenv@1.7.4:
     resolution: {integrity: sha512-fjYsXYi30It0YCQYqLOcT6fHfMXsBr2hw9XC7ycf8rTG7Xxpe3ZssiqUnD0khrjiZEmkBXWLwm42yCSCH46fMw==}
@@ -22244,10 +22113,6 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-
-  /yaml-ast-parser@0.0.43:
-    resolution: {integrity: sha512-2PTINUwsRqSd+s8XxKaJWQlUuEMHJQyEuh2edBbW8KNJz0SJPwUSD2zRWqezFEdN7IzAgeuYHFUCF7o8zRdZ0A==}
-    dev: true
 
   /yaml@1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}

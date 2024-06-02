@@ -21,7 +21,6 @@
     "@openint/engine-backend": "workspace:*",
     "concurrently": "8.2.2",
     "openapi-fetch": "0.8.1",
-    "openapi-typescript": "7.0.0-next.3",
     "yaml": "2.3.4"
   }
 }

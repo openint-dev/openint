@@ -10,7 +10,5 @@
     "@openint/util": "workspace:*",
     "@opensdks/sdk-heron": "^0.0.1"
   },
-  "devDependencies": {
-    "openapi-typescript": "6.7.1"
-  }
+  "devDependencies": {}
 }

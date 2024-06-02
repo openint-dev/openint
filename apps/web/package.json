@@ -60,7 +60,6 @@
     "autoprefixer": "*",
     "jiti": "*",
     "node-loader": "2.0.0",
-    "openapi-typescript": "6.7.1",
     "postcss": "*",
     "tailwindcss": "3.3.2",
     "tailwindcss-animate": "^1.0.5",
