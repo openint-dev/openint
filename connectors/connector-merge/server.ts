@@ -104,6 +104,25 @@ export const mergeServer = {
       links: (defaultLinks) => [...fetchLinks, ...defaultLinks],
     }),
 
+  listIntegrations: async () => {
+    const merge = initMergeSDK({headers: {}})
+    const integrations = await merge
+      .GET('/integrations/', {})
+      .then((res) => res.data)
+
+    return {
+      has_next_page: false,
+      next_cursor: null,
+      items: integrations.map((int) => ({
+        id: int.slug,
+        name: int.name,
+        updated_at: new Date().toISOString(),
+        logo_url: int.square_image,
+        raw_data: int as never,
+      })),
+    }
+  },
+
   // MARK: -
 
   sourceSync: ({config, settings}) => {

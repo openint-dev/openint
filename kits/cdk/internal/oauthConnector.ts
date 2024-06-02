@@ -5,7 +5,6 @@ import type {
   NangoProvider,
   UpsertIntegration,
 } from '@opensdks/sdk-nango/src/nango.oas'
-import {zConnection, zIntegration} from '@opensdks/sdk-nango/src/nango.oas'
 import {HTTPError, makeUlid} from '@openint/util'
 import {z} from '@openint/zod'
 import type {
@@ -17,20 +16,48 @@ import {CANCELLATION_TOKEN} from '../frontend-utils'
 import type {Id} from '../id.types'
 import {extractId, makeId, zId} from '../id.types'
 
+export const zAuthMode = z
+  .enum(['OAUTH2', 'OAUTH1', 'BASIC', 'API_KEY'])
+  .openapi({ref: 'AuthMode'})
+
 export const oauthBaseSchema = {
   name: z.literal('__oauth__'), // TODO: This is a noop
   connectorConfig: z.object({
-    oauth: zIntegration.pick({
-      client_id: true,
-      client_secret: true,
-      scopes: true,
+    oauth: z.object({
+      client_id: z.string(),
+      client_secret: z.string(),
+      /** comma deliminated scopes with no spaces in between */
+      scopes: z.string().optional(),
     }),
   }),
   resourceSettings: z.object({
-    oauth: zConnection.pick({
-      credentials: true,
-      connection_config: true,
-      metadata: true,
+    oauth: z.object({
+      credentials: z.object({
+        type: zAuthMode,
+        /** For API key auth... */
+        api_key: z.string().nullish(),
+        access_token: z.string().optional(),
+        refresh_token: z.string().optional(),
+        expires_at: z.string().datetime(),
+        raw: z.object({
+          access_token: z.string(),
+          expires_in: z.number(),
+          expires_at: z.string().datetime(),
+          /** Refresh token (Only returned if the REFRESH_TOKEN boolean parameter is set to true and the refresh token is available) */
+          refresh_token: z.string().nullish(),
+          refresh_token_expires_in: z.number().nullish(),
+          token_type: z.string(), //'bearer',
+          scope: z.string().optional(),
+        }),
+      }),
+      connection_config: z
+        .object({
+          portalId: z.number().nullish(),
+          instance_url: z.string().nullish(),
+        })
+        .catchall(z.unknown())
+        .nullish(),
+      metadata: z.record(z.unknown()).nullable(),
     }),
   }),
   connectOutput: z.object({
