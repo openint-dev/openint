@@ -194,6 +194,7 @@ export const nangoConnectionWithCredentials = z.object({
     .object({
       portalId: z.number().nullish(),
       instance_url: z.string().nullish(),
+      realmId: z.string(),
     })
     .nullish(),
   metadata: z.record(z.unknown()).nullish(),
