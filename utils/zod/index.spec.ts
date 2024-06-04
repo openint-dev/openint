@@ -1,7 +1,7 @@
-import {z, zodToOas31Schema} from './index'
-
-/* eslint-disable unicorn/template-indent */ /* eslint-disable jest-formatting/padding-around-test-blocks */
-
+import {
+  z,
+  zodToOas31Schema,
+} from './index' /* eslint-disable unicorn/template-indent */ /* eslint-disable jest-formatting/padding-around-test-blocks */
 test('simple value', () => {
   expect(zodToOas31Schema(z.literal('myvalue'))).toMatchInlineSnapshot(
     `
@@ -280,7 +280,6 @@ test('streams', () => {
     `
     {
       "additionalProperties": {
-        "properties": {},
         "type": "object",
       },
       "type": "object",
