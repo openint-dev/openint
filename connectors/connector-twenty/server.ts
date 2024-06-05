@@ -17,61 +17,67 @@ export const twentyServer = {
         // crm account
         // eslint-disable-next-line unicorn/prefer-switch
         if (op.data.entityName === 'company') {
-          const company = op.data.entity as Revert['commonCompany']
+          const {company} = op.data.entity as {
+            [op.data.entityName]: Array<Revert['commonCompany']>
+          }
           if (company) {
-            await twenty.core.POST('/companies', {
-              body: {
-                name: company.name ?? '',
+            await twenty.core.POST('/batch/companies', {
+              body: company.map((com) => ({
+                name: com.name ?? '',
                 // annualRecurringRevenue: {
                 //   amountMicros: String(company.annualRevenue),
                 // },
                 address: [
-                  company.address.street,
-                  company.address.city,
-                  company.address.state,
-                  company.address.country,
-                  company.address.zip,
-                  company.address.postalCode,
+                  com.address.street,
+                  com.address.city,
+                  com.address.state,
+                  com.address.country,
+                  com.address.zip,
+                  com.address.postalCode,
                 ].join(', '),
                 // createdAt: String(company.createdTimestamp), // TODO(@jatin): make this typesafe
                 // updatedAt: String(company.updatedTimestamp),
                 // ...(company.additional as Object), // TODO(@jatin): make this work
-              },
+              })),
             })
           }
         } else if (op.data.entityName === 'contact') {
-          const contact = op.data.entity as Revert['commonContact']
+          const {contact} = op.data.entity as {
+            [op.data.entityName]: Array<Revert['commonContact']>
+          }
           if (contact) {
-            await twenty.core.POST('/people', {
-              body: {
+            await twenty.core.POST('/batch/people', {
+              body: contact.map((con) => ({
                 name: {
-                  firstName: contact.firstName,
-                  lastName: contact.lastName,
+                  firstName: con.firstName,
+                  lastName: con.lastName,
                 },
-                email: contact.email,
-                phone: contact.phone,
-                // createdAt: String(contact.createdTimestamp), // TODO(@jatin): make this typesafe
-                // updatedAt: String(contact.updatedTimestamp),
-                // ...(contact.additional as Object), // TODO(@jatin): make this work
-              },
+                email: con.email,
+                phone: con.phone ?? '',
+              })),
+              // createdAt: String(con.createdTimestamp), // TODO(@jatin): make this typesafe
+              // updatedAt: String(con.updatedTimestamp),
+              // ...(con.additional as Object), // TODO(@jatin): make this work
             })
           }
         } else if (op.data.entityName === 'deal') {
-          const deal = op.data.entity as Revert['commonDeal']
+          const {deal} = op.data.entity as {
+            [op.data.entityName]: Array<Revert['commonDeal']>
+          }
           if (deal) {
-            await twenty.core.POST('/opportunities', {
-              body: {
-                name: deal.name ?? '',
+            await twenty.core.POST('/batch/opportunities', {
+              body: deal.map((d) => ({
+                name: d.name ?? '',
                 // amount: {
-                //   amountMicros: String(deal.amount),
+                //   amountMicros: String(d.amount),
                 // },
-                // stage: deal.stage,
-                // probability: String(deal.probability),
-                // closeDate: String(deal.expectedCloseDate),
-                // createdAt: String(deal.createdTimestamp),
-                // updatedAt: String(deal.updatedTimestamp),
-                // ...(deal.additional as Object), // TODO(@jatin): make this work
-              },
+                // stage: d.stage,
+                // probability: String(d.probability),
+                // closeDate: String(d.expectedCloseDate),
+                // createdAt: String(d.createdTimestamp),
+                // updatedAt: String(d.updatedTimestamp),
+                // ...(d.additional as Object), // TODO(@jatin): make this work
+              })),
             })
           }
         }

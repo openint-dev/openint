@@ -23,11 +23,11 @@ export const revertServer = {
           continue
         }
         const sState = ((state ?? {}) as Record<string, unknown>)[name] ?? {}
-        yield* iterateRecordsInStream(name, stream.fields ?? [], sState) // TODO(@jatin): update this.
+        yield* PipeRecordsInStream(name, stream.fields ?? [], sState) // TODO(@jatin): update this.
       }
     }
 
-    async function* iterateRecordsInStream(
+    async function* PipeRecordsInStream(
       stream: string,
       /** stream state */
       fields: string[],
@@ -41,9 +41,10 @@ export const revertServer = {
         const res = await instance.GET(`/crm/${plural as 'companies'}`, {
           params: {query: {cursor, fields: fields.join(',')}},
         })
-        yield res.data.results.map((com) =>
-          helpers._opData(stream as 'company', com.id ?? '', com),
-        )
+        yield helpers._opData(stream as 'company', '', {
+          [stream]: res.data.results,
+        })
+
         cursor = res.data.next
         if (!cursor) {
           break
@@ -52,7 +53,7 @@ export const revertServer = {
     }
     return rxjs
       .from(iterateRecords())
-      .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, helpers._op('commit')])))
+      .pipe(Rx.mergeMap((ops) => rxjs.from([ops, helpers._op('commit')])))
   },
 
   proxy: (instance, req) => {
