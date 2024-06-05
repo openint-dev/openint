@@ -35,18 +35,20 @@ export const revertServer = {
     ) {
       const plural = revertPluralize(stream)
       let cursor = sState.cursor
+      const records = []
       while (true) {
         // @jatinsandilya don't worry about making this work for incremental sync
         // Our requirement so far is just one time import for now
         const res = await instance.GET(`/crm/${plural as 'companies'}`, {
           params: {query: {cursor, fields: fields.join(',')}},
         })
-        yield helpers._opData(stream as 'company', '', {
-          [stream]: res.data.results,
-        })
 
+        records.push(...res.data.results)
         cursor = res.data.next
         if (!cursor) {
+          yield helpers._opData(stream as 'company', '', {
+            [stream]: records,
+          })
           break
         }
       }
