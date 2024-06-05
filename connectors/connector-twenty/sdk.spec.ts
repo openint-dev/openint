@@ -22,7 +22,7 @@ maybeTest('CRUD company', async () => {
   const company = create.data.data?.['createCompany' as 'company']
   expect(company?.id).toBeTruthy()
 
-  const update = await twenty.core.PUT('/companies/{id}', {
+  const update = await twenty.core.PATCH('/companies/{id}', {
     body: {domainName: 'test2.com'},
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     params: {path: {id: company!.id!}},
