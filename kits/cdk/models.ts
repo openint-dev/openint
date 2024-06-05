@@ -1,4 +1,4 @@
-import {z} from '@openint/zod'
+import {z} from '@opensdks/util-zod'
 import {zEndUserId, zId} from './id.types'
 
 // Utility types

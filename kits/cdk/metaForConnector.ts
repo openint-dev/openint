@@ -1,8 +1,8 @@
+import {z} from '@opensdks/util-zod'
 import {R, titleCase, urlFromImage, zodToJsonSchema} from '@openint/util'
-import {z} from '@openint/zod'
 import type {AnyConnectorImpl, ConnectorSchemas} from './connector.types'
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+ 
 export type JSONSchema = {} // ReturnType<typeof zodToJsonSchema> | JSONSchema7Definition
 export const metaForConnector = (
   connector: AnyConnectorImpl,

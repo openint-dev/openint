@@ -5,8 +5,8 @@ import type {
   NangoProvider,
   UpsertIntegration,
 } from '@opensdks/sdk-nango/src/nango.oas'
+import {z} from '@opensdks/util-zod'
 import {HTTPError, makeUlid} from '@openint/util'
-import {z} from '@openint/zod'
 import type {
   ConnectorSchemas,
   ConnectorServer,

@@ -1,7 +1,7 @@
+import {z} from '@opensdks/util-zod'
 import {TRPCError} from '@trpc/server'
 import * as jwt from 'jsonwebtoken'
 import {R, zFunction} from '@openint/util'
-import {z} from '@openint/zod'
 import type {EndUserId, ExtEndUserId, Id, UserId} from './id.types'
 import {zEndUserId, zId, zUserId} from './id.types'
 

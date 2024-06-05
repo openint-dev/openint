@@ -1,4 +1,5 @@
 import type {Link as FetchLink} from '@opensdks/runtime'
+import type {z} from '@opensdks/util-zod'
 import type {
   Destination,
   EntityPayload,
@@ -9,7 +10,6 @@ import type {
 } from '@openint/sync'
 import type {MaybePromise} from '@openint/util'
 import {R} from '@openint/util'
-import type {z} from '@openint/zod'
 import type {
   CheckResourceContext,
   CheckResourceOptions,

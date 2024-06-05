@@ -1,6 +1,6 @@
 // @deprecated Move this into openSDKs
 /** TODO: Move this into @opensdks */
-import {z} from '@openint/zod'
+import {z} from '@opensdks/util-zod'
 
 export const NANGO_API_HOST = 'https://api.nango.dev'
 

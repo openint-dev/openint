@@ -1,3 +1,4 @@
+import {z} from '@opensdks/util-zod'
 import type {EntityPayload, Link, StdSyncOperation} from '@openint/sync'
 import type {AmountMap, WritableDraft} from '@openint/util'
 import {
@@ -11,7 +12,6 @@ import {
   setDefault,
   zFunction,
 } from '@openint/util'
-import {z} from '@openint/zod'
 import {handlersLink, transformLink} from './base-links'
 import type {Pta} from './verticals'
 

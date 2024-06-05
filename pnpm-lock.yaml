@@ -1358,9 +1358,6 @@ importers:
       '@openint/util':
         specifier: workspace:*
         version: link:../../packages/util
-      '@openint/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
       '@opensdks/fetch-links':
         specifier: ^0.0.19
         version: 0.0.19
@@ -1557,9 +1554,9 @@ importers:
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk
-      '@openint/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
+      '@opensdks/util-zod':
+        specifier: ^0.0.15
+        version: 0.0.15
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
@@ -1854,9 +1851,9 @@ importers:
       '@blossomfinance/iso-4217-currencies':
         specifier: 0.2.5
         version: 0.2.5
-      '@openint/zod':
-        specifier: workspace:*
-        version: link:../../utils/zod
+      '@opensdks/util-zod':
+        specifier: ^0.0.15
+        version: 0.0.15
       '@trpc/server':
         specifier: 10.40.0
         version: 10.40.0
@@ -2156,9 +2153,6 @@ importers:
       '@openint/connector-xero':
         specifier: workspace:*
         version: link:../../connectors/connector-xero
-      '@openint/types':
-        specifier: workspace:*
-        version: link:../../utils/types
 
   unified/unified-crm:
     dependencies:
@@ -2223,21 +2217,6 @@ importers:
       '@opensdks/sdk-salesloft':
         specifier: 0.0.17
         version: 0.0.17
-
-  utils/types:
-    dependencies:
-      type-fest:
-        specifier: 4.8.2
-        version: 4.8.2
-
-  utils/zod:
-    dependencies:
-      zod:
-        specifier: 3.22.4
-        version: 3.22.4
-      zod-openapi:
-        specifier: 2.14.0
-        version: 2.14.0(zod@3.22.4)
 
 packages:
 
@@ -21097,11 +21076,6 @@ packages:
   /type-fest@3.8.0:
     resolution: {integrity: sha512-FVNSzGQz9Th+/9R6Lvv7WIAkstylfHN2/JYxkyhhmKFYh9At2DST8t6L6Lref9eYO8PXFTfG9Sg1Agg0K3vq3Q==}
     engines: {node: '>=14.16'}
-
-  /type-fest@4.8.2:
-    resolution: {integrity: sha512-mcvrCjixA5166hSrUoJgGb9gBQN4loMYyj9zxuMs/66ibHNEFd5JXMw37YVDx58L4/QID9jIzdTBB4mDwDJ6KQ==}
-    engines: {node: '>=16'}
-    dev: false
 
   /type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}

@@ -9,7 +9,7 @@
     "@openint/trpc": "workspace:*",
     "@openint/util": "workspace:*",
     "@openint/vdk": "workspace:*",
-    "@openint/zod": "workspace:*",
+    "@opensdks/util-zod": "^0.0.15",
     "@trpc/server": "10.40.0",
     "inngest": "^3.16.0",
     "zod-openapi": "2.14.0"

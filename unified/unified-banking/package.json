@@ -10,7 +10,6 @@
     "@openint/connector-postgres": "workspace:*",
     "@openint/connector-qbo": "workspace:*",
     "@openint/connector-xero": "workspace:*",
-    "@openint/types": "workspace:*",
     "@openint/vdk": "workspace:*"
   }
 }

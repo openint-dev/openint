@@ -1,3 +1,4 @@
+import {zodToOas31Schema} from '@opensdks/util-zod'
 import {
   extractId,
   metaForConnector,
@@ -8,7 +9,6 @@ import type {RouterMeta} from '@openint/trpc'
 import {TRPCError} from '@openint/trpc'
 import {R, z} from '@openint/util'
 import {zBaseRecord, zPaginatedResult, zPaginationParams} from '@openint/vdk'
-import {zodToOas31Schema} from '@openint/zod'
 import {publicProcedure, trpc} from './_base'
 
 const tags = ['Connectors']

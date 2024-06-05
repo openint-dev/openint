@@ -1,6 +1,6 @@
 // TODO: Maybe this belongs in engine backend?
+import {extendZodWithOpenApi, z} from '@opensdks/util-zod'
 import {invert, memoize, R} from '@openint/util'
-import {extendZodWithOpenApi, z} from '@openint/zod'
 
 export type ExternalId = z.infer<typeof zExternalId>
 export const zExternalId = z.union([z.string(), z.number()])
