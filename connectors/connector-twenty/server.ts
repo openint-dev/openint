@@ -25,7 +25,7 @@ export const twentyServer = {
               body: company.map((com) => ({
                 name: com.name ?? '',
                 // annualRecurringRevenue: {
-                //   amountMicros: String(company.annualRevenue),
+                //   amountMicros: String(com.annualRevenue),
                 // },
                 address: [
                   com.address.street,
@@ -36,7 +36,7 @@ export const twentyServer = {
                   com.address.postalCode,
                 ].join(', '),
                 // createdAt: String(company.createdTimestamp), // TODO(@jatin): make this typesafe
-                // updatedAt: String(company.updatedTimestamp),
+                // updatedAt: String(com.updatedTimestamp),
                 // ...(company.additional as Object), // TODO(@jatin): make this work
               })),
             })
@@ -68,14 +68,14 @@ export const twentyServer = {
             await twenty.core.POST('/batch/opportunities', {
               body: deal.map((d) => ({
                 name: d.name ?? '',
-                // amount: {
-                //   amountMicros: String(d.amount),
-                // },
+                amount: {
+                  amountMicros: String(d.amount),
+                },
+                probability: String(d.probability),
                 // stage: d.stage,
-                // probability: String(d.probability),
-                // closeDate: String(d.expectedCloseDate),
                 // createdAt: String(d.createdTimestamp),
                 // updatedAt: String(d.updatedTimestamp),
+                // closeDate: String(d.expectedCloseDate),
                 // ...(d.additional as Object), // TODO(@jatin): make this work
               })),
             })
