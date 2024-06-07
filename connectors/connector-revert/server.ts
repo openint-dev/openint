@@ -52,9 +52,6 @@ export const revertServer = {
 
         cursor = res.data.next
         if (!cursor) {
-          yield helpers._opData(stream as 'company', '', {
-            [stream]: records,
-          })
           break
         }
       }
