@@ -23,11 +23,17 @@ export const revertServer = {
           continue
         }
         const sState = ((state ?? {}) as Record<string, unknown>)[name] ?? {}
-        yield* PipeRecordsInStream(name, stream.fields ?? [], sState) // TODO(@jatin): update this.
+        for await (const res of iterateRecordsInStream(
+          name,
+          stream.fields ?? [],
+          sState,
+        )) {
+          yield helpers._opData(name as 'company', '', {[name]: res})
+        }
       }
     }
 
-    async function* PipeRecordsInStream(
+    async function* iterateRecordsInStream(
       stream: string,
       /** stream state */
       fields: string[],
@@ -35,7 +41,6 @@ export const revertServer = {
     ) {
       const plural = revertPluralize(stream)
       let cursor = sState.cursor
-      const records = []
       while (true) {
         // @jatinsandilya don't worry about making this work for incremental sync
         // Our requirement so far is just one time import for now
@@ -43,7 +48,8 @@ export const revertServer = {
           params: {query: {cursor, fields: fields.join(',')}},
         })
 
-        records.push(...res.data.results)
+        yield res.data.results
+
         cursor = res.data.next
         if (!cursor) {
           yield helpers._opData(stream as 'company', '', {
