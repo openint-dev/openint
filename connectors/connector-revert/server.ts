@@ -23,7 +23,7 @@ export const revertServer = {
           continue
         }
         const sState = ((state ?? {}) as Record<string, unknown>)[name] ?? {}
-        yield* iterateRecordsInStream(name, stream.fields ?? [], sState)
+        yield* iterateRecordsInStream(name, stream.fields ?? [], sState) // TODO(@jatin): update this.
       }
     }
 
