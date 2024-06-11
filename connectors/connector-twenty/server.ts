@@ -80,21 +80,20 @@ export const twentyServer = {
               const contact = batches[eName] as unknown as Array<{
                 raw: Revert['commonContact']
               }>
-              if (contact) {
-                await twenty.core.POST('/batch/people', {
-                  body: contact.map(({raw}) => ({
-                    name: {
-                      firstName: raw.firstName,
-                      lastName: raw.lastName,
-                    },
-                    email: raw.email,
-                    phone: raw.phone ?? '',
-                  })),
-                  // createdAt: String(con.createdTimestamp), // TODO(@jatin): make this typesafe
-                  // updatedAt: String(con.updatedTimestamp),
-                  // ...(con.additional as Object), // TODO(@jatin): make this work
-                })
-              }
+
+              await twenty.core.POST('/batch/people', {
+                body: contact.map(({raw}) => ({
+                  name: {
+                    firstName: raw.firstName,
+                    lastName: raw.lastName,
+                  },
+                  email: raw.email,
+                  phone: raw.phone ?? '',
+                })),
+                // createdAt: String(con.createdTimestamp), // TODO(@jatin): make this typesafe
+                // updatedAt: String(con.updatedTimestamp),
+                // ...(con.additional as Object), // TODO(@jatin): make this work
+              })
               break
             }
             case 'deal': {
@@ -102,22 +101,20 @@ export const twentyServer = {
                 raw: Revert['commonDeal']
               }>
 
-              if (deal) {
-                await twenty.core.POST('/batch/opportunities', {
-                  body: deal.map(({raw}) => ({
-                    name: raw.name ?? '',
-                    amount: {
-                      amountMicros: String(raw.amount),
-                    },
-                    probability: String(raw.probability),
-                    // stage: d.stage,
-                    // createdAt: String(d.createdTimestamp),
-                    // updatedAt: String(d.updatedTimestamp),
-                    // closeDate: String(d.expectedCloseDate),
-                    // ...(d.additional as Object), // TODO(@jatin): make this work
-                  })),
-                })
-              }
+              await twenty.core.POST('/batch/opportunities', {
+                body: deal.map(({raw}) => ({
+                  name: raw.name ?? '',
+                  amount: {
+                    amountMicros: String(raw.amount),
+                  },
+                  probability: String(raw.probability),
+                  // stage: d.stage,
+                  // createdAt: String(d.createdTimestamp),
+                  // updatedAt: String(d.updatedTimestamp),
+                  // closeDate: String(d.expectedCloseDate),
+                  // ...(d.additional as Object), // TODO(@jatin): make this work
+                })),
+              })
               break
             }
           }
