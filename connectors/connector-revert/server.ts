@@ -41,9 +41,11 @@ export const revertServer = {
         const res = await instance.GET(`/crm/${plural as 'companies'}`, {
           params: {query: {cursor, fields: fields.join(',')}},
         })
+
         yield res.data.results.map((com) =>
           helpers._opData(stream as 'company', com.id ?? '', com),
         )
+
         cursor = res.data.next
         if (!cursor) {
           break

@@ -19,17 +19,15 @@ maybeTest('CRUD company', async () => {
   })
 
   // Twenty bug. @see https://revert-dev.slack.com/archives/C06KH6J8UTD/p1711079562721159
-  const company = create.data.data?.['createCompany' as 'company']
+  const company = create.data.data?.['createCompany']
   expect(company?.id).toBeTruthy()
 
-  const update = await twenty.core.PUT('/companies/{id}', {
+  const update = await twenty.core.PATCH('/companies/{id}', {
     body: {domainName: 'test2.com'},
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     params: {path: {id: company!.id!}},
   })
-  expect(update.data.data?.['updateCompany' as 'company']?.domainName).toEqual(
-    'test2.com',
-  )
+  expect(update.data.data?.['updateCompany']?.domainName).toEqual('test2.com')
 
   const get = await twenty.core.GET('/companies/{id}', {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -42,7 +40,7 @@ maybeTest('CRUD company', async () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     params: {path: {id: company!.id!}},
   })
-  expect(del.data.data?.['deleteCompany' as 'company']?.id).toEqual(company?.id)
+  expect(del.data.data?.['deleteCompany']?.id).toEqual(company?.id)
 
   // https://revert-dev.slack.com/archives/C06KH6J8UTD/p1711080124005239
   // This does not work at the moment due to bug in Twenty that actually returns 200
