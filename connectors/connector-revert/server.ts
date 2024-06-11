@@ -23,13 +23,7 @@ export const revertServer = {
           continue
         }
         const sState = ((state ?? {}) as Record<string, unknown>)[name] ?? {}
-        for await (const res of iterateRecordsInStream(
-          name,
-          stream.fields ?? [],
-          sState,
-        )) {
-          yield helpers._opData(name as 'company', '', {[name]: res})
-        }
+        yield* iterateRecordsInStream(name, stream.fields ?? [], sState)
       }
     }
 
@@ -48,7 +42,9 @@ export const revertServer = {
           params: {query: {cursor, fields: fields.join(',')}},
         })
 
-        yield res.data.results
+        yield res.data.results.map((com) =>
+          helpers._opData(stream as 'company', com.id ?? '', com),
+        )
 
         cursor = res.data.next
         if (!cursor) {
@@ -58,7 +54,7 @@ export const revertServer = {
     }
     return rxjs
       .from(iterateRecords())
-      .pipe(Rx.mergeMap((ops) => rxjs.from([ops, helpers._op('commit')])))
+      .pipe(Rx.mergeMap((ops) => rxjs.from([...ops, helpers._op('commit')])))
   },
 
   proxy: (instance, req) => {
