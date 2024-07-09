@@ -1226,8 +1226,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1
       '@opensdks/sdk-twenty':
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.0.5
+        version: 0.0.5
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
@@ -5231,8 +5231,8 @@ packages:
     resolution: {integrity: sha512-SS9hQXC7ABvcps2kkEa7C7ocNlgJiUrdYDH+49MEwoIrOrESvMrvak1wJA+d7TNKR3eIW12ocxYqfO+fa41D5A==}
     dev: false
 
-  /@opensdks/sdk-twenty@0.0.4:
-    resolution: {integrity: sha512-pj3hnJ7tAwIumYypbae9zB9u2smOEBkIz698mpY9ZNdeedkUpJ0onUHnxSt9ZfGjUYwCW6sv+AHxuIPvDSDjOQ==}
+  /@opensdks/sdk-twenty@0.0.5:
+    resolution: {integrity: sha512-VvAMxuhHk5SFKrPq/v9Kur7rsvxF6L3Sxv1N4illO8PflmsiK6g8zFZj6bhYdmgnlYU5SrttDxDrYlVg1m9H+Q==}
     dev: false
 
   /@opensdks/sdk-venice@0.0.14(@opensdks/runtime@0.0.16):
