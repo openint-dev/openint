@@ -179,6 +179,7 @@ export interface ConnectorServer<
   revokeResource?: (
     settings: T['_types']['resourceSettings'],
     config: T['_types']['connectorConfig'],
+    instance: TInstance,
   ) => Promise<unknown>
 
   // MARK: - Sync

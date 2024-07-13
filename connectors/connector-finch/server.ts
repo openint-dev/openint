@@ -49,6 +49,9 @@ export const finchServer = {
         authorization: `Bearer ${settings.access_token}`,
       },
     }),
+  revokeResource: async (_, __, instance) => {
+    await instance.POST('/disconnect')
+  },
   passthrough: (instance, input) =>
     instance.request(input.method, input.path, {
       params: {query: input.query},

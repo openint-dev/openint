@@ -159,13 +159,19 @@ export const resourceRouter = trpc.router({
       if (ctx.viewer.role === 'end_user') {
         await ctx.services.getResourceOrFail(resoId)
       }
-      const {
-        settings,
-        connectorConfig: ccfg,
-        ...reso
-      } = await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
+      const reso = await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
+      const {settings, connectorConfig: ccfg} = reso
       if (!opts?.skipRevoke) {
-        await ccfg.connector.revokeResource?.(settings, ccfg.config)
+        await ccfg.connector.revokeResource?.(
+          settings,
+          ccfg.config,
+          ccfg.connector.newInstance?.({
+            config: ccfg.config,
+            settings,
+            fetchLinks: ctx.services.getFetchLinks(reso),
+            onSettingsChange: () => {},
+          }),
+        )
       }
       // if (opts?.todo_deleteAssociatedData) {
       // TODO: Figure out how to delete... Destination is not part of meta service
