@@ -1521,6 +1521,9 @@ importers:
       '@openint/unified-etl':
         specifier: workspace:*
         version: link:../../unified/unified-etl
+      '@openint/unified-hris':
+        specifier: workspace:*
+        version: link:../../unified/unified-hris
       '@openint/unified-pta':
         specifier: workspace:*
         version: link:../../unified/unified-pta
@@ -2183,6 +2186,15 @@ importers:
       '@openint/connector-revert':
         specifier: workspace:*
         version: link:../../connectors/connector-revert
+      '@openint/vdk':
+        specifier: workspace:*
+        version: link:../../kits/vdk
+
+  unified/unified-hris:
+    dependencies:
+      '@openint/connector-finch':
+        specifier: workspace:*
+        version: link:../../connectors/connector-finch
       '@openint/vdk':
         specifier: workspace:*
         version: link:../../kits/vdk

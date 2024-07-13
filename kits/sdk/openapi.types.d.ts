@@ -254,6 +254,9 @@ export interface paths {
   '/unified/ats/department': {
     get: operations['ats-listDepartments']
   }
+  '/unified/hris/individual': {
+    get: operations['hris-listIndividual']
+  }
   '/unified/etl/read/{stream}': {
     get: operations['etl-readStream']
   }
@@ -570,21 +573,15 @@ export interface components {
         type: string
         schema?: string | null
       } | null
-      unified_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
-      standard_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
-      custom_objects?:
-        | Array<{
-            object: string
-          }>
-        | null
+      unified_objects?: Array<{
+        object: string
+      }> | null
+      standard_objects?: Array<{
+        object: string
+      }> | null
+      custom_objects?: Array<{
+        object: string
+      }> | null
     }
     'sales-engagement.contact': {
       id: string
@@ -594,8 +591,12 @@ export interface components {
       account_id?: string
       job_title: string
       address: components['schemas']['sales-engagement.address']
-      email_addresses: Array<components['schemas']['sales-engagement.email_address']>
-      phone_numbers: Array<components['schemas']['sales-engagement.phone_number']>
+      email_addresses: Array<
+        components['schemas']['sales-engagement.email_address']
+      >
+      phone_numbers: Array<
+        components['schemas']['sales-engagement.phone_number']
+      >
       open_count: number
       click_count: number
       reply_count: number
@@ -716,12 +717,10 @@ export interface components {
       /** @description date-time */
       last_activity_at?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       last_modified_at?: string | null
     }
@@ -756,12 +755,10 @@ export interface components {
       number_of_employees?: number | null
       website?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       owner_id?: string | null
       lifecycle_stage?: components['schemas']['crm.lifecycle_stage'] | null
       passthrough_fields?: {
@@ -812,12 +809,10 @@ export interface components {
       converted_contact_id?: string | null
       addresses?: Array<components['schemas']['crm.address']> | null
       email_addresses?: Array<components['schemas']['crm.email_address']> | null
-      phone_numbers?:
-        | Array<{
-            phone_number: string | null
-            phone_number_type: components['schemas']['crm.phone_number_type']
-          }>
-        | null
+      phone_numbers?: Array<{
+        phone_number: string | null
+        phone_number_type: components['schemas']['crm.phone_number_type']
+      }> | null
       created_at?: string | null
       is_deleted?: boolean | null
       last_modified_at?: string | null
@@ -2403,21 +2398,15 @@ export interface operations {
             type: string
             schema?: string | null
           } | null
-          unified_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
-          standard_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
-          custom_objects?:
-            | Array<{
-                object: string
-              }>
-            | null
+          unified_objects?: Array<{
+            object: string
+          }> | null
+          standard_objects?: Array<{
+            object: string
+          }> | null
+          custom_objects?: Array<{
+            object: string
+          }> | null
         }
       }
     }
@@ -2532,7 +2521,9 @@ export interface operations {
         content: {
           'application/json': {
             next_page_cursor?: string | null
-            items: Array<components['schemas']['sales-engagement.sequenceState']>
+            items: Array<
+              components['schemas']['sales-engagement.sequenceState']
+            >
           }
         }
       }
@@ -4199,27 +4190,25 @@ export interface operations {
               name: string
               confidential: boolean
               departments: Array<{
-                id: string
+                id?: string | null
                 created_at?: string | null
                 modified_at?: string | null
-                name: string
+                name?: string | null
                 parent_id?: string | null
                 parent_department_external_id?: string | null
-                child_ids: Array<string | null>
-                child_department_external_ids: Array<string | null>
+                child_ids?: Array<string | null> | null
+                child_department_external_ids?: Array<string | null> | null
                 raw_data?: {
                   [key: string]: unknown
                 }
               }>
-              offices: Array<{
+              offices?: Array<{
                 [key: string]: unknown
-              }>
-              hiring_managers: Array<{
+              }> | null
+              hiring_managers?: unknown
+              recruiters?: Array<{
                 [key: string]: unknown
-              }>
-              recruiters: Array<{
-                [key: string]: unknown
-              }>
+              }> | null
               raw_data?: {
                 [key: string]: unknown
               }
@@ -4266,11 +4255,11 @@ export interface operations {
               id: string
               created_at: string
               modified_at: string
-              application: string
-              closed_at: string
-              sent_at: string
-              start_date: string
-              status: string
+              application?: string | null
+              closed_at?: string | null
+              sent_at?: string | null
+              start_date?: string | null
+              status?: string | null
               raw_data?: {
                 [key: string]: unknown
               }
@@ -4315,28 +4304,26 @@ export interface operations {
             has_next_page: boolean
             items: Array<{
               id: string
-              created_at: string
-              modified_at: string
-              first_name: string
-              last_name: string
-              company: string | null
-              title: string | null
-              last_interaction_at: string
-              is_private: boolean
-              can_email: boolean
-              locations: unknown[]
-              phone_numbers: Array<{
-                value?: string | null
-                phone_number_type?: string | null
-              }>
-              email_addresses: Array<{
-                /** Format: email */
-                value?: string | null
-                email_address_type?: string | null
-              }>
-              tags: string[]
-              applications: unknown[]
-              attachments: unknown[]
+              created_at?: string | null
+              modified_at?: string | null
+              name?: string | null
+              first_name?: string | null
+              last_name?: string | null
+              company?: string | null
+              title?: string | null
+              last_interaction_at?: string | null
+              is_private?: boolean | null
+              can_email?: boolean | null
+              locations?: unknown[] | null
+              phone_numbers?: Array<{
+                [key: string]: unknown
+              }> | null
+              email_addresses?: Array<{
+                [key: string]: unknown
+              }> | null
+              tags?: string[] | null
+              applications?: unknown[] | null
+              attachments?: unknown[] | null
               raw_data?: {
                 [key: string]: unknown
               }
@@ -4380,14 +4367,58 @@ export interface operations {
             next_cursor?: string | null
             has_next_page: boolean
             items: Array<{
-              id: string
+              id?: string | null
               created_at?: string | null
               modified_at?: string | null
-              name: string
+              name?: string | null
               parent_id?: string | null
               parent_department_external_id?: string | null
-              child_ids: Array<string | null>
-              child_department_external_ids: Array<string | null>
+              child_ids?: Array<string | null> | null
+              child_department_external_ids?: Array<string | null> | null
+              raw_data?: {
+                [key: string]: unknown
+              }
+            }>
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'hris-listIndividual': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<{
+              id: string
               raw_data?: {
                 [key: string]: unknown
               }
@@ -4566,34 +4597,36 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': Array<OneOf<
-            [
-              {
-                streams: Array<{
-                  name: string
-                  json_schema: {
-                    [key: string]: unknown
+          'application/json': Array<
+            OneOf<
+              [
+                {
+                  streams: Array<{
+                    name: string
+                    json_schema: {
+                      [key: string]: unknown
+                    }
+                    source_defined_primary_key?: string[][]
+                  }>
+                  /** @enum {string} */
+                  type: 'CATALOG'
+                },
+                {
+                  record: {
+                    data?: unknown
+                    stream: string
                   }
-                  source_defined_primary_key?: string[][]
-                }>
-                /** @enum {string} */
-                type: 'CATALOG'
-              },
-              {
-                record: {
-                  data?: unknown
-                  stream: string
-                }
-                /** @enum {string} */
-                type: 'RECORD'
-              },
-              {
-                state?: unknown
-                /** @enum {string} */
-                type: 'STATE'
-              },
-            ]
-          >>
+                  /** @enum {string} */
+                  type: 'RECORD'
+                },
+                {
+                  state?: unknown
+                  /** @enum {string} */
+                  type: 'STATE'
+                },
+              ]
+            >
+          >
         }
       }
       /** @description Invalid input data */

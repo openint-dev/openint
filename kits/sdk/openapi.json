@@ -6203,7 +6203,7 @@
                               "type": "object",
                               "properties": {
                                 "id": {
-                                  "type": "string"
+                                  "type": ["string", "null"]
                                 },
                                 "created_at": {
                                   "type": ["string", "null"]
@@ -6212,7 +6212,7 @@
                                   "type": ["string", "null"]
                                 },
                                 "name": {
-                                  "type": "string"
+                                  "type": ["string", "null"]
                                 },
                                 "parent_id": {
                                   "type": ["string", "null"]
@@ -6221,13 +6221,13 @@
                                   "type": ["string", "null"]
                                 },
                                 "child_ids": {
-                                  "type": "array",
+                                  "type": ["array", "null"],
                                   "items": {
                                     "type": ["string", "null"]
                                   }
                                 },
                                 "child_department_external_ids": {
-                                  "type": "array",
+                                  "type": ["array", "null"],
                                   "items": {
                                     "type": ["string", "null"]
                                   }
@@ -6236,31 +6236,19 @@
                                   "type": "object",
                                   "additionalProperties": {}
                                 }
-                              },
-                              "required": [
-                                "id",
-                                "name",
-                                "child_ids",
-                                "child_department_external_ids"
-                              ]
+                              }
                             }
                           },
                           "offices": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": "object",
                               "additionalProperties": {}
                             }
                           },
-                          "hiring_managers": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "additionalProperties": {}
-                            }
-                          },
+                          "hiring_managers": {},
                           "recruiters": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": "object",
                               "additionalProperties": {}
@@ -6277,10 +6265,7 @@
                           "modified_at",
                           "name",
                           "confidential",
-                          "departments",
-                          "offices",
-                          "hiring_managers",
-                          "recruiters"
+                          "departments"
                         ]
                       }
                     }
@@ -6379,35 +6364,26 @@
                             "type": "string"
                           },
                           "application": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "closed_at": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "sent_at": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "start_date": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "status": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "raw_data": {
                             "type": "object",
                             "additionalProperties": {}
                           }
                         },
-                        "required": [
-                          "id",
-                          "created_at",
-                          "modified_at",
-                          "application",
-                          "closed_at",
-                          "sent_at",
-                          "start_date",
-                          "status"
-                        ]
+                        "required": ["id", "created_at", "modified_at"]
                       }
                     }
                   },
@@ -6499,16 +6475,19 @@
                             "type": "string"
                           },
                           "created_at": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "modified_at": {
-                            "type": "string"
+                            "type": ["string", "null"]
+                          },
+                          "name": {
+                            "type": ["string", "null"]
                           },
                           "first_name": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "last_name": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "company": {
                             "type": ["string", "null"]
@@ -6517,59 +6496,44 @@
                             "type": ["string", "null"]
                           },
                           "last_interaction_at": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "is_private": {
-                            "type": "boolean"
+                            "type": ["boolean", "null"]
                           },
                           "can_email": {
-                            "type": "boolean"
+                            "type": ["boolean", "null"]
                           },
                           "locations": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {}
                           },
                           "phone_numbers": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": "object",
-                              "properties": {
-                                "value": {
-                                  "type": ["string", "null"]
-                                },
-                                "phone_number_type": {
-                                  "type": ["string", "null"]
-                                }
-                              }
+                              "additionalProperties": {}
                             }
                           },
                           "email_addresses": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": "object",
-                              "properties": {
-                                "value": {
-                                  "type": ["string", "null"],
-                                  "format": "email"
-                                },
-                                "email_address_type": {
-                                  "type": ["string", "null"]
-                                }
-                              }
+                              "additionalProperties": {}
                             }
                           },
                           "tags": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": "string"
                             }
                           },
                           "applications": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {}
                           },
                           "attachments": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {}
                           },
                           "raw_data": {
@@ -6577,24 +6541,7 @@
                             "additionalProperties": {}
                           }
                         },
-                        "required": [
-                          "id",
-                          "created_at",
-                          "modified_at",
-                          "first_name",
-                          "last_name",
-                          "company",
-                          "title",
-                          "last_interaction_at",
-                          "is_private",
-                          "can_email",
-                          "locations",
-                          "phone_numbers",
-                          "email_addresses",
-                          "tags",
-                          "applications",
-                          "attachments"
-                        ]
+                        "required": ["id"]
                       }
                     }
                   },
@@ -6683,7 +6630,7 @@
                         "type": "object",
                         "properties": {
                           "id": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "created_at": {
                             "type": ["string", "null"]
@@ -6692,7 +6639,7 @@
                             "type": ["string", "null"]
                           },
                           "name": {
-                            "type": "string"
+                            "type": ["string", "null"]
                           },
                           "parent_id": {
                             "type": ["string", "null"]
@@ -6701,13 +6648,13 @@
                             "type": ["string", "null"]
                           },
                           "child_ids": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": ["string", "null"]
                             }
                           },
                           "child_department_external_ids": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
                               "type": ["string", "null"]
                             }
@@ -6716,13 +6663,103 @@
                             "type": "object",
                             "additionalProperties": {}
                           }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unified/hris/individual": {
+      "get": {
+        "operationId": "hris-listIndividual",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {
+              "type": "string",
+              "enum": ["full", "incremental"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": ["string", "null"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {
+                      "type": ["string", "null"]
+                    },
+                    "has_next_page": {
+                      "type": "boolean"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "raw_data": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          }
                         },
-                        "required": [
-                          "id",
-                          "name",
-                          "child_ids",
-                          "child_department_external_ids"
-                        ]
+                        "required": ["id"]
                       }
                     }
                   },

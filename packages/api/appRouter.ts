@@ -12,6 +12,7 @@ import atsRouter from '@openint/unified-ats'
 import bankingRouter from '@openint/unified-banking'
 import {crmRouter} from '@openint/unified-crm'
 import eltRouter from '@openint/unified-etl'
+import hrisRouter from '@openint/unified-hris'
 import ptaRouter from '@openint/unified-pta'
 import {salesEngagementRouter} from '@openint/unified-sales-engagement'
 import {mapKeys, mapValues, publicProcedure, trpc, z} from '@openint/vdk'
@@ -36,6 +37,7 @@ export const _appRouter = trpc.router({
   accounting: accountingRouter,
   pta: ptaRouter,
   ats: atsRouter,
+  hris: hrisRouter,
   etl: eltRouter,
 })
 
