@@ -748,8 +748,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
       '@opensdks/sdk-finch':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.4
+        version: 0.0.4
       '@opensdks/util-zod':
         specifier: ^0.0.15
         version: 0.0.15
@@ -758,8 +758,8 @@ importers:
         version: 18.2.0
     devDependencies:
       '@tryfinch/react-connect':
-        specifier: ^3.7.0
-        version: 3.7.0(react@18.2.0)
+        specifier: ^3.11.0
+        version: 3.11.0(react@18.2.0)
       '@types/react':
         specifier: 18.0.27
         version: 18.0.27
@@ -5140,8 +5140,8 @@ packages:
   /@opensdks/sdk-discord@0.0.14:
     resolution: {integrity: sha512-GvA3dEvhiy18Ddd2XTP68YJOheSwg2UFoOKb5nXr8WxWfOwW/o9RvJW+kMhZKKNM5R39oP90xMcIjtSp3GrozQ==}
 
-  /@opensdks/sdk-finch@0.0.3:
-    resolution: {integrity: sha512-fbKPSitxFIcCnb3v2kczLAeMuNTOqzT7IEY3O+vRtpRrFVwBjzs8m1ritQyX5nH4uWJiwfNOEPtz+iuTTzYlOw==}
+  /@opensdks/sdk-finch@0.0.4:
+    resolution: {integrity: sha512-7CxSxCIE8POPBFrEGlovRdkziXNfbrh6GD7fPwIk6GPR2f2CKmLqPxOpLhBhzH/5Ol0nCyzCq8NDsvLbI5OvEQ==}
     dev: false
 
   /@opensdks/sdk-greenhouse@0.0.3:
@@ -7305,8 +7305,8 @@ packages:
   /@trpc/server@10.40.0:
     resolution: {integrity: sha512-49SUOMWzSZtu5+OdrADmJD+u+sjSE0qj1cWgYk2FY4jLkPJunLuNRuhzM7aOeBhiUjyfhg2YTfur8FN1WBmvEw==}
 
-  /@tryfinch/react-connect@3.7.0(react@18.2.0):
-    resolution: {integrity: sha512-FqhVXAlBMyoZIr991/NoaDp/eYZlqXmBi210l0KggCO/coIHBwX30sQ8l8M0Kdl0l3OKtFveImdbWtmW102FEw==}
+  /@tryfinch/react-connect@3.11.0(react@18.2.0):
+    resolution: {integrity: sha512-74dDbMneXPuvQOlB4qDcbbmC0no3K2ze5IGXKKf+G+7gwapFlofj/+LSi9g/nmJUyP+U586IpCIwWjPn3pE0kA==}
     engines: {node: '>=8', npm: '>=5'}
     peerDependencies:
       react: 18.2.0
