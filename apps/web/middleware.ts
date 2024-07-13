@@ -1,7 +1,7 @@
 import {authMiddleware} from '@clerk/nextjs'
 
 // Disable redirects
-export default authMiddleware({publicRoutes: [/^(.*)/]})
+export default authMiddleware({publicRoutes: [/^(.*)/], debug: false})
 
 export const config = {
   /*
@@ -15,8 +15,12 @@ export const config = {
    * - debug page
    */
   matcher: [
-    '/((?!.*\\..*|_next|connect|debug).*)',
+    // Do not run clerk on api routes. More annoying than helpful.
+    // Unexpectedly blocking requests with apikey if user agent has something like the following
+    // User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
+    '/((?!.*\\..*|_next|connect|api|debug).*)',
     '/',
-    '/(api|trpc|connector)(.*)',
+    '/(trpc|connector)(.*)',
+    // '/(api|trpc|connector)(.*)',
   ],
 }

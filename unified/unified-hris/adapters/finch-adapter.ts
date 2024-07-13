@@ -20,22 +20,17 @@ function tryParse<T>(schema: z.ZodType<T>, input: unknown) {
 
 export const finchAdapter = {
   listIndividual: async ({instance, input}) => {
-    const paging = tryParse(
-      z.object({
-        count: z.number().optional(),
-        offset: z.number().optional(),
-      }),
-      input?.cursor,
-    )
+    // TODO: We should have a general purpose limit / offset paginator
+    const offset = tryParse(z.coerce.number().optional(), input?.cursor) ?? 0
     const res = await instance.GET('/employer/directory', {
-      params: {query: paging ?? undefined},
+      params: {query: {offset, limit: input?.page_size} ?? undefined},
     })
-    const individuals = res.data.individuals?.map(mappers.individual)
-
+    const individuals = res.data.individuals?.map(mappers.individual) ?? []
+    const nextOffset = offset + individuals.length
     return {
-      has_next_page: !!individuals?.length,
-      items: individuals ?? [],
-      next_cursor: JSON.stringify(res.data.paging ?? {}),
+      has_next_page: nextOffset < (res.data.paging?.count ?? 0),
+      items: individuals,
+      next_cursor: String(nextOffset),
     }
   },
 } satisfies HrisAdapter<FinchSDK>
