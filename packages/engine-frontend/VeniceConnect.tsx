@@ -87,14 +87,15 @@ export function VeniceConnectButton({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className="flex max-h-screen flex-col">
+        <DialogHeader className="shrink-0">
           <DialogTitle>New connection</DialogTitle>
           <DialogDescription>
             Choose a connector config to start
           </DialogDescription>
         </DialogHeader>
         <VeniceConnect
+          className="flex-1 overflow-scroll"
           {...props}
           onEvent={(event) => {
             // How do we close the dialog when an connector config has been chosen?
@@ -105,7 +106,9 @@ export function VeniceConnectButton({
           }}
         />
         {/* Children here */}
-        <DialogFooter>{/* Cancel here */}</DialogFooter>
+        <DialogFooter className="shrink-0">
+          {/* Cancel here */}
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

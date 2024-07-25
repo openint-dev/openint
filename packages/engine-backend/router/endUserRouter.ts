@@ -28,7 +28,7 @@ export const zConnectTokenPayload = z.object({
     ),
   validityInSeconds: z
     .number()
-    .default(3600)
+    .default(30 * 24 * 60 * 60)
     .describe(
       'How long the magic link will be valid for (in seconds) before it expires',
     ),
