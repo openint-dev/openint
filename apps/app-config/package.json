@@ -17,6 +17,7 @@
     "@openint/connector-apollo": "workspace:*",
     "@openint/connector-beancount": "workspace:*",
     "@openint/connector-brex": "workspace:*",
+    "@openint/connector-coda": "workspace:*",
     "@openint/connector-debug": "workspace:*",
     "@openint/connector-discord": "workspace:*",
     "@openint/connector-expensify": "workspace:*",

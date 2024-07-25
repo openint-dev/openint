@@ -3,6 +3,7 @@ import {default as connectorAirtable} from '@openint/connector-airtable/def'
 import {default as connectorApollo} from '@openint/connector-apollo/def'
 import {default as connectorBeancount} from '@openint/connector-beancount/def'
 import {default as connectorBrex} from '@openint/connector-brex/def'
+import {default as connectorCoda} from '@openint/connector-coda/def'
 import {default as connectorDebug} from '@openint/connector-debug/def'
 import {default as connectorDiscord} from '@openint/connector-discord/def'
 import {default as connectorFinch} from '@openint/connector-finch/def'
@@ -47,6 +48,7 @@ export const defConnectors = {
   apollo: connectorApollo,
   beancount: connectorBeancount,
   brex: connectorBrex,
+  coda: connectorCoda,
   debug: connectorDebug,
   discord: connectorDiscord,
   finch: connectorFinch,

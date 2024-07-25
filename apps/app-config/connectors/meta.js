@@ -42,6 +42,15 @@ module.exports = [
       server: '@openint/connector-brex/server',
     },
   },
+  {
+    name: 'coda',
+    dirName: 'connector-coda',
+    varName: 'connectorCoda',
+    imports: {
+      def: '@openint/connector-coda/def',
+      server: '@openint/connector-coda/server',
+    },
+  },
   {dirName: 'connector-copilot', varName: 'connectorCopilot', imports: {}},
   {
     name: 'debug',
@@ -187,7 +196,6 @@ module.exports = [
       server: '@openint/connector-moota/server',
     },
   },
-  {dirName: 'connector-notion', varName: 'connectorNotion', imports: {}},
   {
     name: 'onebrick',
     dirName: 'connector-onebrick',
@@ -350,7 +358,6 @@ module.exports = [
     varName: 'connectorVenmo',
     imports: {def: '@openint/connector-venmo/def'},
   },
-  {dirName: 'connector-vercel', varName: 'connectorVercel', imports: {}},
   {
     name: 'webhook',
     dirName: 'connector-webhook',

@@ -7,6 +7,8 @@ import {default as connectorBeancount_def} from '@openint/connector-beancount/de
 import {default as connectorBeancount_server} from '@openint/connector-beancount/server'
 import {default as connectorBrex_def} from '@openint/connector-brex/def'
 import {default as connectorBrex_server} from '@openint/connector-brex/server'
+import {default as connectorCoda_def} from '@openint/connector-coda/def'
+import {default as connectorCoda_server} from '@openint/connector-coda/server'
 import {default as connectorDebug_def} from '@openint/connector-debug/def'
 import {default as connectorDebug_server} from '@openint/connector-debug/server'
 import {default as connectorDiscord_def} from '@openint/connector-discord/def'
@@ -100,6 +102,11 @@ const connectorBeancount = {
 const connectorBrex = {
   ...connectorBrex_def,
   ...connectorBrex_server,
+}
+
+const connectorCoda = {
+  ...connectorCoda_def,
+  ...connectorCoda_server,
 }
 
 const connectorDebug = {
@@ -295,6 +302,7 @@ export const mergedConnectors = {
   apollo: connectorApollo,
   beancount: connectorBeancount,
   brex: connectorBrex,
+  coda: connectorCoda,
   debug: connectorDebug,
   discord: connectorDiscord,
   finch: connectorFinch,

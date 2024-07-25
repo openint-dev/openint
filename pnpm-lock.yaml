@@ -189,6 +189,9 @@ importers:
       '@openint/connector-brex':
         specifier: workspace:*
         version: link:../../connectors/connector-brex
+      '@openint/connector-coda':
+        specifier: workspace:*
+        version: link:../../connectors/connector-coda
       '@openint/connector-debug':
         specifier: workspace:*
         version: link:../../connectors/connector-debug
@@ -696,6 +699,18 @@ importers:
       '@opensdks/sdk-brex':
         specifier: ^0.0.1
         version: 0.0.1
+
+  connectors/connector-coda:
+    dependencies:
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
+      '@openint/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@opensdks/sdk-coda':
+        specifier: ^0.0.0
+        version: 0.0.0
 
   connectors/connector-copilot:
     dependencies:
@@ -5147,6 +5162,10 @@ packages:
 
   /@opensdks/sdk-brex@0.0.1:
     resolution: {integrity: sha512-4qNzNAyzHhmKAQlA71ofeU7eyJA4lfoPvOud9DM3bTAWZCX9msRte2kwL4/mIalJskk2UiBub3JeSdX3iqrnyA==}
+    dev: false
+
+  /@opensdks/sdk-coda@0.0.0:
+    resolution: {integrity: sha512-sHYIbEYXrUVj5t4ZGKbaJwopV89BxqSFDGBsWfBtoX0c25gwikUY+qRyo77tFfZhfvZGh522Efw9uRGoxd9e/w==}
     dev: false
 
   /@opensdks/sdk-discord@0.0.14:
