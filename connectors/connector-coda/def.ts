@@ -5,6 +5,11 @@ import {z} from '@openint/util'
 
 // type components = CodaSDKTypes['oas']['components']
 
+function modify<T>(input: T, fn: (input: T) => void): T {
+  fn(input)
+  return input
+}
+
 export const codaSchemas = {
   name: z.literal('coda'),
   resourceSettings: z.object({apiKey: z.string()}),
@@ -17,7 +22,11 @@ export const codaDef = {
     categories: ['flat-files-and-spreadsheets'],
     logoUrl: '/_assets/logo-coda.png',
     stage: 'beta',
-    openapiSpec: {proxied: codaOas as unknown as OpenApiSpec},
+    openapiSpec: {
+      proxied: modify(codaOas, (oas) => {
+        oas.security = [] // remove security from the spec generally as it is not needed due to proxying
+      }) as unknown as OpenApiSpec,
+    },
   },
 } satisfies ConnectorDef<typeof codaSchemas>
 

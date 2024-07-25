@@ -709,8 +709,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
       '@opensdks/sdk-coda':
-        specifier: ^0.0.0
-        version: 0.0.0
+        specifier: ^0.0.1
+        version: 0.0.1
 
   connectors/connector-copilot:
     dependencies:
@@ -5164,8 +5164,8 @@ packages:
     resolution: {integrity: sha512-4qNzNAyzHhmKAQlA71ofeU7eyJA4lfoPvOud9DM3bTAWZCX9msRte2kwL4/mIalJskk2UiBub3JeSdX3iqrnyA==}
     dev: false
 
-  /@opensdks/sdk-coda@0.0.0:
-    resolution: {integrity: sha512-sHYIbEYXrUVj5t4ZGKbaJwopV89BxqSFDGBsWfBtoX0c25gwikUY+qRyo77tFfZhfvZGh522Efw9uRGoxd9e/w==}
+  /@opensdks/sdk-coda@0.0.1:
+    resolution: {integrity: sha512-AH/ot2d4kbV+wjPy+LVZvVikQQdFyuZANHxV1TjBQ05FLdO36s1JrAfVdAFO9xOqlzHZ8L0kyPjVCJT+rBZf9A==}
     dev: false
 
   /@opensdks/sdk-discord@0.0.14:

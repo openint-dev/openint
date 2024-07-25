@@ -10,6 +10,6 @@
   "dependencies": {
     "@openint/cdk": "workspace:*",
     "@openint/util": "workspace:*",
-    "@opensdks/sdk-coda": "^0.0.0"
+    "@opensdks/sdk-coda": "^0.0.1"
   }
 }
