@@ -1,13 +1,12 @@
 'use client'
 
-import React from 'react'
 import '@stoplight/elements/styles.min.css'
+import {API as StoplightElements} from '@stoplight/elements'
+import React from 'react'
 // this pollutes the global CSS space
 
-import {API as StoplightElements} from '@stoplight/elements'
-import type {Id, OpenApiSpec, PassthroughInput} from '@openint/cdk'
+import type {Id, OpenApiSpec} from '@openint/cdk'
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink} from '@openint/ui'
-import {safeJSONParse} from '@openint/util'
 
 export function PlaygroundPage({
   apikey,
@@ -26,20 +25,14 @@ export function PlaygroundPage({
       for (const server of oas.servers ?? []) {
         path = path.replace(server.url, '')
       }
-      return fetch('/api/v0/passthrough', {
-        method: 'POST',
+      return fetch('/api/proxy' + path, {
+        ...init,
         headers: {
+          ...init?.headers,
+          // Make it even more custom
           'x-apikey': apikey,
           'x-resource-id': resourceId,
-          'content-type': 'application/json',
         },
-        body: JSON.stringify({
-          method: init?.method as 'POST',
-          path,
-          query: {}, // Would have been part of `path` already...
-          headers: init?.headers as Record<string, string>,
-          body: safeJSONParse(init?.body as string) as Record<string, unknown>,
-        } satisfies PassthroughInput),
       })
     }
     ;(globalThis as any)._stoplight_fetch = customFetch

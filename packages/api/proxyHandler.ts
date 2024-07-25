@@ -15,5 +15,10 @@ export const proxyHandler = async (req: Request) => {
       status: 404,
     })
   }
-  return res
+  const headers = new Headers(res.headers)
+  headers.delete('content-encoding') // No more gzip at this point...
+  return new Response(res.body, {
+    status: res.status,
+    headers,
+  })
 }
