@@ -10,7 +10,10 @@ export const codaServer = {
 
   proxy(instance, req) {
     return instance
-      .request(req.method as 'GET', req.url.replace(/.+\/api\/proxy/, ''), req)
+      .request(req.method as 'GET', req.url.replace(/.+\/api\/proxy/, ''), {
+        body: req.body, // See if this works...
+        headers: req.headers,
+      })
       .then((r) => r.response.clone())
   },
 
