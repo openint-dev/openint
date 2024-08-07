@@ -8,10 +8,10 @@ export const codaServer = {
     return initCodaSDK({headers: {Authorization: `Bearer ${settings.apiKey}`}})
   },
 
-  proxy(instance, req) {
+  async proxy(instance, req) {
     return instance
       .request(req.method as 'GET', req.url.replace(/.+\/api\/proxy/, ''), {
-        body: req.body, // See if this works...
+        body: await req.blob(), // See if this works... We need to figure out how to do streaming here...
         headers: req.headers,
       })
       .then((r) => r.response.clone())
