@@ -20,7 +20,9 @@ export const config = {
     // User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36
     '/((?!.*\\..*|_next|connect|api|debug).*)',
     '/',
-    '/(trpc|connector)(.*)',
-    // '/(api|trpc|connector)(.*)',
+    // TODO: Figure out how to work properly with clerk... Should probably not depend on Clerk in the API layer unless
+    // clerk itself handles api key auth.
+    // '/(trpc|connector)(.*)',
+    '/(api|trpc|connector)(.*)',
   ],
 }
