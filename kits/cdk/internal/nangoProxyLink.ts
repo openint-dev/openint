@@ -194,7 +194,8 @@ export const nangoConnectionWithCredentials = z.object({
     .object({
       portalId: z.number().nullish(),
       instance_url: z.string().nullish(),
-      realmId: z.string(),
+      /** Only exists for QBO` */
+      realmId: z.string().nullish(),
     })
     .nullish(),
   metadata: z.record(z.unknown()).nullish(),
