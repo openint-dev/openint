@@ -1,6 +1,7 @@
 import {HTTPError} from '@opensdks/runtime'
 import {z} from '@opensdks/util-zod'
 import {TRPCError} from '@trpc/server'
+import {getHTTPStatusCodeFromError} from '@trpc/server/http'
 
 export {HTTPError}
 
@@ -83,6 +84,15 @@ export function isHttpError<T>(
     }
   }
   return false
+}
+
+export async function getHTTPResponseFromError(err: TRPCError) {
+  const statusCode = getHTTPStatusCodeFromError(err)
+
+  return {
+    status: statusCode,
+    body: await parseErrorInfo(err),
+  }
 }
 
 /** Handles error from both within and out of the process. Used for displaying in UI / saving to DB etc. */

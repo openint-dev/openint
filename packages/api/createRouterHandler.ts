@@ -13,7 +13,14 @@ import {
 import type {Id, Viewer} from '@openint/cdk'
 import {decodeApikey, makeJwtClient, zEndUserId, zId} from '@openint/cdk'
 import {envRequired} from '@openint/env'
-import {BadRequestError, isHttpError, z, type AnyRouter} from '@openint/vdk'
+import {
+  BadRequestError,
+  getHTTPResponseFromError,
+  isHttpError,
+  TRPCError,
+  z,
+  type AnyRouter,
+} from '@openint/vdk'
 import type {AppRouter} from './appRouter'
 
 export const zOpenIntHeaders = z
@@ -165,43 +172,55 @@ export function createRouterHandler({
       return new Response(null, {status: 204, headers: corsHeaders})
     }
     // Now handle for reals
-    const context = await contextFromRequest({req})
-    // More aptly named handleOpenApiFetchRequest as it returns a response already
-    const res = await createOpenApiFetchHandler({
-      endpoint,
-      req,
-      router: router as AppRouter,
-      createContext: () => context,
-      // TODO: handle error status code from passthrough endpoints
-      // onError, // can only have side effect and not modify response error status code unfortunately...
-      responseMeta: ({errors, ctx: _ctx}) => {
-        // Pass the status along
-        for (const err of errors) {
-          console.warn(
-            '[TRPCError]',
-            {
-              // customerId: ctx?.headers.get('x-customer-id'),
-              // providerName: ctx?.headers.get('x-provider-name'),
-            },
-            err,
-          )
-          if (isHttpError(err.cause)) {
-            // Maybe rename this to status within the error object?
-            return {status: err.cause.code}
+    try {
+      const context = await contextFromRequest({req})
+      // More aptly named handleOpenApiFetchRequest as it returns a response already
+      const res = await createOpenApiFetchHandler({
+        endpoint,
+        req,
+        router: router as AppRouter,
+        createContext: () => context,
+        // TODO: handle error status code from passthrough endpoints
+        // onError, // can only have side effect and not modify response error status code unfortunately...
+        responseMeta: ({errors, ctx: _ctx}) => {
+          // Pass the status along
+          for (const err of errors) {
+            console.warn(
+              '[TRPCError]',
+              {
+                // customerId: ctx?.headers.get('x-customer-id'),
+                // providerName: ctx?.headers.get('x-provider-name'),
+              },
+              err,
+            )
+            if (isHttpError(err.cause)) {
+              // Maybe rename this to status within the error object?
+              return {status: err.cause.code}
+            }
           }
-        }
-        return {}
-      },
-    })
-    // Pass the resourceId back to the client so there is certainly on which ID
-    // was used to fetch the data
-    if (context.remoteResourceId) {
-      res.headers.set('x-resource-id', context.remoteResourceId)
+          return {}
+        },
+      })
+      // Pass the resourceId back to the client so there is certainly on which ID
+      // was used to fetch the data
+      if (context.remoteResourceId) {
+        res.headers.set('x-resource-id', context.remoteResourceId)
+      }
+      for (const [k, v] of Object.entries(corsHeaders)) {
+        res.headers.set(k, v)
+      }
+      return res
+    } catch (err) {
+      console.error('[trpc.createRouterHandler] error', err)
+      if (err instanceof TRPCError) {
+        const ret = await getHTTPResponseFromError(err)
+        return new Response(JSON.stringify(ret.body), {
+          status: ret.status,
+          headers: {'Content-Type': 'application/json'},
+        })
+      }
+      throw err
     }
-    for (const [k, v] of Object.entries(corsHeaders)) {
-      res.headers.set(k, v)
-    }
-    return res
   }
   return (req: Request) => applyLinks(req, [corsLink(), openapiRouteHandler])
 }
