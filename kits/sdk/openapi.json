@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://openint.dev/api/v0"
+      "url": "http://localhost:4000/api/v0"
     }
   ],
   "paths": {
@@ -84,7 +84,7 @@
                   },
                   "validityInSeconds": {
                     "type": "number",
-                    "default": 3600,
+                    "default": 2592000,
                     "description": "How long the magic link will be valid for (in seconds) before it expires"
                   }
                 }
@@ -150,7 +150,7 @@
                   },
                   "validityInSeconds": {
                     "type": "number",
-                    "default": 3600,
+                    "default": 2592000,
                     "description": "How long the magic link will be valid for (in seconds) before it expires"
                   },
                   "displayName": {
@@ -724,6 +724,80 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/core/resource/{id}/_check": {
+      "post": {
+        "operationId": "checkResource",
+        "tags": ["Core"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "description": "Must start with 'reso_'"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "skipCache": {
+                    "type": ["boolean", "null"]
+                  },
+                  "import": {
+                    "type": ["boolean", "null"]
+                  },
+                  "updateWebhook": {
+                    "type": ["boolean", "null"]
+                  },
+                  "sandboxSimulateUpdate": {
+                    "type": ["boolean", "null"]
+                  },
+                  "sandboxSimulateDisconnect": {
+                    "type": ["boolean", "null"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
                 }
               }
             }

@@ -1,6 +1,7 @@
 import type {ResourceUpdate, ZRaw} from '@openint/cdk'
 import {
   extractId,
+  getRemoteContext,
   makeId,
   sync,
   zCheckResourceOptions,
@@ -212,22 +213,27 @@ export const resourceRouter = trpc.router({
   checkResource: protectedProcedure
     .meta({
       description: 'Not automatically called, used for debugging for now',
+      openapi: {method: 'POST', path: '/core/resource/{id}/_check', tags},
     })
-    .input(z.tuple([zId('reso'), zCheckResourceOptions.optional()]))
-    .mutation(async ({input: [resoId, opts], ctx}) => {
+    .input(z.object({id: zId('reso')}).merge(zCheckResourceOptions))
+    .output(z.unknown())
+    .mutation(async ({input: {id: resoId, ...opts}, ctx}) => {
       if (ctx.viewer.role === 'end_user') {
         await ctx.services.getResourceOrFail(resoId)
       }
-      const {
-        settings,
-        connectorConfig: int,
-        ...reso
-      } = await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
+      const remoteCtx = await getRemoteContext({
+        ...ctx,
+        remoteResourceId: resoId,
+      })
+      const {connectorConfig: int, ...reso} =
+        await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
+
       // console.log('checkResource', {settings, connectorConfig, ...conn}, opts)
       const resoUpdate = await int.connector.checkResource?.({
-        settings,
+        settings: remoteCtx.remote.settings,
         config: int.config,
         options: opts ?? {},
+        instance: remoteCtx.remote.instance,
         context: {
           webhookBaseUrl: joinPath(
             ctx.apiUrl,
@@ -235,7 +241,7 @@ export const resourceRouter = trpc.router({
           ),
         },
       })
-      if (resoUpdate || opts?.import) {
+      if (resoUpdate || opts?.import !== false) {
         /** Do not update the `endUserId` here... */
         await ctx.asOrgIfNeeded._syncResourceUpdate(int, {
           ...(opts?.import && {
@@ -244,7 +250,7 @@ export const resourceRouter = trpc.router({
           ...resoUpdate,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           settings: {
-            ...(opts?.import && settings),
+            ...(opts?.import && remoteCtx.remote.settings),
             ...resoUpdate?.settings,
           },
           resourceExternalId:
@@ -254,7 +260,7 @@ export const resourceRouter = trpc.router({
       if (!int.connector.checkResource) {
         return `Not implemented in ${int.connector.name}`
       }
-      return 'Ok'
+      return resoUpdate
     }),
 
   // MARK: - Sync

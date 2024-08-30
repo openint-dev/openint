@@ -164,6 +164,7 @@ export interface ConnectorServer<
       config: T['_types']['connectorConfig']
       options: CheckResourceOptions
       context: CheckResourceContext
+      instance?: TInstance
     }>,
   ) => MaybePromise<
     Omit<

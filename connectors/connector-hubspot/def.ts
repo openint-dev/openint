@@ -7,6 +7,7 @@ export const zConfig = oauthBaseSchema.connectorConfig
 const oReso = oauthBaseSchema.resourceSettings
 export const zSettings = oReso.extend({
   oauth: oReso.shape.oauth,
+  extra: z.unknown(),
 })
 
 export const hubspotSchemas = {

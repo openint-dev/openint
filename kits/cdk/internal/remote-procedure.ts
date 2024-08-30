@@ -81,7 +81,7 @@ export async function getRemoteContext(ctx: ProtectedContext) {
       connector: resource.connectorConfig.connector,
       connectorName: resource.connectorName,
       connectorMetadata: resource.connectorConfig.connector.metadata,
-      settings: resource.settings,
+      settings, // Not resource.settings which is out of date. // TODO: we should update resource.settings through
       // TODO: Need to be careful this is never returned to any end user endpoints
       // and only used for making requests with remotes
       config: resource.connectorConfig.config,
