@@ -4788,6 +4788,63 @@
             }
           }
         }
+      },
+      "post": {
+        "operationId": "crm-createNote",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "record": {
+                    "$ref": "#/components/schemas/crm.note_input"
+                  }
+                },
+                "required": ["record"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "record": {
+                      "$ref": "#/components/schemas/crm.note"
+                    }
+                  },
+                  "required": ["record"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/unified/crm/user": {
@@ -8873,6 +8930,18 @@
           }
         },
         "required": ["id", "updated_at"]
+      },
+      "crm.note_input": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": ["string", "null"]
+          },
+          "passthrough_fields": {
+            "type": ["object", "null"],
+            "additionalProperties": {}
+          }
+        }
       },
       "crm.user": {
         "type": "object",

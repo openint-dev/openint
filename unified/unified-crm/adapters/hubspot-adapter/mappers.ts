@@ -278,7 +278,7 @@ export const mappers = {
     phone: 'properties.phone',
     updated_at: (record) => new Date(record.updatedAt).toISOString(),
   }),
-  opportunity: mapper(HSDeal, unified.opportunity, {
+  opportunities: mapper(HSDeal, unified.opportunity, {
     id: 'id',
     name: 'properties.dealname',
     description: 'properties.description',
@@ -305,7 +305,7 @@ export const mappers = {
     updated_at: (record) => new Date(record.updatedAt).toISOString(),
     last_modified_at: (record) => new Date(record.updatedAt).toISOString(),
   }),
-  note: mapper(HSNote, unified.note, {
+  notes: mapper(HSNote, unified.note, {
     id: 'id',
     // notes body is full HTML, so we are using the preview for simplicity
     content: 'properties.hs_body_preview',
@@ -313,11 +313,11 @@ export const mappers = {
     updated_at: (record) => new Date(record.updatedAt).toISOString(),
     // last_modified_at: (record) => new Date(record.updatedAt).toISOString(),
   }),
-  lead: mapper(HSBase, unified.lead, {
+  leads: mapper(HSBase, unified.lead, {
     id: 'id',
     updated_at: (record) => new Date(record.updatedAt).toISOString(),
   }),
-  user: mapper(zCast<Owner>(), unified.user, {
+  users: mapper(zCast<Owner>(), unified.user, {
     id: 'id',
     updated_at: 'updatedAt',
     created_at: 'createdAt',
@@ -327,7 +327,7 @@ export const mappers = {
     is_active: (record) => !record.archived, // Assuming archived is a boolean
     is_deleted: (record) => !!record.archived, // Assuming archived is a boolean
   }),
-  customObject: mapper(HSBase, zBaseRecord, {
+  customObjects: mapper(HSBase, zBaseRecord, {
     id: 'id',
     updated_at: 'properties.hs_lastmodifieddate',
   }),
@@ -405,6 +405,15 @@ export const reverseMappers = {
       first_name: nullToEmptyString(input.first_name),
       email: nullToEmptyString(input.email),
       phone: nullToEmptyString(input.phone),
+      ...getIfObject(input.passthrough_fields, 'properties'),
+    }),
+  })),
+  notes_input: mapper(unified.note_input, HSObject, (input) => ({
+    ...input.passthrough_fields,
+    properties: removeUndefinedValues({
+      // https://developers.hubspot.com/docs/api/crm/notes
+      hs_timestamp: new Date().toISOString(),
+      hs_note_body: nullToEmptyString(input.content),
       ...getIfObject(input.passthrough_fields, 'properties'),
     }),
   })),

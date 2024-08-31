@@ -328,3 +328,13 @@ export const contact_input = contact
     passthrough_fields: z.record(z.unknown()).nullish(),
   })
   .openapi({ref: 'crm.contact_input'})
+
+export const note_input = note
+  .pick({
+    content: true,
+  })
+  .partial()
+  .extend({
+    passthrough_fields: z.record(z.unknown()).nullish(),
+  })
+  .openapi({ref: 'crm.note_input'})

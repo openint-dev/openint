@@ -137,6 +137,13 @@ const _listObjectsFullThenMap = async <TIn, TOut extends BaseRecord>(
   }
 }
 
+function getApiName(objectType: HubspotObjectTypePlural) {
+  const apiName = `crm_${
+    (objectType === 'notes' ? 'objects' : objectType) as 'contacts'
+  }` as const
+  return apiName
+}
+
 const _listObjectsIncrementalThenMap = async <TIn, TOut extends BaseRecord>(
   instance: HubspotSDK,
   {
@@ -162,11 +169,7 @@ const _listObjectsIncrementalThenMap = async <TIn, TOut extends BaseRecord>(
     objectType === 'contacts' ? 'lastmodifieddate' : 'hs_lastmodifieddate'
   // We may want to consider using the list rather than search endpoint for this stuff...
 
-  const apiName = `crm_${
-    (objectType === 'notes' ? 'objects' : objectType) as 'contacts'
-  }` as const
-
-  const res = await instance[apiName].POST(
+  const res = await instance[getApiName(objectType)].POST(
     `/crm/v3/objects/${objectType as 'contacts'}/search`,
     {
       body: {
@@ -387,7 +390,7 @@ const _getPipelineStageMapping = async (instance: HubspotSDK) => {
   ])
 }
 
-const _createObject = async <T extends 'contacts' | 'companies'>(
+const _createObject = async <T extends 'contacts' | 'companies' | 'notes'>(
   instance: HubspotSDK,
   {
     objectType,
@@ -398,7 +401,7 @@ const _createObject = async <T extends 'contacts' | 'companies'>(
   },
 ) => {
   const hubspotInput = reverseMappers[`${objectType}_input`].parse(input.record)
-  const res = await instance[`crm_${objectType}` as 'crm_contacts'].POST(
+  const res = await instance[getApiName(objectType)].POST(
     `/crm/v3/objects/${objectType as 'contacts'}/batch/create`,
     {body: {inputs: [{associations: [], ...hubspotInput}]}},
   )
@@ -422,7 +425,7 @@ const _updateObject = async <T extends 'contacts' | 'companies'>(
   },
 ) => {
   const hubspotInput = reverseMappers[`${objectType}_input`].parse(input.record)
-  const res = await instance[`crm_${objectType}` as 'crm_contacts'].POST(
+  const res = await instance[getApiName(objectType)].POST(
     `/crm/v3/objects/${objectType as 'contacts'}/batch/update`,
     {body: {inputs: [{...hubspotInput, id: input.id}]}},
   )
@@ -485,7 +488,7 @@ const _batchReadObjectThenMap = async <TIn, TOut extends BaseRecord>(
     properties: string[]
   },
 ) => {
-  const res = await instance[`crm_${objectType}` as 'crm_contacts'].POST(
+  const res = await instance[getApiName(objectType)].POST(
     `/crm/v3/objects/${objectType as 'contacts'}/batch/read`,
     {
       body: {
@@ -565,7 +568,7 @@ export const hubspotAdapter = {
     input?.sync_mode === 'full'
       ? _listObjectsFullThenMap(instance, {
           objectType: 'deals',
-          mapper: mappers.opportunity,
+          mapper: mappers.opportunities,
           page_size: input?.page_size,
           cursor: input?.cursor,
           fields: propertiesToFetch.deal,
@@ -574,18 +577,20 @@ export const hubspotAdapter = {
       : _listObjectsIncrementalThenMap(instance, {
           ...input,
           objectType: 'deals',
-          mapper: mappers.opportunity,
+          mapper: mappers.opportunities,
           fields: propertiesToFetch.deal,
           includeAllFields: true,
           associations: associationsToFetch.deal,
           ctx,
         }),
+  createNote: ({instance, input}) =>
+    _createObject(instance, {...input, objectType: 'notes'}),
 
   listNotes: async ({instance, input, ctx}) =>
     input?.sync_mode === 'full'
       ? _listObjectsFullThenMap(instance, {
           objectType: 'notes',
-          mapper: mappers.note,
+          mapper: mappers.notes,
           page_size: input?.page_size,
           cursor: input?.cursor,
           fields: propertiesToFetch.note,
@@ -594,7 +599,7 @@ export const hubspotAdapter = {
       : _listObjectsIncrementalThenMap(instance, {
           ...input,
           objectType: 'notes',
-          mapper: mappers.note,
+          mapper: mappers.notes,
           fields: propertiesToFetch.note,
           includeAllFields: true,
           associations: associationsToFetch.note,
@@ -612,7 +617,7 @@ export const hubspotAdapter = {
   listUsers: async ({instance, input}) =>
     _listObjectsFullThenMap(instance, {
       objectType: 'owners',
-      mapper: mappers.user,
+      mapper: mappers.users,
       page_size: input?.page_size,
       cursor: input?.cursor,
     }),
@@ -624,7 +629,7 @@ export const hubspotAdapter = {
         instance,
         input.object_name,
       ).then(hubspotPluralize),
-      mapper: mappers.customObject,
+      mapper: mappers.customObjects,
       page_size: input?.page_size,
       cursor: input?.cursor,
     }),
