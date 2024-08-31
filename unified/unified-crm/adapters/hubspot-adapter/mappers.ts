@@ -165,6 +165,7 @@ export const HSNote = z.object({
       hubspot_owner_id: z.string(),
       hubspot_team_id: z.unknown(),
     })
+    .partial()
     .passthrough(),
   associations: HSAssociations.nullish(),
   createdAt: z.string(),
@@ -199,7 +200,7 @@ export const HSCompany = z.object({
 export const associationsToFetch = {
   contact: ['company'],
   deal: ['company'],
-  note: [],
+  note: ['company'],
 }
 export const propertiesToFetch = {
   company: [
@@ -335,7 +336,47 @@ export const mappers = {
 const HSProperties = z.record(z.string())
 const HSObject = z.object({
   properties: HSProperties,
-  associations: z.any().optional(), // for now
+  /**
+ * "associations": [
+    {
+     "to": {
+        "id": 301
+      },
+      "types": [
+        {
+          "associationCategory": "HUBSPOT_DEFINED",
+          "associationTypeId": 190
+        } ]
+    },
+    {
+     "to": {
+        "id": 401
+      },
+      "types": [
+        {
+          "associationCategory": "HUBSPOT_DEFINED",
+          "associationTypeId": 214
+        } ]
+}]
+ */
+  // associations: z.any().optional(), // for now
+  associations: z
+    .array(
+      z.object({
+        to: z.object({id: z.string()}),
+        types: z.array(
+          z.object({
+            associationCategory: z.enum([
+              'HUBSPOT_DEFINED',
+              'USER_DEFINED',
+              'INTEGRATOR_DEFINED',
+            ]),
+            associationTypeId: z.number(),
+          }),
+        ),
+      }),
+    )
+    .optional(),
 })
 
 // const reverse_address = mapper(unified.address, zHSProperties, {
@@ -412,11 +453,33 @@ export const reverseMappers = {
     ...input.passthrough_fields,
     properties: removeUndefinedValues({
       // https://developers.hubspot.com/docs/api/crm/notes
-      hs_timestamp: new Date().toISOString(),
+      hs_timestamp: new Date().toISOString(), // TODO Allow this to be passed in...
       hs_note_body: nullToEmptyString(input.content),
       ...getIfObject(input.passthrough_fields, 'properties'),
     }),
+    associations: input.account_id
+      ? [toAssociation('note_to_company', input.account_id)]
+      : [],
   })),
+}
+
+function toAssociation(type: 'note_to_company', toObjectId: string) {
+  /** https://developers.hubspot.com/docs/api/crm/associations#association-type-id-values */
+  const associationTypeId = {
+    note_to_company: 190,
+  }[type]
+
+  if (associationTypeId === undefined) {
+    throw new Error(`Unknown association type: ${type}`)
+  }
+  return {
+    // to: {id: Number.parseInt(toObjectId, 10)},
+    // apparently we are happy with string?!
+    to: {id: toObjectId},
+    types: [
+      {associationCategory: 'HUBSPOT_DEFINED' as const, associationTypeId},
+    ],
+  }
 }
 
 // MARK: - Utils

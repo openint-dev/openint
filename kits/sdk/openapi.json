@@ -8940,6 +8940,10 @@
           "passthrough_fields": {
             "type": ["object", "null"],
             "additionalProperties": {}
+          },
+          "account_id": {
+            "type": "string",
+            "description": "The ID of the company to associate the note to."
           }
         }
       },

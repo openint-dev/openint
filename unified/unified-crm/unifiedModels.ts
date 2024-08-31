@@ -336,5 +336,9 @@ export const note_input = note
   .partial()
   .extend({
     passthrough_fields: z.record(z.unknown()).nullish(),
+    account_id: z
+      .string()
+      .optional()
+      .describe('The ID of the company to associate the note to.'),
   })
   .openapi({ref: 'crm.note_input'})
