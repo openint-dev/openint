@@ -194,6 +194,9 @@ export interface paths {
   '/unified/crm/opportunity/{id}': {
     get: operations['crm-getOpportunity']
   }
+  '/unified/crm/note': {
+    get: operations['crm-listNotes']
+  }
   '/unified/crm/user': {
     get: operations['crm-listUsers']
   }
@@ -857,6 +860,15 @@ export interface components {
     }
     /** @enum {string} */
     'crm.opportunity_status': 'OPEN' | 'WON' | 'LOST'
+    'crm.note': {
+      id: string
+      /** @description ISO8601 date string */
+      updated_at: string
+      raw_data?: {
+        [key: string]: unknown
+      }
+      content?: string | null
+    }
     'crm.user': {
       id: string
       /** @description ISO8601 date string */
@@ -3499,6 +3511,45 @@ export interface operations {
           'application/json': {
             record: components['schemas']['crm.opportunity']
             raw?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'crm-listNotes': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: Array<components['schemas']['crm.note']>
           }
         }
       }

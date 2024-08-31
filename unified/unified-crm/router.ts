@@ -153,6 +153,12 @@ export const crmRouter = trpc.router({
     .output(z.object({record: unified.opportunity, raw: z.unknown()}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 
+  listNotes: procedure
+    .meta(oapi({method: 'GET', path: '/note'}))
+    .input(zPaginationParams.nullish())
+    .output(zPaginatedResult.extend({items: z.array(unified.note)}))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+
   // MARK: - User
   listUsers: procedure
     .meta(oapi({method: 'GET', path: '/user'}))

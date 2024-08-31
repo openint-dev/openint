@@ -162,7 +162,11 @@ const _listObjectsIncrementalThenMap = async <TIn, TOut extends BaseRecord>(
     objectType === 'contacts' ? 'lastmodifieddate' : 'hs_lastmodifieddate'
   // We may want to consider using the list rather than search endpoint for this stuff...
 
-  const res = await instance[`crm_${objectType as 'contacts'}`].POST(
+  const apiName = `crm_${
+    (objectType === 'notes' ? 'objects' : objectType) as 'contacts'
+  }` as const
+
+  const res = await instance[apiName].POST(
     `/crm/v3/objects/${objectType as 'contacts'}/search`,
     {
       body: {
@@ -574,6 +578,26 @@ export const hubspotAdapter = {
           fields: propertiesToFetch.deal,
           includeAllFields: true,
           associations: associationsToFetch.deal,
+          ctx,
+        }),
+
+  listNotes: async ({instance, input, ctx}) =>
+    input?.sync_mode === 'full'
+      ? _listObjectsFullThenMap(instance, {
+          objectType: 'notes',
+          mapper: mappers.note,
+          page_size: input?.page_size,
+          cursor: input?.cursor,
+          fields: propertiesToFetch.note,
+          associations: associationsToFetch.note,
+        })
+      : _listObjectsIncrementalThenMap(instance, {
+          ...input,
+          objectType: 'notes',
+          mapper: mappers.note,
+          fields: propertiesToFetch.note,
+          includeAllFields: true,
+          associations: associationsToFetch.note,
           ctx,
         }),
   // Original supaglue never implemented this, TODO: handle me...

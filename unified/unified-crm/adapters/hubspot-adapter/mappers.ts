@@ -114,6 +114,63 @@ export const HSDeal = z.object({
   /** toObjectType => toObjectId[] */
   '#pipelineStageMapping': zCast<PipelineStageMapping>(),
 })
+export const HSNote = z.object({
+  id: z.string(),
+  // https://gist.github.com/tonyxiao/5128bdeba29f0201f5062395e4a2545b
+  properties: z
+    .object({
+      hs_all_accessible_team_ids: z.unknown(),
+      hs_all_assigned_business_unit_ids: z.unknown(),
+      hs_all_owner_ids: z.string(),
+      hs_all_team_ids: z.unknown(),
+      hs_at_mentioned_owner_ids: z.unknown(),
+      hs_attachment_ids: z.unknown(),
+      hs_body_preview: z.string(),
+      hs_body_preview_html: z.string(),
+      hs_body_preview_is_truncated: z.string(),
+      hs_created_by: z.string(),
+      hs_created_by_user_id: z.string(),
+      hs_createdate: z.string(),
+      hs_engagement_source: z.string(),
+      hs_engagement_source_id: z.unknown(),
+      hs_follow_up_action: z.unknown(),
+      hs_gdpr_deleted: z.unknown(),
+      hs_lastmodifieddate: z.string(),
+      hs_merged_object_ids: z.unknown(),
+      hs_modified_by: z.string(),
+      hs_note_body: z.string(),
+      hs_note_ms_teams_payload: z.unknown(),
+      hs_object_id: z.string(),
+      hs_object_source: z.string(),
+      hs_object_source_detail_1: z.unknown(),
+      hs_object_source_detail_2: z.unknown(),
+      hs_object_source_detail_3: z.unknown(),
+      hs_object_source_id: z.string(),
+      hs_object_source_label: z.string(),
+      hs_object_source_user_id: z.string(),
+      hs_product_name: z.unknown(),
+      hs_queue_membership_ids: z.unknown(),
+      hs_read_only: z.unknown(),
+      hs_shared_team_ids: z.unknown(),
+      hs_shared_user_ids: z.unknown(),
+      hs_timestamp: z.string(),
+      hs_unique_creation_key: z.unknown(),
+      hs_unique_id: z.unknown(),
+      hs_updated_by_user_id: z.string(),
+      hs_user_ids_of_all_notification_followers: z.unknown(),
+      hs_user_ids_of_all_notification_unfollowers: z.unknown(),
+      hs_user_ids_of_all_owners: z.string(),
+      hs_was_imported: z.unknown(),
+      hubspot_owner_assigneddate: z.string(),
+      hubspot_owner_id: z.string(),
+      hubspot_team_id: z.unknown(),
+    })
+    .passthrough(),
+  associations: HSAssociations.nullish(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  archived: z.boolean(),
+})
 export const HSCompany = z.object({
   id: z.string(),
   properties: z
@@ -142,6 +199,7 @@ export const HSCompany = z.object({
 export const associationsToFetch = {
   contact: ['company'],
   deal: ['company'],
+  note: [],
 }
 export const propertiesToFetch = {
   company: [
@@ -194,6 +252,7 @@ export const propertiesToFetch = {
     'hs_is_closed_won',
     'hs_is_closed',
   ],
+  note: [],
 }
 
 export const mappers = {
@@ -245,6 +304,14 @@ export const mappers = {
     // TODO: take into account archivedAt if needed
     updated_at: (record) => new Date(record.updatedAt).toISOString(),
     last_modified_at: (record) => new Date(record.updatedAt).toISOString(),
+  }),
+  note: mapper(HSNote, unified.note, {
+    id: 'id',
+    // notes body is full HTML, so we are using the preview for simplicity
+    content: 'properties.hs_body_preview',
+    // created_at: 'properties.createdate',
+    updated_at: (record) => new Date(record.updatedAt).toISOString(),
+    // last_modified_at: (record) => new Date(record.updatedAt).toISOString(),
   }),
   lead: mapper(HSBase, unified.lead, {
     id: 'id',

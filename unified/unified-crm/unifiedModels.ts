@@ -109,6 +109,12 @@ export const lead = zBaseRecord
   })
   .openapi({ref: 'crm.lead'})
 
+export const note = zBaseRecord
+  .extend({
+    content: z.string().nullish(),
+  })
+  .openapi({ref: 'crm.note'})
+
 export const opportunity_status = z
   .enum(['OPEN', 'WON', 'LOST'])
   .openapi({ref: 'crm.opportunity_status'})
