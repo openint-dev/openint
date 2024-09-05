@@ -13,7 +13,7 @@
     "@openint/sdk": "workspace:*",
     "@openint/unified-banking": "workspace:*",
     "@openint/unified-etl": "workspace:*",
-    "@opensdks/runtime": "^0.0.16",
+    "@opensdks/runtime": "^0.0.19",
     "@opensdks/sdk-discord": "^0.0.14",
     "@opensdks/sdk-openai": "^0.0.14",
     "@opensdks/sdk-slack": "^0.0.14",

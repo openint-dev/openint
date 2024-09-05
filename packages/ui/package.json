@@ -37,8 +37,8 @@
     "tailwind-merge": "1.6.0"
   },
   "devDependencies": {
-    "@openint/cdk": "*",
-    "@openint/engine-backend": "*",
+    "@openint/cdk": "workspace:*",
+    "@openint/engine-backend": "workspace:*",
     "@tanstack/react-query": "*",
     "@types/react": "*"
   },

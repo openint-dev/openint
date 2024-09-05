@@ -4,6 +4,14 @@ import {z} from '@opensdks/util-zod'
 
 export const NANGO_API_HOST = 'https://api.nango.dev'
 
+export const zNangoError = z.object({
+  error: z.object({
+    message: z.string(),
+    code: z.union([z.literal('unknown_provider_config'), z.string()]),
+    payload: z.object({}).passthrough(),
+  }),
+})
+
 export const zNangoOauthConnectParams = z
   .object({
     provider_config_key: z.string(),

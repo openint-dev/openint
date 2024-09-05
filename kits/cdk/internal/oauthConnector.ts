@@ -1,12 +1,13 @@
 import type NangoFrontend from '@nangohq/frontend'
 import type {AuthError} from '@nangohq/frontend'
+import {HTTPError} from '@opensdks/runtime'
 import type {NangoSDK} from '@opensdks/sdk-nango'
 import type {
   NangoProvider,
   UpsertIntegration,
 } from '@opensdks/sdk-nango/src/nango.oas'
 import {z} from '@opensdks/util-zod'
-import {HTTPError, makeUlid} from '@openint/util'
+import {makeUlid} from '@openint/util'
 import type {
   ConnectorSchemas,
   ConnectorServer,
@@ -15,6 +16,7 @@ import type {
 import {CANCELLATION_TOKEN} from '../frontend-utils'
 import type {Id} from '../id.types'
 import {extractId, makeId, zId} from '../id.types'
+import {zNangoError} from './NangoClient'
 
 export const zAuthMode = z
   .enum(['OAUTH2', 'OAUTH1', 'BASIC', 'API_KEY'])
@@ -138,12 +140,18 @@ export function makeOauthConnectorServer({
         oauth_client_secret: config.oauth.client_secret,
         oauth_scopes: config.oauth.scopes,
       }
-      await nangoClient.PUT('/config', {body}).catch((err) => {
-        if (
-          err instanceof HTTPError &&
-          err.response?.data.type === 'unknown_provider_config'
-        ) {
-          return nangoClient.POST('/config', {body})
+      await nangoClient.PUT('/config', {body}).catch(async (err) => {
+        console.log('got error of type')
+        // This is very error prone... If we have different versions runtime
+        // Then instanceof in one case would not be the same as instanceof in another case...
+        // maybe we should do ducktyping instead of using instanceof?
+        // And in general we need a better story around error types in openSDKs anyways
+        if (err instanceof HTTPError) {
+          const nangoErr = zNangoError.parse(await err.response.json())
+          // console.log('httpError', err, nangoErr, nangoErr.error.code)
+          if (nangoErr.error.code === 'unknown_provider_config') {
+            return nangoClient.POST('/config', {body})
+          }
         }
         throw err
       })
