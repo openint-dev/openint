@@ -28,8 +28,10 @@ export const leverServer = {
   async proxy(instance, req) {
     return instance
       .request(req.method as 'GET', req.url.replace(/.+\/api\/proxy/, ''), {
-        body: await req.blob(), // See if this works... We need to figure out how to do streaming here...
         headers: req.headers,
+        ...(!['GET', 'OPTIONS', 'HEAD'].includes(req.method) && {
+          body: await req.blob(), // See if this works... We need to figure out how to do streaming here...
+        }),
       })
       .then((r) => r.response.clone())
   },
