@@ -3,6 +3,12 @@ import {applyMapper} from '@openint/vdk'
 import type {ATSAdapter} from '../../router'
 import {mappers} from './mappers'
 
+/**
+ * In Lever,
+ * - opportunity and contact have a 1:1 relationship.
+ * - application and opportunity have a 1:1 relationship.
+ */
+
 export const leverAdapter = {
   listJobs: async ({instance, input}) => {
     const res = await instance.GET('/postings', {

@@ -851,8 +851,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@opensdks/sdk-greenhouse':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.4
+        version: 0.0.4
 
   connectors/connector-heron:
     dependencies:
@@ -893,8 +893,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@opensdks/sdk-lever':
-        specifier: 0.0.8
-        version: 0.0.8
+        specifier: 0.0.9
+        version: 0.0.9
 
   connectors/connector-lunchmoney:
     dependencies:
@@ -3499,6 +3499,9 @@ packages:
   '@opensdks/runtime@0.0.19':
     resolution: {integrity: sha512-9rPrPDHS+PRVKOWXbdYEtys/4uHeVzitQgR0QVSWtMFOn6FOY8VxMGvem0TGJwHf4EPecejoWF8NuNwUATmbeA==}
 
+  '@opensdks/runtime@0.0.20':
+    resolution: {integrity: sha512-Ho1+r9Y6Bsdl/3oppx6c709rlJot2UM86Rj36MYfKFIt9kCj6mHI2HLWi+X9+bmYE3CwwMsw58h3PWJMYjq/2w==}
+
   '@opensdks/sdk-airbyte@0.0.1':
     resolution: {integrity: sha512-bFDDy0BDRhvJAlto2wW4BwcMVMdsedLDIAsrHTDV5InyxKFqu9wxTE6vONwWm/JKB5aximIoedNq208wAmEKvw==}
 
@@ -3520,8 +3523,8 @@ packages:
   '@opensdks/sdk-finch@0.0.4':
     resolution: {integrity: sha512-7CxSxCIE8POPBFrEGlovRdkziXNfbrh6GD7fPwIk6GPR2f2CKmLqPxOpLhBhzH/5Ol0nCyzCq8NDsvLbI5OvEQ==}
 
-  '@opensdks/sdk-greenhouse@0.0.3':
-    resolution: {integrity: sha512-MVWuKC5JXN3lgZ1djSq3hITQutwBC/gLSF6UYY2I0U8QVkWVi8YNdWTrROqlGmlZG6VrG/uKht+gyNDmIZmScA==}
+  '@opensdks/sdk-greenhouse@0.0.4':
+    resolution: {integrity: sha512-XModga2Ghv1/dVndqLjlpWZuKOA/RdcXsYUlaVE76ewTOE94uj0fyu5ALkJrK6WUjG/bE7KsDcaZm3+Yc8I3vg==}
 
   '@opensdks/sdk-heron@0.0.1':
     resolution: {integrity: sha512-7DOFFlq5C8u060L9GJ6euwE/g8aqIClyZysio4jqYQ1W9rcYX/pZUsZ7NNPt6LQTX+coAz+8nieEi35ejiKbdg==}
@@ -3529,8 +3532,8 @@ packages:
   '@opensdks/sdk-hubspot@0.0.6':
     resolution: {integrity: sha512-UivI44M/g4XwoQvDq57b9PVdlGeiCYS+6zcFJq5HhEJLzYejg21oSJ+R3LC49TINfde88fZvV+wx/ism62C65A==}
 
-  '@opensdks/sdk-lever@0.0.8':
-    resolution: {integrity: sha512-OXwSuFpU6ucIgEvvzHjl8ON6j5rKGZlyolAmvoOZfmM+L7klkHgZLHpBTuUU+ezmLrOBQ2n/3fkz1SWDsRSLug==}
+  '@opensdks/sdk-lever@0.0.9':
+    resolution: {integrity: sha512-pBWxKrTYTUBlFrBogk9ifnmly8+jgSny6e0gIV56i+FvrX6yZ83/DKCDe9rFlpSFSM6qR1dIOM5A36rem1RnyQ==}
 
   '@opensdks/sdk-merge@0.0.6':
     resolution: {integrity: sha512-OJO+rJFpjh0ctqFH7Fq88sepjoVlGseN82MujNZfb7IPpoUIlAdM9dfj0kORfDgt4yFsqnz7TxhgQtNUvDemeg==}
@@ -14254,6 +14257,13 @@ snapshots:
       openapi-typescript-helpers: 0.0.4
       openapi3-ts: 4.1.2
 
+  '@opensdks/runtime@0.0.20':
+    dependencies:
+      '@opensdks/fetch-links': 0.0.19
+      openapi-fetch: 0.8.1
+      openapi-typescript-helpers: 0.0.4
+      openapi3-ts: 4.1.2
+
   '@opensdks/sdk-airbyte@0.0.1': {}
 
   '@opensdks/sdk-apollo@0.0.18': {}
@@ -14268,17 +14278,17 @@ snapshots:
 
   '@opensdks/sdk-finch@0.0.4': {}
 
-  '@opensdks/sdk-greenhouse@0.0.3':
+  '@opensdks/sdk-greenhouse@0.0.4':
     dependencies:
-      '@opensdks/runtime': 0.0.19
+      '@opensdks/runtime': 0.0.20
 
   '@opensdks/sdk-heron@0.0.1': {}
 
   '@opensdks/sdk-hubspot@0.0.6': {}
 
-  '@opensdks/sdk-lever@0.0.8':
+  '@opensdks/sdk-lever@0.0.9':
     dependencies:
-      '@opensdks/runtime': 0.0.19
+      '@opensdks/runtime': 0.0.20
 
   '@opensdks/sdk-merge@0.0.6': {}
 
