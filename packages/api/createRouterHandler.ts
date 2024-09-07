@@ -142,7 +142,7 @@ export const contextFromRequest = async ({
       resourceId = resources[0]?.id
     }
   }
-  console.log('[trpc.createContext]', {url: req.url, viewer, resourceId})
+  console.log('[contextFromRequest]', {url: req.url, viewer, resourceId})
   return {
     ...context,
     remoteResourceId: resourceId ?? null,

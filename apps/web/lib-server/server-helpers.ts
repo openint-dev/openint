@@ -122,6 +122,8 @@ export async function serverGetViewer(
   // access token via query param
   let accessToken = fromMaybeArray(searchParams[kAccessToken])[0]
   let viewer = jwt.verifyViewer(accessToken)
+  // console.log('accessToken', accessToken, viewer)
+
   if (viewer.role !== 'anon') {
     return {...viewer, accessToken}
   }
@@ -159,6 +161,8 @@ export async function serverGetViewer(
   // TODO: Do not crash if we do not have middleware... super annoying...
   const auth =
     'req' in context ? getAuth(context.req) : serverComponentGetAuth()
+
+  // console.log('auth', auth)
   if (auth.userId) {
     return {
       role: 'user',

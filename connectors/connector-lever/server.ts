@@ -16,18 +16,22 @@ export type LeverObjectType = LeverTypes['components']['schemas']
 
 export const leverServer = {
   newInstance: ({config, settings}) => {
-    const lever = initSDK(
-      {
-        ...leverSdkDef,
+    const lever = initSDK(leverSdkDef, {
+      headers: {
+        authorization: `Bearer ${settings.oauth.credentials.access_token}`,
       },
-      {
-        headers: {
-          authorization: `Bearer ${settings.oauth.credentials.access_token}`,
-        },
-        envName: config.envName,
-      },
-    )
+      envName: config.envName,
+    })
     return lever
+  },
+
+  async proxy(instance, req) {
+    return instance
+      .request(req.method as 'GET', req.url.replace(/.+\/api\/proxy/, ''), {
+        body: await req.blob(), // See if this works... We need to figure out how to do streaming here...
+        headers: req.headers,
+      })
+      .then((r) => r.response.clone())
   },
 } satisfies ConnectorServer<typeof leverSchemas, LeverSDK>
 

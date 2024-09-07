@@ -1,4 +1,5 @@
-import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
+import leverOas from '@opensdks/sdk-lever/lever.oas.json'
+import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@openint/cdk'
 import {connHelpers, oauthBaseSchema} from '@openint/cdk'
 import {z} from '@openint/util'
 
@@ -31,7 +32,8 @@ export const leverDef = {
     stage: 'beta',
     categories: ['ats'],
     logoUrl: '/_assets/logo-lever.png',
-    nangoProvider: 'lever-sandbox',
+    nangoProvider: 'lever-sandbox', // TODO: make this support production!
+    openapiSpec: {proxied: leverOas as unknown as OpenApiSpec},
   },
 } satisfies ConnectorDef<typeof leverSchemas>
 
