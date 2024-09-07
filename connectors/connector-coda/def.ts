@@ -20,7 +20,7 @@ export const codaDef = {
   name: 'coda',
   metadata: {
     categories: ['flat-files-and-spreadsheets'],
-    logoUrl: '/_assets/logo-coda.png',
+    logoUrl: '/_assets/logo-coda.svg',
     stage: 'beta',
     openapiSpec: {
       proxied: modify(codaOas, (oas) => {
