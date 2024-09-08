@@ -245,6 +245,17 @@ export const crmRouter = trpc.router({
     .output(z.array(unified.meta_property))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 
+  metadataCreateObjectProperty: procedure
+    .meta(
+      oapi({
+        method: 'POST',
+        path: '/metadata/objects/{object_name}/properties',
+      }),
+    )
+    .input(z.object({object_name: z.string()}).merge(unified.meta_property))
+    .output(unified.meta_property)
+    .mutation(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+
   metadataCreateAssociation: procedure
     .meta(oapi({method: 'POST', path: '/metadata/associations'}))
     .input(

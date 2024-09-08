@@ -429,13 +429,13 @@ export const reverseMappers = {
       // only primary phone is supported for hubspot accounts
       phone:
         input.phone_numbers?.find((p) => p.phone_number_type === 'primary')
-          ?.phone_number ?? '',
-      address: input.addresses?.[0]?.street_1 ?? '',
+          ?.phone_number ?? undefined,
+      address: input.addresses?.[0]?.street_1 ?? undefined,
       // NOTE: Support address2 for companies only
-      city: input.addresses?.[0]?.city ?? '',
-      state: input.addresses?.[0]?.state ?? '',
-      zip: input.addresses?.[0]?.postal_code ?? '',
-      country: input.addresses?.[0]?.country ?? '',
+      city: input.addresses?.[0]?.city ?? undefined,
+      state: input.addresses?.[0]?.state ?? undefined,
+      zip: input.addresses?.[0]?.postal_code ?? undefined,
+      country: input.addresses?.[0]?.country ?? undefined,
       ...getIfObject(input.passthrough_fields, 'properties'),
     }),
   })),

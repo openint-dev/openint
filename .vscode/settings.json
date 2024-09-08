@@ -81,5 +81,8 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#0C4B33"
+  },
+  "files.watcherExclude": {
+    "**/target": true
   }
 }

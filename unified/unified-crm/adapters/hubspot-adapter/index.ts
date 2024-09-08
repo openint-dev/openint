@@ -679,7 +679,31 @@ export const hubspotAdapter = {
       id: obj.name,
       label: obj.label,
       type: obj.type,
+      raw_details: obj,
     }))
+  },
+
+  metadataCreateObjectProperty: async ({instance, input}) => {
+    const res = await instance.crm_properties.POST(
+      '/crm/v3/properties/{objectType}',
+      {
+        params: {path: {objectType: input.object_name}},
+        body: {
+          groupName: '',
+          fieldType: 'text',
+          ...input.raw_details,
+          name: input.id,
+          label: input.label,
+          type: input.type as 'string',
+        },
+      },
+    )
+    return {
+      id: res.data.name,
+      label: res.data.label,
+      type: res.data.type,
+      raw_details: res.data,
+    }
   },
 
   metadataCreateObject: async ({instance, input: params}) => {
