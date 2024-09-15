@@ -23,7 +23,7 @@ export const finchAdapter = {
     // TODO: We should have a general purpose limit / offset paginator
     const offset = tryParse(z.coerce.number().optional(), input?.cursor) ?? 0
     const res = await instance.GET('/employer/directory', {
-      params: {query: {offset, limit: input?.page_size} ?? undefined},
+      params: {query: {offset, limit: input?.page_size}},
     })
     const individuals = res.data.individuals?.map(mappers.individual) ?? []
     const nextOffset = offset + individuals.length
