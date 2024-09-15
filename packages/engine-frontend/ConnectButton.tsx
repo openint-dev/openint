@@ -16,7 +16,7 @@ import {
   IntegrationCard,
 } from '@openint/ui'
 import {_trpcReact} from './TRPCProvider'
-import {ConnectorConnectButton} from './WithProviderConnect'
+import {WithConnectorConnect} from './WithProviderConnect'
 
 type Connector = RouterOutput['listConnectorMetas'][number]
 
@@ -163,7 +163,8 @@ export function MultipleConnectDialog({
               <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <form>
                   <div className="relative">
-                    <Search className="absolute left-2 top-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    {/* top-2.5 is not working for some reason due to tailwind setup */}
+                    <Search className="absolute left-2 top-2 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Search"
                       className="pl-8"
@@ -176,25 +177,31 @@ export function MultipleConnectDialog({
               {/* Search results */}
               <div className="flex flex-wrap gap-4">
                 {ints.map((int) => (
-                  <IntegrationCard
-                    // {...uiProps}
+                  <WithConnectorConnect
                     key={int.id}
-                    integration={{
-                      ...int,
-                      connectorName: int.connector_name,
-                      // connectorConfigId: int.connector_config_id,
-                    }}>
-                    <ConnectorConnectButton
-                      connectorConfig={{
-                        id: int.connector_config_id,
-                        connector: int.ccfg.connector,
-                      }}
-                      // connectFn={connectFnMap[int.connector_name]}
-                      // onEvent={(e) => {
-                      //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-                      // }}
-                    />
-                  </IntegrationCard>
+                    connectorConfig={{
+                      id: int.connector_config_id,
+                      connector: int.ccfg.connector,
+                    }}
+                    // connectFn={connectFnMap[int.connector_name]}
+                    // onEvent={(e) => {
+                    //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
+                    // }}
+                  >
+                    {({openConnect}) => (
+                      // <DialogTrigger asChild>
+                      <IntegrationCard
+                        // {...uiProps}
+                        onClick={() => openConnect()}
+                        integration={{
+                          ...int,
+                          connectorName: int.connector_name,
+                          // connectorConfigId: int.connector_config_id,
+                        }}
+                      />
+                      // </DialogTrigger>
+                    )}
+                  </WithConnectorConnect>
                 ))}
               </div>
 

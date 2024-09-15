@@ -30,6 +30,7 @@ export const IntegrationCard = ({
   integration: int,
   className,
   children,
+  onClick,
   ...uiProps
 }: UIProps & {
   integration: Integration & {
@@ -38,6 +39,7 @@ export const IntegrationCard = ({
     envName?: string | null
   }
   className?: string
+  onClick?: () => void
 }) => (
   // <ConnectorCard
   //   {...props}
@@ -46,11 +48,12 @@ export const IntegrationCard = ({
   // />
   <Card
     className={cn(
-      'm-3 flex h-36 w-36 flex-col items-center p-2 sm:h-48 sm:w-48',
+      'm-3 flex h-36 w-48 flex-col p-4 sm:h-48 sm:w-64',
+      'cursor-pointer rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-600',
       className,
-    )}>
+    )}
+    onClick={onClick}>
     <div className="flex h-6 self-stretch">
-      <span className="text-sm text-muted-foreground">{int.name}</span>
       {int.envName && (
         <Badge key={int.envName} variant="secondary">
           {int.envName}
@@ -73,9 +76,10 @@ export const IntegrationCard = ({
       {...uiProps}
       integration={int}
       // min-h-0 is a hack where some images do not shrink in height @see https://share.cleanshot.com/jMX1bzLP
-      className="min-h-0 grow"
+      className="h-12 min-h-0 w-12"
     />
-    {children}
+    <span className="mt-2 text-sm text-muted-foreground">{int.name}</span>
+    {/* {children} */}
   </Card>
 )
 
@@ -90,8 +94,8 @@ const IntegrationLogoTemp = ({
 }) =>
   int.logo_url ? (
     <Image
-      width={100}
-      height={100}
+      // width={100}
+      // height={100}
       src={int.logo_url}
       alt={`"${int.name}" logo`}
       className={cn('object-contain', className)}

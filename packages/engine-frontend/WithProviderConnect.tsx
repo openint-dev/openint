@@ -10,14 +10,12 @@ import type {RouterInput, RouterOutput} from '@openint/engine-backend'
 import type {SchemaFormElement, UIProps} from '@openint/ui'
 import {
   Button,
-  cn,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -44,20 +42,28 @@ const __DEBUG__ = Boolean(
   typeof window !== 'undefined' && window.location.hostname === 'localhost',
 )
 
-export const ConnectorConnectButton = ({
-  onEvent,
-  className,
-  ...props
-}: UIProps & {
+export const WithConnectorConnect = ({
+  connectorConfig: ccfg,
+  resource,
+  // connectFn,
+  children,
+}: {
   connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
   resource?: Resource
-  connectFn?: ReturnType<UseConnectHook>
+  // connectFn?: ReturnType<UseConnectHook>
   onEvent?: (event: {type: ConnectEventType}) => void
+  children: (props: {
+    openConnect: () => void
+    label: string
+    variant: 'default' | 'ghost'
+    loading: boolean
+  }) => React.ReactNode
 }) => {
+  // console.log('ConnectCard', int.id, int.connector)
+
   const {clientConnectors} = useOpenIntConnectContext()
-  const useConnectHook =
-    clientConnectors[props.connectorConfig.connector.name]?.useConnectHook
-  const nangoProvider = props.connectorConfig.connector.nangoProvider
+  const useConnectHook = clientConnectors[ccfg.connector.name]?.useConnectHook
+  const nangoProvider = ccfg.connector.nangoProvider
 
   const nangoPublicKey =
     _trpcReact.getPublicEnv.useQuery().data?.NEXT_PUBLIC_NANGO_PUBLIC_KEY
@@ -81,56 +87,10 @@ export const ConnectorConnectButton = ({
           return oauthConnect({
             connectorConfigId,
             nangoFrontend,
-            connectorName: props.connectorConfig.connector.name,
+            connectorName: ccfg.connector.name,
           })
         }
       : undefined)
-
-  return (
-    <WithConnectorConnect {...props} connectFn={connectFn}>
-      {({loading, label, openConnect: open, variant}) => (
-        <DialogTrigger asChild>
-          <Button
-            className={cn('mt-2', className)}
-            disabled={loading}
-            variant={variant}
-            onClick={(e) => {
-              onEvent?.({type: 'open'})
-              if (!connectFn) {
-                // Allow the default behavior of opening the dialog
-                return
-              }
-              // Prevent dialog from automatically opening
-              // as we invoke provider client side JS
-              e.preventDefault()
-              open()
-            }}>
-            {label}
-          </Button>
-        </DialogTrigger>
-      )}
-    </WithConnectorConnect>
-  )
-}
-
-export const WithConnectorConnect = ({
-  connectorConfig: ccfg,
-  resource,
-  connectFn,
-  children,
-}: {
-  connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
-  resource?: Resource
-  connectFn?: ReturnType<UseConnectHook>
-  onEvent?: (event: {type: ConnectEventType}) => void
-  children: (props: {
-    openConnect: () => void
-    label: string
-    variant: 'default' | 'ghost'
-    loading: boolean
-  }) => React.ReactNode
-}) => {
-  // console.log('ConnectCard', int.id, int.connector)
 
   const resourceExternalId = resource ? extractId(resource.id)[2] : undefined
 
@@ -212,6 +172,15 @@ export const WithConnectorConnect = ({
       {children({
         // Children is responsible for rendering dialog triggers as needed
         openConnect: () => {
+          // noop, allow the dialog to open instead via Trigger?
+          if (!connectFn) {
+            // The whole dialog trigger thing is a bit funky to work with
+            // it requires the children to know whether a dialog would pop up or not
+            // and a hard api to work with. We sacrifice some accessiblity by
+            // using explicit callback rather than DialogTrigger component
+            setOpen(true)
+            return
+          }
           connect.mutate(undefined)
         },
         loading: connect.isLoading,
