@@ -1,5 +1,5 @@
-import {clerkClient} from '@clerk/nextjs'
-import Image from 'next/image'
+// import {clerkClient} from '@clerk/nextjs'
+// import Image from 'next/image'
 import {defConnectors} from '@openint/app-config/connectors/connectors.def'
 import {kAccessToken} from '@openint/app-config/constants'
 import {envRequired} from '@openint/app-config/env'
@@ -111,8 +111,8 @@ export default async function ConnectPageContainer({
     }
   }
 
-  const [org] = await Promise.all([
-    clerkClient.organizations.getOrganization({organizationId: viewer.orgId}),
+  await Promise.all([
+    // clerkClient.organizations.getOrganization({organizationId: viewer.orgId}),
     // Switch to using react suspense / server fetch for this instead of prefetch
     ssg.listConnectorConfigInfos.prefetch({
       id: connectorConfigId,
@@ -123,7 +123,7 @@ export default async function ConnectPageContainer({
 
   return (
     <div className="h-screen w-screen p-6">
-      <header className="flex items-center">
+      {/* <header className="flex items-center">
         <Image
           width={50}
           height={50}
@@ -134,7 +134,7 @@ export default async function ConnectPageContainer({
         <h2 className="text-2xl font-semibold tracking-tight">
           {params.displayName ?? `${org.name} - ${viewer.endUserId}`}
         </h2>
-      </header>
+      </header> */}
       <ClientRoot accessToken={viewer.accessToken} authStatus="success">
         <SuperHydrate dehydratedState={getDehydratedState()}>
           <ConnectPage {...params} />
