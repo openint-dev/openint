@@ -11,6 +11,49 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@openint/ui'
+import {_trpcReact} from './TRPCProvider'
+
+export function CategoryConnectButton({category}: {category: string}) {
+  const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery(
+    {},
+  )
+  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({})
+
+  const ccfgs = listConnectorConfigsRes.data?.filter(
+    (ccfg) => ccfg.categories?.includes(category as never),
+  )
+
+  const ints = listIntegrationsRes.data?.items.filter(
+    (int) => int.categories?.includes(category as never),
+  )
+
+  console.log(category, {
+    ccfgs,
+    ints,
+  })
+
+  if (!ccfgs || !ints) {
+    return null
+  }
+
+  if (ccfgs.length === 0) {
+    return (
+      <div>
+        No connectors configured for {category}. Please check your settings
+      </div>
+    )
+  }
+
+  if (ccfgs.length === 1) {
+    // Return ConnectorConnectButton
+    return null
+  }
+
+  // Render dialog for MultiConnector scenarios
+  // This would be the case for greenhouse + lever
+
+  return null
+}
 
 /**
  * TODO: Figure out if we can reuse the same dialog such that when a provider is selected

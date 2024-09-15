@@ -9,12 +9,14 @@ import type {RouterInput, RouterOutput} from '@openint/engine-backend'
 import type {SchemaFormElement, UIProps} from '@openint/ui'
 import {
   Button,
+  cn,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -36,7 +38,42 @@ type Catalog = RouterOutput['listConnectorMetas']
 
 type ConnectorMeta = Catalog[string]
 
-export const WithProviderConnect = ({
+export const ConnectorConnectButton = ({
+  onEvent,
+  className,
+  ...props
+}: UIProps & {
+  connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
+  resource?: Resource
+  connectFn?: ReturnType<UseConnectHook>
+  onEvent?: (event: {type: ConnectEventType}) => void
+}) => (
+  <WithConnectorConnect {...props}>
+    {({loading, label, openConnect: open, variant}) => (
+      <DialogTrigger asChild>
+        <Button
+          className={cn('mt-2', className)}
+          disabled={loading}
+          variant={variant}
+          onClick={(e) => {
+            onEvent?.({type: 'open'})
+            if (!props.connectFn) {
+              // Allow the default behavior of opening the dialog
+              return
+            }
+            // Prevent dialog from automatically opening
+            // as we invoke provider client side JS
+            e.preventDefault()
+            open()
+          }}>
+          {label}
+        </Button>
+      </DialogTrigger>
+    )}
+  </WithConnectorConnect>
+)
+
+export const WithConnectorConnect = ({
   connectorConfig: ccfg,
   resource,
   connectFn,
@@ -250,7 +287,7 @@ export function ResourceDropdownMenu(
   return (
     // Not necessarily happy that we have to wrap the whole thing here inside
     // WithProviderConnect but also don't know of a better option
-    <WithProviderConnect {...props}>
+    <WithConnectorConnect {...props}>
       {(connectProps) => (
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
@@ -288,6 +325,6 @@ export function ResourceDropdownMenu(
           </DropdownMenuContent>
         </DropdownMenu>
       )}
-    </WithProviderConnect>
+    </WithConnectorConnect>
   )
 }

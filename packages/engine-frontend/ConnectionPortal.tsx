@@ -20,7 +20,7 @@ import type {UIPropsNoChildren} from '@openint/ui'
 import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R, titleCase} from '@openint/util'
-import {ConnectButton} from './ConnectButton'
+import {CategoryConnectButton, ConnectButton} from './ConnectButton'
 import {_trpcReact} from './TRPCProvider'
 import {ResourceDropdownMenu} from './WithProviderConnect'
 
@@ -221,7 +221,8 @@ export function _ConnectionPortal({
             </ResourceCard>
           ))}
           <ConnectCard
-            category={category.name}
+            categoryKey={category.key}
+            categoryName={category.name}
             hasExisting={category.connections.length > 0}
           />
         </div>
@@ -231,7 +232,8 @@ export function _ConnectionPortal({
 }
 
 export const ConnectCard = (props: {
-  category: string
+  categoryKey: string
+  categoryName: string
   hasExisting: boolean
 }) => (
   <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
@@ -241,14 +243,15 @@ export const ConnectCard = (props: {
     />
     <h3 className="text-black-dark mb-5 text-[24px] font-semibold leading-[36px] tracking-[-0.01em] antialiased">
       {props.hasExisting
-        ? `Connect another ${props.category} integration`
-        : `No ${props.category} integration connected`}
+        ? `Connect another ${props.categoryName} integration`
+        : `No ${props.categoryName} integration connected`}
     </h3>
 
     <p className="text-black-mid mb-3 text-sm font-semibold tracking-[-0.01em] antialiased">
       Connect an integration here ASAP. This integration is needed to keep your{' '}
-      {props.category} data accurate.
+      {props.categoryName} data accurate.
     </p>
-    <ConnectButton>{`Connect ${props.category}`}</ConnectButton>
+    <ConnectButton>{`Connect ${props.categoryName}`}</ConnectButton>
+    <CategoryConnectButton category={props.categoryKey}></CategoryConnectButton>
   </Card>
 )

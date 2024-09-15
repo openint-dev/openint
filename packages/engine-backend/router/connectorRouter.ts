@@ -193,8 +193,10 @@ export const connectorRouter = trpc.mergeRouters(
         const ccfgs = await ctx.services.metaService.listConnectorConfigInfos()
 
         const integrations = await Promise.all(
-          ccfgs.map((ccfg) =>
-            _connectorRouter
+          // eslint-disable-next-line arrow-body-style
+          ccfgs.map((ccfg) => {
+            // const connector = ctx.connectorMap[extractId(ccfg.id)[1]]
+            return _connectorRouter
               .createCaller(ctx)
               .listConnectorIntegrations({name: extractId(ccfg.id)[1]})
               .then((res) => ({
@@ -203,8 +205,8 @@ export const connectorRouter = trpc.mergeRouters(
                   ...int,
                   connector_config_id: ccfg.id,
                 })),
-              })),
-          ),
+              }))
+          }),
         )
         // integration should have connector name...
         return {

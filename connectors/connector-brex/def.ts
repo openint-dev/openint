@@ -36,7 +36,11 @@ export const brexDef = {
   schemas: brexSchemas,
   name: 'brex',
   metadata: {
-    categories: ['banking', 'expense-management'],
+    categories: [
+      'banking',
+      // Add back expense management category once we actually support it properly
+      // 'expense-management'
+    ],
     logoUrl: '/_assets/logo-brex.png',
     stage: 'beta',
   },

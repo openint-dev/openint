@@ -4,6 +4,7 @@ import {
   makeId,
   makeOauthConnectorServer,
   oauthBaseSchema,
+  zConnectorVertical,
   zId,
   zRaw,
 } from '@openint/cdk'
@@ -164,6 +165,7 @@ export const connectorConfigRouter = trpc.router({
           .extend({
             isSource: z.boolean(),
             isDestination: z.boolean(),
+            categories: z.array(zConnectorVertical),
           }),
       ),
     )
@@ -184,6 +186,7 @@ export const connectorConfigRouter = trpc.router({
                 connectorName: connector.name,
                 isSource: !!connector.sourceSync,
                 isDestination: !!connector.destinationSync,
+                categories: connector.metadata?.categories ?? [],
               }
             : null
         })
