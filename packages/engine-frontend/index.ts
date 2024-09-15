@@ -4,6 +4,6 @@
 'use client'
 
 // codegen:start {preset: barrel, include: "./{*.{ts,tsx},*/index.{ts,tsx}}", exclude: "./**/*.{d,spec,test,fixture,gen,node}.{ts,tsx}"}
+export * from './OpenIntConnect'
 export * from './TRPCProvider'
-export * from './VeniceConnect'
 // codegen:end

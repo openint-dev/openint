@@ -3,7 +3,7 @@
 import 'next/image'
 import '../global.css'
 import {useSearchParams} from 'next/navigation'
-import {VeniceConnectEmbed} from '@openint/connect'
+import {OpenIntConnectEmbed} from '@openint/connect'
 
 export default function Demo() {
   const params = useSearchParams()
@@ -11,7 +11,7 @@ export default function Demo() {
   return (
     <div className="flex h-screen w-screen flex-col">
       {token ? (
-        <VeniceConnectEmbed className="flex-1" params={{token}} />
+        <OpenIntConnectEmbed className="flex-1" params={{token}} />
       ) : (
         <p>
           Please pass a valid venice connect token in the url as query param

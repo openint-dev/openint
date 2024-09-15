@@ -15,7 +15,7 @@ export function makeAirbyteConnector(connector: AnyConnectorImpl) {
   const connSpec = z.object({
     settings: connector.schemas.resourceSettings ?? z.object({}),
     // For now, unclear whether it should actually live in airbyte config
-    // or perhaps it should just have a `veniceconnectorConfigId` field
+    // or perhaps it should just have a `OpenIntConnectorConfigId` field
     // so the data is not duplicated across dozens of integrations
     // but then we'd have to think about "auth", or at least the connectorConfigId would have to be
     // made a secret field too

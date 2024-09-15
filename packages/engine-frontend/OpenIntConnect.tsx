@@ -47,7 +47,7 @@ import {_trpcReact} from './TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
-export interface VeniceConnectProps extends UIPropsNoChildren {
+export interface OpenIntConnectProps extends UIPropsNoChildren {
   /** Whether to display the existing connections */
   showExisting?: boolean
   clientConnectors: Record<string, ConnectorClient>
@@ -69,11 +69,11 @@ interface DialogConfig {
  * Alternatively if there's something like a mobile app navigation where it's part of a
  * "back" stack...
  */
-export function VeniceConnectButton({
+export function OpenIntConnectButton({
   children,
   className,
   ...props
-}: VeniceConnectProps & {className?: string; children?: React.ReactNode}) {
+}: OpenIntConnectProps & {className?: string; children?: React.ReactNode}) {
   const [open, setOpen] = React.useState(false)
   return (
     // non modal dialog do not add pointer events none to the body
@@ -94,21 +94,19 @@ export function VeniceConnectButton({
             Choose a connector config to start
           </DialogDescription>
         </DialogHeader>
-        <VeniceConnect
+        <OpenIntConnect
           className="flex-1 overflow-scroll"
           {...props}
           onEvent={(event) => {
             // How do we close the dialog when an connector config has been chosen?
-            // This is problematic because if VeniceConnect itself gets removed from dom
+            // This is problematic because if OpenIntConnect itself gets removed from dom
             // then any dialog it presents goes away also
             // Tested forceMount though and it doesn't quite work... So we might want something like a hidden
             props.onEvent?.(event)
           }}
         />
         {/* Children here */}
-        <DialogFooter className="shrink-0">
-          {/* Cancel here */}
-        </DialogFooter>
+        <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
       </DialogContent>
     </Dialog>
   )
@@ -117,7 +115,7 @@ export function VeniceConnectButton({
 // TODO: Wrap this in memo so it does not re-render as much as possible.
 // Also it would be nice if there was an easy way to automatically prefetch on the server side
 // based on calls to useQuery so it doesn't need to be separately handled again on the client...
-export function VeniceConnect(props: VeniceConnectProps) {
+export function OpenIntConnect(props: OpenIntConnectProps) {
   const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery({
     id: props.connectorConfigId,
     connectorName: props.connectorName,
@@ -136,7 +134,7 @@ export function VeniceConnect(props: VeniceConnectProps) {
     return <div>Loading...</div>
   }
   return (
-    <_VeniceConnect
+    <_OpenIntConnect
       connectorConfigInfos={listConnectorConfigsRes.data ?? []}
       catalog={catalogRes.data}
       integrations={listIntegrationsRes.data.items}
@@ -155,8 +153,8 @@ const __DEBUG__ = Boolean(
   typeof window !== 'undefined' && window.location.hostname === 'localhost',
 )
 
-/** Need _VeniceConnect connectorConfigIds to not have useConnectHook execute unreliably  */
-export function _VeniceConnect({
+/** Need _OpenIntConnect connectorConfigIds to not have useConnectHook execute unreliably  */
+export function _OpenIntConnect({
   catalog,
   clientConnectors,
   onEvent,
@@ -166,7 +164,7 @@ export function _VeniceConnect({
   integrations,
   debugConnectorConfigs,
   ...uiProps
-}: VeniceConnectProps & {
+}: OpenIntConnectProps & {
   connectorConfigInfos: ConnectorConfigInfos
   catalog: Catalog
   integrations: Integrations
@@ -181,7 +179,7 @@ export function _VeniceConnect({
     [nangoPublicKey],
   )
 
-  // VeniceConnect should be fetching its own connectorConfigIds as well as resources
+  // OpenIntConnect should be fetching its own connectorConfigIds as well as resources
   // this way it can esure those are refreshed as operations take place
   // This is esp true when we are operating in client envs (js embed)
   // and cannot run on server-side per-se
@@ -191,7 +189,7 @@ export function _VeniceConnect({
     {enabled: showExisting},
   )
 
-  console.log('[VeniceConnect] integrations', integrations)
+  console.log('[OpenIntConnect] integrations', integrations)
   const connectorConfigs = connectorConfigInfos
     .map(({id, ...info}) => {
       const connector = catalog[extractConnectorName(id)]
@@ -226,8 +224,8 @@ export function _VeniceConnect({
     })
     .filter((c): c is NonNullable<typeof c> => !!c)
 
-  console.log('[VeniceConnect] connector configs', connectorConfigs)
-  console.log('[VeniceConnect] connections', connections)
+  console.log('[OpenIntConnect] connector configs', connectorConfigs)
+  console.log('[OpenIntConnect] connections', connections)
 
   const [_dialogConfig, setDialogConfig] = React.useState<DialogConfig | null>(
     null,
@@ -440,19 +438,19 @@ export const WithProviderConnect = ({
       const connInput = ccfg.connector.hasPreConnect
         ? (await preConnect.refetch()).data
         : {}
-      console.log(`[VeniceConnect] ${ccfg.id} connInput`, connInput)
+      console.log(`[OpenIntConnect] ${ccfg.id} connInput`, connInput)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const connOutput = connectFn
         ? await connectFn?.(connInput, {connectorConfigId: ccfg.id})
         : connInput
-      console.log(`[VeniceConnect] ${ccfg.id} connOutput`, connOutput)
+      console.log(`[OpenIntConnect] ${ccfg.id} connOutput`, connOutput)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const postConnOutput = ccfg.connector.hasPostConnect
         ? await postConnect.mutateAsync([connOutput, ccfg.id, {}])
         : connOutput
-      console.log(`[VeniceConnect] ${ccfg.id} postConnOutput`, postConnOutput)
+      console.log(`[OpenIntConnect] ${ccfg.id} postConnOutput`, postConnOutput)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return postConnOutput

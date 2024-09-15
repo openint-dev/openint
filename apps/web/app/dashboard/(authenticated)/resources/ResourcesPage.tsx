@@ -1,7 +1,7 @@
 'use client'
 
 import {clientConnectors} from '@openint/app-config/connectors/connectors.client'
-import {_trpcReact, VeniceConnectButton} from '@openint/engine-frontend'
+import {_trpcReact, OpenIntConnectButton} from '@openint/engine-frontend'
 import {DataTable} from '@openint/ui'
 import {VCommandMenu} from '@/vcommands/vcommand-components'
 
@@ -15,7 +15,7 @@ export default function ResourcesPage() {
         <h2 className="mb-4 mr-auto text-2xl font-semibold tracking-tight">
           Resources
         </h2>
-        <VeniceConnectButton clientConnectors={clientConnectors} />
+        <OpenIntConnectButton clientConnectors={clientConnectors} />
       </header>
       <p>Resources are created based on connector configurations</p>
       <DataTable

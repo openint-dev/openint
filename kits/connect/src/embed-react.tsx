@@ -2,15 +2,15 @@ import React from 'react'
 import type {GetIFrameProps} from './common'
 import {getIFrameUrl} from './common'
 
-export interface VeniceConnectEmbedProps
+export interface OpenIntConnectEmbedProps
   extends GetIFrameProps,
     React.IframeHTMLAttributes<HTMLIFrameElement> {
   onReady?: () => void
 }
 
-export const VeniceConnectEmbed = React.forwardRef(
+export const OpenIntConnectEmbed = React.forwardRef(
   (
-    {deploymentUrl, params, onReady, ...iframeProps}: VeniceConnectEmbedProps,
+    {deploymentUrl, params, onReady, ...iframeProps}: OpenIntConnectEmbedProps,
     forwardedRef: React.ForwardedRef<HTMLIFrameElement>,
   ) => {
     const url = getIFrameUrl({deploymentUrl, params})
@@ -34,4 +34,4 @@ export const VeniceConnectEmbed = React.forwardRef(
     )
   },
 )
-VeniceConnectEmbed.displayName = 'VeniceConnectEmbed'
+OpenIntConnectEmbed.displayName = 'OpenIntConnectEmbed'
