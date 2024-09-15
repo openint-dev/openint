@@ -27,6 +27,14 @@ export const zConnectorVertical = z.enum([
   'calendar',
 ])
 
+export const CATEGORY_BY_KEY: Partial<
+  Record<z.infer<typeof zConnectorVertical>, {name?: string}>
+> = {
+  ats: {
+    name: 'ATS',
+  },
+}
+
 export const zConnectorStage = z.enum(['hidden', 'alpha', 'beta', 'ga'])
 
 export type OpenApiSpec = oas30.OpenAPIObject | oas31.OpenAPIObject

@@ -260,49 +260,51 @@ export function _OpenIntConnect({
   )
 
   const categories = zConnectorVertical.options
-    .map((category) => ({
-      key: category,
-      name: titleCase(category),
-      connectorConfigs: connectorConfigs.filter(
+    .map((category) => {
+      const ccfgs = connectorConfigs.filter(
         (ccfg) => ccfg.connector?.categories.includes(category),
-      ),
-    }))
+      )
+      return {
+        key: category,
+        name: titleCase(category),
+        connectorConfigs: ccfgs,
+        connections: connections.filter((c) =>
+          ccfgs.includes(c.connectorConfig),
+        ),
+      }
+    })
     .filter((item) => item.connectorConfigs.length > 0)
 
   if (!connectorConfigs.length) {
     return <div>No connectors configured</div>
   }
   return (
-    <div className={cn('flex flex-wrap', className)}>
+    <div className={cn('', className)}>
       {/* Listing by categories */}
-      {false &&
-        categories.map((category) => (
-          <div key={category.key}>
-            <h3 className="mb-4 ml-4 text-xl font-semibold tracking-tight">
-              {category.name}
-            </h3>
-            {category.connectorConfigs.map((int) => (
-              <div key={int.id}>Connect with {int.id}</div>
-            ))}
-          </div>
-        ))}
-
-      {/* Show existing */}
-      {connections.map((conn) => (
-        <ResourceCard
-          {...uiProps}
-          key={conn.id}
-          resource={conn}
-          connector={conn.connectorConfig.connector}>
-          <ResourceDropdownMenu
-            connectorConfig={conn.connectorConfig}
-            resource={conn}
-            connectFn={connectFnMap[conn.connectorConfig.connector.name]}
-            onEvent={(e) => {
-              onEvent?.({type: e.type, ccfgId: conn.connectorConfig.id})
-            }}
-          />
-          {/* <ProviderConnectButton
+      {categories.map((category) => (
+        <div key={category.key}>
+          <h3 className="mb-4 ml-4 text-xl font-semibold tracking-tight">
+            {category.name}
+          </h3>
+          {category.connectorConfigs.map((int) => (
+            <div key={int.id}>Connect with {int.id}</div>
+          ))}
+          {/* Show existing */}
+          {category.connections.map((conn) => (
+            <ResourceCard
+              {...uiProps}
+              key={conn.id}
+              resource={conn}
+              connector={conn.connectorConfig.connector}>
+              <ResourceDropdownMenu
+                connectorConfig={conn.connectorConfig}
+                resource={conn}
+                connectFn={connectFnMap[conn.connectorConfig.connector.name]}
+                onEvent={(e) => {
+                  onEvent?.({type: e.type, ccfgId: conn.connectorConfig.id})
+                }}
+              />
+              {/* <ProviderConnectButton
             connectorConfig={conn.connectorConfig}
             resource={conn}
             connectFn={connectFnMap[conn.connectorConfig.connector.name]}
@@ -310,8 +312,39 @@ export function _OpenIntConnect({
               onEvent?.({type: e.type, ccfgId: conn.connectorConfig.id})
             }}
           /> */}
-        </ResourceCard>
+            </ResourceCard>
+          ))}
+        </div>
       ))}
+
+      <hr />
+      {/* Show existing */}
+      {
+        // connections.map((conn) => (
+        //   <ResourceCard
+        //     {...uiProps}
+        //     key={conn.id}
+        //     resource={conn}
+        //     connector={conn.connectorConfig.connector}>
+        //     <ResourceDropdownMenu
+        //       connectorConfig={conn.connectorConfig}
+        //       resource={conn}
+        //       connectFn={connectFnMap[conn.connectorConfig.connector.name]}
+        //       onEvent={(e) => {
+        //         onEvent?.({type: e.type, ccfgId: conn.connectorConfig.id})
+        //       }}
+        //     />
+        //     {/* <ProviderConnectButton
+        //       connectorConfig={conn.connectorConfig}
+        //       resource={conn}
+        //       connectFn={connectFnMap[conn.connectorConfig.connector.name]}
+        //       onEvent={(e) => {
+        //         onEvent?.({type: e.type, ccfgId: conn.connectorConfig.id})
+        //       }}
+        //     /> */}
+        //   </ResourceCard>
+        // ))
+      }
       {/* Add new  */}
       {debugConnectorConfigs &&
         connectorConfigs.map((ccfg) => (

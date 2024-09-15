@@ -3,7 +3,8 @@
 
 'use client'
 
-// codegen:start {preset: barrel, include: "./{*.{ts,tsx},*/index.{ts,tsx}}", exclude: "./**/*.{d,spec,test,fixture,gen,node}.{ts,tsx}"}
+// - codegen:start {preset: barrel, include: "./{*.{ts,tsx},*/index.{ts,tsx}}", exclude: "./**/*.{d,spec,test,fixture,gen,node}.{ts,tsx}"}
+export * from './ConnectionPortal'
 export * from './OpenIntConnect'
 export * from './TRPCProvider'
-// codegen:end
+// - codegen:end
