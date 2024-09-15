@@ -20,7 +20,7 @@ import type {UIPropsNoChildren} from '@openint/ui'
 import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R, titleCase} from '@openint/util'
-import {CategoryConnectButton, ConnectButton} from './ConnectButton'
+import {CategoryConnectButton} from './ConnectButton'
 import {_trpcReact} from './TRPCProvider'
 import {ResourceDropdownMenu} from './WithProviderConnect'
 
@@ -251,7 +251,10 @@ export const ConnectCard = (props: {
       Connect an integration here ASAP. This integration is needed to keep your{' '}
       {props.categoryName} data accurate.
     </p>
-    <ConnectButton>{`Connect ${props.categoryName}`}</ConnectButton>
+    {/* <ConnectButton
+    // For some reason not working. Maybe need to setup tailwind again?
+    // className="bg-purple-400"
+    >{`Connect ${props.categoryName}`}</ConnectButton> */}
     <CategoryConnectButton category={props.categoryKey}></CategoryConnectButton>
   </Card>
 )

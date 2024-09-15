@@ -166,6 +166,8 @@ const _connectorRouter = trpc.router({
             updated_at: new Date().toISOString(),
             logo_url: meta.logoUrl,
             connector_name: name,
+            // TODO: Should not duplicate this so much...
+            categories: connector.metadata?.categories,
           },
         ],
         next_cursor: null,

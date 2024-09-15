@@ -1,10 +1,11 @@
 'use client'
 
+import NangoFrontend from '@nangohq/frontend'
 import {useMutation} from '@tanstack/react-query'
 import {Link2, Loader2, RefreshCw, Trash2} from 'lucide-react'
 import React from 'react'
 import type {Id, UseConnectHook} from '@openint/cdk'
-import {CANCELLATION_TOKEN, extractId} from '@openint/cdk'
+import {CANCELLATION_TOKEN, extractId, oauthConnect} from '@openint/cdk'
 import type {RouterInput, RouterOutput} from '@openint/engine-backend'
 import type {SchemaFormElement, UIProps} from '@openint/ui'
 import {
@@ -28,6 +29,7 @@ import {
   useToast,
 } from '@openint/ui'
 import {z} from '@openint/util'
+import {useOpenIntConnectContext} from './OpenIntContext'
 import {_trpcReact} from './TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -38,6 +40,10 @@ type Catalog = RouterOutput['listConnectorMetas']
 
 type ConnectorMeta = Catalog[string]
 
+const __DEBUG__ = Boolean(
+  typeof window !== 'undefined' && window.location.hostname === 'localhost',
+)
+
 export const ConnectorConnectButton = ({
   onEvent,
   className,
@@ -47,31 +53,65 @@ export const ConnectorConnectButton = ({
   resource?: Resource
   connectFn?: ReturnType<UseConnectHook>
   onEvent?: (event: {type: ConnectEventType}) => void
-}) => (
-  <WithConnectorConnect {...props}>
-    {({loading, label, openConnect: open, variant}) => (
-      <DialogTrigger asChild>
-        <Button
-          className={cn('mt-2', className)}
-          disabled={loading}
-          variant={variant}
-          onClick={(e) => {
-            onEvent?.({type: 'open'})
-            if (!props.connectFn) {
-              // Allow the default behavior of opening the dialog
-              return
-            }
-            // Prevent dialog from automatically opening
-            // as we invoke provider client side JS
-            e.preventDefault()
-            open()
-          }}>
-          {label}
-        </Button>
-      </DialogTrigger>
-    )}
-  </WithConnectorConnect>
-)
+}) => {
+  const {clientConnectors} = useOpenIntConnectContext()
+  const useConnectHook =
+    clientConnectors[props.connectorConfig.connector.name]?.useConnectHook
+  const nangoProvider = props.connectorConfig.connector.nangoProvider
+
+  const nangoPublicKey =
+    _trpcReact.getPublicEnv.useQuery().data?.NEXT_PUBLIC_NANGO_PUBLIC_KEY
+  const nangoFrontend = React.useMemo(
+    () =>
+      nangoPublicKey &&
+      new NangoFrontend({publicKey: nangoPublicKey, debug: __DEBUG__}),
+    [nangoPublicKey],
+  )
+
+  const connectFn =
+    useConnectHook?.({
+      // TODO: Implement me
+      openDialog: () => {},
+    }) ??
+    (nangoProvider
+      ? (_, {connectorConfigId}) => {
+          if (!nangoFrontend) {
+            throw new Error('Missing nango public key')
+          }
+          return oauthConnect({
+            connectorConfigId,
+            nangoFrontend,
+            connectorName: props.connectorConfig.connector.name,
+          })
+        }
+      : undefined)
+
+  return (
+    <WithConnectorConnect {...props} connectFn={connectFn}>
+      {({loading, label, openConnect: open, variant}) => (
+        <DialogTrigger asChild>
+          <Button
+            className={cn('mt-2', className)}
+            disabled={loading}
+            variant={variant}
+            onClick={(e) => {
+              onEvent?.({type: 'open'})
+              if (!connectFn) {
+                // Allow the default behavior of opening the dialog
+                return
+              }
+              // Prevent dialog from automatically opening
+              // as we invoke provider client side JS
+              e.preventDefault()
+              open()
+            }}>
+            {label}
+          </Button>
+        </DialogTrigger>
+      )}
+    </WithConnectorConnect>
+  )
+}
 
 export const WithConnectorConnect = ({
   connectorConfig: ccfg,

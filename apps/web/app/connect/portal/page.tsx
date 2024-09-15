@@ -6,7 +6,7 @@ import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
-import ConnectionPortal from './ConnectionPortal'
+import ConnectionPortal from './ConnectionPortalWrapper'
 
 export const metadata = {
   title: 'OpenInt Connect',

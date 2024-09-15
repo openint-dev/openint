@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import type {RouterOutput} from '@openint/engine-backend'
 import {
   Button,
   Dialog,
@@ -10,49 +11,179 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  IntegrationCard,
 } from '@openint/ui'
 import {_trpcReact} from './TRPCProvider'
+import {ConnectorConnectButton} from './WithProviderConnect'
 
-export function CategoryConnectButton({category}: {category: string}) {
+type Connector = RouterOutput['listConnectorMetas'][number]
+
+type ConnectorConfig = RouterOutput['listConnectorConfigInfos'][number] & {
+  connector: Connector
+}
+
+type ConfiguredIntegration =
+  RouterOutput['listConfiguredIntegrations']['items'][number] & {
+    ccfg: ConnectorConfig
+  }
+
+export function WithConnectContext({
+  category,
+  children,
+}: {
+  category: string
+  children: (props: {
+    ccfgs: ConnectorConfig[]
+    ints: ConfiguredIntegration[]
+  }) => React.ReactElement | null
+}) {
   const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery(
     {},
   )
   const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({})
 
-  const ccfgs = listConnectorConfigsRes.data?.filter(
-    (ccfg) => ccfg.categories?.includes(category as never),
-  )
+  const catalogRes = _trpcReact.listConnectorMetas.useQuery()
 
-  const ints = listIntegrationsRes.data?.items.filter(
-    (int) => int.categories?.includes(category as never),
-  )
-
-  console.log(category, {
-    ccfgs,
-    ints,
-  })
-
-  if (!ccfgs || !ints) {
+  if (
+    !listConnectorConfigsRes.data ||
+    !listIntegrationsRes.data ||
+    !catalogRes.data
+  ) {
     return null
   }
 
-  if (ccfgs.length === 0) {
-    return (
-      <div>
-        No connectors configured for {category}. Please check your settings
-      </div>
-    )
-  }
+  const ccfgs = listConnectorConfigsRes.data
+    ?.filter((ccfg) => ccfg.categories?.includes(category as never))
+    .map((ccfg) => ({
+      ...ccfg,
+      connector: catalogRes.data[ccfg.connectorName]!,
+    }))
 
-  if (ccfgs.length === 1) {
-    // Return ConnectorConnectButton
-    return null
-  }
+  const ints = listIntegrationsRes.data?.items
+    .filter((int) => int.categories?.includes(category as never))
+    .map((int) => ({
+      ...int,
+      ccfg: ccfgs.find((ccfg) => ccfg.id === int.connector_config_id)!,
+    }))
 
-  // Render dialog for MultiConnector scenarios
-  // This would be the case for greenhouse + lever
+  // console.log(category, {
+  //   ccfgs,
+  //   ints,
+  //   catalogRes: catalogRes.data,
+  // })
 
-  return null
+  return children({ccfgs, ints})
+}
+
+export function CategoryConnectButton({category}: {category: string}) {
+  return (
+    <WithConnectContext category={category}>
+      {({ccfgs}) => {
+        if (ccfgs.length === 0) {
+          return (
+            <div>
+              No connectors configured for {category}. Please check your
+              settings
+            </div>
+          )
+        }
+
+        if (ccfgs.length === 1) {
+          // Return ConnectorConnectButton
+          return <div>Single ConnectorConnectButton</div>
+        }
+
+        // Render dialog for MultiConnector scenarios
+        // This would be the case for greenhouse + lever
+
+        return <ConnectDialog category={category} />
+      }}
+    </WithConnectContext>
+  )
+}
+
+export function ConnectDialog({
+  children,
+  className,
+  category,
+}: {
+  className?: string
+  children?: React.ReactNode
+  category: string
+}) {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <WithConnectContext category={category}>
+      {({ints}) => (
+        // non modal dialog do not add pointer events none to the body
+        // which workaround issue with multiple portals (dropdown, dialog) conflicting
+        // as well as other modals introduced by things like Plaid
+        <Dialog open={open} onOpenChange={setOpen} modal={false}>
+          <DialogTrigger asChild>
+            <Button className={className} variant="default">
+              {children ?? 'Connect'}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="flex max-h-screen flex-col">
+            <DialogHeader className="shrink-0">
+              <DialogTitle>New connection</DialogTitle>
+              <DialogDescription>
+                Choose a connector config to start
+              </DialogDescription>
+            </DialogHeader>
+            {/* <OpenIntConnect
+        className="flex-1 overflow-scroll"
+        {...props}
+        onEvent={(event) => {
+          // How do we close the dialog when an connector config has been chosen?
+          // This is problematic because if OpenIntConnect itself gets removed from dom
+          // then any dialog it presents goes away also
+          // Tested forceMount though and it doesn't quite work... So we might want something like a hidden
+          props.onEvent?.(event)
+        }}
+      /> */}
+            {/* Children here */}
+            <h1>Select your first {} integration</h1>
+            <p>
+              Our secure API identifies employees and compensation by
+              integrating with your payroll. Only users who are invited to the
+              platform can access this information, and the integration is
+              one-way with no impact on original data.
+            </p>
+            {/* Search integrations */}
+            {/* Search results */}
+            <div className="flex flex-wrap gap-4">
+              {ints.map((int) => (
+                <IntegrationCard
+                  // {...uiProps}
+                  key={int.id}
+                  integration={{
+                    ...int,
+                    connectorName: int.connector_name,
+                    // connectorConfigId: int.connector_config_id,
+                  }}>
+                  <ConnectorConnectButton
+                    connectorConfig={{
+                      id: int.connector_config_id,
+                      connector: int.ccfg.connector,
+                    }}
+                    // connectFn={connectFnMap[int.connector_name]}
+                    // onEvent={(e) => {
+                    //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
+                    // }}
+                  />
+                </IntegrationCard>
+              ))}
+            </div>
+
+            <DialogFooter className="shrink-0">
+              {/* Cancel here */}
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+    </WithConnectContext>
+  )
 }
 
 /**
@@ -98,6 +229,15 @@ export function ConnectButton({
           }}
         /> */}
         {/* Children here */}
+        <h1>Select your first {} integration</h1>
+        <p>
+          Our secure API identifies employees and compensation by integrating
+          with your payroll. Only users who are invited to the platform can
+          access this information, and the integration is one-way with no impact
+          on original data.
+        </p>
+        {/* Search integrations */}
+        {/* Search results */}
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
       </DialogContent>
     </Dialog>

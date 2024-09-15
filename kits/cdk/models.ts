@@ -1,4 +1,5 @@
 import {z} from '@opensdks/util-zod'
+import {zConnectorVertical} from './connector-meta.types'
 import {zEndUserId, zId} from './id.types'
 
 // Utility types
@@ -32,11 +33,8 @@ export const zStandardConnectorConfig = z.object({
     .describe('Not implemented yet'),
 })
 
-export const zIntegrationCategory = z.enum([
-  'accounting',
-  'banking',
-  'hris', // Aka payroll
-])
+/** @deprecated, use connector vertical instead */
+export const zIntegrationCategory = zConnectorVertical
 
 export const zMetadata = z.unknown().describe(`
   JSON object can can be used to associate arbitrary metadata to

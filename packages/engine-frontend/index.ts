@@ -7,4 +7,5 @@
 export * from './ConnectionPortal'
 export * from './OpenIntConnect'
 export * from './TRPCProvider'
+export * from './OpenIntContext'
 // - codegen:end

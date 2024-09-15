@@ -30,7 +30,7 @@ export function TRPCProvider({
       // createTRPCProxyClient<FlatRouter>({
       _trpcReact.createClient({
         links: [
-          (debug ? httpLink : httpBatchLink)({
+          (debug || true ? httpLink : httpBatchLink)({
             url: apiUrl ?? '/api/trpc',
             headers: () => ({
               ...(accessToken ? {Authorization: `Bearer ${accessToken}`} : {}),

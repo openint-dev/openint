@@ -22,6 +22,7 @@ export const zConnectorVertical = z.enum([
   'streaming',
   'personal-finance',
   'other',
+  'hris',
   'payroll', // e.g. Gusto
   'ats', // e.g. Greenhouse
   'calendar',
