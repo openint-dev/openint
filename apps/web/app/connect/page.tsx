@@ -9,26 +9,18 @@ import {
   getViewerId,
   makeId,
   NangoConnect,
-  zId,
 } from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
-import {makeUlid, z} from '@openint/util'
+import {makeUlid} from '@openint/util'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
 import ConnectPage from './ConnectPage'
 import {SetCookieAndRedirect} from './SetCookieAndRedirect'
-
-export const kConnectSession = 'connect-session'
-
-type ConnectSession = z.infer<typeof zConnectSession>
-export const zConnectSession = z.object({
-  token: z.string(),
-  resourceId: zId('reso'),
-})
+import {kConnectSession, type ConnectSession} from './shared'
 
 export const metadata = {
-  title: 'Venice Connect',
+  title: 'OpenInt Connect',
 }
 
 /**
