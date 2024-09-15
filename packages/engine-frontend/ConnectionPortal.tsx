@@ -17,7 +17,7 @@ import {
 } from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import type {UIPropsNoChildren} from '@openint/ui'
-import {ResourceCard} from '@openint/ui'
+import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R, titleCase} from '@openint/util'
 import {ConnectButton} from './ConnectButton'
@@ -196,7 +196,7 @@ export function _ConnectionPortal({
     return <div>No connectors configured</div>
   }
   return (
-    <div className={cn('', className)}>
+    <div className={cn('mb-4', className)}>
       {/* Listing by categories */}
       {categories.map((category) => (
         <div key={category.key}>
@@ -208,7 +208,8 @@ export function _ConnectionPortal({
               {...uiProps}
               key={conn.id}
               resource={conn}
-              connector={conn.connectorConfig.connector}>
+              connector={conn.connectorConfig.connector}
+              className="mb-4">
               <ResourceDropdownMenu
                 connectorConfig={conn.connectorConfig}
                 resource={conn}
@@ -219,7 +220,7 @@ export function _ConnectionPortal({
               />
             </ResourceCard>
           ))}
-          <ConnectCallout
+          <ConnectCard
             category={category.name}
             hasExisting={category.connections.length > 0}
           />
@@ -229,11 +230,11 @@ export function _ConnectionPortal({
   )
 }
 
-export const ConnectCallout = (props: {
+export const ConnectCard = (props: {
   category: string
   hasExisting: boolean
 }) => (
-  <div className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
+  <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
     <AlertTriangle
       className="text-orange-500"
       style={{color: '#f97316'}} // Tailwind is not fully working for some reason...
@@ -244,10 +245,10 @@ export const ConnectCallout = (props: {
         : `No ${props.category} integration connected`}
     </h3>
 
-    <p className="text-black-mid text-sm font-semibold tracking-[-0.01em] antialiased">
-      Connect an integration here ASAP. This integration is needed to keep your
+    <p className="text-black-mid mb-3 text-sm font-semibold tracking-[-0.01em] antialiased">
+      Connect an integration here ASAP. This integration is needed to keep your{' '}
       {props.category} data accurate.
     </p>
     <ConnectButton>{`Connect ${props.category}`}</ConnectButton>
-  </div>
+  </Card>
 )

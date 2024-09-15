@@ -2,6 +2,7 @@ import {formatDistanceToNowStrict} from 'date-fns'
 import {Landmark} from 'lucide-react'
 import type {ZStandard} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
+import {titleCase} from '@openint/util'
 import {LoadingText} from '../components/LoadingText'
 import {Badge, Card} from '../shadcn'
 import {cn} from '../utils'
@@ -20,23 +21,45 @@ export const ResourceCard = ({
   resource: Resource
   connector: ConnectorMeta
 }) => (
-  <Card
-    className={cn(
-      'm-3 flex h-36 w-36 flex-col items-center p-2 sm:h-48 sm:w-48',
-      className,
-    )}>
-    <div className="flex h-6 items-center justify-between self-stretch">
-      <Badge
-        variant="secondary"
-        className={cn(
-          resource.status === 'healthy' && 'bg-green-200',
-          resource.status === 'manual' && 'bg-blue-200',
-          (resource.status === 'error' || resource.status === 'disconnected') &&
-            'bg-pink-200',
-        )}>
-        {resource.syncInProgress ? 'Syncing' : resource.status}
-      </Badge>
-      <span className="ml-2 truncate text-right text-xs">
+  <Card className={cn('flex items-center p-3', className)}>
+    <div className="inline-flex h-12 w-12 min-w-[48px] items-center justify-center overflow-hidden rounded-xl border">
+      {resource.integrationId ? (
+        <IntegrationLogo
+          {...uiProps}
+          integration={resource.integration}
+          className="h-12 w-12"
+        />
+      ) : (
+        <ConnectorLogo
+          {...uiProps}
+          connector={connector}
+          className="h-12 w-12"
+        />
+      )}
+    </div>
+    <div className="ml-2 mr-auto">
+      <div className="flex h-6 items-center justify-between space-x-2 self-stretch">
+        <h4 className="text-sm font-semibold tracking-[-0.01em] text-black antialiased">
+          {resource.displayName ||
+            resource.integration?.name ||
+            titleCase(resource.connectorName) ||
+            resource.connectorConfigId ||
+            '<TODO>'}
+        </h4>
+        <Badge
+          variant="secondary"
+          className={cn(
+            resource.status === 'healthy' && 'bg-green-200',
+            resource.status === 'manual' && 'bg-blue-200',
+            (resource.status === 'error' ||
+              resource.status === 'disconnected') &&
+              'bg-pink-200',
+          )}>
+          {/* TODO: Fix me */}
+          {resource.syncInProgress ? 'Syncing' : resource.status || 'Primary'}
+        </Badge>
+      </div>
+      <div className="text-black-mid truncate text-sm tracking-[-0.01em] antialiased">
         {resource.syncInProgress ? (
           <LoadingText text="Syncing" />
         ) : resource.lastSyncCompletedAt ? (
@@ -47,19 +70,8 @@ export const ResourceCard = ({
         ) : (
           'No sync information'
         )}
-      </span>
+      </div>
     </div>
-
-    {resource.integrationId ? (
-      <IntegrationLogo
-        {...uiProps}
-        integration={resource.integration}
-        className="grow"
-      />
-    ) : (
-      <ConnectorLogo {...uiProps} connector={connector} className="grow" />
-    )}
-
     {/* connector config id / provider name */}
     {/* Integration logo with name */}
     {/* Connection status / last synced time */}
