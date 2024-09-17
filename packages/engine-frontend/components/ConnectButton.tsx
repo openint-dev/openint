@@ -2,7 +2,7 @@
 
 import React from 'react'
 import type {Category} from '@openint/cdk'
-import {CATEGORY_BY_KEY, type CategoryKey} from '@openint/cdk'
+import {CATEGORY_BY_KEY} from '@openint/cdk'
 import {
   Button,
   Dialog,
@@ -13,7 +13,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@openint/ui'
-import type {ConnectorConfig} from '../hocs/WithConnectConfig'
+import type {
+  ConnectorConfig,
+  ConnectorConfigFilters,
+} from '../hocs/WithConnectConfig'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {IntegrationSearch} from './IntegrationSearch'
@@ -23,12 +26,17 @@ interface ConnectButtonCommonProps {
   children?: React.ReactNode
 }
 
+// TODO: Refactor WithOpenConnect out of ConnectButton
+// such that users can render their own trigger fully
 export function ConnectButton({
-  categoryKey,
+  connectorConfigFilters,
   ...commonProps
-}: {categoryKey?: CategoryKey} & ConnectButtonCommonProps) {
+}: {
+  connectorConfigFilters: ConnectorConfigFilters
+} & ConnectButtonCommonProps) {
+  const {categoryKey} = connectorConfigFilters
   return (
-    <WithConnectConfig categoryKey={categoryKey}>
+    <WithConnectConfig {...connectorConfigFilters}>
       {({ccfgs}) => {
         const [first, ...rest] = ccfgs
         if (!first) {

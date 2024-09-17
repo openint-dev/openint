@@ -1,7 +1,7 @@
 'use client'
 
 import type React from 'react'
-import type {Category} from '@openint/cdk'
+import type {Category, Id} from '@openint/cdk'
 import {CATEGORY_BY_KEY, type CategoryKey} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import {_trpcReact} from '../providers/TRPCProvider'
@@ -21,14 +21,20 @@ export type ConfiguredCategory = Category & {
   connectorConfigs: ConnectorConfig[]
 }
 
-export function WithConnectConfig({
-  categoryKey,
-  children,
-}: {
+export interface ConnectorConfigFilters {
   categoryKey?: CategoryKey
-  // connectorName
-  // connectorConfigId
+  connectorName?: string
+  connectorConfigId?: Id['ccfg']
+  // Allow filtering by integrations, not just connector configs?
   // integrationId
+  // search text?
+}
+
+export function WithConnectConfig({
+  children,
+  categoryKey,
+  ...props
+}: ConnectorConfigFilters & {
   // etc.
   children: (props: {
     ccfgs: ConnectorConfig[]
@@ -36,8 +42,8 @@ export function WithConnectConfig({
   }) => React.ReactElement | null
 }) {
   const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery({
-    // id: props.connectorConfigId,
-    // connectorName: props.connectorName,
+    id: props.connectorConfigId,
+    connectorName: props.connectorName,
   })
 
   const listConnectorsRes = _trpcReact.listConnectorMetas.useQuery()

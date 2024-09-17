@@ -109,10 +109,9 @@ const NewConnectionCard = ({
       Connect an integration here ASAP. This integration is needed to keep your{' '}
       {category.name} data accurate.
     </p>
-    {/* <ConnectButton
-    // For some reason not working. Maybe need to setup tailwind again?
-    // className="bg-purple-400"
-    >{`Connect ${category.name}`}</ConnectButton> */}
-    <ConnectButton categoryKey={category.key}></ConnectButton>
+    <ConnectButton
+      // For some reason not working. Maybe need to setup tailwind again?
+      // className="bg-purple-400"
+      connectorConfigFilters={{categoryKey: category.key}}></ConnectButton>
   </Card>
 )

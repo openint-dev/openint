@@ -12,6 +12,7 @@ export function IntegrationSearch({
   connectorConfigs,
 }: {
   className?: string
+  /** TODO: Make this optional so it is easier to use it as a standalone component */
   connectorConfigs: ConnectorConfig[]
 }) {
   const [searchText, setSearchText] = React.useState('')
