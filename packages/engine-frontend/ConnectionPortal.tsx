@@ -4,6 +4,7 @@ import NangoFrontend from '@nangohq/frontend'
 import {AlertTriangle} from 'lucide-react'
 import React from 'react'
 import type {
+  Category,
   ConnectorClient,
   Id,
   OpenDialogFn,
@@ -19,7 +20,7 @@ import type {RouterOutput} from '@openint/engine-backend'
 import type {UIPropsNoChildren} from '@openint/ui'
 import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
-import {R, titleCase} from '@openint/util'
+import {R} from '@openint/util'
 import {CategoryConnectButton} from './ConnectButton'
 import {_trpcReact} from './TRPCProvider'
 import {ResourceDropdownMenu} from './WithProviderConnect'
@@ -174,11 +175,7 @@ export function _ConnectionPortal({
 
   const categories = zConnectorVertical.options
     .map((categoryKey) => {
-      const category = {
-        key: categoryKey,
-        name: titleCase(categoryKey),
-        ...CATEGORY_BY_KEY[categoryKey],
-      }
+      const category = CATEGORY_BY_KEY[categoryKey]
       const ccfgs = connectorConfigs.filter(
         (ccfg) => ccfg.connector?.categories.includes(categoryKey),
       )
@@ -221,8 +218,7 @@ export function _ConnectionPortal({
             </ResourceCard>
           ))}
           <ConnectCard
-            categoryKey={category.key}
-            categoryName={category.name}
+            category={category}
             hasExisting={category.connections.length > 0}
           />
         </div>
@@ -231,9 +227,11 @@ export function _ConnectionPortal({
   )
 }
 
-export const ConnectCard = (props: {
-  categoryKey: string
-  categoryName: string
+export const ConnectCard = ({
+  category,
+  hasExisting,
+}: {
+  category: Category
   hasExisting: boolean
 }) => (
   <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
@@ -242,19 +240,19 @@ export const ConnectCard = (props: {
       style={{color: '#f97316'}} // Tailwind is not fully working for some reason...
     />
     <h3 className="text-black-dark mb-5 text-[24px] font-semibold leading-[36px] tracking-[-0.01em] antialiased">
-      {props.hasExisting
-        ? `Connect another ${props.categoryName} integration`
-        : `No ${props.categoryName} integration connected`}
+      {hasExisting
+        ? `Connect another ${category.name} integration`
+        : `No ${category.name} integration connected`}
     </h3>
 
     <p className="text-black-mid mb-3 text-sm font-semibold tracking-[-0.01em] antialiased">
       Connect an integration here ASAP. This integration is needed to keep your{' '}
-      {props.categoryName} data accurate.
+      {category.name} data accurate.
     </p>
     {/* <ConnectButton
     // For some reason not working. Maybe need to setup tailwind again?
     // className="bg-purple-400"
-    >{`Connect ${props.categoryName}`}</ConnectButton> */}
-    <CategoryConnectButton category={props.categoryKey}></CategoryConnectButton>
+    >{`Connect ${category.name}`}</ConnectButton> */}
+    <CategoryConnectButton categoryKey={category.key}></CategoryConnectButton>
   </Card>
 )

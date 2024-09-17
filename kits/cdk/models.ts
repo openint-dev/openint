@@ -1,5 +1,5 @@
 import {z} from '@opensdks/util-zod'
-import {zConnectorVertical} from './connector-meta.types'
+import {zConnectorVertical} from './categories'
 import {zEndUserId, zId} from './id.types'
 
 // Utility types

@@ -2,6 +2,7 @@
 // cannot export ./verticals otherwise we will crash client side
 // codegen:start {preset: barrel, include: "./{*.{ts,tsx},*/index.{ts,tsx}}", exclude: "./**/*.{spec,test,fixture}.{ts,tsx}"}
 export * from './base-links'
+export * from './categories'
 export * from './connector-meta.types'
 export * from './connector-utils'
 export * from './connector.types'

@@ -3,38 +3,10 @@ import {z} from '@opensdks/util-zod'
 import type {oas30, oas31} from 'openapi3-ts'
 import type {AnyEntityPayload, ResoUpdateData, Source} from '@openint/sync'
 import {castIs} from '@openint/util'
+import type {CategoryKey} from './categories'
 import type {ConnHelpers} from './connector.types'
 import type {EndUserId, ExtEndUserId, ExternalId, Id} from './id.types'
 import {zExternalId} from './id.types'
-
-// aka verticals
-export const zConnectorVertical = z.enum([
-  'banking',
-  'accounting',
-  'crm',
-  'sales-engagement',
-  'commerce',
-  'expense-management',
-  'enrichment',
-  'database',
-  'flat-files-and-spreadsheets',
-  'file-storage',
-  'streaming',
-  'personal-finance',
-  'other',
-  'hris',
-  'payroll', // e.g. Gusto
-  'ats', // e.g. Greenhouse
-  'calendar',
-])
-
-export const CATEGORY_BY_KEY: Partial<
-  Record<z.infer<typeof zConnectorVertical>, {name?: string}>
-> = {
-  ats: {
-    name: 'ATS',
-  },
-}
 
 export const zConnectorStage = z.enum(['hidden', 'alpha', 'beta', 'ga'])
 
@@ -49,7 +21,7 @@ export interface ConnectorMetadata {
   platforms?: Array<'cloud' | 'local'>
   stage?: z.infer<typeof zConnectorStage>
   // labels?: Array<'featured' | 'banking' | 'accounting' | 'enrichment'>
-  categories?: Array<z.infer<typeof zConnectorVertical>>
+  categories?: CategoryKey[]
 
   openapiSpec?: {
     proxied?: OpenApiSpec

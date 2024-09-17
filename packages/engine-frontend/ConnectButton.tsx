@@ -2,6 +2,8 @@
 
 import {Search} from 'lucide-react'
 import React from 'react'
+import type { CategoryKey} from '@openint/cdk';
+import {CATEGORY_BY_KEY, type Category} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import {
   Button,
@@ -30,13 +32,14 @@ type ConfiguredIntegration =
   }
 
 export function WithConnectContext({
-  category,
+  categoryKey,
   children,
 }: {
-  category: string
+  categoryKey: CategoryKey
   children: (props: {
     ccfgs: ConnectorConfig[]
     ints: ConfiguredIntegration[]
+    category: Category
   }) => React.ReactElement | null
 }) {
   const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery(
@@ -55,18 +58,20 @@ export function WithConnectContext({
   }
 
   const ccfgs = listConnectorConfigsRes.data
-    ?.filter((ccfg) => ccfg.categories?.includes(category as never))
+    ?.filter((ccfg) => ccfg.categories?.includes(categoryKey as never))
     .map((ccfg) => ({
       ...ccfg,
       connector: catalogRes.data[ccfg.connectorName]!,
     }))
 
   const ints = listIntegrationsRes.data?.items
-    .filter((int) => int.categories?.includes(category as never))
+    .filter((int) => int.categories?.includes(categoryKey as never))
     .map((int) => ({
       ...int,
       ccfg: ccfgs.find((ccfg) => ccfg.id === int.connector_config_id)!,
     }))
+
+  const category = CATEGORY_BY_KEY[categoryKey]
 
   // console.log(category, {
   //   ccfgs,
@@ -74,17 +79,21 @@ export function WithConnectContext({
   //   catalogRes: catalogRes.data,
   // })
 
-  return children({ccfgs, ints})
+  return children({ccfgs, ints, category})
 }
 
-export function CategoryConnectButton({category}: {category: string}) {
+export function CategoryConnectButton({
+  categoryKey,
+}: {
+  categoryKey: CategoryKey
+}) {
   return (
-    <WithConnectContext category={category}>
+    <WithConnectContext categoryKey={categoryKey}>
       {({ccfgs}) => {
         if (ccfgs.length === 0) {
           return (
             <div>
-              No connectors configured for {category}. Please check your
+              No connectors configured for {categoryKey}. Please check your
               settings
             </div>
           )
@@ -98,7 +107,7 @@ export function CategoryConnectButton({category}: {category: string}) {
         // Render dialog for MultiConnector scenarios
         // This would be the case for greenhouse + lever
 
-        return <MultipleConnectDialog category={category} />
+        return <MultipleConnectDialog categoryKey={categoryKey} />
       }}
     </WithConnectContext>
   )
@@ -107,18 +116,18 @@ export function CategoryConnectButton({category}: {category: string}) {
 export function MultipleConnectDialog({
   children,
   className,
-  category,
+  categoryKey,
 }: {
   className?: string
   children?: React.ReactNode
-  category: string
+  categoryKey: CategoryKey
 }) {
   const [open, setOpen] = React.useState(false)
   const [searchValue, setSearchValue] = React.useState('')
 
   return (
-    <WithConnectContext category={category}>
-      {({ints: allInts}) => {
+    <WithConnectContext categoryKey={categoryKey}>
+      {({ints: allInts, category}) => {
         const needle = searchValue.toLowerCase().trim()
         const ints = needle
           ? allInts.filter((int) => int.name.toLowerCase().includes(needle))
@@ -152,13 +161,8 @@ export function MultipleConnectDialog({
           }}
         /> */}
               {/* Children here */}
-              <h1>Select your first {} integration</h1>
-              <p>
-                Our secure API identifies employees and compensation by
-                integrating with your payroll. Only users who are invited to the
-                platform can access this information, and the integration is
-                one-way with no impact on original data.
-              </p>
+              <h1>Select your first {category.name} integration</h1>
+              <p>{category.description}</p>
               {/* Search integrations */}
               <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <form>

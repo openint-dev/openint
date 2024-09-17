@@ -1,4 +1,3 @@
-import * as R from 'remeda'
 import type {DeepMergeLeafURI} from 'deepmerge-ts'
 import {deepmergeCustom} from 'deepmerge-ts'
 import {createCustomEqual, deepEqual} from 'fast-equals'
@@ -7,9 +6,14 @@ import {
   isEmpty as _isEmpty,
   isPlainObject as _isPlainObject,
 } from 'lodash'
-
+import * as R from 'remeda'
 import {math} from './math-utils'
-import type {AnyRecord, Invert, ObjectPartialDeep} from './type-utils'
+import type {
+  AnyRecord,
+  Invert,
+  NonEmptyArray,
+  ObjectPartialDeep,
+} from './type-utils'
 
 export {
   circularDeepEqual,
@@ -71,8 +75,8 @@ export function deepPartialDeepEqual<
         !deepPartialDeepEqual(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           obj[i]! as Record<string, unknown>,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          matching[i]!,
+           
+          matching[i],
           opts,
         )
       ) {
@@ -101,8 +105,8 @@ export function isPlainObject<T extends Record<string, unknown>>(
 }
 
 /** Mostly safe workaround. @see https://stackoverflow.com/questions/55012174/why-doesnt-object-keys-return-a-keyof-type-in-typescript */
-export function objectKeys<T extends object>(obj: T): Array<keyof T> {
-  return Object.keys(obj) as Array<keyof T>
+export function objectKeys<T extends object>(obj: T): NonEmptyArray<keyof T> {
+  return Object.keys(obj) as NonEmptyArray<keyof T>
 }
 
 /** Mostly safe workaround. @see https://stackoverflow.com/questions/55012174/why-doesnt-object-keys-return-a-keyof-type-in-typescript */
