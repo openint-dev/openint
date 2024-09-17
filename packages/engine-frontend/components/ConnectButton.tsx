@@ -2,7 +2,7 @@
 
 import {Search} from 'lucide-react'
 import React from 'react'
-import type {CategoryKey} from '@openint/cdk'
+import {CATEGORY_BY_KEY, type CategoryKey} from '@openint/cdk'
 import {
   Button,
   Dialog,
@@ -15,8 +15,8 @@ import {
   Input,
   IntegrationCard,
 } from '@openint/ui'
-import {WithConnectConfig} from './WithConnectConfig'
-import {WithConnectorConnect} from './WithConnectorConnect'
+import {WithConnectConfig} from '../hocs/WithConnectConfig'
+import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 
 export function CategoryConnectButton({
   categoryKey,
@@ -60,10 +60,11 @@ export function MultipleConnectDialog({
 }) {
   const [open, setOpen] = React.useState(false)
   const [searchValue, setSearchValue] = React.useState('')
+  const category = CATEGORY_BY_KEY[categoryKey]
 
   return (
     <WithConnectConfig categoryKey={categoryKey}>
-      {({ints: allInts, category}) => {
+      {({ints: allInts}) => {
         const needle = searchValue.toLowerCase().trim()
         const ints = needle
           ? allInts.filter((int) => int.name.toLowerCase().includes(needle))

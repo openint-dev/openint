@@ -16,8 +16,8 @@ import {
   DropdownMenuTrigger,
   useToast,
 } from '@openint/ui'
-import {_trpcReact} from './TRPCProvider'
-import {WithConnectorConnect} from './WithConnectorConnect'
+import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
+import {_trpcReact} from '../providers/TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 

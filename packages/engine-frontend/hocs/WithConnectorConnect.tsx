@@ -20,8 +20,8 @@ import {
   useToast,
 } from '@openint/ui'
 import {z} from '@openint/util'
-import {useOpenIntConnectContext} from './OpenIntConnectProvider'
-import {_trpcReact} from './TRPCProvider'
+import {useOpenIntConnectContext} from '../providers/OpenIntConnectProvider'
+import {_trpcReact} from '../providers/TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
@@ -50,9 +50,11 @@ export const WithConnectorConnect = ({
     loading: boolean
   }) => React.ReactNode
 }) => {
-  // console.log('ConnectCard', int.id, int.connector)
-
+  // console.log('WithConnectorConnect', int.id, int.connector)
   const {clientConnectors} = useOpenIntConnectContext()
+  // TODO: Restore connectFnMap so that we respect the rules of hooks to always render all hooks
+  // and not skip rendering or conditionally rendering hooks
+
   const useConnectHook = clientConnectors[ccfg.connector.name]?.useConnectHook
   const nangoProvider = ccfg.connector.nangoProvider
 

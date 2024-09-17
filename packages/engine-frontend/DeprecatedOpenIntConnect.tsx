@@ -43,7 +43,7 @@ import {
 } from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R, titleCase, z} from '@openint/util'
-import {_trpcReact} from './TRPCProvider'
+import {_trpcReact} from './providers/TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 

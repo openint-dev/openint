@@ -2,9 +2,8 @@
 
 import type React from 'react'
 import type {CategoryKey} from '@openint/cdk'
-import {CATEGORY_BY_KEY, type Category} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
-import {_trpcReact} from './TRPCProvider'
+import {_trpcReact} from '../providers/TRPCProvider'
 
 type Connector = RouterOutput['listConnectorMetas'][number]
 
@@ -21,17 +20,24 @@ export function WithConnectConfig({
   categoryKey,
   children,
 }: {
-  categoryKey: CategoryKey
+  categoryKey?: CategoryKey
+  // connectorName
+  // connectorConfigId
+  // integrationId
+  // etc.
   children: (props: {
     ccfgs: ConnectorConfig[]
     ints: ConfiguredIntegration[]
-    category: Category
   }) => React.ReactElement | null
 }) {
-  const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery(
-    {},
-  )
-  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({})
+  const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery({
+    // id: props.connectorConfigId,
+    // connectorName: props.connectorName,
+  })
+  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({
+    // id: props.connectorConfigId,
+    // connectorName: props.connectorName,
+  })
 
   const catalogRes = _trpcReact.listConnectorMetas.useQuery()
 
@@ -44,20 +50,18 @@ export function WithConnectConfig({
   }
 
   const ccfgs = listConnectorConfigsRes.data
-    ?.filter((ccfg) => ccfg.categories?.includes(categoryKey as never))
+    ?.filter((ccfg) => !categoryKey || ccfg.categories?.includes(categoryKey))
     .map((ccfg) => ({
       ...ccfg,
       connector: catalogRes.data[ccfg.connectorName]!,
     }))
 
   const ints = listIntegrationsRes.data?.items
-    .filter((int) => int.categories?.includes(categoryKey as never))
+    .filter((int) => !categoryKey || int.categories?.includes(categoryKey))
     .map((int) => ({
       ...int,
       ccfg: ccfgs.find((ccfg) => ccfg.id === int.connector_config_id)!,
     }))
-
-  const category = CATEGORY_BY_KEY[categoryKey]
 
   // console.log(category, {
   //   ccfgs,
@@ -65,5 +69,5 @@ export function WithConnectConfig({
   //   catalogRes: catalogRes.data,
   // })
 
-  return children({ccfgs, ints, category})
+  return children({ccfgs, ints})
 }
