@@ -2,7 +2,7 @@
 
 import {Search} from 'lucide-react'
 import React from 'react'
-import type { CategoryKey} from '@openint/cdk';
+import type {CategoryKey} from '@openint/cdk'
 import {CATEGORY_BY_KEY, type Category} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import {
@@ -187,7 +187,6 @@ export function MultipleConnectDialog({
                       id: int.connector_config_id,
                       connector: int.ccfg.connector,
                     }}
-                    // connectFn={connectFnMap[int.connector_name]}
                     // onEvent={(e) => {
                     //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
                     // }}

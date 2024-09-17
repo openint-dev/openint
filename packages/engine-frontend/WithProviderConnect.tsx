@@ -4,7 +4,7 @@ import NangoFrontend from '@nangohq/frontend'
 import {useMutation} from '@tanstack/react-query'
 import {Link2, Loader2, RefreshCw, Trash2} from 'lucide-react'
 import React from 'react'
-import type {Id, UseConnectHook} from '@openint/cdk'
+import type {Id} from '@openint/cdk'
 import {CANCELLATION_TOKEN, extractId, oauthConnect} from '@openint/cdk'
 import type {RouterInput, RouterOutput} from '@openint/engine-backend'
 import type {SchemaFormElement, UIProps} from '@openint/ui'
@@ -45,12 +45,10 @@ const __DEBUG__ = Boolean(
 export const WithConnectorConnect = ({
   connectorConfig: ccfg,
   resource,
-  // connectFn,
   children,
 }: {
   connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
   resource?: Resource
-  // connectFn?: ReturnType<UseConnectHook>
   onEvent?: (event: {type: ConnectEventType}) => void
   children: (props: {
     openConnect: () => void
@@ -238,7 +236,6 @@ export function ResourceDropdownMenu(
       connector: ConnectorMeta
     }
     resource: Resource
-    connectFn?: ReturnType<UseConnectHook>
     onEvent?: (event: {type: ConnectEventType}) => void
   },
 ) {
