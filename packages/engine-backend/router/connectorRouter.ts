@@ -131,7 +131,12 @@ const _connectorRouter = trpc.router({
   // it'd be nice to leverage the same primitive
   listConnectorIntegrations: publicProcedure
     .meta(oapi({method: 'GET', path: '/connector/{name}/integrations'}))
-    .input(zPaginationParams.extend({name: z.string()}))
+    .input(
+      zPaginationParams.extend({
+        name: z.string(),
+        search_text: z.string().nullish(),
+      }),
+    )
     // TODO: Add deterministic type for the output here
     .output(
       zPaginatedResult.extend({
@@ -156,7 +161,9 @@ const _connectorRouter = trpc.router({
           })),
         }))
       }
+
       const meta = metaForConnector(connector)
+      const needle = params.search_text?.toLowerCase().trim()
       return {
         has_next_page: false,
         items: [
@@ -169,7 +176,7 @@ const _connectorRouter = trpc.router({
             // TODO: Should not duplicate this so much...
             categories: connector.metadata?.categories,
           },
-        ],
+        ].filter((int) => !needle || int.name.toLowerCase().includes(needle)),
         next_cursor: null,
       }
     }),
@@ -183,7 +190,8 @@ export const connectorRouter = trpc.mergeRouters(
       .meta(oapi({method: 'GET', path: '/configured_integrations'}))
       .input(
         zPaginationParams.extend({
-          query: z.string().optional(),
+          search_text: z.string().optional(),
+          connector_config_ids: z.array(z.string()).optional(),
         }),
       )
       .output(
@@ -191,25 +199,36 @@ export const connectorRouter = trpc.mergeRouters(
           items: z.array(zConfiguredIntegration),
         }),
       )
-      .query(async ({ctx}) => {
+      .query(async ({ctx, input}) => {
         const ccfgs = await ctx.services.metaService.listConnectorConfigInfos()
 
         const integrations = await Promise.all(
-          // eslint-disable-next-line arrow-body-style
-          ccfgs.map((ccfg) => {
-            // const connector = ctx.connectorMap[extractId(ccfg.id)[1]]
-            return _connectorRouter
-              .createCaller(ctx)
-              .listConnectorIntegrations({name: extractId(ccfg.id)[1]})
-              .then((res) => ({
-                ...res,
-                items: res.items.map((int) => ({
-                  ...int,
-                  connector_config_id: ccfg.id,
-                })),
-              }))
-          }),
+          ccfgs
+            .filter(
+              (ccfg) =>
+                !input.connector_config_ids ||
+                input.connector_config_ids.includes(ccfg.id),
+            )
+            // eslint-disable-next-line arrow-body-style
+            .map((ccfg) => {
+              // const connector = ctx.connectorMap[extractId(ccfg.id)[1]]
+              return _connectorRouter
+                .createCaller(ctx)
+                .listConnectorIntegrations({
+                  name: extractId(ccfg.id)[1],
+                  search_text: input.search_text,
+                })
+                .then((res) => ({
+                  ...res,
+                  items: res.items.map((int) => ({
+                    ...int,
+                    connector_config_id: ccfg.id,
+                  })),
+                }))
+            }),
         )
+        // TODO: Implement filtering in each of the connectors instead?
+
         // integration should have connector name...
         return {
           has_next_page: integrations.some((int) => int.has_next_page),

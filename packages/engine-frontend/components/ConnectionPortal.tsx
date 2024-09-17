@@ -2,14 +2,13 @@
 
 import {AlertTriangle} from 'lucide-react'
 import type {Category, Id} from '@openint/cdk'
-import {CATEGORY_BY_KEY} from '@openint/cdk'
 import type {UIPropsNoChildren} from '@openint/ui'
 import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
-import {CategoryConnectButton} from './ConnectButton'
+import {ConnectButton} from './ConnectButton'
 import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -25,7 +24,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
   return (
     <WithConnectConfig>
-      {({ccfgs}) => {
+      {({ccfgs, categories}) => {
         if (!ccfgs.length) {
           return <div>No connectors configured</div>
         }
@@ -41,25 +40,17 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
           })
           .filter((c): c is NonNullable<typeof c> => !!c)
 
-        const configuredCategories = Object.values(CATEGORY_BY_KEY)
-          .map((category) => {
-            const categoryCcfgs = ccfgs.filter(
-              (ccfg) => ccfg.connector?.categories.includes(category.key),
-            )
-            return {
-              ...category,
-              connectorConfigs: categoryCcfgs,
-              connections: connections.filter((c) =>
-                categoryCcfgs.includes(c.connectorConfig),
-              ),
-            }
-          })
-          .filter((item) => item.connectorConfigs.length > 0)
+        const categoriesWithConnections = categories.map((category) => ({
+          ...category,
+          connections: connections.filter((c) =>
+            category.connectorConfigs.includes(c.connectorConfig),
+          ),
+        }))
 
         return (
           <div className={cn('mb-4', className)}>
             {/* Listing by categories */}
-            {configuredCategories.map((category) => (
+            {categoriesWithConnections.map((category) => (
               <div key={category.key}>
                 <h3 className="mb-4 ml-4 text-xl font-semibold tracking-tight">
                   {category.name}
@@ -83,7 +74,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
                     />
                   </ResourceCard>
                 ))}
-                <ConnectCard
+                <NewConnectionCard
                   category={category}
                   hasExisting={category.connections.length > 0}
                 />
@@ -96,7 +87,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
   )
 }
 
-export const ConnectCard = ({
+const NewConnectionCard = ({
   category,
   hasExisting,
 }: {
@@ -122,6 +113,6 @@ export const ConnectCard = ({
     // For some reason not working. Maybe need to setup tailwind again?
     // className="bg-purple-400"
     >{`Connect ${category.name}`}</ConnectButton> */}
-    <CategoryConnectButton categoryKey={category.key}></CategoryConnectButton>
+    <ConnectButton categoryKey={category.key}></ConnectButton>
   </Card>
 )

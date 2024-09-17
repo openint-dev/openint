@@ -2,6 +2,7 @@
 
 import {Search} from 'lucide-react'
 import React from 'react'
+import type {Category} from '@openint/cdk'
 import {CATEGORY_BY_KEY, type CategoryKey} from '@openint/cdk'
 import {
   Button,
@@ -15,18 +16,25 @@ import {
   Input,
   IntegrationCard,
 } from '@openint/ui'
+import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
+import {_trpcReact} from '../providers/TRPCProvider'
 
-export function CategoryConnectButton({
+interface ConnectButtonCommonProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+export function ConnectButton({
   categoryKey,
-}: {
-  categoryKey: CategoryKey
-}) {
+  ...commonProps
+}: {categoryKey: CategoryKey} & ConnectButtonCommonProps) {
   return (
     <WithConnectConfig categoryKey={categoryKey}>
       {({ccfgs}) => {
-        if (ccfgs.length === 0) {
+        const [first, ...rest] = ccfgs
+        if (!first) {
           return (
             <div>
               No connectors configured for {categoryKey}. Please check your
@@ -34,142 +42,81 @@ export function CategoryConnectButton({
             </div>
           )
         }
-
-        if (ccfgs.length === 1) {
-          // Return ConnectorConnectButton
-          return <div>Single ConnectorConnectButton</div>
+        if (rest.length === 0) {
+          // e.g. Plaid
+          return (
+            <SingleConnectButton {...commonProps} connectorConfig={first} />
+          )
         }
-
         // Render dialog for MultiConnector scenarios
         // This would be the case for greenhouse + lever
-
-        return <MultipleConnectDialog categoryKey={categoryKey} />
-      }}
-    </WithConnectConfig>
-  )
-}
-
-export function MultipleConnectDialog({
-  children,
-  className,
-  categoryKey,
-}: {
-  className?: string
-  children?: React.ReactNode
-  categoryKey: CategoryKey
-}) {
-  const [open, setOpen] = React.useState(false)
-  const [searchValue, setSearchValue] = React.useState('')
-  const category = CATEGORY_BY_KEY[categoryKey]
-
-  return (
-    <WithConnectConfig categoryKey={categoryKey}>
-      {({ints: allInts}) => {
-        const needle = searchValue.toLowerCase().trim()
-        const ints = needle
-          ? allInts.filter((int) => int.name.toLowerCase().includes(needle))
-          : allInts
+        const category = categoryKey ? CATEGORY_BY_KEY[categoryKey] : undefined
         return (
-          // non modal dialog do not add pointer events none to the body
-          // which workaround issue with multiple portals (dropdown, dialog) conflicting
-          // as well as other modals introduced by things like Plaid
-          <Dialog open={open} onOpenChange={setOpen} modal={false}>
-            <DialogTrigger asChild>
-              <Button className={className} variant="default">
-                {children ?? 'Connect'}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="flex max-h-screen flex-col">
-              <DialogHeader className="shrink-0">
-                <DialogTitle>New connection</DialogTitle>
-                <DialogDescription>
-                  Choose a connector config to start
-                </DialogDescription>
-              </DialogHeader>
-              {/* <OpenIntConnect
-          className="flex-1 overflow-scroll"
-          {...props}
-          onEvent={(event) => {
-            // How do we close the dialog when an connector config has been chosen?
-            // This is problematic because if OpenIntConnect itself gets removed from dom
-            // then any dialog it presents goes away also
-            // Tested forceMount though and it doesn't quite work... So we might want something like a hidden
-            props.onEvent?.(event)
-          }}
-        /> */}
-              {/* Children here */}
-              <h1>Select your first {category.name} integration</h1>
-              <p>{category.description}</p>
-              {/* Search integrations */}
-              <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <form>
-                  <div className="relative">
-                    {/* top-2.5 is not working for some reason due to tailwind setup */}
-                    <Search className="absolute left-2 top-2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Search"
-                      className="pl-8"
-                      value={searchValue}
-                      onChange={(e) => setSearchValue(e.target.value)}
-                    />
-                  </div>
-                </form>
-              </div>
-              {/* Search results */}
-              <div className="flex flex-wrap gap-4">
-                {ints.map((int) => (
-                  <WithConnectorConnect
-                    key={int.id}
-                    connectorConfig={{
-                      id: int.connector_config_id,
-                      connector: int.ccfg.connector,
-                    }}
-                    // onEvent={(e) => {
-                    //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-                    // }}
-                  >
-                    {({openConnect}) => (
-                      // <DialogTrigger asChild>
-                      <IntegrationCard
-                        // {...uiProps}
-                        onClick={() => openConnect()}
-                        integration={{
-                          ...int,
-                          connectorName: int.connector_name,
-                          // connectorConfigId: int.connector_config_id,
-                        }}
-                      />
-                      // </DialogTrigger>
-                    )}
-                  </WithConnectorConnect>
-                ))}
-              </div>
-
-              <DialogFooter className="shrink-0">
-                {/* Cancel here */}
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <MultipleConnectButton
+            {...commonProps}
+            connectorConfigs={ccfgs}
+            category={category}
+          />
         )
       }}
     </WithConnectConfig>
   )
 }
 
-/**
- * TODO: Figure out if we can reuse the same dialog such that when a provider is selected
- * we can replace the dialog content.
- * Alternatively if there's something like a mobile app navigation where it's part of a
- * "back" stack...
- */
-export function ConnectButton({
+function SingleConnectButton({
+  connectorConfig,
   children,
   className,
 }: {
-  className?: string
-  children?: React.ReactNode
-}) {
+  connectorConfig: ConnectorConfig
+} & ConnectButtonCommonProps) {
+  return (
+    <WithConnectorConnect
+      connectorConfig={connectorConfig}
+      // onEvent={(e) => {
+      //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
+      // }}
+    >
+      {({openConnect}) => (
+        // <DialogTrigger asChild>
+        <Button
+          onClick={() => openConnect()}
+          className={className}
+          variant="default">
+          {children ?? 'Connect'}
+        </Button>
+        // </DialogTrigger>
+      )}
+    </WithConnectorConnect>
+  )
+}
+
+function MultipleConnectButton({
+  children,
+  className,
+  connectorConfigs,
+  category,
+}: {
+  connectorConfigs: ConnectorConfig[]
+  /** Should correspond to connectorConfigs, but we can't guarantee that statically here... */
+  category?: Category
+} & ConnectButtonCommonProps) {
   const [open, setOpen] = React.useState(false)
+  const [searchText, setSearchText] = React.useState('')
+
+  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({
+    connector_config_ids: connectorConfigs.map((ccfg) => ccfg.id),
+    search_text: searchText,
+  })
+  const ints = listIntegrationsRes.data?.items.map((int) => ({
+    ...int,
+    ccfg: connectorConfigs.find((ccfg) => ccfg.id === int.connector_config_id)!,
+  }))
+  // TODO: implement loading state here...
+  if (!ints) {
+    return null
+  }
+
   return (
     // non modal dialog do not add pointer events none to the body
     // which workaround issue with multiple portals (dropdown, dialog) conflicting
@@ -187,27 +134,58 @@ export function ConnectButton({
             Choose a connector config to start
           </DialogDescription>
         </DialogHeader>
-        {/* <OpenIntConnect
-          className="flex-1 overflow-scroll"
-          {...props}
-          onEvent={(event) => {
-            // How do we close the dialog when an connector config has been chosen?
-            // This is problematic because if OpenIntConnect itself gets removed from dom
-            // then any dialog it presents goes away also
-            // Tested forceMount though and it doesn't quite work... So we might want something like a hidden
-            props.onEvent?.(event)
-          }}
-        /> */}
-        {/* Children here */}
-        <h1>Select your first {} integration</h1>
-        <p>
-          Our secure API identifies employees and compensation by integrating
-          with your payroll. Only users who are invited to the platform can
-          access this information, and the integration is one-way with no impact
-          on original data.
-        </p>
+        {category && (
+          <>
+            <h1>Select your first {category.name} integration</h1>
+            <p>{category.description}</p>
+          </>
+        )}
         {/* Search integrations */}
+        <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <form>
+            <div className="relative">
+              {/* top-2.5 is not working for some reason due to tailwind setup */}
+              <Search className="absolute left-2 top-2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search"
+                className="pl-8"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+          </form>
+        </div>
         {/* Search results */}
+        <div className="flex flex-wrap gap-4">
+          {ints.map((int) => (
+            <WithConnectorConnect
+              key={int.id}
+              connectorConfig={{
+                id: int.connector_config_id,
+                connector: int.ccfg.connector,
+              }}
+              // TODO: pre-select a single integration when possible
+              // onEvent={(e) => {
+              //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
+              // }}
+            >
+              {({openConnect}) => (
+                // <DialogTrigger asChild>
+                <IntegrationCard
+                  // {...uiProps}
+                  onClick={() => openConnect()}
+                  integration={{
+                    ...int,
+                    connectorName: int.connector_name,
+                    // connectorConfigId: int.connector_config_id,
+                  }}
+                />
+                // </DialogTrigger>
+              )}
+            </WithConnectorConnect>
+          ))}
+        </div>
+
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
       </DialogContent>
     </Dialog>

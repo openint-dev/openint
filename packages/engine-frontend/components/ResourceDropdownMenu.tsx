@@ -2,7 +2,6 @@
 
 import {Link2, RefreshCw, Trash2} from 'lucide-react'
 import React from 'react'
-import type {Id} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import type {UIProps} from '@openint/ui'
 import {
@@ -16,6 +15,7 @@ import {
   DropdownMenuTrigger,
   useToast,
 } from '@openint/ui'
+import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {_trpcReact} from '../providers/TRPCProvider'
 
@@ -23,20 +23,13 @@ type ConnectEventType = 'open' | 'close' | 'error'
 
 type Resource = RouterOutput['listConnections'][number]
 
-type Catalog = RouterOutput['listConnectorMetas']
-
-type ConnectorMeta = Catalog[string]
-
 /**
  * TODO: Add loading indicator when mutations are happening as a result of
  * selecting dropdown menu action
  */
 export function ResourceDropdownMenu(
   props: UIProps & {
-    connectorConfig: {
-      id: Id['ccfg']
-      connector: ConnectorMeta
-    }
+    connectorConfig: ConnectorConfig
     resource: Resource
     onEvent?: (event: {type: ConnectEventType}) => void
   },
@@ -91,7 +84,7 @@ export function ResourceDropdownMenu(
       data: {resourceId: props.resource.id},
     })
 
-  // TODO: Implement delete
+  // TODO: Turn this into a menu powered by the command abstraction?
   return (
     // Not necessarily happy that we have to wrap the whole thing here inside
     // WithProviderConnect but also don't know of a better option
@@ -99,6 +92,7 @@ export function ResourceDropdownMenu(
       {(connectProps) => (
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
+            {/* TODO: use ... instead of Options */}
             <Button variant="ghost">Options</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">

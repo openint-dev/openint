@@ -8,7 +8,7 @@ interface CategoryInfo {
 
 // TODO: Should this correspond to the list of unified apis we have actually implemented?
 // Doesn't seem quite right otherwise...
-export const _CATEGORY_BY_KEY = {
+const _CATEGORY_BY_KEY = {
   banking: {},
   accounting: {},
   crm: {},
