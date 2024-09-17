@@ -30,7 +30,7 @@ export default async function PortalPage({
   //  https://beta.nextjs.org/docs/api-reference/file-conventions/page#searchparams-optional
   searchParams,
 }: {
-  // Only accessible in PageComponent rather than layout component
+  // Search params in Next.js are only accessible in PageComponent and no accessible in layout component, too bad
   // @see https://github.com/vercel/next.js/issues/43704
   searchParams: Record<string, string | string[] | undefined>
 }) {
