@@ -2,7 +2,6 @@
 
 import 'next/image'
 import '../global.css'
-
 import {SchemaForm} from '@/../../packages/ui'
 import {z} from '@/../../packages/util'
 
