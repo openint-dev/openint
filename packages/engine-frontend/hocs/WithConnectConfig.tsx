@@ -32,15 +32,9 @@ export function WithConnectConfig({
   // etc.
   children: (props: {
     ccfgs: ConnectorConfig[]
-    ints: ConfiguredIntegration[]
     categories: ConfiguredCategory[]
   }) => React.ReactElement | null
 }) {
-  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({
-    // id: props.connectorConfigId,
-    // connectorName: props.connectorName,
-  })
-
   const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery({
     // id: props.connectorConfigId,
     // connectorName: props.connectorName,
@@ -48,11 +42,7 @@ export function WithConnectConfig({
 
   const listConnectorsRes = _trpcReact.listConnectorMetas.useQuery()
 
-  if (
-    !listIntegrationsRes.data ||
-    !listConnectorConfigsRes.data ||
-    !listConnectorsRes.data
-  ) {
+  if (!listConnectorConfigsRes.data || !listConnectorsRes.data) {
     return null
   }
 
@@ -61,13 +51,6 @@ export function WithConnectConfig({
     .map((ccfg) => ({
       ...ccfg,
       connector: listConnectorsRes.data[ccfg.connectorName]!,
-    }))
-
-  const ints = listIntegrationsRes.data?.items
-    .filter((int) => !categoryKey || int.categories?.includes(categoryKey))
-    .map((int) => ({
-      ...int,
-      ccfg: ccfgs.find((ccfg) => ccfg.id === int.connector_config_id)!,
     }))
 
   const categories = Object.values(CATEGORY_BY_KEY)
@@ -81,9 +64,8 @@ export function WithConnectConfig({
 
   // console.log(category, {
   //   ccfgs,
-  //   ints,
   //   catalogRes: catalogRes.data,
   // })
 
-  return children({ccfgs, ints, categories})
+  return children({ccfgs, categories})
 }

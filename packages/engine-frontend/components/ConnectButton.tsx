@@ -1,6 +1,5 @@
 'use client'
 
-import {Search} from 'lucide-react'
 import React from 'react'
 import type {Category} from '@openint/cdk'
 import {CATEGORY_BY_KEY, type CategoryKey} from '@openint/cdk'
@@ -13,13 +12,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Input,
-  IntegrationCard,
 } from '@openint/ui'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
-import {_trpcReact} from '../providers/TRPCProvider'
+import {IntegrationSearch} from './IntegrationSearch'
 
 interface ConnectButtonCommonProps {
   className?: string
@@ -29,7 +26,7 @@ interface ConnectButtonCommonProps {
 export function ConnectButton({
   categoryKey,
   ...commonProps
-}: {categoryKey: CategoryKey} & ConnectButtonCommonProps) {
+}: {categoryKey?: CategoryKey} & ConnectButtonCommonProps) {
   return (
     <WithConnectConfig categoryKey={categoryKey}>
       {({ccfgs}) => {
@@ -102,20 +99,6 @@ function MultipleConnectButton({
   category?: Category
 } & ConnectButtonCommonProps) {
   const [open, setOpen] = React.useState(false)
-  const [searchText, setSearchText] = React.useState('')
-
-  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({
-    connector_config_ids: connectorConfigs.map((ccfg) => ccfg.id),
-    search_text: searchText,
-  })
-  const ints = listIntegrationsRes.data?.items.map((int) => ({
-    ...int,
-    ccfg: connectorConfigs.find((ccfg) => ccfg.id === int.connector_config_id)!,
-  }))
-  // TODO: implement loading state here...
-  if (!ints) {
-    return null
-  }
 
   return (
     // non modal dialog do not add pointer events none to the body
@@ -140,51 +123,7 @@ function MultipleConnectButton({
             <p>{category.description}</p>
           </>
         )}
-        {/* Search integrations */}
-        <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <form>
-            <div className="relative">
-              {/* top-2.5 is not working for some reason due to tailwind setup */}
-              <Search className="absolute left-2 top-2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search"
-                className="pl-8"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
-          </form>
-        </div>
-        {/* Search results */}
-        <div className="flex flex-wrap gap-4">
-          {ints.map((int) => (
-            <WithConnectorConnect
-              key={int.id}
-              connectorConfig={{
-                id: int.connector_config_id,
-                connector: int.ccfg.connector,
-              }}
-              // TODO: pre-select a single integration when possible
-              // onEvent={(e) => {
-              //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-              // }}
-            >
-              {({openConnect}) => (
-                // <DialogTrigger asChild>
-                <IntegrationCard
-                  // {...uiProps}
-                  onClick={() => openConnect()}
-                  integration={{
-                    ...int,
-                    connectorName: int.connector_name,
-                    // connectorConfigId: int.connector_config_id,
-                  }}
-                />
-                // </DialogTrigger>
-              )}
-            </WithConnectorConnect>
-          ))}
-        </div>
+        <IntegrationSearch connectorConfigs={connectorConfigs} />
 
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
       </DialogContent>
