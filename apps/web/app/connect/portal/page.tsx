@@ -9,7 +9,7 @@ import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
 
 export const metadata = {
-  title: 'OpenInt Connect',
+  title: 'OpenInt Connection Management Portal',
 }
 
 /**
@@ -22,8 +22,12 @@ export const dynamic = 'force-dynamic'
 // Perhaps it would even be an advantage to have the page simply be static?
 // Though that would result in waterfall loading of integrations
 
-/** https://beta.nextjs.org/docs/api-reference/file-conventions/page#searchparams-optional */
-export default async function ConnectPageContainer({
+/**
+ * Embed this fully featured page to allow customers to fully manage their own resources
+ * Include checking sync status, adding, removing, and reauthenticating their connections
+ */
+export default async function PortalPage({
+  //  https://beta.nextjs.org/docs/api-reference/file-conventions/page#searchparams-optional
   searchParams,
 }: {
   // Only accessible in PageComponent rather than layout component

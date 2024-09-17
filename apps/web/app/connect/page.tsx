@@ -15,8 +15,8 @@ import {makeUlid} from '@openint/util'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
+import {SetCookieAndRedirect} from './(oauth)/redirect/SetCookieAndRedirect'
 import ConnectPage from './ConnectPage'
-import {SetCookieAndRedirect} from './SetCookieAndRedirect'
 import {kConnectSession, type ConnectSession} from './shared'
 
 export const metadata = {

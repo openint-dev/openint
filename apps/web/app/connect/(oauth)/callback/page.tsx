@@ -9,7 +9,7 @@ import type {FrameMessage} from '@openint/connect'
 import {FullScreenCenter} from '@/components/FullScreenCenter'
 import {serverSideHelpersFromViewer} from '@/lib-server'
 import {serverComponentGetViewer} from '@/lib-server/server-component-helpers'
-import {kConnectSession, zConnectSession} from '../shared'
+import {kConnectSession, zConnectSession} from '../../shared'
 import {CallbackEffect} from './CallbackEffect'
 
 export const metadata = {
