@@ -7,5 +7,5 @@
 export * from './ConnectionPortal'
 export * from './DeprecatedOpenIntConnect'
 export * from './TRPCProvider'
-export * from './OpenIntContext'
+export * from './OpenIntConnectProvider'
 // - codegen:end

@@ -9,8 +9,8 @@ import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R} from '@openint/util'
 import {CategoryConnectButton} from './ConnectButton'
+import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 import {_trpcReact} from './TRPCProvider'
-import {ResourceDropdownMenu} from './WithProviderConnect'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 

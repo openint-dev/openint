@@ -1,21 +1,25 @@
 import React from 'react'
 import type {ConnectorClient} from '@openint/cdk'
 
-type OpenIntContext = {
+type OpenIntConnectContext = {
   clientConnectors: Record<string, ConnectorClient>
 }
 
-const OpenIntContext = React.createContext<OpenIntContext | null>(null)
+const OpenIntConnectContext = React.createContext<OpenIntConnectContext | null>(
+  null,
+)
 
 export const OpenIntConnectProvider = ({
   children,
   ...ctx
-}: OpenIntContext & {children: React.ReactNode}) => (
-  <OpenIntContext.Provider value={ctx}>{children}</OpenIntContext.Provider>
+}: OpenIntConnectContext & {children: React.ReactNode}) => (
+  <OpenIntConnectContext.Provider value={ctx}>
+    {children}
+  </OpenIntConnectContext.Provider>
 )
 
 export const useOpenIntConnectContext = () => {
-  const ctx = React.useContext(OpenIntContext)
+  const ctx = React.useContext(OpenIntConnectContext)
   if (!ctx) {
     throw new Error('useClientConnectors must be used within a OpenIntProvider')
   }

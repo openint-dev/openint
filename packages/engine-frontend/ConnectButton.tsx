@@ -3,8 +3,6 @@
 import {Search} from 'lucide-react'
 import React from 'react'
 import type {CategoryKey} from '@openint/cdk'
-import {CATEGORY_BY_KEY, type Category} from '@openint/cdk'
-import type {RouterOutput} from '@openint/engine-backend'
 import {
   Button,
   Dialog,
@@ -17,70 +15,8 @@ import {
   Input,
   IntegrationCard,
 } from '@openint/ui'
-import {_trpcReact} from './TRPCProvider'
-import {WithConnectorConnect} from './WithProviderConnect'
-
-type Connector = RouterOutput['listConnectorMetas'][number]
-
-type ConnectorConfig = RouterOutput['listConnectorConfigInfos'][number] & {
-  connector: Connector
-}
-
-type ConfiguredIntegration =
-  RouterOutput['listConfiguredIntegrations']['items'][number] & {
-    ccfg: ConnectorConfig
-  }
-
-export function WithConnectContext({
-  categoryKey,
-  children,
-}: {
-  categoryKey: CategoryKey
-  children: (props: {
-    ccfgs: ConnectorConfig[]
-    ints: ConfiguredIntegration[]
-    category: Category
-  }) => React.ReactElement | null
-}) {
-  const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery(
-    {},
-  )
-  const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({})
-
-  const catalogRes = _trpcReact.listConnectorMetas.useQuery()
-
-  if (
-    !listConnectorConfigsRes.data ||
-    !listIntegrationsRes.data ||
-    !catalogRes.data
-  ) {
-    return null
-  }
-
-  const ccfgs = listConnectorConfigsRes.data
-    ?.filter((ccfg) => ccfg.categories?.includes(categoryKey as never))
-    .map((ccfg) => ({
-      ...ccfg,
-      connector: catalogRes.data[ccfg.connectorName]!,
-    }))
-
-  const ints = listIntegrationsRes.data?.items
-    .filter((int) => int.categories?.includes(categoryKey as never))
-    .map((int) => ({
-      ...int,
-      ccfg: ccfgs.find((ccfg) => ccfg.id === int.connector_config_id)!,
-    }))
-
-  const category = CATEGORY_BY_KEY[categoryKey]
-
-  // console.log(category, {
-  //   ccfgs,
-  //   ints,
-  //   catalogRes: catalogRes.data,
-  // })
-
-  return children({ccfgs, ints, category})
-}
+import {WithConnectConfig} from './WithConnectConfig'
+import {WithConnectorConnect} from './WithConnectorConnect'
 
 export function CategoryConnectButton({
   categoryKey,
@@ -88,7 +24,7 @@ export function CategoryConnectButton({
   categoryKey: CategoryKey
 }) {
   return (
-    <WithConnectContext categoryKey={categoryKey}>
+    <WithConnectConfig categoryKey={categoryKey}>
       {({ccfgs}) => {
         if (ccfgs.length === 0) {
           return (
@@ -109,7 +45,7 @@ export function CategoryConnectButton({
 
         return <MultipleConnectDialog categoryKey={categoryKey} />
       }}
-    </WithConnectContext>
+    </WithConnectConfig>
   )
 }
 
@@ -126,7 +62,7 @@ export function MultipleConnectDialog({
   const [searchValue, setSearchValue] = React.useState('')
 
   return (
-    <WithConnectContext categoryKey={categoryKey}>
+    <WithConnectConfig categoryKey={categoryKey}>
       {({ints: allInts, category}) => {
         const needle = searchValue.toLowerCase().trim()
         const ints = needle
@@ -215,7 +151,7 @@ export function MultipleConnectDialog({
           </Dialog>
         )
       }}
-    </WithConnectContext>
+    </WithConnectConfig>
   )
 }
 
