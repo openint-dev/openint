@@ -10,9 +10,11 @@ export default {
     // paths here we don't need otherwise it causes massive DX perf issues
     // where it takes 60 seconds to compile a one line hello world change
     // '../../integrations/**/*.tsx',
-    // '../../packages/engine-frontend/**/*.tsx',
 
+    '../../packages/engine-frontend/**/*.tsx',
+    '!../../packages/engine-frontend/node_modules',
     '../../packages/ui/**/*.tsx',
+    '!../../packages/ui/node_modules',
     './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
