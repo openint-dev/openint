@@ -51,6 +51,8 @@ export function ResourceDropdownMenu(
   //     })
   //   },
   // })
+
+  const ctx = _trpcReact.useContext()
   const deleteResource = _trpcReact.deleteResource.useMutation({
     onSuccess: () => {
       setOpen(false)
@@ -62,6 +64,9 @@ export function ResourceDropdownMenu(
         description: `${err.message}`,
         variant: 'destructive',
       })
+    },
+    onSettled: () => {
+      ctx.listConnections.invalidate()
     },
   })
   const syncResource = _trpcReact.dispatch.useMutation({
