@@ -95,10 +95,7 @@ const NewConnectionCard = ({
   hasExisting: boolean
 }) => (
   <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
-    <AlertTriangle
-      className="text-orange-500"
-      style={{color: '#f97316'}} // Tailwind is not fully working for some reason...
-    />
+    <AlertTriangle className="text-orange-500" />
     <h3 className="text-black-dark mb-5 text-[24px] font-semibold leading-[36px] tracking-[-0.01em] antialiased">
       {hasExisting
         ? `Connect another ${category.name} integration`
@@ -110,8 +107,7 @@ const NewConnectionCard = ({
       {category.name} data accurate.
     </p>
     <ConnectButton
-      // For some reason not working. Maybe need to setup tailwind again?
-      // className="bg-purple-400"
+      className="bg-purple-400 hover:bg-purple-500"
       connectorConfigFilters={{categoryKey: category.key}}></ConnectButton>
   </Card>
 )

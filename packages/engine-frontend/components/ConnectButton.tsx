@@ -118,7 +118,7 @@ function MultipleConnectButton({
           {children ?? 'Connect'}
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex max-h-screen flex-col">
+      <DialogContent className="flex max-h-screen flex-col sm:max-w-2xl">
         <DialogHeader className="shrink-0">
           <DialogTitle>New connection</DialogTitle>
           <DialogDescription>
