@@ -3,9 +3,10 @@
 import 'next/image'
 import '../global.css'
 import {useSearchParams} from 'next/navigation'
+import {Suspense} from 'react'
 import {OpenIntConnectEmbed} from '@openint/connect'
 
-export default function Demo() {
+function DemoInner() {
   const params = useSearchParams()
   const token = params?.get('token')
   return (
@@ -19,5 +20,13 @@ export default function Demo() {
         </p>
       )}
     </div>
+  )
+}
+
+export default function Demo() {
+  return (
+    <Suspense>
+      <DemoInner />
+    </Suspense>
   )
 }
