@@ -46,7 +46,7 @@ export async function scheduleSyncs({
     // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
     // development
     links: [createAppHandler()],
-    baseUrl: 'http://localhost:4000/api/v0',
+    // baseUrl: 'http://localhost:4000/api/v0',
   })
 
   // TODO: Deal with pagination
@@ -150,8 +150,8 @@ export async function syncConnection({
     // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
     // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
     // development
-    // links: [createAppHandler()],
-    baseUrl: 'http://localhost:4000/api/v0',
+    links: [createAppHandler()],
+    // baseUrl: 'http://localhost:4000/api/v0',
   })
 
   const overallState = (syncState.state ?? {}) as Record<
