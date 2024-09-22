@@ -6,11 +6,13 @@
   "module": "./index.ts",
   "dependencies": {
     "@openint/cdk": "workspace:*",
+    "@openint/db": "workspace:*",
     "@openint/trpc": "workspace:*",
     "@openint/util": "workspace:*",
     "@openint/vdk": "workspace:*",
     "@opensdks/util-zod": "^0.0.15",
     "@trpc/server": "10.40.0",
+    "drizzle-orm": "^0.29.3",
     "inngest": "^3.16.0",
     "zod-openapi": "2.14.0"
   },

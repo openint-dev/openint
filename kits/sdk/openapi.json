@@ -1309,7 +1309,7 @@
                       "isDestination": {
                         "type": "boolean"
                       },
-                      "categories": {
+                      "verticals": {
                         "type": "array",
                         "items": {
                           "type": "string",
@@ -1341,7 +1341,7 @@
                       "connectorName",
                       "isSource",
                       "isDestination",
-                      "categories"
+                      "verticals"
                     ]
                   }
                 }
@@ -2225,6 +2225,71 @@
         }
       }
     },
+    "/core/sync_run": {
+      "get": {
+        "operationId": "listSyncRuns",
+        "tags": ["Core"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.BAD_REQUEST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.NOT_FOUND"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/viewer": {
       "get": {
         "operationId": "getViewer",
@@ -2275,10 +2340,6 @@
                     "publicMetadata": {
                       "type": "object",
                       "properties": {
-                        "webhook_url": {
-                          "type": "string",
-                          "description": "This is a postgres database only right now"
-                        },
                         "database_url": {
                           "type": "string",
                           "title": "PostgreSQL Database URL",
@@ -2287,7 +2348,13 @@
                         },
                         "synced_data_schema": {
                           "type": "string",
+                          "title": "Synced Data Schema",
                           "description": "Postgres schema to pipe data synced from end user resources into. Defaults to \"synced\" if missing."
+                        },
+                        "webhook_url": {
+                          "type": "string",
+                          "title": "Webhook URL",
+                          "description": "Events like sync.completed and connection.created can be sent to url of your choosing"
                         }
                       }
                     }
@@ -7297,7 +7364,7 @@
           "login_url": {
             "type": ["string", "null"]
           },
-          "categories": {
+          "verticals": {
             "type": ["array", "null"],
             "items": {
               "type": "string",

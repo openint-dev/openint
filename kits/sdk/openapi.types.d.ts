@@ -96,6 +96,9 @@ export interface paths {
   '/core/pipeline/{id}/_sync': {
     post: operations['syncPipeline']
   }
+  '/core/sync_run': {
+    get: operations['listSyncRuns']
+  }
   '/viewer': {
     /** Get current viewer accessing the API */
     get: operations['getViewer']
@@ -455,7 +458,7 @@ export interface components {
       name: string
       logo_url?: string | null
       login_url?: string | null
-      categories?:
+      verticals?:
         | (
             | 'banking'
             | 'accounting'
@@ -1793,7 +1796,7 @@ export interface operations {
             connectorName: string
             isSource: boolean
             isDestination: boolean
-            categories: (
+            verticals: (
               | 'banking'
               | 'accounting'
               | 'crm'
@@ -2284,6 +2287,40 @@ export interface operations {
       }
     }
   }
+  listSyncRuns: {
+    parameters: {
+      query?: {
+        limit?: number
+        offset?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': unknown[]
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
   /** Get current viewer accessing the API */
   getViewer: {
     responses: {
@@ -2312,16 +2349,22 @@ export interface operations {
             id: string
             slug?: string | null
             publicMetadata: {
-              /** @description This is a postgres database only right now */
-              webhook_url?: string
               /**
                * PostgreSQL Database URL
                * @description This is where data from resources are synced to by default
                * @example postgres://username:password@host:port/database
                */
               database_url?: string
-              /** @description Postgres schema to pipe data synced from end user resources into. Defaults to "synced" if missing. */
+              /**
+               * Synced Data Schema
+               * @description Postgres schema to pipe data synced from end user resources into. Defaults to "synced" if missing.
+               */
               synced_data_schema?: string
+              /**
+               * Webhook URL
+               * @description Events like sync.completed and connection.created can be sent to url of your choosing
+               */
+              webhook_url?: string
             }
           }
         }

@@ -21,7 +21,7 @@
   "devDependencies": {
     "@openint/vdk": "workspace:*",
     "drizzle-kit": "^0.20.12",
-    "prettier": "3.3.3",
+    "prettier": "3.1.0",
     "prettier-plugin-sql": "0.18.1"
   }
 }

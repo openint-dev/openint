@@ -8,6 +8,7 @@ import {pipelineRouter} from './pipelineRouter'
 import {protectedRouter} from './protectedRouter'
 import {publicRouter} from './publicRouter'
 import {resourceRouter} from './resourceRouter'
+import {syncRouter} from './syncRouter'
 import {systemRouter} from './systemRouter'
 
 // accountingRouter._def.procedures.listAccounts._def.meta?.openapi?.path += '/accounting/'
@@ -22,6 +23,7 @@ export const routers = {
   resource: resourceRouter,
   pipeline: pipelineRouter,
   connector: connectorRouter,
+  sync: syncRouter,
 }
 
 // Which one is best?
@@ -37,6 +39,7 @@ export const flatRouter = trpc.mergeRouters(
   connectorConfigRouter,
   connectorRouter,
   pipelineRouter,
+  syncRouter,
 )
 
 export type FlatRouter = typeof flatRouter
