@@ -1,4 +1,4 @@
-import type {Oas_accounting, XeroSDK} from 'connectors/connector-xero'
+import type {Oas_accounting, XeroSDK} from '@openint/connector-xero'
 import {mapper, zCast} from '@openint/vdk'
 import type {BankingAdapter} from '../router'
 import * as unified from '../unifiedModels'
