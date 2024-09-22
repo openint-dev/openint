@@ -25,17 +25,14 @@ export default function SettingsPage() {
   return (
     <div className="p-6">
       <h2 className="mb-4 text-2xl font-semibold tracking-tight">Settings</h2>
-      {/* <div>Webhook url URL</div> */}
-
       <SchemaForm
-        schema={zOrganization.shape.publicMetadata.pick({
-          database_url: true,
-        })}
+        schema={zOrganization.shape.publicMetadata}
         uiSchema={{
           // Would be nice if this can be extracted from example field of the openapi spec
           database_url: {
             'ui:placeholder': 'postgres://username:password@host:port/database',
           },
+          webhook_url: {'ui:placeholder': 'https://yourapp.com/webhook'},
         }}
         formData={res.data.publicMetadata}
         loading={updateOrg.isLoading}

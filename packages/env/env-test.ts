@@ -17,15 +17,10 @@ export const testEnv = createEnv({
     INNGEST_SIGNING_KEY: z.string().optional(),
     INNGEST_EVENT_KEY: z.string().optional(),
 
-    // Set if you want to receive webhooks for all the events
-    WEBHOOK_URL: z.string().optional(),
-    WEBHOOK_SECRET: z.string().optional(),
-
     // Used for scripts / cli only, maybe we should rename them to all _ prefixed to be clear?
     RESOURCE_ID: z.string().optional(),
     CONNECTOR_NAME: z.string().optional(),
-    // Redundant with NEXT_PUBLIC_SERVER_URL, but shorter and for script only
-    BYOS_URL: z.string().optional(),
+
     SFDC_INSTANCE_URL: z.string().optional(),
     SFDC_ACCESS_TOKEN: z.string().optional(),
     CONNECTION_ID: z.string().optional(),
@@ -58,8 +53,6 @@ export const testEnv = createEnv({
   },
   runtimeEnv: {
     RESOURCE_ID: process.env['RESOURCE_ID'],
-    BYOS_URL: process.env['BYOS_URL'],
-    CONFIG_SCHEMA: process.env['CONFIG_SCHEMA'],
     CONNECTION_ID: process.env['CONNECTION_ID'],
     DEBUG: process.env['DEBUG'],
     INNGEST_EVENT_KEY: process.env['INNGEST_EVENT_KEY'],
@@ -78,8 +71,6 @@ export const testEnv = createEnv({
     UNIFIED_OBJECT: process.env['UNIFIED_OBJECT'],
     VERCEL_URL: process.env['VERCEL_URL'],
     VERTICAL: process.env['VERTICAL'],
-    WEBHOOK_SECRET: process.env['WEBHOOK_SECRET'],
-    WEBHOOK_URL: process.env['WEBHOOK_URL'],
   },
 })
 

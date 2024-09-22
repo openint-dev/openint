@@ -29,9 +29,7 @@ switch (cmd) {
     void routines.sendWebhook({
       event: {
         name: 'sync.completed',
-        data: {
-          resource_id: testEnv['RESOURCE_ID']!,
-        },
+        data: {resource_id: testEnv['RESOURCE_ID']!},
       },
       step,
     })

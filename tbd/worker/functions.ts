@@ -1,5 +1,6 @@
 import {eq, sql} from 'drizzle-orm'
 import type {SendEventPayload} from 'inngest/helpers/types'
+import type {OpenIntHeaders} from '@openint/api'
 import {createAppHandler} from '@openint/api'
 import type {Id} from '@openint/cdk'
 import {CATEGORY_BY_KEY, makeJwtClient} from '@openint/cdk'
@@ -12,7 +13,7 @@ import {
   schema,
   stripNullByte,
 } from '@openint/db'
-import {testEnv as env, envRequired} from '@openint/env'
+import {envRequired} from '@openint/env'
 import type {Events} from '@openint/events'
 import {initOpenIntSDK} from '@openint/sdk'
 import {HTTPError, parseErrorInfo} from '../../packages/trpc/errors'
@@ -41,16 +42,7 @@ export async function scheduleSyncs({
   event,
 }: FunctionInput<'scheduler.requested'>) {
   console.log('[scheduleSyncs]', event)
-  const jwt = makeJwtClient({secretOrPublicKey: envRequired.JWT_SECRET})
-  const openint = initOpenIntSDK({
-    headers: {authorization: `Bearer ${jwt.signViewer({role: 'system'})}`},
-    // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
-    // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
-    // development
-    links: [createAppHandler()],
-    // baseUrl: 'http://localhost:4000/api/v0',
-  })
-
+  const {openint} = initSDK()
   // TODO: Deal with pagination
   const resources = await openint.GET('/core/resource').then((r) => r.data)
 
@@ -140,18 +132,8 @@ export async function syncConnection({
     .returning()
     .then((rows) => rows[0]!.id)
 
-  const jwt = makeJwtClient({secretOrPublicKey: envRequired.JWT_SECRET})
-
-  const openint = initOpenIntSDK({
-    headers: {
-      authorization: `Bearer ${jwt.signViewer({role: 'system'})}`,
-      'x-resource-id': resource_id as `reso_${string}`,
-    },
-    // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
-    // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
-    // development
-    links: [createAppHandler()],
-    // baseUrl: 'http://localhost:4000/api/v0',
+  const {openint, jwt} = initSDK({
+    'x-resource-id': resource_id as `reso_${string}`,
   })
 
   // Should we get the orgId and customerId as part of input ideally already?
@@ -381,24 +363,48 @@ export async function triggerImmediateSync({
 }
 
 export async function sendWebhook({event}: FunctionInput<keyof Events>) {
-  if (!env.WEBHOOK_URL) {
+  const resourceId =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    'resource_id' in event.data ? (event.data.resource_id as string) : null
+  if (!resourceId) {
+    console.log('No resource_id in event, passing', event)
+    return false
+  }
+
+  const {openint, jwt} = initSDK()
+  const reso = await openint
+    .GET('/core/resource/{id}', {params: {path: {id: resourceId}}})
+    .then((r) => r.data)
+
+  const org = await openint
+    .GET('/viewer/organization', {
+      headers: {
+        authorization: `Bearer ${jwt.signViewer({
+          role: 'org',
+          orgId: reso.connector_config.orgId as Id['org'],
+        })}`,
+      },
+    })
+    .then((r) => r.data)
+
+  if (!org.publicMetadata.webhook_url) {
+    console.log('No webhook_url in org, passing', org)
     return false
   }
 
   // We shall let inngest handle the retries and backoff for now
   // Would be nice to have a openSDK for sending webhook payloads that are typed actually, after all it has
   // the exact same shape as paths.
-  const res = await fetch(env.WEBHOOK_URL, {
+  const res = await fetch(org.publicMetadata.webhook_url, {
     method: 'POST',
     body: JSON.stringify(event),
     headers: {
       'content-type': 'application/json',
-      // TODO: Adopt standardwebhooks and implement actual signing rather than simple secret.
-      'x-webhook-secret': env.WEBHOOK_SECRET ?? '',
+      // TODO: Adopt standardwebhooks and implement webhook signing
     },
   })
   const responseAsJson = await responseToJson(res)
-  return {...responseAsJson, target: env.WEBHOOK_URL}
+  return {...responseAsJson, target: org.publicMetadata.webhook_url}
 }
 
 async function responseToJson(res: Response) {
@@ -416,4 +422,20 @@ function safeJsonParse(str: string) {
   } catch {
     return str
   }
+}
+
+function initSDK(headers?: OpenIntHeaders) {
+  const jwt = makeJwtClient({secretOrPublicKey: envRequired.JWT_SECRET})
+  const openint = initOpenIntSDK({
+    headers: {
+      authorization: `Bearer ${jwt.signViewer({role: 'system'})}`,
+      ...headers,
+    },
+    // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
+    // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
+    // development
+    links: [createAppHandler()],
+    // baseUrl: 'http://localhost:4000/api/v0',
+  })
+  return {openint, jwt}
 }
