@@ -1,4 +1,4 @@
-// import {clerkClient} from '@clerk/nextjs'
+// import {clerkClient} from '@clerk/nextjs/server'
 // import Image from 'next/image'
 import {defConnectors} from '@openint/app-config/connectors/connectors.def'
 import {kAccessToken} from '@openint/app-config/constants'

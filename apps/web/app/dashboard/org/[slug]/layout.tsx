@@ -1,4 +1,4 @@
-import {clerkClient, auth as serverComponentGetAuth} from '@clerk/nextjs'
+import {clerkClient, auth as serverComponentGetAuth} from '@clerk/nextjs/server'
 import {notFound} from 'next/navigation'
 import OrgLayoutClient from './layout-client'
 

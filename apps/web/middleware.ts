@@ -1,4 +1,4 @@
-import {authMiddleware} from '@clerk/nextjs'
+import {authMiddleware} from '@clerk/nextjs/server'
 
 // Disable redirects
 export default authMiddleware({publicRoutes: [/^(.*)/], debug: false})

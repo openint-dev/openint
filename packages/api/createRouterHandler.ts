@@ -1,4 +1,4 @@
-import {clerkClient} from '@clerk/nextjs'
+import {clerkClient} from '@clerk/nextjs/server'
 import {createOpenApiFetchHandler} from '@lilyrose2798/trpc-openapi'
 import {applyLinks, corsLink} from '@opensdks/fetch-links'
 import {pickBy} from 'remeda'

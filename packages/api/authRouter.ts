@@ -1,4 +1,4 @@
-import {clerkClient} from '@clerk/nextjs'
+import {clerkClient} from '@clerk/nextjs/server'
 import {z} from '@opensdks/util-zod'
 import {TRPCError} from '@trpc/server'
 import type {Viewer} from '@openint/cdk'
@@ -58,7 +58,7 @@ export const authRouter = trpc.router({
         'imageUrl',
         'createdAt',
         'updatedAt',
-        'members_count',
+        'membersCount',
       ]),
       publicMetadata: zOrganization.shape.publicMetadata.parse(
         org.publicMetadata,

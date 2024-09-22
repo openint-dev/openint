@@ -1,5 +1,8 @@
-import {clerkClient, auth as serverComponentGetAuth} from '@clerk/nextjs'
-import {getAuth} from '@clerk/nextjs/server'
+import {
+  clerkClient,
+  getAuth,
+  auth as serverComponentGetAuth,
+} from '@clerk/nextjs/server'
 import {dehydrate, QueryClient} from '@tanstack/react-query'
 import {createServerSideHelpers} from '@trpc/react-query/server'
 import {TRPCError} from '@trpc/server'

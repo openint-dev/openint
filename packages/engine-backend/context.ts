@@ -1,4 +1,4 @@
-import type {clerkClient} from '@clerk/nextjs'
+import type {clerkClient} from '@clerk/nextjs/server'
 import type {
   AnyConnectorImpl,
   EndUserId,

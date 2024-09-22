@@ -1,5 +1,5 @@
 // import '@openint/app-config/register.node'
-import {clerkClient} from '@clerk/nextjs'
+import {clerkClient} from '@clerk/nextjs/server'
 import {makePostgresClient} from '@openint/app-config/backendConfig'
 import {kApikeyMetadata} from '@openint/app-config/constants'
 import {envRequired} from '@openint/app-config/env'

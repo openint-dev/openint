@@ -1,4 +1,4 @@
-import {clerkClient} from '@clerk/nextjs'
+import {clerkClient} from '@clerk/nextjs/server'
 import type {LinkFactory} from '@openint/cdk'
 import {logLink, renameAccountLink} from '@openint/cdk'
 import type {PipelineInput} from '@openint/engine-backend'
