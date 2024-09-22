@@ -1,1 +1,0 @@
-ALTER TABLE "sync_run" RENAME COLUMN "error" TO "error_detail";

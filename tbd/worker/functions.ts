@@ -203,7 +203,7 @@ export async function syncConnection({
             updated_at: sqlNow,
             is_deleted: false,
             // Workaround jsonb support issue... https://github.com/drizzle-team/drizzle-orm/issues/724
-            raw_data: sql`${stripNullByte(raw_data) ?? null}::jsonb`,
+            raw: sql`${stripNullByte(raw_data) ?? null}::jsonb`,
             unified: sql`${stripNullByte(item)}::jsonb`,
           })),
           {insertOnlyColumns: ['created_at'], noDiffColumns: ['updated_at']},

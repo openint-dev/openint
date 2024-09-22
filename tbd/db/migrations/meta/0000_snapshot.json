@@ -1,5 +1,5 @@
 {
-  "id": "bee64073-b428-4462-9fe1-54e8393c75e6",
+  "id": "5d712a4c-7380-4bc1-9bbf-740ee52c3a4e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -120,14 +120,34 @@
           "primaryKey": false,
           "notNull": false
         },
-        "error": {
-          "name": "error",
+        "resource_id": {
+          "name": "resource_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_detail": {
+          "name": "error_detail",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_type": {
+          "name": "error_type",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_resource_id": {
+          "name": "idx_resource_id",
+          "columns": [
+            "resource_id"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
@@ -136,16 +156,10 @@
       "name": "sync_state",
       "schema": "",
       "columns": {
-        "customer_id": {
-          "name": "customer_id",
+        "resource_id": {
+          "name": "resource_id",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "provider_name": {
-          "name": "provider_name",
-          "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "state": {
@@ -171,15 +185,7 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "sync_state_pkey": {
-          "name": "sync_state_pkey",
-          "columns": [
-            "customer_id",
-            "provider_name"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
   },
