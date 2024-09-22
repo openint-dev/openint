@@ -6,4 +6,5 @@ export * from './Kbd'
 export * from './LoadingText'
 export * from './SchemaForm'
 export * from './SchemaSheet'
+export * from './SecureInput'
 // codegen:end
