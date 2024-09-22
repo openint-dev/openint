@@ -1,7 +1,7 @@
 import {z} from '@opensdks/util-zod'
 import {TRPCError} from '@trpc/server'
 import * as jwt from 'jsonwebtoken'
-import {R, zFunction} from '@openint/util'
+import {DiscriminatedUnionWithAllKeys, R, zFunction} from '@openint/util'
 import type {EndUserId, ExtEndUserId, Id, UserId} from './id.types'
 import {zEndUserId, zId, zUserId} from './id.types'
 
@@ -32,8 +32,10 @@ export const zViewer = z
   .openapi({ref: 'Viewer'})
 
 export type ViewerRole = z.infer<typeof zRole>
+
+type _Viewer = DiscriminatedUnionWithAllKeys<z.infer<typeof zViewer>>
 export type Viewer<R extends ViewerRole = ViewerRole> = Extract<
-  z.infer<typeof zViewer>,
+  _Viewer,
   {role: R}
 >
 
