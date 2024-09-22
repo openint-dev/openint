@@ -1,32 +1,21 @@
 'use client'
 
-import {AppRouter} from '@openint/api'
+import type {AppRouter} from '@openint/api'
 import {zOrganization} from '@openint/api/platform-models'
-import {
-  _trpcReact,
-  formatTRPCClientError,
-  TRPCReact,
-} from '@openint/engine-frontend'
-import {SchemaForm, useToast} from '@openint/ui'
+import type {TRPCReact} from '@openint/engine-frontend'
+import {_trpcReact, useMutationToast} from '@openint/engine-frontend'
+import {SchemaForm} from '@openint/ui'
 
 const trpcReact = _trpcReact as unknown as TRPCReact<AppRouter>
 
 export default function SettingsPage() {
   const res = trpcReact.getCurrentOrganization.useQuery()
 
-  const {toast} = useToast()
-
   const updateOrg = trpcReact.updateCurrentOrganization.useMutation({
-    onSuccess: () => {
-      toast({title: 'Organization updated', variant: 'success'})
-    },
-    onError: (err) => {
-      toast({
-        title: 'Failed to save organization',
-        description: formatTRPCClientError(err),
-        variant: 'destructive',
-      })
-    },
+    ...useMutationToast({
+      successMessage: 'Organization updated',
+      errorMessage: 'Failed to save organization',
+    }),
   })
 
   if (!res.data) {
@@ -37,7 +26,6 @@ export default function SettingsPage() {
     <div className="p-6">
       <h2 className="mb-4 text-2xl font-semibold tracking-tight">Settings</h2>
       {/* <div>Webhook url URL</div> */}
-
 
       <SchemaForm
         schema={zOrganization.shape.publicMetadata.pick({
@@ -51,9 +39,8 @@ export default function SettingsPage() {
         }}
         formData={res.data.publicMetadata}
         loading={updateOrg.isLoading}
-        onSubmit={async ({formData}) => {
+        onSubmit={({formData}) => {
           updateOrg.mutate({publicMetadata: formData})
-          console.log('submit', formData)
         }}
       />
     </div>

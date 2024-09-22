@@ -1,10 +1,5 @@
 import type {QueryClient} from '@tanstack/react-query'
-import {
-  createTRPCReact,
-  httpBatchLink,
-  httpLink,
-  TRPCClientErrorLike,
-} from '@trpc/react-query'
+import {createTRPCReact, httpBatchLink, httpLink} from '@trpc/react-query'
 import React from 'react'
 import type {AnyRouter, FlatRouter} from '@openint/engine-backend'
 
@@ -53,17 +48,4 @@ export function TRPCProvider({
       {children}
     </_trpcReact.Provider>
   )
-}
-
-/** Workaround for https://share.cleanshot.com/Yr1CMhLD */
-export function formatTRPCClientError(err: TRPCClientErrorLike<any>) {
-  try {
-    const causes = JSON.parse(err.shape.message) as {
-      code: string
-      message: string
-    }[]
-    return causes[0]?.message
-  } catch {
-    return err.message
-  }
 }

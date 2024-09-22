@@ -8,4 +8,5 @@ export * from './components/ConnectionPortal'
 export * from './DeprecatedOpenIntConnect'
 export * from './providers/TRPCProvider'
 export * from './providers/OpenIntConnectProvider'
+export * from './lib'
 // - codegen:end
