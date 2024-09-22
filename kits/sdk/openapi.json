@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:4000/api/v0"
+      "url": "https://openint.dev/api/v0"
     }
   ],
   "paths": {
@@ -1283,13 +1283,39 @@
                       },
                       "isDestination": {
                         "type": "boolean"
+                      },
+                      "categories": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "banking",
+                            "accounting",
+                            "crm",
+                            "sales-engagement",
+                            "commerce",
+                            "expense-management",
+                            "enrichment",
+                            "database",
+                            "flat-files-and-spreadsheets",
+                            "file-storage",
+                            "streaming",
+                            "personal-finance",
+                            "other",
+                            "hris",
+                            "payroll",
+                            "calendar",
+                            "ats"
+                          ]
+                        }
                       }
                     },
                     "required": [
                       "id",
                       "connectorName",
                       "isSource",
-                      "isDestination"
+                      "isDestination",
+                      "categories"
                     ]
                   }
                 }
@@ -1608,6 +1634,13 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "in": "query",
+            "name": "search_text",
+            "schema": {
+              "type": ["string", "null"]
+            }
           }
         ],
         "responses": {
@@ -1698,9 +1731,19 @@
           },
           {
             "in": "query",
-            "name": "query",
+            "name": "search_text",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "connector_config_ids",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             }
           }
         ],
@@ -7686,7 +7729,25 @@
             "type": ["array", "null"],
             "items": {
               "type": "string",
-              "enum": ["accounting", "banking", "hris"]
+              "enum": [
+                "banking",
+                "accounting",
+                "crm",
+                "sales-engagement",
+                "commerce",
+                "expense-management",
+                "enrichment",
+                "database",
+                "flat-files-and-spreadsheets",
+                "file-storage",
+                "streaming",
+                "personal-finance",
+                "other",
+                "hris",
+                "payroll",
+                "calendar",
+                "ats"
+              ]
             }
           },
           "connector_name": {

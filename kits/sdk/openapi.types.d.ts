@@ -474,7 +474,27 @@ export interface components {
       name: string
       logo_url?: string | null
       login_url?: string | null
-      categories?: ('accounting' | 'banking' | 'hris')[] | null
+      categories?:
+        | (
+            | 'banking'
+            | 'accounting'
+            | 'crm'
+            | 'sales-engagement'
+            | 'commerce'
+            | 'expense-management'
+            | 'enrichment'
+            | 'database'
+            | 'flat-files-and-spreadsheets'
+            | 'file-storage'
+            | 'streaming'
+            | 'personal-finance'
+            | 'other'
+            | 'hris'
+            | 'payroll'
+            | 'calendar'
+            | 'ats'
+          )[]
+        | null
       connector_name: string
     }
     'core.configured_integration': WithRequired<
@@ -1817,6 +1837,25 @@ export interface operations {
             connectorName: string
             isSource: boolean
             isDestination: boolean
+            categories: (
+              | 'banking'
+              | 'accounting'
+              | 'crm'
+              | 'sales-engagement'
+              | 'commerce'
+              | 'expense-management'
+              | 'enrichment'
+              | 'database'
+              | 'flat-files-and-spreadsheets'
+              | 'file-storage'
+              | 'streaming'
+              | 'personal-finance'
+              | 'other'
+              | 'hris'
+              | 'payroll'
+              | 'calendar'
+              | 'ats'
+            )[]
           }[]
         }
       }
@@ -1988,6 +2027,7 @@ export interface operations {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
+        search_text?: string | null
       }
       path: {
         name: string
@@ -2030,7 +2070,8 @@ export interface operations {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
-        query?: string
+        search_text?: string
+        connector_config_ids?: string[]
       }
     }
     responses: {
