@@ -851,8 +851,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@opensdks/sdk-greenhouse':
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.0.6
+        version: 0.0.6
 
   connectors/connector-heron:
     dependencies:
@@ -3524,8 +3524,8 @@ packages:
   '@opensdks/sdk-finch@0.0.4':
     resolution: {integrity: sha512-7CxSxCIE8POPBFrEGlovRdkziXNfbrh6GD7fPwIk6GPR2f2CKmLqPxOpLhBhzH/5Ol0nCyzCq8NDsvLbI5OvEQ==}
 
-  '@opensdks/sdk-greenhouse@0.0.4':
-    resolution: {integrity: sha512-XModga2Ghv1/dVndqLjlpWZuKOA/RdcXsYUlaVE76ewTOE94uj0fyu5ALkJrK6WUjG/bE7KsDcaZm3+Yc8I3vg==}
+  '@opensdks/sdk-greenhouse@0.0.6':
+    resolution: {integrity: sha512-+ZpAp8Gca0Hta3ligCL49tbfiUwCEVZhTD4isVZRYOhvapORvuarApZROxWTDq8oJ0XNDDQrpPh0/Rq0QPM/XA==}
 
   '@opensdks/sdk-heron@0.0.1':
     resolution: {integrity: sha512-7DOFFlq5C8u060L9GJ6euwE/g8aqIClyZysio4jqYQ1W9rcYX/pZUsZ7NNPt6LQTX+coAz+8nieEi35ejiKbdg==}
@@ -14227,7 +14227,7 @@ snapshots:
 
   '@opensdks/sdk-finch@0.0.4': {}
 
-  '@opensdks/sdk-greenhouse@0.0.4':
+  '@opensdks/sdk-greenhouse@0.0.6':
     dependencies:
       '@opensdks/runtime': 0.0.20
 
