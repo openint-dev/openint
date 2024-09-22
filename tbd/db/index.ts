@@ -37,6 +37,7 @@ export async function ensureSchema(thisDb: typeof db, schema: string) {
 
 /** Will close the postgres client connection by default */
 export async function runMigration(opts?: {keepAlive?: boolean}) {
+  console.log('[db] Running migrations...')
   const path = await import('node:path')
   // const fs = await import('node:fs')
   // const url = await import('node:url')
