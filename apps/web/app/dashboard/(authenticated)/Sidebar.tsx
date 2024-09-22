@@ -80,12 +80,11 @@ const sectionedLinks: Array<{
         href: '/api/v0',
         icon: 'Cpu',
       },
-      // Nothing interesting in here anymore
-      // {
-      //   title: 'Settings',
-      //   href: '/dashboard/settings',
-      //   icon: 'Settings',
-      // },
+      {
+        title: 'Settings',
+        href: '/dashboard/settings',
+        icon: 'Settings',
+      },
     ],
   },
 ]

@@ -1,4 +1,6 @@
 import {clerkClient} from '@clerk/nextjs'
+import {z} from '@opensdks/util-zod'
+import {TRPCError} from '@trpc/server'
 import type {Viewer} from '@openint/cdk'
 import {zViewer} from '@openint/cdk'
 import {
@@ -6,8 +8,7 @@ import {
   publicProcedure,
   trpc,
 } from '@openint/engine-backend/router/_base'
-import {z} from '@opensdks/util-zod'
-import {TRPCError} from '@trpc/server'
+import {R} from '@openint/util'
 import {zOrganization} from './platform-models'
 
 export type ClerkOrg = Awaited<
@@ -41,13 +42,36 @@ export const authRouter = trpc.router({
 
       return {...ctx.viewer, extra} as Viewer
     }),
-  updateOrganization: adminProcedure
-    .input(zOrganization.pick({id: true, publicMetadata: true}))
-    .mutation(async ({ctx, input: {id, ...update}}) => {
-      if (ctx.viewer.role !== 'system' && ctx.viewer.orgId !== id) {
-        throw new TRPCError({code: 'UNAUTHORIZED'})
+
+  getCurrentOrganization: adminProcedure.query(async ({ctx}) => {
+    if (!ctx.viewer.orgId) {
+      throw new TRPCError({code: 'BAD_REQUEST', message: 'orgId needed'})
+    }
+    const org = await clerkClient.organizations.getOrganization({
+      organizationId: ctx.viewer.orgId,
+    })
+    return R.pick(org, [
+      'id',
+      'publicMetadata',
+      'name',
+      'slug',
+      'imageUrl',
+      'createdAt',
+      'updatedAt',
+      'members_count',
+    ])
+  }),
+
+  updateCurrentOrganization: adminProcedure
+    .input(zOrganization.pick({publicMetadata: true}))
+    .mutation(async ({ctx, input: update}) => {
+      if (!ctx.viewer.orgId) {
+        throw new TRPCError({code: 'BAD_REQUEST', message: 'orgId needed'})
       }
-      const org = await clerkClient.organizations.updateOrganization(id, update)
+      const org = await clerkClient.organizations.updateOrganization(
+        ctx.viewer.orgId,
+        update,
+      )
       return org
     }),
 })
