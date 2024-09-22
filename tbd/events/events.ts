@@ -17,7 +17,7 @@ export const zResult = z.enum([
 const syncRequestedData = z.object({
   customer_id: z.string(),
   provider_name: z.string(),
-  vertical: z.enum(['crm', 'engagement']),
+  vertical: z.enum(['crm', 'engagement', 'ats']),
   unified_objects: z.array(z.string()).optional(),
   /** Not implemented yet */
   standard_objects: z.array(z.string()).optional(),
@@ -38,7 +38,7 @@ export const eventsMap = {
   'scheduler.requested': {
     data: z.object({
       provider_names: z.array(z.string()),
-      vertical: z.enum(['crm', 'engagement']),
+      vertical: z.enum(['crm', 'engagement', 'ats']),
       sync_mode: z.enum(['full', 'incremental']),
     }),
   },

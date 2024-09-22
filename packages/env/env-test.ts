@@ -49,9 +49,19 @@ export const testEnv = createEnv({
     SFDC_ACCESS_TOKEN: z.string().optional(),
     CONNECTION_ID: z.string().optional(),
     PROVIDER_CONFIG_KEY: z.string().optional(),
-    VERTICAL: z.enum(['crm', 'engagement']).optional(),
+    // etc. etcc
+    VERTICAL: z.enum(['crm', 'engagement', 'ats']).optional(),
     UNIFIED_OBJECT: z
-      .enum(['account', 'contact', 'opportunity', 'lead', 'user'])
+      .enum([
+        'account',
+        'contact',
+        'opportunity',
+        'lead',
+        'user',
+        'job',
+        'offer',
+        'candidate',
+      ])
       .optional(),
     SYNC_MODE: z.enum(['incremental', 'full']).optional(),
     PAGE_SIZE: z.string().optional(), // TODO: parse number / boolean from str

@@ -58,7 +58,7 @@ const tag = mapper(zCast<LeverObjectType['tag']>(), unified.department, {
 })
 
 export const mappers = {
-  // contact,
+  contact,
   opportunity,
   posting,
   tag,
