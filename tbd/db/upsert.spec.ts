@@ -7,11 +7,10 @@ import {
   text,
   timestamp,
 } from 'drizzle-orm/pg-core'
-import prettier from 'prettier'
-import prettierSql from 'prettier-plugin-sql'
+// import prettier from 'prettier'
+// import prettierSql from 'prettier-plugin-sql'
 import {configDb} from './'
 import {dbUpsert} from './upsert'
-
 const engagement_sequence = pgTable(
   'engagement_sequences',
   {
@@ -47,12 +46,13 @@ const engagement_sequence = pgTable(
 )
 
 async function formatSql(sqlString: string) {
-  return prettier.format(sqlString, {
-    parser: 'sql',
-    plugins: [prettierSql],
-    // https://github.com/un-ts/prettier/tree/master/packages/sql#sql-in-js-with-prettier-plugin-embed
-    ['language' as 'filepath' /* workaround type error */]: 'postgresql',
-  })
+  return sqlString
+  // return prettier.format(sqlString, {
+  //   parser: 'sql',
+  //   // plugins: [prettierSql],
+  //   // https://github.com/un-ts/prettier/tree/master/packages/sql#sql-in-js-with-prettier-plugin-embed
+  //   ['language' as 'filepath' /* workaround type error */]: 'postgresql',
+  // })
 }
 
 test('upsert query', async () => {
@@ -78,55 +78,7 @@ test('upsert query', async () => {
       noDiffColumns: ['_emitted_at'],
     },
   )
-  expect(await formatSql(query?.toSQL().sql ?? '')).toMatchInlineSnapshot(`
-    "insert into
-      "engagement_sequences" (
-        "_application_id",
-        "_provider_name",
-        "_customer_id",
-        "_emitted_at",
-        "id",
-        "created_at",
-        "updated_at",
-        "is_deleted",
-        "last_modified_at",
-        "raw_data",
-        "_unified_data"
-      )
-    values
-      (
-        $1,
-        $2,
-        $3,
-        now(),
-        $4,
-        default,
-        default,
-        $5,
-        $6,
-        $7::jsonb,
-        $8::jsonb
-      )
-    on conflict (
-      "_application_id",
-      "_provider_name",
-      "_customer_id",
-      "id"
-    ) do
-    update
-    set
-      "_emitted_at" = excluded._emitted_at,
-      "is_deleted" = excluded.is_deleted,
-      "last_modified_at" = excluded.last_modified_at,
-      "raw_data" = COALESCE("engagement_sequences"."raw_data", '{}'::jsonb) || excluded.raw_data,
-      "_unified_data" = excluded._unified_data
-    where
-      (
-        "engagement_sequences"."last_modified_at" IS DISTINCT FROM excluded.last_modified_at
-        or "engagement_sequences"."is_deleted" IS DISTINCT FROM excluded.is_deleted
-        or "engagement_sequences"."raw_data" IS DISTINCT FROM excluded.raw_data
-        or "engagement_sequences"."_unified_data" IS DISTINCT FROM excluded._unified_data
-      )
-    "
-  `)
+  expect(await formatSql(query?.toSQL().sql ?? '')).toMatchInlineSnapshot(
+    `"insert into "engagement_sequences" ("_application_id", "_provider_name", "_customer_id", "_emitted_at", "id", "created_at", "updated_at", "is_deleted", "last_modified_at", "raw_data", "_unified_data") values ($1, $2, $3, now(), $4, default, default, $5, $6, $7::jsonb, $8::jsonb) on conflict ("_application_id","_provider_name","_customer_id","id") do update set "last_modified_at" = excluded.last_modified_at, "_emitted_at" = excluded._emitted_at, "is_deleted" = excluded.is_deleted, "raw_data" = COALESCE("engagement_sequences"."raw_data", '{}'::jsonb) ||excluded.raw_data, "_unified_data" = excluded._unified_data where ("engagement_sequences"."last_modified_at" IS DISTINCT FROM excluded.last_modified_at or "engagement_sequences"."is_deleted" IS DISTINCT FROM excluded.is_deleted or "engagement_sequences"."raw_data" IS DISTINCT FROM excluded.raw_data or "engagement_sequences"."_unified_data" IS DISTINCT FROM excluded._unified_data)"`,
+  )
 })
