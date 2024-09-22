@@ -50,7 +50,7 @@ importers:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.1.1
-        version: 4.1.1(prettier@3.1.0)
+        version: 4.1.1(prettier@3.3.3)
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
@@ -139,17 +139,17 @@ importers:
         specifier: 4.1.5
         version: 4.1.5
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.3.3
+        version: 3.3.3
       prettier-plugin-packagejson:
-        specifier: 2.4.6
-        version: 2.4.6(prettier@3.1.0)
+        specifier: 2.5.2
+        version: 2.5.2(prettier@3.3.3)
       prettier-plugin-sql:
-        specifier: 0.16.0
-        version: 0.16.0(prettier@3.1.0)
+        specifier: 0.18.1
+        version: 0.18.1(prettier@3.3.3)
       prettier-plugin-tailwindcss:
-        specifier: 0.5.7
-        version: 0.5.7(@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.1.0))(prettier@3.1.0)
+        specifier: 0.6.6
+        version: 0.6.6(@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.3.3))(prettier@3.3.3)
       ts-brand:
         specifier: 0.0.2
         version: 0.0.2
@@ -356,8 +356,8 @@ importers:
         specifier: 0.0.3
         version: 0.0.3
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.3.3
+        version: 3.3.3
       tablemark:
         specifier: 3.0.0
         version: 3.0.0
@@ -1040,8 +1040,8 @@ importers:
         specifier: 18.0.27
         version: 18.0.27
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.3.3
+        version: 3.3.3
       yamljs:
         specifier: 0.3.0
         version: 0.3.0
@@ -2019,11 +2019,11 @@ importers:
         specifier: ^0.20.12
         version: 0.20.14
       prettier:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.3.3
+        version: 3.3.3
       prettier-plugin-sql:
-        specifier: 0.16.0
-        version: 0.16.0(prettier@3.1.0)
+        specifier: 0.18.1
+        version: 0.18.1(prettier@3.3.3)
 
   tbd/events:
     dependencies:
@@ -8513,8 +8513,8 @@ packages:
     resolution: {integrity: sha512-tuGfYXxkQGDPnLJ7SibiQgVgeDgfbPq2k2ICcbgqW8WxWLBAxKQM/ZCu/IT8SOSwmaYl4dpTFCW5xZv7YbbWUw==}
     engines: {node: '>=12', npm: '>=6'}
 
-  jsox@1.2.118:
-    resolution: {integrity: sha512-ubYWn4WOc7HA7icvcQuIni1I7Xx4bI4KbRXbXzlr5e48hvdizeAbflBx97B629ZNH5RZnQ657Z5Z8dFgxFVrSQ==}
+  jsox@1.2.119:
+    resolution: {integrity: sha512-f37obwxWKKuylcaOzNlUlzfDvURSCpqTXs8yEivhvsp86D/DTIySxP4v5Qdlg24qCuzDSZ0mJr3krc/f7TZ/5A==}
     hasBin: true
 
   jsprim@1.4.2:
@@ -9489,8 +9489,8 @@ packages:
   node-releases@2.0.6:
     resolution: {integrity: sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==}
 
-  node-sql-parser@4.11.0:
-    resolution: {integrity: sha512-ElheoPibjc7IVyRdsORgkzJi0DWm3f0LYSsm/eJIeUt3M/csDLTblLDR4zl5Qi7jmVjJ1KpEkPKSbgVGEzU5Xw==}
+  node-sql-parser@4.18.0:
+    resolution: {integrity: sha512-2YEOR5qlI1zUFbGMLKNfsrR5JUvFg9LxIRVE+xJe962pfVLH0rnItqLzv96XVs1Y1UIR8FxsXAuvX/lYAWZ2BQ==}
     engines: {node: '>=8'}
 
   normalize-package-data@2.5.0:
@@ -10087,40 +10087,41 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-packagejson@2.4.6:
-    resolution: {integrity: sha512-5JGfzkJRL0DLNyhwmiAV9mV0hZLHDwddFCs2lc9CNxOChpoWUQVe8K4qTMktmevmDlMpok2uT10nvHUyU59sNw==}
+  prettier-plugin-packagejson@2.5.2:
+    resolution: {integrity: sha512-w+TmoLv2pIa+siplW1cCj2ujEXQQS6z7wmWLOiLQK/2QVl7Wy6xh/ZUpqQw8tbKMXDodmSW4GONxlA33xpdNOg==}
     peerDependencies:
       prettier: '>= 1.16.0'
     peerDependenciesMeta:
       prettier:
         optional: true
 
-  prettier-plugin-sql@0.16.0:
-    resolution: {integrity: sha512-ISKL8EpiW9VSaHxmezr/lYiBNgcJvCF5V4NR2SCGZcv4vawn1negBD5jVVf7VN/wqTLd56U/taJiQPhQdbrYdA==}
+  prettier-plugin-sql@0.18.1:
+    resolution: {integrity: sha512-2+Nob2sg7hzLAKJoE6sfgtkhBZCqOzrWHZPvE4Kee/e80oOyI4qwy9vypeltqNBJwTtq3uiKPrCxlT03bBpOaw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       prettier: ^3.0.3
 
-  prettier-plugin-tailwindcss@0.5.7:
-    resolution: {integrity: sha512-4v6uESAgwCni6YF6DwJlRaDjg9Z+al5zM4JfngcazMy4WEf/XkPS5TEQjbD+DZ5iNuG6RrKQLa/HuX2SYzC3kQ==}
+  prettier-plugin-tailwindcss@0.6.6:
+    resolution: {integrity: sha512-OPva5S7WAsPLEsOuOWXATi13QrCKACCiIonFgIR6V4lYv4QLp++UXVhZSzRbZxXGimkQtQT86CC6fQqTOybGng==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
       '@prettier/plugin-pug': '*'
       '@shopify/prettier-plugin-liquid': '*'
-      '@shufo/prettier-plugin-blade': '*'
       '@trivago/prettier-plugin-sort-imports': '*'
+      '@zackad/prettier-plugin-twig-melody': '*'
       prettier: ^3.0
       prettier-plugin-astro: '*'
       prettier-plugin-css-order: '*'
       prettier-plugin-import-sort: '*'
       prettier-plugin-jsdoc: '*'
       prettier-plugin-marko: '*'
+      prettier-plugin-multiline-arrays: '*'
       prettier-plugin-organize-attributes: '*'
       prettier-plugin-organize-imports: '*'
+      prettier-plugin-sort-imports: '*'
       prettier-plugin-style-order: '*'
       prettier-plugin-svelte: '*'
-      prettier-plugin-twig-melody: '*'
     peerDependenciesMeta:
       '@ianvs/prettier-plugin-sort-imports':
         optional: true
@@ -10128,9 +10129,9 @@ packages:
         optional: true
       '@shopify/prettier-plugin-liquid':
         optional: true
-      '@shufo/prettier-plugin-blade':
-        optional: true
       '@trivago/prettier-plugin-sort-imports':
+        optional: true
+      '@zackad/prettier-plugin-twig-melody':
         optional: true
       prettier-plugin-astro:
         optional: true
@@ -10142,19 +10143,21 @@ packages:
         optional: true
       prettier-plugin-marko:
         optional: true
+      prettier-plugin-multiline-arrays:
+        optional: true
       prettier-plugin-organize-attributes:
         optional: true
       prettier-plugin-organize-imports:
+        optional: true
+      prettier-plugin-sort-imports:
         optional: true
       prettier-plugin-style-order:
         optional: true
       prettier-plugin-svelte:
         optional: true
-      prettier-plugin-twig-melody:
-        optional: true
 
-  prettier@3.1.0:
-    resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -11114,8 +11117,8 @@ packages:
   sort-object-keys@1.1.3:
     resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
 
-  sort-package-json@2.6.0:
-    resolution: {integrity: sha512-XSQ+lY9bAYA8ZsoChcEoPlgcSMaheziEp1beox1JVxy1SV4F2jSq9+h2rJ+3mC/Dhu9Ius1DLnInD5AWcsDXZw==}
+  sort-package-json@2.10.1:
+    resolution: {integrity: sha512-d76wfhgUuGypKqY72Unm5LFnMpACbdxXsLPcL27pOsSrmVqH3PztFp1uq+Z22suk15h7vXmTesuh2aEjdCqb5w==}
     hasBin: true
 
   source-map-js@1.2.1:
@@ -11203,8 +11206,8 @@ packages:
     resolution: {integrity: sha512-rvNfY+g+mv3vxzqdDrsLVjhe/UZohYdCqUqyTK/JI8oXxnW4ObcldlclqUoL55SWQs8azEfFf66XfPBi6tkjfQ==}
     hasBin: true
 
-  sql-formatter@13.1.0:
-    resolution: {integrity: sha512-/nZQXuN7KzipFNM20ko+dHY4kOr9rymSfZLUDED8rhx3m8OK5y74jcyN+y1L51ZqHqiB0kp40VdpZP99uWvQdA==}
+  sql-formatter@15.4.2:
+    resolution: {integrity: sha512-Pw4aAgfuyml/SHMlhbJhyOv+GR+Z1HNb9sgX3CVBVdN5YNM+v2VWkYJ3NNbYS7cu37GY3vP/PgnwoVynCuXRxg==}
     hasBin: true
 
   ssf@0.11.2:
@@ -11466,10 +11469,6 @@ packages:
     resolution: {integrity: sha512-AjqHOv2lAhkuUdIiBu9xbuettzAzWXmCEcLONNKJRba87WAefz8Ca9d6ds/SzrPc235n1IxWYdhJ2zF3MNUaoQ==}
     peerDependencies:
       react: 18.3.1
-
-  synckit@0.8.4:
-    resolution: {integrity: sha512-Dn2ZkzMdSX827QbowGbU/4yjWuvNaCoScLLoMo/yKbu+P4GBR6cRGKZH27k6a9bRzdqcyd1DE96pQtQ6uNkmyw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
 
   synckit@0.8.5:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}
@@ -13805,14 +13804,14 @@ snapshots:
 
   '@humanwhocodes/object-schema@1.2.1': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.1.0)':
+  '@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.3.3)':
     dependencies:
       '@babel/core': 7.23.3
       '@babel/generator': 7.23.4
       '@babel/parser': 7.23.4
       '@babel/traverse': 7.23.4
       '@babel/types': 7.23.4
-      prettier: 3.1.0
+      prettier: 3.3.3
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
@@ -16170,7 +16169,7 @@ snapshots:
 
   '@types/prettier@3.0.0':
     dependencies:
-      prettier: 3.1.0
+      prettier: 3.3.3
 
   '@types/prop-types@15.7.5': {}
 
@@ -18270,7 +18269,7 @@ snapshots:
       globby: 13.1.3
       is-core-module: 2.13.1
       is-glob: 4.0.3
-      synckit: 0.8.4
+      synckit: 0.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -20831,7 +20830,7 @@ snapshots:
       ms: 2.1.3
       semver: 7.5.4
 
-  jsox@1.2.118: {}
+  jsox@1.2.119: {}
 
   jsprim@1.4.2:
     dependencies:
@@ -22171,7 +22170,7 @@ snapshots:
 
   node-releases@2.0.6: {}
 
-  node-sql-parser@4.11.0:
+  node-sql-parser@4.18.0:
     dependencies:
       big-integer: 1.6.51
 
@@ -22793,28 +22792,28 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-packagejson@2.4.6(prettier@3.1.0):
+  prettier-plugin-packagejson@2.5.2(prettier@3.3.3):
     dependencies:
-      sort-package-json: 2.6.0
-      synckit: 0.8.5
+      sort-package-json: 2.10.1
+      synckit: 0.9.1
     optionalDependencies:
-      prettier: 3.1.0
+      prettier: 3.3.3
 
-  prettier-plugin-sql@0.16.0(prettier@3.1.0):
+  prettier-plugin-sql@0.18.1(prettier@3.3.3):
     dependencies:
-      jsox: 1.2.118
-      node-sql-parser: 4.11.0
-      prettier: 3.1.0
-      sql-formatter: 13.1.0
+      jsox: 1.2.119
+      node-sql-parser: 4.18.0
+      prettier: 3.3.3
+      sql-formatter: 15.4.2
       tslib: 2.6.2
 
-  prettier-plugin-tailwindcss@0.5.7(@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.1.0))(prettier@3.1.0):
+  prettier-plugin-tailwindcss@0.6.6(@ianvs/prettier-plugin-sort-imports@4.1.1(prettier@3.3.3))(prettier@3.3.3):
     dependencies:
-      prettier: 3.1.0
+      prettier: 3.3.3
     optionalDependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.1.0)
+      '@ianvs/prettier-plugin-sort-imports': 4.1.1(prettier@3.3.3)
 
-  prettier@3.1.0: {}
+  prettier@3.3.3: {}
 
   pretty-data@0.40.0: {}
 
@@ -24048,7 +24047,7 @@ snapshots:
 
   sort-object-keys@1.1.3: {}
 
-  sort-package-json@2.6.0:
+  sort-package-json@2.10.1:
     dependencies:
       detect-indent: 7.0.1
       detect-newline: 4.0.1
@@ -24056,6 +24055,7 @@ snapshots:
       git-hooks-list: 3.1.0
       globby: 13.1.3
       is-plain-obj: 4.1.0
+      semver: 7.6.0
       sort-object-keys: 1.1.3
 
   source-map-js@1.2.1: {}
@@ -24139,7 +24139,7 @@ snapshots:
       argparse: 2.0.1
       nearley: 2.20.1
 
-  sql-formatter@13.1.0:
+  sql-formatter@15.4.2:
     dependencies:
       argparse: 2.0.1
       get-stdin: 8.0.0
@@ -24455,11 +24455,6 @@ snapshots:
     dependencies:
       react: 18.3.1
       use-sync-external-store: 1.2.0(react@18.3.1)
-
-  synckit@0.8.4:
-    dependencies:
-      '@pkgr/utils': 2.3.1
-      tslib: 2.6.2
 
   synckit@0.8.5:
     dependencies:
