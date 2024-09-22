@@ -52,28 +52,28 @@ export type MaybePromise<T> = T | Promise<T>
 export declare type PartialDeep<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
-  ? Map<PartialDeep<K>, PartialDeep<V>>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? ReadonlyMap<PartialDeep<K>, PartialDeep<V>>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<PartialDeep<K>, PartialDeep<V>>
-  : T extends Set<infer U>
-  ? Set<PartialDeep<U>>
-  : T extends ReadonlySet<infer U>
-  ? ReadonlySet<PartialDeep<U>>
-  : T extends WeakSet<infer U>
-  ? WeakSet<PartialDeep<U>>
-  : T extends Array<infer U>
-  ? T extends IsTuple<T>
-    ? {[K in keyof T]?: PartialDeep<T[K]>}
-    : Array<PartialDeep<U>>
-  : T extends Promise<infer U>
-  ? Promise<PartialDeep<U>>
-  : T extends Brand<infer U, infer B>
-  ? Brand<U, B>
-  : T extends {}
-  ? {[K in keyof T]?: PartialDeep<T[K]>}
-  : Partial<T>
+    ? Map<PartialDeep<K>, PartialDeep<V>>
+    : T extends ReadonlyMap<infer K, infer V>
+      ? ReadonlyMap<PartialDeep<K>, PartialDeep<V>>
+      : T extends WeakMap<infer K, infer V>
+        ? WeakMap<PartialDeep<K>, PartialDeep<V>>
+        : T extends Set<infer U>
+          ? Set<PartialDeep<U>>
+          : T extends ReadonlySet<infer U>
+            ? ReadonlySet<PartialDeep<U>>
+            : T extends WeakSet<infer U>
+              ? WeakSet<PartialDeep<U>>
+              : T extends Array<infer U>
+                ? T extends IsTuple<T>
+                  ? {[K in keyof T]?: PartialDeep<T[K]>}
+                  : Array<PartialDeep<U>>
+                : T extends Promise<infer U>
+                  ? Promise<PartialDeep<U>>
+                  : T extends Brand<infer U, infer B>
+                    ? Brand<U, B>
+                    : T extends {}
+                      ? {[K in keyof T]?: PartialDeep<T[K]>}
+                      : Partial<T>
 
 /**
  * Like `PartialDeep` but Array/Map/Set/Promise elements are unchanged
@@ -81,30 +81,30 @@ export declare type PartialDeep<T> = T extends Builtin
 export declare type ObjectPartialDeep<T> = T extends Builtin
   ? T
   : T extends Map<infer K, infer V>
-  ? Map<K, V>
-  : T extends ReadonlyMap<infer K, infer V>
-  ? ReadonlyMap<K, V>
-  : T extends WeakMap<infer K, infer V>
-  ? WeakMap<K, V>
-  : T extends Set<infer U>
-  ? Set<U>
-  : T extends ReadonlySet<infer U>
-  ? ReadonlySet<U>
-  : T extends WeakSet<infer U>
-  ? WeakSet<U>
-  : T extends Array<infer U>
-  ? T extends NonEmptyArray<U>
-    ? T
-    : U[]
-  : T extends Promise<infer U>
-  ? Promise<U>
-  : T extends Brand<infer U, infer B>
-  ? Brand<U, B>
-  : T extends {}
-  ? {[K in keyof T]?: ObjectPartialDeep<T[K]>}
-  : T extends unknown
-  ? unknown
-  : Partial<T>
+    ? Map<K, V>
+    : T extends ReadonlyMap<infer K, infer V>
+      ? ReadonlyMap<K, V>
+      : T extends WeakMap<infer K, infer V>
+        ? WeakMap<K, V>
+        : T extends Set<infer U>
+          ? Set<U>
+          : T extends ReadonlySet<infer U>
+            ? ReadonlySet<U>
+            : T extends WeakSet<infer U>
+              ? WeakSet<U>
+              : T extends Array<infer U>
+                ? T extends NonEmptyArray<U>
+                  ? T
+                  : U[]
+                : T extends Promise<infer U>
+                  ? Promise<U>
+                  : T extends Brand<infer U, infer B>
+                    ? Brand<U, B>
+                    : T extends {}
+                      ? {[K in keyof T]?: ObjectPartialDeep<T[K]>}
+                      : T extends unknown
+                        ? unknown
+                        : Partial<T>
 
 /**
  * Check whether a type is a tuple type
@@ -204,14 +204,14 @@ export type PathsOfObject<
   number extends keyof T
     ? PathsOfProp<number, NonNullable<T[number]>, TSelf, TMaxDepth, TDepth>
     : // Map
-    string extends keyof T
-    ? PathsOfProp<string, NonNullable<T[string]>, TSelf, TMaxDepth, TDepth>
-    : // Plain object
-      {
-        [P in keyof T]: T[P] extends infer V | null | undefined
-          ? PathsOfProp<P, V, TSelf, TMaxDepth, TDepth>
-          : never
-      }[keyof T]
+      string extends keyof T
+      ? PathsOfProp<string, NonNullable<T[string]>, TSelf, TMaxDepth, TDepth>
+      : // Plain object
+        {
+          [P in keyof T]: T[P] extends infer V | null | undefined
+            ? PathsOfProp<P, V, TSelf, TMaxDepth, TDepth>
+            : never
+        }[keyof T]
 
 export type PathsOfProp<
   P,
@@ -233,14 +233,14 @@ export type PathsOfProp<
     }[TDepth extends TMaxDepth
       ? 0
       : V extends object
-      ? V extends string
-        ? 0
-        : TSelf extends V
-        ? V extends TSelf
+        ? V extends string
           ? 0
-          : 1
-        : 1
-      : 0]
+          : TSelf extends V
+            ? V extends TSelf
+              ? 0
+              : 1
+            : 1
+        : 0]
   : never
 
 type Increment<T extends number> = T extends keyof IncrementMap
@@ -278,3 +278,65 @@ export class UnreachableCaseError extends Error {
     Object.setPrototypeOf(this, UnreachableCaseError.prototype)
   }
 }
+
+// Utility type to check if two types are equal
+export type _IsEqual<A, B> = (<T>() => T extends A ? 1 : 2) extends <
+  T,
+>() => T extends B ? 1 : 2
+  ? true
+  : false
+// Utility type to check if two types are not equal
+export type _NotEqual<A, B> = _IsEqual<A, B> extends true ? false : true
+
+// Helper type to assert a condition
+export type _Assert<T extends true> = T
+
+/**
+ * Each member of the union has all possble keys of union with undefined as default value
+type InputUnion =
+  | {type: 'a'; foo: string}
+  | {type: 'b'; bar: number}
+  | {type: 'c'; baz: boolean}
+
+type OutputUnion =
+  | ({type: 'a'; foo: string} & {bar?: undefined; baz?: undefined})
+  | ({type: 'b'; bar: number} & {foo?: undefined; baz?: undefined})
+  | ({type: 'c'; baz: boolean} & {foo?: undefined; bar?: undefined})
+ */
+export type DiscriminatedUnionWithAllKeys<
+  T,
+  /** Discriminator key */
+  K extends keyof T = keyof T,
+> = T[K] extends string
+  ? {
+      [tk in T[K]]: Extract<T, {[key in K]: tk}> & {
+        [k in Exclude<
+          AllUnionKeys<T>,
+          keyof Extract<T, {[key in K]: tk}>
+        >]?: undefined
+      }
+    }[T[K]]
+  : never
+
+export type __TestDiscriminatedUnionWithAllKeys1 = _Assert<
+  _IsEqual<
+    DiscriminatedUnionWithAllKeys<
+      | {type: 'a'; foo: string}
+      | {type: 'b'; bar: number}
+      | {type: 'c'; baz: boolean}
+    >,
+    | ({type: 'a'; foo: string} & {bar?: undefined; baz?: undefined})
+    | ({type: 'b'; bar: number} & {foo?: undefined; baz?: undefined})
+    | ({type: 'c'; baz: boolean} & {foo?: undefined; bar?: undefined})
+  >
+>
+
+export type __TestDiscriminatedUnionWithAllKeys2 = _Assert<
+  _NotEqual<
+    DiscriminatedUnionWithAllKeys<
+      {type: 'a'; foo: string} | {type: 'b'; bar: number}
+    >,
+    | ({type: 'a'; foo: string} & {bar?: undefined; baz?: undefined})
+    | ({type: 'b'; bar: number} & {foo?: undefined; baz?: undefined})
+  >
+>
