@@ -38,7 +38,7 @@ export const googleDef = {
   metadata: {
     displayName: 'google',
     stage: 'beta',
-    categories: ['file-storage', 'calendar'],
+    verticals: ['file-storage', 'calendar'],
     logoUrl: '/_assets/logo-google.svg',
     nangoProvider: 'google',
   },

@@ -2,7 +2,6 @@ import {z} from '@opensdks/util-zod'
 import {R, titleCase, urlFromImage, zodToJsonSchema} from '@openint/util'
 import type {AnyConnectorImpl, ConnectorSchemas} from './connector.types'
 
- 
 export type JSONSchema = {} // ReturnType<typeof zodToJsonSchema> | JSONSchema7Definition
 export const metaForConnector = (
   connector: AnyConnectorImpl,
@@ -17,7 +16,7 @@ export const metaForConnector = (
     : connector.metadata?.logoUrl,
   stage: connector.metadata?.stage ?? 'alpha',
   platforms: connector.metadata?.platforms ?? ['cloud', 'local'],
-  categories: connector.metadata?.categories ?? ['other'],
+  verticals: connector.metadata?.verticals ?? ['other'],
   sourceStreams: Object.keys(connector.schemas.sourceOutputEntities ?? {}),
   supportedModes: R.compact([
     connector.sourceSync ? ('source' as const) : null,

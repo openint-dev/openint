@@ -3,7 +3,7 @@
 import {Loader2} from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
-import {zConnectorStage, zConnectorVertical} from '@openint/cdk'
+import {zConnectorStage, zVerticalKey} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import {_trpcReact} from '@openint/engine-frontend'
 import {
@@ -58,28 +58,28 @@ export default function ConnectorConfigsPage() {
       <h2 className="mb-4 text-2xl font-semibold tracking-tight">
         Available connectors
       </h2>
-      {zConnectorVertical.options.map((category) => {
+      {zVerticalKey.options.map((vertical) => {
         const stageByIndex = R.mapToObj.indexed(
           zConnectorStage.options,
           (o, i) => [o, i],
         )
         const connectors = inPlaceSort(
           Object.values(catalog.data).filter(
-            (p) => p.categories.includes(category) && p.stage !== 'hidden',
+            (p) => p.verticals.includes(vertical) && p.stage !== 'hidden',
           ),
         ).desc((p) => stageByIndex[p.stage])
         if (!connectors.length) {
           return null
         }
         return (
-          <div key={category}>
+          <div key={vertical}>
             <h3 className="mb-4 ml-4 text-xl font-semibold tracking-tight">
-              {titleCase(category)}
+              {titleCase(vertical)}
             </h3>
             <div className="flex flex-wrap">
               {connectors.map((connector) => (
                 <ConnectorCard
-                  key={`${category}-${connector.name}`}
+                  key={`${vertical}-${connector.name}`}
                   connector={connector}>
                   {connector.stage === 'alpha' ? (
                     <Button

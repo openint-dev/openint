@@ -40,7 +40,7 @@ export const helpers = connHelpers(onebrickSchemas)
 export const oneBrickDef = {
   name: 'onebrick',
   schemas: onebrickSchemas,
-  metadata: {categories: ['banking'], logoUrl: '/_assets/logo-onebrick.png'},
+  metadata: {verticals: ['banking'], logoUrl: '/_assets/logo-onebrick.png'},
   standardMappers: {
     entity: (data) => {
       if (data.entityName === 'account') {

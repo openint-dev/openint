@@ -61,7 +61,7 @@ export const helpers = connHelpers(finchSchemas)
 
 export const finchDef = {
   metadata: {
-    categories: ['payroll'],
+    verticals: ['payroll'],
     logoUrl: '/_assets/logo-finch.svg',
     stage: 'beta',
     // TODO: Make the openAPI spec dynamic.. It can be many megabytes per connector

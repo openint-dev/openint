@@ -1,6 +1,6 @@
 import {z} from '@opensdks/util-zod'
-import {zConnectorVertical} from './categories'
 import {zEndUserId, zId} from './id.types'
+import {zVerticalKey} from './verticals'
 
 // Utility types
 
@@ -33,9 +33,6 @@ export const zStandardConnectorConfig = z.object({
     .describe('Not implemented yet'),
 })
 
-/** @deprecated, use connector vertical instead */
-export const zIntegrationCategory = zConnectorVertical
-
 export const zMetadata = z.unknown().describe(`
   JSON object can can be used to associate arbitrary metadata to
   avoid needing a separate 1-1 table just for simple key values in your application.
@@ -61,7 +58,8 @@ export const zStandard = {
           : url,
       z.string().url().optional(),
     ),
-    categories: z.array(zIntegrationCategory).nullish(),
+    /** TODO: Is this the same as connector vertical? */
+    verticals: z.array(zVerticalKey).nullish(),
   }),
   resource: z.object({
     id: zId('reso'),

@@ -30,7 +30,7 @@ function toISO(mootaDate: string) {
 export const mootaDef = {
   name: 'moota',
   schemas: mootaSchemas,
-  metadata: {categories: ['banking'], logoUrl: '/_assets/logo-moota.png'},
+  metadata: {verticals: ['banking'], logoUrl: '/_assets/logo-moota.png'},
   standardMappers: {
     entity: {
       account: ({entity: a}) => ({

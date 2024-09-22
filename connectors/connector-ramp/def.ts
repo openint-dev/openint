@@ -47,7 +47,7 @@ export const rampDef = {
   name: 'ramp',
   schemas: rampSchemas,
   metadata: {
-    categories: ['banking', 'expense-management'],
+    verticals: ['banking', 'expense-management'],
     logoUrl: '/_assets/logo-ramp.png',
     stage: 'beta',
   },

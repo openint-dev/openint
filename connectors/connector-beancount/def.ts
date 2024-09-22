@@ -22,7 +22,7 @@ export const beancountHelpers = connHelpers(beancountSchemas)
 export const beancountDef = {
   name: 'beancount',
   schemas: beancountSchemas,
-  metadata: {categories: ['personal-finance'], platforms: ['local']},
+  metadata: {verticals: ['personal-finance'], platforms: ['local']},
 } satisfies ConnectorDef<typeof beancountSchemas>
 
 export default beancountDef

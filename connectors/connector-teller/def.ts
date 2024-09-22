@@ -47,7 +47,7 @@ export const tellerDef = {
   name: 'teller',
   schemas: tellerSchemas,
   metadata: {
-    categories: ['banking'],
+    verticals: ['banking'],
     logoUrl: '/_assets/logo-teller.svg',
     stage: 'beta',
   },

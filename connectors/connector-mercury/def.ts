@@ -15,7 +15,7 @@ export const mercuryDef = {
   schemas: mercurySchemas,
   name: 'mercury',
   metadata: {
-    categories: ['banking'],
+    verticals: ['banking'],
     logoUrl: '/_assets/logo-mercury.png',
     stage: 'alpha',
   },
@@ -23,7 +23,7 @@ export const mercuryDef = {
     integration: () => ({
       name: 'Mercury',
       logoUrl: 'TODO: Default to integration metadata logoUrl',
-      categories: ['banking'],
+      verticals: ['banking'],
     }),
     resource() {
       return {

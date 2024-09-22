@@ -35,7 +35,7 @@ export const fsDef = {
   metadata: {
     platforms: ['local'],
     displayName: 'File system',
-    categories: ['flat-files-and-spreadsheets'],
+    verticals: ['flat-files-and-spreadsheets'],
   },
 
   schemas: fsSchemas,

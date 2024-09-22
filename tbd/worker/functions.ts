@@ -3,7 +3,7 @@ import type {SendEventPayload} from 'inngest/helpers/types'
 import type {OpenIntHeaders} from '@openint/api'
 import {createAppHandler} from '@openint/api'
 import type {Id} from '@openint/cdk'
-import {CATEGORY_BY_KEY, makeJwtClient} from '@openint/cdk'
+import {VERTICAL_BY_KEY, makeJwtClient} from '@openint/cdk'
 import {
   configDb,
   dbUpsert,
@@ -95,7 +95,7 @@ export async function syncConnection({
   } = event
 
   const unified_objects =
-    _unified_objects ?? CATEGORY_BY_KEY[vertical].objects ?? []
+    _unified_objects ?? VERTICAL_BY_KEY[vertical].objects ?? []
 
   console.log('[syncConnection] Start', {
     resource_id,

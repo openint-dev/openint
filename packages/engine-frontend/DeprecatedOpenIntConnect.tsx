@@ -15,7 +15,7 @@ import {
   extractConnectorName,
   extractId,
   oauthConnect,
-  zConnectorVertical,
+  zVerticalKey,
 } from '@openint/cdk'
 import type {RouterInput, RouterOutput} from '@openint/engine-backend'
 import type {SchemaFormElement, UIProps, UIPropsNoChildren} from '@openint/ui'
@@ -259,10 +259,10 @@ export function _OpenIntConnect({
     }),
   )
 
-  const categories = zConnectorVertical.options
+  const categories = zVerticalKey.options
     .map((category) => {
       const ccfgs = connectorConfigs.filter(
-        (ccfg) => ccfg.connector?.categories.includes(category),
+        (ccfg) => ccfg.connector?.verticals.includes(category),
       )
       return {
         key: category,

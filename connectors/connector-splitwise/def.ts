@@ -38,7 +38,7 @@ export const splitwiseHelpers = connHelpers(splitwiseSchemas)
 export const splitwiseDef = {
   name: 'splitwise',
   schemas: splitwiseSchemas,
-  metadata: {categories: ['personal-finance']},
+  metadata: {verticals: ['personal-finance']},
   standardMappers: {
     entity: {
       account: ({entity: a}) => ({

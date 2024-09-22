@@ -3,7 +3,7 @@ import {z} from '@opensdks/util-zod'
 import type {oas30, oas31} from 'openapi3-ts'
 import type {AnyEntityPayload, ResoUpdateData, Source} from '@openint/sync'
 import {castIs} from '@openint/util'
-import type {CategoryKey} from './categories'
+import type {VerticalKey} from './verticals'
 import type {ConnHelpers} from './connector.types'
 import type {EndUserId, ExtEndUserId, ExternalId, Id} from './id.types'
 import {zExternalId} from './id.types'
@@ -21,7 +21,7 @@ export interface ConnectorMetadata {
   platforms?: Array<'cloud' | 'local'>
   stage?: z.infer<typeof zConnectorStage>
   // labels?: Array<'featured' | 'banking' | 'accounting' | 'enrichment'>
-  categories?: CategoryKey[]
+  verticals?: VerticalKey[]
 
   openapiSpec?: {
     proxied?: OpenApiSpec

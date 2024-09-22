@@ -63,7 +63,7 @@ export const postgresHelpers = connHelpers(postgresSchemas)
 export const postgresDef = {
   name: 'postgres',
   metadata: {
-    categories: ['database'],
+    verticals: ['database'],
     logoUrl: '/_assets/logo-postgres.png',
     stage: 'ga',
   },

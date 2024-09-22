@@ -19,7 +19,7 @@ export const codaDef = {
   schemas: codaSchemas,
   name: 'coda',
   metadata: {
-    categories: ['flat-files-and-spreadsheets'],
+    verticals: ['flat-files-and-spreadsheets'],
     logoUrl: '/_assets/logo-coda.svg',
     stage: 'beta',
     openapiSpec: {

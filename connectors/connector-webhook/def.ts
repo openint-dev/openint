@@ -18,7 +18,7 @@ export const webhookHelpers = connHelpers(webhookSchemas)
 
 export const webhookDef = {
   name: 'webhook',
-  metadata: {categories: ['streaming'], logoUrl: '/_assets/logo-webhook.png'},
+  metadata: {verticals: ['streaming'], logoUrl: '/_assets/logo-webhook.png'},
 
   schemas: webhookSchemas,
 } satisfies ConnectorDef<typeof webhookSchemas>

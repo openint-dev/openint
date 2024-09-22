@@ -25,7 +25,7 @@ export const salesforceDef = {
   metadata: {
     displayName: 'salesforce',
     stage: 'beta',
-    categories: ['crm'],
+    verticals: ['crm'],
     logoUrl: '/_assets/logo-salesforce.svg',
     nangoProvider: 'salesforce',
     openapiSpec: {proxied: oas as unknown as OpenApiSpec},

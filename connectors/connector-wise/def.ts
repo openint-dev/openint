@@ -42,7 +42,7 @@ export const wiseHelpers = connHelpers(wiseSchemas)
 export const wiseDef = {
   name: 'wise',
   schemas: wiseSchemas,
-  metadata: {categories: ['banking'], logoUrl: '/_assets/logo-wise.png'},
+  metadata: {verticals: ['banking'], logoUrl: '/_assets/logo-wise.png'},
   standardMappers: {
     entity: (data) => {
       if (data.entityName === 'account') {

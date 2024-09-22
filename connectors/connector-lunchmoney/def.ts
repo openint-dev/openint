@@ -33,7 +33,7 @@ export const lunchmoneyHelpers = connHelpers(lunchmoneySchemas)
 export const lunchmoneyDef = {
   name: 'lunchmoney',
   schemas: lunchmoneySchemas,
-  metadata: {categories: ['personal-finance']},
+  metadata: {verticals: ['personal-finance']},
   standardMappers: {
     entity: {
       account: ({entity: a}) => ({

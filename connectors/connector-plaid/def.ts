@@ -125,7 +125,7 @@ export const plaidDef = {
   name: 'plaid',
   schemas: plaidSchemas,
   metadata: {
-    categories: ['banking'],
+    verticals: ['banking'],
     displayName: 'Plaid',
     stage: 'ga',
     /** https://commons.wikimedia.org/wiki/File:Plaid_logo.svg */
@@ -197,7 +197,7 @@ export const plaidDef = {
       name: ins.name,
       logoUrl: ins.logo ? `data:image/png;base64,${ins.logo}` : undefined,
       loginUrl: ins.url ?? undefined,
-      categories: ['banking'],
+      verticals: ['banking'],
     }),
     resource: (settings) => {
       // TODO: Unify item.error and webhookItemError into a single field

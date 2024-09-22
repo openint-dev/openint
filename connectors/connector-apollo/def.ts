@@ -22,7 +22,7 @@ export const apolloDef = {
   name: 'apollo',
   schemas: apolloSchemas,
   metadata: {
-    categories: ['sales-engagement'],
+    verticals: ['sales-engagement'],
     displayName: 'Apollo',
     stage: 'beta',
     logoUrl: '/_assets/logo-apollo.svg',

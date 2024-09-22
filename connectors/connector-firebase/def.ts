@@ -85,7 +85,7 @@ export const firebaseHelpers = connHelpers(firebaseSchemas)
 
 export const firebaseDef = {
   name: 'firebase',
-  metadata: {categories: ['database'], logoUrl: '/_assets/logo-firebase.png'},
+  metadata: {verticals: ['database'], logoUrl: '/_assets/logo-firebase.png'},
   schemas: firebaseSchemas,
 } satisfies ConnectorDef<typeof firebaseSchemas>
 

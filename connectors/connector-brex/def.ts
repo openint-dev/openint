@@ -36,7 +36,7 @@ export const brexDef = {
   schemas: brexSchemas,
   name: 'brex',
   metadata: {
-    categories: [
+    verticals: [
       'banking',
       // Add back expense management category once we actually support it properly
       // 'expense-management'
@@ -49,7 +49,7 @@ export const brexDef = {
       name: 'Brex',
       logoUrl: 'Add brex logo...',
       envName: undefined,
-      categories: ['banking'],
+      verticals: ['banking'],
     }),
     resource() {
       return {

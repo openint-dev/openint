@@ -83,7 +83,7 @@ export const spreadsheetDef = {
   schemas: spreadsheetSchemas,
   metadata: {
     displayName: 'Spreadsheet (CSV, Google Sheets, Excel)',
-    categories: ['flat-files-and-spreadsheets'],
+    verticals: ['flat-files-and-spreadsheets'],
     logoUrl: '/_assets/logo-spreadsheet.png',
   },
   standardMappers: {

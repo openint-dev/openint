@@ -32,7 +32,7 @@ export const hubspotDef = {
   metadata: {
     displayName: 'hubspot',
     stage: 'beta',
-    categories: ['crm'],
+    verticals: ['crm'],
     logoUrl: '/_assets/logo-hubspot.svg',
     nangoProvider: 'hubspot',
   },

@@ -19,7 +19,7 @@ export const mongoSchemas = {
 export const mongoDef = {
   name: 'mongodb',
   schemas: mongoSchemas,
-  metadata: {categories: ['database'], logoUrl: '/_assets/logo-mongodb.png'},
+  metadata: {verticals: ['database'], logoUrl: '/_assets/logo-mongodb.png'},
 } satisfies ConnectorDef<typeof mongoSchemas>
 
 export default mongoDef

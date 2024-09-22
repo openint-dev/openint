@@ -3,7 +3,7 @@ import {
   extractId,
   metaForConnector,
   zId,
-  zIntegrationCategory,
+  zVerticalKey,
 } from '@openint/cdk'
 import type {RouterMeta} from '@openint/trpc'
 import {TRPCError} from '@openint/trpc'
@@ -23,7 +23,7 @@ const zIntegration = zBaseRecord
     name: z.string(),
     logo_url: z.string().nullish(),
     login_url: z.string().nullish(),
-    categories: z.array(zIntegrationCategory).nullish(),
+    verticals: z.array(zVerticalKey).nullish(),
     connector_name: z.string(),
   })
   .openapi({ref: 'core.integration'})
@@ -174,7 +174,7 @@ const _connectorRouter = trpc.router({
             logo_url: meta.logoUrl,
             connector_name: name,
             // TODO: Should not duplicate this so much...
-            categories: connector.metadata?.categories,
+            categories: connector.metadata?.verticals,
           },
         ].filter((int) => !needle || int.name.toLowerCase().includes(needle)),
         next_cursor: null,

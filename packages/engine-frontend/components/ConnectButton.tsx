@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import type {Category} from '@openint/cdk'
-import {CATEGORY_BY_KEY} from '@openint/cdk'
+import type {Vertical} from '@openint/cdk'
+import {VERTICAL_BY_KEY} from '@openint/cdk'
 import {
   Button,
   Dialog,
@@ -34,7 +34,7 @@ export function ConnectButton({
 }: {
   connectorConfigFilters: ConnectorConfigFilters
 } & ConnectButtonCommonProps) {
-  const {categoryKey} = connectorConfigFilters
+  const {verticalKey: categoryKey} = connectorConfigFilters
   return (
     <WithConnectConfig {...connectorConfigFilters}>
       {({ccfgs}) => {
@@ -55,7 +55,7 @@ export function ConnectButton({
         }
         // Render dialog for MultiConnector scenarios
         // This would be the case for greenhouse + lever
-        const category = categoryKey ? CATEGORY_BY_KEY[categoryKey] : undefined
+        const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined
         return (
           <MultipleConnectButton
             {...commonProps}
@@ -104,7 +104,7 @@ function MultipleConnectButton({
 }: {
   connectorConfigs: ConnectorConfig[]
   /** Should correspond to connectorConfigs, but we can't guarantee that statically here... */
-  category?: Category
+  category?: Vertical
 } & ConnectButtonCommonProps) {
   const [open, setOpen] = React.useState(false)
 

@@ -75,7 +75,7 @@ export const helpers = connHelpers(yodleeSchemas)
 export const yodleeDef = {
   name: 'yodlee',
   schemas: yodleeSchemas,
-  metadata: {categories: ['banking'], logoUrl: '/_assets/logo-yodlee.png'},
+  metadata: {verticals: ['banking'], logoUrl: '/_assets/logo-yodlee.png'},
   standardMappers: {
     entity: {
       account: ({entity: a}, extConn) => ({

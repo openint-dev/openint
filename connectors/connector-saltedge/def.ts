@@ -27,7 +27,7 @@ export const saltedgeHelpers = connHelpers(saltedgeSchemas)
 export const saltedgeDef = {
   name: 'saltedge',
   schemas: saltedgeSchemas,
-  metadata: {categories: ['banking'], logoUrl: '/_assets/logo-saltedge.png'},
+  metadata: {verticals: ['banking'], logoUrl: '/_assets/logo-saltedge.png'},
   standardMappers: {
     entity: {
       account: ({entity: a}, c) => ({

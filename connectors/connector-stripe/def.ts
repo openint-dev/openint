@@ -36,7 +36,7 @@ export const stripeDef = {
   schemas: stripeSchemas,
   name: 'stripe',
   metadata: {
-    categories: ['commerce'],
+    verticals: ['commerce'],
     logoUrl: '/_assets/logo-stripe.png',
     stage: 'beta',
   },

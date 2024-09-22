@@ -30,7 +30,7 @@ export const xeroHelpers = connHelpers(xeroSchemas)
 
 export const xeroDef = {
   metadata: {
-    categories: ['accounting'],
+    verticals: ['accounting'],
     logoUrl: '/_assets/logo-xero.svg',
     displayName: 'Xero',
     stage: 'beta',

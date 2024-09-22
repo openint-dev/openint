@@ -61,7 +61,7 @@ export const mergeDef = {
     displayName: 'merge.dev',
     stage: 'beta',
     logoSvg: mergeLogoSvg,
-    categories: ['accounting', 'commerce', 'crm', 'ats'],
+    verticals: ['accounting', 'commerce', 'crm', 'ats'],
   },
 
   standardMappers: {
@@ -69,7 +69,7 @@ export const mergeDef = {
       name: ins.name,
       logoUrl: ins.square_image,
       envName: undefined,
-      categories: ins.categories.filter(
+      verticals: ins.categories.filter(
         (c): c is 'accounting' | 'hris' => c === 'accounting' || c === 'hris',
       ),
     }),

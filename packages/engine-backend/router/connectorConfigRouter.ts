@@ -4,9 +4,9 @@ import {
   makeId,
   makeOauthConnectorServer,
   oauthBaseSchema,
-  zConnectorVertical,
   zId,
   zRaw,
+  zVerticalKey,
 } from '@openint/cdk'
 import {TRPCError} from '@openint/trpc'
 import {makeUlid, z} from '@openint/util'
@@ -165,7 +165,7 @@ export const connectorConfigRouter = trpc.router({
           .extend({
             isSource: z.boolean(),
             isDestination: z.boolean(),
-            categories: z.array(zConnectorVertical),
+            verticals: z.array(zVerticalKey),
           }),
       ),
     )
@@ -186,7 +186,7 @@ export const connectorConfigRouter = trpc.router({
                 connectorName: connector.name,
                 isSource: !!connector.sourceSync,
                 isDestination: !!connector.destinationSync,
-                categories: connector.metadata?.categories ?? [],
+                verticals: connector.metadata?.verticals ?? [],
               }
             : null
         })

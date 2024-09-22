@@ -1,7 +1,7 @@
 'use client'
 
 import {AlertTriangle} from 'lucide-react'
-import type {Category, Id} from '@openint/cdk'
+import type {Vertical, Id} from '@openint/cdk'
 import type {UIPropsNoChildren} from '@openint/ui'
 import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
@@ -24,7 +24,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
   return (
     <WithConnectConfig>
-      {({ccfgs, categories}) => {
+      {({ccfgs, verticals: categories}) => {
         if (!ccfgs.length) {
           return <div>No connectors configured</div>
         }
@@ -91,7 +91,7 @@ const NewConnectionCard = ({
   category,
   hasExisting,
 }: {
-  category: Category
+  category: Vertical
   hasExisting: boolean
 }) => (
   <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
@@ -108,6 +108,6 @@ const NewConnectionCard = ({
     </p>
     <ConnectButton
       className="bg-purple-400 hover:bg-purple-500"
-      connectorConfigFilters={{categoryKey: category.key}}></ConnectButton>
+      connectorConfigFilters={{verticalKey: category.key}}></ConnectButton>
   </Card>
 )

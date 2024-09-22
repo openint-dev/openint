@@ -25,7 +25,7 @@ export const pipedriveDef = {
   metadata: {
     displayName: 'Outreach',
     stage: 'beta',
-    categories: ['crm'],
+    verticals: ['crm'],
     logoUrl: '/_assets/logo-pipedrive.svg',
     nangoProvider: 'pipedrive',
     openapiSpec: {proxied: oas as unknown as OpenApiSpec},

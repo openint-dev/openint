@@ -13,7 +13,7 @@ import {
   zFunction,
 } from '@openint/util'
 import {handlersLink, transformLink} from './base-links'
-import type {Pta} from './verticals'
+import type {Pta} from './verticals-deprecated'
 
 // TODO: Move into entityLink
 export interface StdCache {

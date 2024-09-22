@@ -15,7 +15,7 @@ export const greenhouseDef = {
   metadata: {
     displayName: 'greenhouse',
     stage: 'beta',
-    categories: ['ats'],
+    verticals: ['ats'],
     logoUrl: '/_assets/logo-greenhouse.png',
   },
 } satisfies ConnectorDef<typeof greenhouseSchema>

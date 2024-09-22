@@ -30,7 +30,7 @@ export const helpers = connHelpers(revertSchemas)
 
 export const revertDef = {
   metadata: {
-    categories: ['crm'],
+    verticals: ['crm'],
     logoUrl: '/_assets/logo-revert.png',
     stage: 'beta',
     openapiSpec: {

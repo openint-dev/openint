@@ -25,7 +25,7 @@ export const outreachDef = {
   metadata: {
     displayName: 'Outreach',
     stage: 'beta',
-    categories: ['sales-engagement'],
+    verticals: ['sales-engagement'],
     logoUrl: '/_assets/logo-outreach.svg',
     nangoProvider: 'outreach',
     openapiSpec: {proxied: oas as unknown as OpenApiSpec},

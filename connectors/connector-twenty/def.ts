@@ -18,7 +18,7 @@ export const helpers = connHelpers(twentySchemas)
 
 export const twentyDef = {
   metadata: {
-    categories: ['crm'],
+    verticals: ['crm'],
     logoUrl: '/_assets/logo-twenty.svg',
     stage: 'beta',
   },

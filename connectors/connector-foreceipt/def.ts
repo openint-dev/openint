@@ -50,7 +50,7 @@ export const foreceiptHelpers = connHelpers(foreceiptSchemas)
 export const foreceiptDef = {
   name: 'foreceipt',
   schemas: foreceiptSchemas,
-  metadata: {categories: ['expense-management']},
+  metadata: {verticals: ['expense-management']},
   standardMappers: {
     entity: {
       account: ({entity: a}) => ({

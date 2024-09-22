@@ -25,7 +25,7 @@ export const salesloftDef = {
   metadata: {
     displayName: 'Salesloft',
     stage: 'beta',
-    categories: ['sales-engagement'],
+    verticals: ['sales-engagement'],
     logoUrl: '/_assets/logo-salesloft.svg',
     nangoProvider: 'salesloft',
     openapiSpec: {proxied: oas as unknown as OpenApiSpec},

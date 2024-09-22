@@ -17,7 +17,7 @@ export const helpers = connHelpers(airtableSchemas)
 
 export const airtableDef = {
   metadata: {
-    categories: ['database'],
+    verticals: ['database'],
     logoUrl: '/_assets/logo-airtable.svg',
   },
   name: 'airtable',

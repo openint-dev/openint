@@ -1,8 +1,8 @@
 'use client'
 
 import type React from 'react'
-import type {Category, Id} from '@openint/cdk'
-import {CATEGORY_BY_KEY, type CategoryKey} from '@openint/cdk'
+import type {Id, Vertical} from '@openint/cdk'
+import {VERTICAL_BY_KEY, type VerticalKey} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
 import {_trpcReact} from '../providers/TRPCProvider'
 
@@ -17,12 +17,12 @@ export type ConfiguredIntegration =
   RouterOutput['listConfiguredIntegrations']['items'][number] & {
     ccfg: ConnectorConfig
   }
-export type ConfiguredCategory = Category & {
+export type ConfiguredVertical = Vertical & {
   connectorConfigs: ConnectorConfig[]
 }
 
 export interface ConnectorConfigFilters {
-  categoryKey?: CategoryKey
+  verticalKey?: VerticalKey
   connectorName?: string
   connectorConfigId?: Id['ccfg']
   // Allow filtering by integrations, not just connector configs?
@@ -32,13 +32,13 @@ export interface ConnectorConfigFilters {
 
 export function WithConnectConfig({
   children,
-  categoryKey,
+  verticalKey: verticalKey,
   ...props
 }: ConnectorConfigFilters & {
   // etc.
   children: (props: {
     ccfgs: ConnectorConfig[]
-    categories: ConfiguredCategory[]
+    verticals: ConfiguredVertical[]
   }) => React.ReactElement | null
 }) {
   const listConnectorConfigsRes = _trpcReact.listConnectorConfigInfos.useQuery({
@@ -53,16 +53,16 @@ export function WithConnectConfig({
   }
 
   const ccfgs = listConnectorConfigsRes.data
-    ?.filter((ccfg) => !categoryKey || ccfg.categories?.includes(categoryKey))
+    ?.filter((ccfg) => !verticalKey || ccfg.verticals?.includes(verticalKey))
     .map((ccfg) => ({
       ...ccfg,
       connector: listConnectorsRes.data[ccfg.connectorName]!,
     }))
 
-  const categories = Object.values(CATEGORY_BY_KEY)
+  const verticals = Object.values(VERTICAL_BY_KEY)
     .map((category) => {
       const categoryCcfgs = ccfgs.filter(
-        (ccfg) => ccfg.connector?.categories.includes(category.key),
+        (ccfg) => ccfg.connector?.verticals.includes(category.key),
       )
       return {...category, connectorConfigs: categoryCcfgs}
     })
@@ -73,5 +73,5 @@ export function WithConnectConfig({
   //   catalogRes: catalogRes.data,
   // })
 
-  return children({ccfgs, categories})
+  return children({ccfgs, verticals})
 }
