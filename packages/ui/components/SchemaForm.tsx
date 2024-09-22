@@ -83,9 +83,9 @@ export const SchemaForm = React.forwardRef(function SchemaForm<
 declare module 'react' {
   function forwardRef<T, P = NonNullable<unknown>>(
     render: (props: P, ref: ForwardedRef<T>) => ReturnType<FunctionComponent>,
-  ): (
+  ): ((
     props: PropsWithoutRef<P> & RefAttributes<T>,
-  ) => ReturnType<FunctionComponent> & {
+  ) => ReturnType<FunctionComponent>) & {
     displayName?: string
   }
 }
