@@ -12,39 +12,12 @@ import {
 
 export const mySchema = pgSchema('my_schema')
 
-/**
- * Supaglue inconsistently pluralized table names... Only did it for common objects too not standard objects...
- * @see https://github.com/supaglue-labs/supaglue/blob/d482ca9468b8047c0fa874b77a38ab765dc5e9c3/packages/core/destination_writers/postgres.ts#L373-L393
- */
-function pluralizeCommonObjectName(name: string) {
-  switch (name) {
-    case 'crm_opportunity':
-      return 'crm_opportunities'
-    case 'engagement_mailbox':
-      return 'engagement_mailboxes'
-    case 'crm_account':
-    case 'crm_contact':
-    case 'crm_lead':
-    case 'crm_user':
-    case 'engagement_account':
-    case 'engagement_contact':
-    case 'engagement_sequence_state':
-    case 'engagement_sequence_step':
-    case 'engagement_user':
-    case 'engagement_sequence':
-      return `${name}s`
-    default:
-      return name
-  }
-}
-
 /** e.g. crm_accounts */
 export function getCommonObjectTable<TName extends string>(
-  _tableName: TName,
+  tableName: TName,
   opts: {schema?: string} = {},
 ) {
   const schema = opts.schema ? pgSchema(opts.schema) : undefined
-  const tableName = pluralizeCommonObjectName(_tableName)
   const table = (schema ? schema.table : pgTable)(
     tableName,
     {

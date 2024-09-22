@@ -2060,9 +2060,6 @@ importers:
       '@openint/unified-etl':
         specifier: workspace:*
         version: link:../../unified/unified-etl
-      '@opensdks/sdk-supaglue':
-        specifier: 0.0.3
-        version: 0.0.3
       drizzle-orm:
         specifier: ^0.29.3
         version: 0.29.5(@types/pg@8.6.5)(@types/react@18.0.27)(pg@8.8.0(pg-native@3.0.1))(postgres@3.4.4)(react@18.3.1)
@@ -3549,9 +3546,6 @@ packages:
 
   '@opensdks/sdk-stripe@0.0.2':
     resolution: {integrity: sha512-DwOdSgXQv7MPdZPVU9i68w0FUaCFzZ0j+KZXA68SyiGvaoDWTu++76bUgQVzK4hmx23uC3DoXbJ18MFhwD2zAg==}
-
-  '@opensdks/sdk-supaglue@0.0.3':
-    resolution: {integrity: sha512-SS9hQXC7ABvcps2kkEa7C7ocNlgJiUrdYDH+49MEwoIrOrESvMrvak1wJA+d7TNKR3eIW12ocxYqfO+fa41D5A==}
 
   '@opensdks/sdk-twenty@0.0.5':
     resolution: {integrity: sha512-VvAMxuhHk5SFKrPq/v9Kur7rsvxF6L3Sxv1N4illO8PflmsiK6g8zFZj6bhYdmgnlYU5SrttDxDrYlVg1m9H+Q==}
@@ -14229,8 +14223,6 @@ snapshots:
   '@opensdks/sdk-slack@0.0.14': {}
 
   '@opensdks/sdk-stripe@0.0.2': {}
-
-  '@opensdks/sdk-supaglue@0.0.3': {}
 
   '@opensdks/sdk-twenty@0.0.5': {}
 

@@ -103,29 +103,6 @@ export interface paths {
   '/openapi.json': {
     get: operations['public-getOpenapiDocument']
   }
-  '/customers': {
-    get: operations['mgmt-listCustomers']
-  }
-  '/customers/{id}': {
-    get: operations['mgmt-getCustomer']
-  }
-  '/customers/{customer_id}': {
-    put: operations['mgmt-upsertCustomer']
-  }
-  '/customers/{customer_id}/connections': {
-    get: operations['mgmt-listConnections']
-  }
-  '/customers/{customer_id}/connections/{provider_name}': {
-    get: operations['mgmt-getConnection']
-    delete: operations['mgmt-deleteConnection']
-  }
-  '/sync_configs': {
-    get: operations['mgmt-listSyncConfigs']
-  }
-  '/connection_sync_configs': {
-    get: operations['mgmt-getConnectionSyncConfig']
-    put: operations['mgmt-upsertConnectionSyncConfig']
-  }
   '/unified/sales-engagement/contact': {
     get: operations['salesEngagement-listContacts']
   }
@@ -480,6 +457,7 @@ export interface components {
             | 'accounting'
             | 'crm'
             | 'sales-engagement'
+            | 'engagement'
             | 'commerce'
             | 'expense-management'
             | 'enrichment'
@@ -580,43 +558,6 @@ export interface components {
         },
       ]
     >
-    customer: {
-      customer_id: string
-      name?: string | null
-      /** @description Email, but not validated as data from Supaglue has invalid emails for now */
-      email?: string | null
-    }
-    connection: {
-      id: string
-      customer_id: string
-      provider_name: string
-    }
-    sync_config: components['schemas']['connection_sync_config'] & {
-      provider_name: string
-      /** @description If true, the sync will start automatically when the connection is created. */
-      auto_start_on_connection?: boolean | null
-    }
-    connection_sync_config: {
-      destination_config?: {
-        type: string
-        schema?: string | null
-      } | null
-      unified_objects?:
-        | {
-            object: string
-          }[]
-        | null
-      standard_objects?:
-        | {
-            object: string
-          }[]
-        | null
-      custom_objects?:
-        | {
-            object: string
-          }[]
-        | null
-    }
     'sales-engagement.contact': {
       id: string
       first_name: string
@@ -934,7 +875,7 @@ export interface components {
       /** @description The default value for the property. Only supported for Salesforce. */
       default_value?: string | number | boolean
       /**
-       * @description Only applicable for Hubspot. If specified, Supaglue will attempt to attach the field to this group if it exists, or create it if it doesn't.
+       * @description Only applicable for Hubspot. If specified, OpenInt will attempt to attach the field to this group if it exists, or create it if it doesn't.
        * @example my group
        */
       group_name?: string
@@ -992,7 +933,7 @@ export interface components {
        */
       label: string
       /**
-       * @description The type of the property as provided by the third-party Provider. These types are not unified by Supaglue. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.
+       * @description The type of the property as provided by the third-party Provider. These types are not unified by OpenInt. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.
        * @example string
        */
       type?: string
@@ -1842,6 +1783,7 @@ export interface operations {
               | 'accounting'
               | 'crm'
               | 'sales-engagement'
+              | 'engagement'
               | 'commerce'
               | 'expense-management'
               | 'enrichment'
@@ -2350,283 +2292,6 @@ export interface operations {
       200: {
         content: {
           'application/json': unknown
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-listCustomers': {
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['customer'][]
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-getCustomer': {
-    parameters: {
-      path: {
-        id: string
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['customer']
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-upsertCustomer': {
-    parameters: {
-      path: {
-        customer_id: string
-      }
-    }
-    requestBody: {
-      content: {
-        'application/json': {
-          name?: string | null
-          /** @description Email, but not validated as data from Supaglue has invalid emails for now */
-          email?: string | null
-        }
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['customer']
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-listConnections': {
-    parameters: {
-      path: {
-        customer_id: string
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['connection'][]
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-getConnection': {
-    parameters: {
-      path: {
-        customer_id: string
-        provider_name: string
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['connection']
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-deleteConnection': {
-    parameters: {
-      path: {
-        customer_id: string
-        provider_name: string
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-listSyncConfigs': {
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['sync_config'][]
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-getConnectionSyncConfig': {
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['connection_sync_config']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'mgmt-upsertConnectionSyncConfig': {
-    requestBody: {
-      content: {
-        'application/json': {
-          destination_config?: {
-            type: string
-            schema?: string | null
-          } | null
-          unified_objects?:
-            | {
-                object: string
-              }[]
-            | null
-          standard_objects?:
-            | {
-                object: string
-              }[]
-            | null
-          custom_objects?:
-            | {
-                object: string
-              }[]
-            | null
-        }
-      }
-    }
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': components['schemas']['connection_sync_config']
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
         }
       }
       /** @description Internal server error */
@@ -4016,7 +3681,7 @@ export interface operations {
            */
           label: string
           /**
-           * @description The type of the property as provided by the third-party Provider. These types are not unified by Supaglue. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.
+           * @description The type of the property as provided by the third-party Provider. These types are not unified by OpenInt. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.
            * @example string
            */
           type?: string

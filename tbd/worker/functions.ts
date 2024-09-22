@@ -41,8 +41,6 @@ export async function scheduleSyncs({
   console.log('[scheduleSyncs]', event)
   const openint = initOpenIntSDK({
     headers: {
-      // 'x-api-key': env.SUPAGLUE_API_KEY,
-      // 'x-nango-secret-key': env.NANGO_SECRET_KEY,
       // Support system wide authentication here
     },
     // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
@@ -144,8 +142,6 @@ export async function syncConnection({
 
   const byos = initOpenIntSDK({
     headers: {
-      // 'x-api-key': env.SUPAGLUE_API_KEY,
-      // 'x-nango-secret-key': env.NANGO_SECRET_KEY,
       // 'x-customer-id': customer_id, // This relies on customer-id mapping 1:1 to connection_id
       // 'x-provider-name': provider_name, // This relies on provider_config_key mapping 1:1 to provider-name
       'x-apikey': process.env['API_KEY'],

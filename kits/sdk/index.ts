@@ -22,4 +22,4 @@ export function initOpenIntSDK(opts: OpenIntSdkTypes['options']) {
   return initSDK(openIntSdkDef, opts)
 }
 
-export type BYOSupaglueSDK = ReturnType<typeof initOpenIntSDK>
+export type OpenIntSDK = ReturnType<typeof initOpenIntSDK>

@@ -172,7 +172,7 @@ export const meta_property = z
     }),
     type: z.string().optional().openapi({
       description:
-        'The type of the property as provided by the third-party Provider. These types are not unified by Supaglue. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.',
+        'The type of the property as provided by the third-party Provider. These types are not unified by OpenInt. For Intercom, this is string, integer, boolean, or object. For Outreach, this is integer, boolean, number, array, or string.',
       example: 'string',
     }),
     raw_details: z.record(z.unknown()).optional().openapi({
@@ -253,7 +253,7 @@ export const meta_custom_object_field = z
       ),
     group_name: z.string().optional().openapi({
       description:
-        "Only applicable for Hubspot. If specified, Supaglue will attempt to attach the field to this group if it exists, or create it if it doesn't.",
+        "Only applicable for Hubspot. If specified, OpenInt will attempt to attach the field to this group if it exists, or create it if it doesn't.",
       example: 'my group',
     }),
     type: meta_property_type,
@@ -292,7 +292,6 @@ export const account_input = account
     name: true,
     /** @example 276000 */
     number_of_employees: true,
-    /** @example https:supaglue.com/ */
     website: true,
     addresses: true,
     phone_numbers: true,
