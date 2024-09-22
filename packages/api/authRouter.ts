@@ -1,5 +1,5 @@
 import {clerkClient} from '@clerk/nextjs/server'
-import {z} from '@opensdks/util-zod'
+import {z, zCast} from '@opensdks/util-zod'
 import {TRPCError} from '@trpc/server'
 import type {Viewer} from '@openint/cdk'
 import {zViewer} from '@openint/cdk'
@@ -43,28 +43,22 @@ export const authRouter = trpc.router({
       return {...ctx.viewer, extra} as Viewer
     }),
 
-  getCurrentOrganization: adminProcedure.query(async ({ctx}) => {
-    if (!ctx.viewer.orgId) {
-      throw new TRPCError({code: 'BAD_REQUEST', message: 'orgId needed'})
-    }
-    const org = await clerkClient.organizations.getOrganization({
-      organizationId: ctx.viewer.orgId,
+  getCurrentOrganization: adminProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/viewer/organization',
+        summary: 'Get current organization of viewer accessing the API',
+      },
     })
-    return {
-      ...R.pick(org, [
-        'id',
-        'name',
-        'slug',
-        'imageUrl',
-        'createdAt',
-        'updatedAt',
-        'membersCount',
-      ]),
-      publicMetadata: zOrganization.shape.publicMetadata.parse(
-        org.publicMetadata,
-      ),
-    }
-  }),
+    .input(z.void())
+    .output(zOrganization.omit({privateMetadata: true}))
+    .query(async ({ctx}) => {
+      if (!ctx.viewer.orgId) {
+        throw new TRPCError({code: 'BAD_REQUEST', message: 'orgId needed'})
+      }
+      return await getOrganization(ctx.viewer.orgId)
+    }),
 
   updateCurrentOrganization: adminProcedure
     .input(zOrganization.pick({publicMetadata: true}))
@@ -79,3 +73,21 @@ export const authRouter = trpc.router({
       return org
     }),
 })
+
+async function getOrganization(organizationId: string) {
+  const org = await clerkClient.organizations.getOrganization({organizationId})
+  return {
+    ...R.pick(org, [
+      'id',
+      'name',
+      'slug',
+      'imageUrl',
+      'createdAt',
+      'updatedAt',
+      'membersCount',
+    ]),
+    publicMetadata: zOrganization.shape.publicMetadata.parse(
+      org.publicMetadata,
+    ),
+  }
+}

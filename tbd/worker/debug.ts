@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
-  db,
+  configDb,
   dbUpsert,
   getCommonObjectTable,
-  pgClient,
+  configPg,
   sql,
   stripNullByte,
 } from '@openint/db'
@@ -15,7 +15,7 @@ const sqlNow = sql`now()`
 async function main() {
   const table = getCommonObjectTable('crm_contact', {schema: 'byos_test'})
   await dbUpsert(
-    db,
+    configDb,
     table,
     [
       {
@@ -36,7 +36,7 @@ async function main() {
     ],
     {insertOnlyColumns: ['created_at'], noDiffColumns: ['updated_at']},
   )
-  await pgClient.end()
+  await configPg.end()
 }
 
 void main()

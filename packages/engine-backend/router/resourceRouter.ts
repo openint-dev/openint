@@ -11,7 +11,7 @@ import {
   zRaw,
 } from '@openint/cdk'
 import {TRPCError} from '@openint/trpc'
-import {joinPath, makeUlid, Rx, rxjs, z} from '@openint/util'
+import {joinPath, makeUlid, R, Rx, rxjs, z} from '@openint/util'
 import {inngest} from '../events'
 import {parseWebhookRequest} from '../parseWebhookRequest'
 import {zSyncOptions} from '../types'
@@ -204,11 +204,26 @@ export const resourceRouter = trpc.router({
       openapi: {method: 'GET', path: '/core/resource/{id}', tags},
     })
     .input(z.object({id: zId('reso')}))
-    .output(zRaw.resource) // TODO: This is actually expanded...
+    .output(
+      // TODO: Should we expand this?
+      zRaw.resource.extend({
+        connector_config: zRaw.connector_config.pick({
+          id: true,
+          orgId: true,
+          connectorName: true,
+        }),
+      }),
+    )
     .query(async ({input, ctx}) => {
       // do not expand for now otherwise permission issues..
       const reso = await ctx.services.getResourceOrFail(input.id)
-      return reso
+      const ccfg = await ctx.services.getConnectorConfigOrFail(
+        reso.connectorConfigId,
+      )
+      return {
+        ...reso,
+        connector_config: R.pick(ccfg, ['id', 'orgId', 'connectorName']),
+      }
     }),
   checkResource: protectedProcedure
     .meta({

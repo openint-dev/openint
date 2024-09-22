@@ -703,7 +703,32 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Resource"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Resource"
+                    }
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "connector_config": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Must start with 'ccfg_'"
+                        },
+                        "orgId": {
+                          "type": "string",
+                          "description": "Must start with 'org_'"
+                        },
+                        "connectorName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["id", "orgId", "connectorName"]
+                    }
+                  },
+                  "required": ["connector_config"]
                 }
               }
             }
@@ -2211,6 +2236,63 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Viewer"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/viewer/organization": {
+      "get": {
+        "operationId": "getCurrentOrganization",
+        "summary": "Get current organization of viewer accessing the API",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Must start with 'org_'"
+                    },
+                    "slug": {
+                      "type": ["string", "null"]
+                    },
+                    "publicMetadata": {
+                      "type": "object",
+                      "properties": {
+                        "webhook_url": {
+                          "type": "string",
+                          "description": "This is a postgres database only right now"
+                        },
+                        "database_url": {
+                          "type": "string",
+                          "title": "PostgreSQL Database URL",
+                          "description": "This is where data from resources are synced to by default",
+                          "example": "postgres://username:password@host:port/database"
+                        },
+                        "synced_data_schema": {
+                          "type": "string",
+                          "description": "Postgres schema to pipe data synced from end user resources into. Defaults to \"synced\" if missing."
+                        }
+                      }
+                    }
+                  },
+                  "required": ["id", "publicMetadata"]
                 }
               }
             }

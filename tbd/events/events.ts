@@ -22,8 +22,6 @@ const syncRequestedData = z.object({
     .enum(['full', 'incremental'])
     .optional()
     .describe('Incremental by default'),
-  /** e.g. postgres schema, created on demand */
-  destination_schema: z.string().optional(),
   /** Override the default page sizing, will be provider default otherwise... */
   page_size: z.number().optional(),
 })

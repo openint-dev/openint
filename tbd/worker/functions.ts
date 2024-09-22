@@ -1,12 +1,14 @@
 import {eq, sql} from 'drizzle-orm'
 import type {SendEventPayload} from 'inngest/helpers/types'
 import {createAppHandler} from '@openint/api'
+import type {Id} from '@openint/cdk'
 import {CATEGORY_BY_KEY, makeJwtClient} from '@openint/cdk'
 import {
-  db,
+  configDb,
   dbUpsert,
   ensureSchema,
   getCommonObjectTable,
+  getDb,
   schema,
   stripNullByte,
 } from '@openint/db'
@@ -59,16 +61,11 @@ export async function scheduleSyncs({
         return null
       }
       console.log(`[scheduleSyncs] Will sendEvent for ${r.id}`)
-
-      const category = CATEGORY_BY_KEY[event.data.vertical]
-
       return {
         name: 'sync.requested',
         data: {
           resource_id: r.id,
           vertical: event.data.vertical,
-          unified_objects: category.objects,
-          destination_schema: env.DESTINATION_SCHEMA,
           sync_mode: event.data.sync_mode,
         },
       } satisfies EventPayload
@@ -99,12 +96,15 @@ export async function syncConnection({
     data: {
       resource_id,
       vertical,
-      unified_objects = [],
+      unified_objects: _unified_objects,
       sync_mode = 'incremental',
-      destination_schema,
       page_size,
     },
   } = event
+
+  const unified_objects =
+    _unified_objects ?? CATEGORY_BY_KEY[vertical].objects ?? []
+
   console.log('[syncConnection] Start', {
     resource_id,
     eventId: event.id,
@@ -114,7 +114,7 @@ export async function syncConnection({
   })
 
   // This can probably be done via an upsert returning...
-  const syncState = await db.query.sync_state
+  const syncState = await configDb.query.sync_state
     .findFirst({
       where: eq(schema.sync_state.resource_id, resource_id),
     })
@@ -122,7 +122,7 @@ export async function syncConnection({
       (ss) =>
         ss ??
         // eslint-disable-next-line promise/no-nesting
-        db
+        configDb
           .insert(schema.sync_state)
           .values({resource_id, state: sql`${{}}::jsonb`})
           .returning()
@@ -130,7 +130,7 @@ export async function syncConnection({
           .then((rows) => rows[0]!),
     )
 
-  const syncRunId = await db
+  const syncRunId = await configDb
     .insert(schema.sync_run)
     .values({
       input_event: sql`${event}::jsonb`,
@@ -142,7 +142,7 @@ export async function syncConnection({
 
   const jwt = makeJwtClient({secretOrPublicKey: envRequired.JWT_SECRET})
 
-  const byos = initOpenIntSDK({
+  const openint = initOpenIntSDK({
     headers: {
       authorization: `Bearer ${jwt.signViewer({role: 'system'})}`,
       'x-resource-id': resource_id as `reso_${string}`,
@@ -153,6 +153,8 @@ export async function syncConnection({
     links: [createAppHandler()],
     // baseUrl: 'http://localhost:4000/api/v0',
   })
+
+  // Should we get the orgId and customerId as part of input ideally already?
 
   const overallState = (syncState.state ?? {}) as Record<
     string,
@@ -173,118 +175,138 @@ export async function syncConnection({
     return metrics[name] as T
   }
 
-  async function syncStreamPage(
-    stream: string,
-    table: ReturnType<typeof getCommonObjectTable>,
-    state: {cursor?: string | null},
-  ) {
-    try {
-      const res = await byos.GET(
-        `/unified/${vertical}/${stream}` as '/unified/crm/contact',
-        {params: {query: {cursor: state.cursor, page_size}}},
-      )
-      const count = incrementMetric(`${stream}_count`, res.data.items.length)
-      incrementMetric(`${stream}_page_count`)
-      console.log(`Syncing ${vertical} ${stream} count=${count}`)
-      if (res.data.items.length) {
-        await dbUpsert(
-          db,
-          table,
-          res.data.items.map(({raw_data, ...item}) => ({
-            // Primary keys
-            source_id: resource_id,
-            id: item.id,
-            // Other columns
-            created_at: sqlNow,
-            updated_at: sqlNow,
-            is_deleted: false,
-            // Workaround jsonb support issue... https://github.com/drizzle-team/drizzle-orm/issues/724
-            raw: sql`${stripNullByte(raw_data) ?? null}::jsonb`,
-            unified: sql`${stripNullByte(item)}::jsonb`,
-          })),
-          {insertOnlyColumns: ['created_at'], noDiffColumns: ['updated_at']},
-        )
-      }
-      return {
-        next_cursor: res.data.next_cursor,
-        has_next_page: res.data.has_next_page,
-      }
-    } catch (err) {
-      // HTTP 501 not implemented
-      if (err instanceof HTTPError && err.code === 501) {
-        // NOTE: vercel doesn't understand console.warn unfortunately... so this will show up as error
-        // https://vercel.com/docs/observability/runtime-logs#level
-        console.warn(
-          `[sync progress] ${resource_id} does not implement ${stream}`,
-        )
-        return {has_next_page: false, next_cursor: null}
-      }
-      throw err
-    }
-  }
-
-  async function syncStream(stream: string) {
-    const fullEntity = `${vertical}_${stream}`
-    console.log('[syncConnection] Syncing', fullEntity)
-    const table = getCommonObjectTable(fullEntity, {
-      schema: destination_schema,
-    })
-    await db.execute(table.createIfNotExistsSql())
-    const state = sync_mode === 'full' ? {} : overallState[stream] ?? {}
-    overallState[stream] = state
-    const streamSyncMode = state.cursor ? 'incremental' : 'full'
-    setMetric(`${stream}_sync_mode`, streamSyncMode)
-
-    while (true) {
-      // const ret = await step.run(
-      //   `${stream}-sync-${state.cursor ?? ''}`,
-      //   iteratePage,
-      // )
-      const ret = await syncStreamPage(stream, table, state)
-      console.log('[sync progress]', {
-        stream,
-        completed_cursor: state.cursor,
-        ...ret,
-      })
-      state.cursor = ret.next_cursor
-      // Persist state. TODO: Figure out how to make this work with step function
-      await Promise.all([
-        dbUpsert(
-          db,
-          schema.sync_state,
-          [
-            {
-              ...syncState,
-              state: sql`${overallState}::jsonb`,
-              updated_at: sqlNow,
-            },
-          ],
-          {
-            shallowMergeJsonbColumns: ['state'], // For race condition / concurrent sync of multiple streams
-            noDiffColumns: ['created_at', 'updated_at'],
-          },
-        ),
-        // Should this happen in a transaction? doesn't seem necessary but still
-        db
-          .update(schema.sync_run)
-          .set({
-            // Should we call it currentState instead? Also do we need it on the sync_state itself?
-            final_state: sql`${overallState}::jsonb`,
-            metrics: sql`${metrics}::jsonb`,
-          })
-          .where(eq(schema.sync_run.id, syncRunId)),
-      ])
-      if (!ret.has_next_page) {
-        break
-      }
-    }
-  }
-
   try {
+    async function syncStreamPage(
+      stream: string,
+      table: ReturnType<typeof getCommonObjectTable>,
+      state: {cursor?: string | null},
+    ) {
+      try {
+        const res = await openint.GET(
+          `/unified/${vertical}/${stream}` as '/unified/crm/contact',
+          {params: {query: {cursor: state.cursor, page_size}}},
+        )
+        const count = incrementMetric(`${stream}_count`, res.data.items.length)
+        incrementMetric(`${stream}_page_count`)
+        console.log(`Syncing ${vertical} ${stream} count=${count}`)
+        if (res.data.items.length) {
+          await dbUpsert(
+            db,
+            table,
+            res.data.items.map(({raw_data, ...item}) => ({
+              // Primary keys
+              source_id: resource_id,
+              id: item.id,
+              // Other columns
+              created_at: sqlNow,
+              updated_at: sqlNow,
+              is_deleted: false,
+              // Workaround jsonb support issue... https://github.com/drizzle-team/drizzle-orm/issues/724
+              raw: sql`${stripNullByte(raw_data) ?? null}::jsonb`,
+              unified: sql`${stripNullByte(item)}::jsonb`,
+            })),
+            {insertOnlyColumns: ['created_at'], noDiffColumns: ['updated_at']},
+          )
+        }
+        return {
+          next_cursor: res.data.next_cursor,
+          has_next_page: res.data.has_next_page,
+        }
+      } catch (err) {
+        // HTTP 501 not implemented
+        if (err instanceof HTTPError && err.code === 501) {
+          // NOTE: vercel doesn't understand console.warn unfortunately... so this will show up as error
+          // https://vercel.com/docs/observability/runtime-logs#level
+          console.warn(
+            `[sync progress] ${resource_id} does not implement ${stream}`,
+          )
+          return {has_next_page: false, next_cursor: null}
+        }
+        throw err
+      }
+    }
+
+    async function syncStream(stream: string) {
+      const fullEntity = `${vertical}_${stream}`
+      console.log('[syncConnection] Syncing', fullEntity)
+      const table = getCommonObjectTable(fullEntity, {
+        schema: synced_data_schema,
+      })
+      await db.execute(table.createIfNotExistsSql())
+      const state = sync_mode === 'full' ? {} : overallState[stream] ?? {}
+      overallState[stream] = state
+      const streamSyncMode = state.cursor ? 'incremental' : 'full'
+      setMetric(`${stream}_sync_mode`, streamSyncMode)
+
+      while (true) {
+        // const ret = await step.run(
+        //   `${stream}-sync-${state.cursor ?? ''}`,
+        //   iteratePage,
+        // )
+        const ret = await syncStreamPage(stream, table, state)
+        console.log('[sync progress]', {
+          stream,
+          completed_cursor: state.cursor,
+          ...ret,
+        })
+        state.cursor = ret.next_cursor
+        // Persist state. TODO: Figure out how to make this work with step function
+        await Promise.all([
+          dbUpsert(
+            configDb,
+            schema.sync_state,
+            [
+              {
+                ...syncState,
+                state: sql`${overallState}::jsonb`,
+                updated_at: sqlNow,
+              },
+            ],
+            {
+              shallowMergeJsonbColumns: ['state'], // For race condition / concurrent sync of multiple streams
+              noDiffColumns: ['created_at', 'updated_at'],
+            },
+          ),
+          // Should this happen in a transaction? doesn't seem necessary but still
+          configDb
+            .update(schema.sync_run)
+            .set({
+              // Should we call it currentState instead? Also do we need it on the sync_state itself?
+              final_state: sql`${overallState}::jsonb`,
+              metrics: sql`${metrics}::jsonb`,
+            })
+            .where(eq(schema.sync_run.id, syncRunId)),
+        ])
+        if (!ret.has_next_page) {
+          break
+        }
+      }
+    }
+    const reso = await openint
+      .GET('/core/resource/{id}', {params: {path: {id: resource_id}}})
+      .then((r) => r.data)
+
+    const org = await openint
+      .GET('/viewer/organization', {
+        headers: {
+          authorization: `Bearer ${jwt.signViewer({
+            role: 'org',
+            orgId: reso.connector_config.orgId as Id['org'],
+          })}`,
+        },
+      })
+      .then((r) => r.data)
+
+    if (!org.publicMetadata.database_url) {
+      throw new Error(`org does not have a database_url: ${org.id}`)
+    }
+    const synced_data_schema = org.publicMetadata.synced_data_schema ?? 'synced'
+    const {db, pg} = getDb(org.publicMetadata.database_url, {})
+
     // Load this from a config please...
-    if (destination_schema) {
-      await ensureSchema(db, destination_schema)
-      console.log('[syncConnection] Ensured schema', destination_schema)
+    if (synced_data_schema) {
+      await ensureSchema(db, synced_data_schema)
+      console.log('[syncConnection] Ensured schema', synced_data_schema)
     }
     // TODO: Collect list of errors not just the last one...
     for (const stream of unified_objects) {
@@ -300,10 +322,12 @@ export async function syncConnection({
         console.error('[syncConnection] Error syncing stream', stream, err)
       }
     }
+    // TODO: Put pg.end() in a finally block
+    await pg.end()
   } catch (err) {
     errorInfo = await parseErrorInfo(err)
   } finally {
-    await db
+    await configDb
       .update(schema.sync_run)
       .set({
         ...errorInfo,
@@ -322,7 +346,6 @@ export async function syncConnection({
       vertical,
       unified_objects,
       sync_mode,
-      destination_schema,
       page_size,
       //
       request_event_id: event.id,
@@ -351,9 +374,6 @@ export async function triggerImmediateSync({
   const data = {
     ...event.data,
     vertical: 'crm',
-    unified_objects: ['account', 'contact', 'opportunity', 'lead', 'user'],
-    // TODO: Dedupe with this scheduleSyncs
-    destination_schema: env.DESTINATION_SCHEMA,
   } satisfies Events['sync.requested']['data']
   await step.sendEvent('sync.requested', {name: 'sync.requested', data})
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {parseArgs} from 'node:util'
-import {db, desc, eq, pgClient, schema} from '@openint/db'
+import {configDb, configPg, desc, eq, schema} from '@openint/db'
 import {testEnv} from '@openint/env'
 import type {Events} from '@openint/events'
 import * as routines from './functions'
@@ -51,7 +51,7 @@ switch (cmd) {
         },
         step,
       })
-      .finally(() => pgClient.end())
+      .finally(() => configPg.end())
     break
   case 'syncConnection':
     void routines
@@ -65,7 +65,6 @@ switch (cmd) {
               ? [testEnv['UNIFIED_OBJECT']]
               : ['account', 'contact', 'opportunity', 'lead', 'user'],
             sync_mode: testEnv['SYNC_MODE'],
-            destination_schema: testEnv['DESTINATION_SCHEMA'],
             page_size: testEnv['PAGE_SIZE']
               ? Number.parseInt(testEnv['PAGE_SIZE'])
               : undefined,
@@ -73,10 +72,10 @@ switch (cmd) {
         },
         step,
       })
-      .finally(() => pgClient.end())
+      .finally(() => configPg.end())
     break
   case 'backfill':
-    void runBackfill().finally(() => pgClient.end())
+    void runBackfill().finally(() => configPg.end())
     break
   default:
     console.error('Unknown command', cmd)
@@ -113,7 +112,7 @@ async function runBackfill() {
   let i = 0
   for (const event of syncEvents) {
     i++
-    const lastRun = await db.query.sync_run.findFirst({
+    const lastRun = await configDb.query.sync_run.findFirst({
       where: eq(schema.sync_run.resource_id, event.data.resource_id),
       orderBy: desc(schema.sync_run.started_at),
     })
@@ -142,9 +141,6 @@ async function runBackfill() {
           }),
           ...(testEnv['SYNC_MODE'] && {
             sync_mode: testEnv['SYNC_MODE'],
-          }),
-          ...(testEnv['DESTINATION_SCHEMA'] && {
-            destination_schema: testEnv['DESTINATION_SCHEMA'],
           }),
         },
       },

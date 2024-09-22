@@ -1,3 +1,4 @@
+import type {DrizzleConfig} from 'drizzle-orm'
 import {sql} from 'drizzle-orm'
 import {drizzle} from 'drizzle-orm/postgres-js'
 import {migrate} from 'drizzle-orm/postgres-js/migrator'
@@ -11,16 +12,26 @@ export * from './upsert'
 
 export {schema}
 
-const url = new URL(env.POSTGRES_URL)
-if (env.DEBUG) {
-  console.log('[db] host', url.host)
+export function getDb<
+  TSchema extends Record<string, unknown> = Record<string, never>,
+>(url: string, config?: DrizzleConfig<TSchema>) {
+  const pg = postgres(url)
+  const db = drizzle(pg, {logger: !!env['DEBUG'], ...config})
+
+  return {db, pg}
 }
 
-// TODO: Remove these global variables...
-export const pgClient = postgres(env.POSTGRES_URL)
-export const db = drizzle(pgClient, {schema, logger: !!env['DEBUG']})
+const url = new URL(env.POSTGRES_URL)
+if (env.DEBUG) {
+  console.log('[config db] host', url.host)
+}
 
-export async function ensureSchema(thisDb: typeof db, schema: string) {
+export const {pg: configPg, db: configDb} = getDb(env.POSTGRES_URL, {schema})
+
+export async function ensureSchema(
+  thisDb: ReturnType<typeof getDb>['db'],
+  schema: string,
+) {
   // Check existence first because we may not have permission to actually create the schema
   const exists = await thisDb
     .execute(
@@ -44,22 +55,22 @@ export async function runMigration(opts?: {keepAlive?: boolean}) {
 
   const schema = env['POSTGRES_SCHEMA']
   if (schema) {
-    await ensureSchema(db, schema)
-    await db.execute(sql`
+    await ensureSchema(configDb, schema)
+    await configDb.execute(sql`
       SET search_path TO ${sql.identifier(schema)};
     `)
   }
 
   // const __filename = url.fileURLToPath(import.meta.url)
   // const __dirname = path.dirname(__filename)
-  await migrate(db, {
+  await migrate(configDb, {
     migrationsFolder: path.join(__dirname, 'migrations'),
     // Seems to have no impact, and unconditionally creates a drizzle schema... 🤔
     // migrationsTable: '_migrations',
   })
 
   if (!opts?.keepAlive) {
-    await pgClient.end()
+    await configPg.end()
   }
 }
 

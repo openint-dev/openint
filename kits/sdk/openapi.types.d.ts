@@ -100,6 +100,10 @@ export interface paths {
     /** Get current viewer accessing the API */
     get: operations['getViewer']
   }
+  '/viewer/organization': {
+    /** Get current organization of viewer accessing the API */
+    get: operations['getCurrentOrganization']
+  }
   '/openapi.json': {
     get: operations['public-getOpenapiDocument']
   }
@@ -1370,7 +1374,18 @@ export interface operations {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': components['schemas']['Resource']
+          'application/json': WithRequired<
+            {
+              connector_config: {
+                /** @description Must start with 'ccfg_' */
+                id: string
+                /** @description Must start with 'org_' */
+                orgId: string
+                connectorName: string
+              }
+            } & components['schemas']['Resource'],
+            'connector_config'
+          >
         }
       }
       /** @description Invalid input data */
@@ -2276,6 +2291,39 @@ export interface operations {
       200: {
         content: {
           'application/json': components['schemas']['Viewer']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** Get current organization of viewer accessing the API */
+  getCurrentOrganization: {
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            /** @description Must start with 'org_' */
+            id: string
+            slug?: string | null
+            publicMetadata: {
+              /** @description This is a postgres database only right now */
+              webhook_url?: string
+              /**
+               * PostgreSQL Database URL
+               * @description This is where data from resources are synced to by default
+               * @example postgres://username:password@host:port/database
+               */
+              database_url?: string
+              /** @description Postgres schema to pipe data synced from end user resources into. Defaults to "synced" if missing. */
+              synced_data_schema?: string
+            }
+          }
         }
       }
       /** @description Internal server error */

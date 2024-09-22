@@ -9,7 +9,7 @@ import {
 } from 'drizzle-orm/pg-core'
 import prettier from 'prettier'
 import prettierSql from 'prettier-plugin-sql'
-import {db} from './'
+import {configDb} from './'
 import {dbUpsert} from './upsert'
 
 const engagement_sequence = pgTable(
@@ -57,7 +57,7 @@ async function formatSql(sqlString: string) {
 
 test('upsert query', async () => {
   const query = dbUpsert(
-    db,
+    configDb,
     engagement_sequence,
     [
       {

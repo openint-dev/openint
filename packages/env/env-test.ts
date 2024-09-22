@@ -13,11 +13,6 @@ export const testEnv = createEnv({
     // Core env vars
     POSTGRES_URL: z.string().default('postgres://localhost:5432/postgres'),
     NANGO_SECRET_KEY: z.string().optional(),
-
-    // For sync
-    CONFIG_SCHEMA: z.string().optional(),
-    DESTINATION_SCHEMA: z.string().optional(),
-
     // Required for worker to work when deployed
     INNGEST_SIGNING_KEY: z.string().optional(),
     INNGEST_EVENT_KEY: z.string().optional(),
@@ -67,7 +62,6 @@ export const testEnv = createEnv({
     CONFIG_SCHEMA: process.env['CONFIG_SCHEMA'],
     CONNECTION_ID: process.env['CONNECTION_ID'],
     DEBUG: process.env['DEBUG'],
-    DESTINATION_SCHEMA: process.env['DESTINATION_SCHEMA'],
     INNGEST_EVENT_KEY: process.env['INNGEST_EVENT_KEY'],
     INNGEST_SIGNING_KEY: process.env['INNGEST_SIGNING_KEY'],
     NANGO_SECRET_KEY: process.env['NANGO_SECRET_KEY'],

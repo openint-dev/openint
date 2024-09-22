@@ -11,7 +11,7 @@ const zPostgresUrl = z
 
 export const zOrganization = z.object({
   id: zId('org'),
-  slug: z.string(),
+  slug: z.string().nullish(),
   publicMetadata: z.object({
     // TODO: Add client side encryption for sensitive metadata
     webhook_url: z
@@ -23,6 +23,12 @@ export const zOrganization = z.object({
       description: 'This is where data from resources are synced to by default',
       example: 'postgres://username:password@host:port/database',
     }),
+    synced_data_schema: z
+      .string()
+      .optional()
+      .describe(
+        'Postgres schema to pipe data synced from end user resources into. Defaults to "synced" if missing.',
+      ),
   }),
   privateMetadata: z.object({
     [kApikeyMetadata]: z.string().optional(),
