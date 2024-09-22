@@ -76,11 +76,16 @@ export const SchemaForm = React.forwardRef(function SchemaForm<
   )
 })
 
-/** https://fettblog.eu/typescript-react-generic-forward-refs/ */
+/**
+ * New approach https://www.kripod.dev/blog/fixing-generics-in-react/
+ * Original does not work no more https://fettblog.eu/typescript-react-generic-forward-refs/
+ */
 declare module 'react' {
-  function forwardRef<T, P = {}>(
-    render: (props: P, ref: React.ForwardedRef<T>) => React.ReactElement | null,
-  ): ((props: P & React.RefAttributes<T>) => React.ReactElement | null) & {
+  function forwardRef<T, P = NonNullable<unknown>>(
+    render: (props: P, ref: ForwardedRef<T>) => ReturnType<FunctionComponent>,
+  ): (
+    props: PropsWithoutRef<P> & RefAttributes<T>,
+  ) => ReturnType<FunctionComponent> & {
     displayName?: string
   }
 }

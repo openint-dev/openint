@@ -50,16 +50,20 @@ export const authRouter = trpc.router({
     const org = await clerkClient.organizations.getOrganization({
       organizationId: ctx.viewer.orgId,
     })
-    return R.pick(org, [
-      'id',
-      'publicMetadata',
-      'name',
-      'slug',
-      'imageUrl',
-      'createdAt',
-      'updatedAt',
-      'members_count',
-    ])
+    return {
+      ...R.pick(org, [
+        'id',
+        'name',
+        'slug',
+        'imageUrl',
+        'createdAt',
+        'updatedAt',
+        'members_count',
+      ]),
+      publicMetadata: zOrganization.shape.publicMetadata.parse(
+        org.publicMetadata,
+      ),
+    }
   }),
 
   updateCurrentOrganization: adminProcedure
