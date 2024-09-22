@@ -1,7 +1,8 @@
 import {z} from '@opensdks/util-zod'
 import {TRPCError} from '@trpc/server'
 import * as jwt from 'jsonwebtoken'
-import {DiscriminatedUnionWithAllKeys, R, zFunction} from '@openint/util'
+import type {DiscriminatedUnionWithAllKeys} from '@openint/util'
+import {R, zFunction} from '@openint/util'
 import type {EndUserId, ExtEndUserId, Id, UserId} from './id.types'
 import {zEndUserId, zId, zUserId} from './id.types'
 
@@ -102,11 +103,11 @@ export const zJwtPayload = z.object({
   /** Different meaning in different contexts */
   sub: z.string(),
   /**
-   * Jwt role is different from viewer role because supabase uses authenticated
-   * by default and it's a bit too much work right now to switch
-   * futher we never want to permit system role for now for security, and anon role has no token
+   * Jwt role is different from viewer role because supabase uses `authenticated`
+   * by default and it's a bit too much work right now to switch to `user` so we shall
+   * accept both then
    */
-  role: z.enum(['authenticated', 'end_user', 'org']),
+  role: z.enum([...zRole.options, 'authenticated']),
   /** Enforce that all jwts are timed. The actual validity check is done by jwtClient */
   exp: z.number(),
   org_id: zId('org').nullish(),
@@ -119,16 +120,19 @@ export const zJwtPayload = z.object({
 export const zViewerFromJwtPayload = zJwtPayload
   .nullish()
   .transform((payload): Viewer => {
-    // console.log('zViewerFromJwtPayload', payload)
+    console.log('zViewerFromJwtPayload', payload)
     switch (payload?.role) {
       case undefined:
+      case 'anon':
         return {role: 'anon'}
+      case 'user':
       case 'authenticated':
         return {
           role: 'user',
           userId: payload.sub as UserId,
           orgId: payload.org_id,
         }
+      // good reason to rename end_user to customer
       case 'end_user': {
         const [orgId, endUserId] = payload.sub.split('/') as [
           Id['org'],
@@ -138,11 +142,11 @@ export const zViewerFromJwtPayload = zJwtPayload
       }
       case 'org':
         return {role: payload.role, orgId: payload.sub as Id['org']}
+      case 'system':
+        return {role: 'system'}
     }
   })
   .pipe(zViewer)
-  // Not ideal we have to explictly type, but oh well
-  .refine((_): _ is Viewer<'anon' | 'end_user' | 'user' | 'org'> => true)
 
 export const zViewerFromUnverifiedJwtToken = z
   .string()
@@ -185,10 +189,11 @@ export const makeJwtClient = zFunction(
       }
     },
     signViewer: (
-      viewer: Viewer<'end_user' | 'user' | 'org'>,
+      viewer: Viewer,
       {validityInSeconds = 3600}: {validityInSeconds?: number} = {},
     ) => {
       const payload = {
+        role: 'anon',
         exp: Math.floor(Date.now() / 1000) + validityInSeconds,
         ...(viewer.role === 'end_user' && {
           role: 'end_user',
@@ -205,6 +210,10 @@ export const makeJwtClient = zFunction(
           role: 'authenticated',
           sub: viewer.userId,
           org_id: viewer.orgId, // Needed for RLS
+        }),
+        ...(viewer.role === 'system' && {
+          role: 'system',
+          sub: 'system',
         }),
         // Partial is a lie, it should not happen
       } satisfies Partial<z.input<typeof zViewerFromJwtPayload>>

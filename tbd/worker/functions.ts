@@ -1,7 +1,7 @@
 import {eq, sql} from 'drizzle-orm'
 import type {SendEventPayload} from 'inngest/helpers/types'
 import {createAppHandler} from '@openint/api'
-import {CATEGORY_BY_KEY} from '@openint/cdk'
+import {CATEGORY_BY_KEY, makeJwtClient} from '@openint/cdk'
 import {
   db,
   dbUpsert,
@@ -10,7 +10,7 @@ import {
   schema,
   stripNullByte,
 } from '@openint/db'
-import {testEnv as env} from '@openint/env'
+import {testEnv as env, envRequired} from '@openint/env'
 import type {Events} from '@openint/events'
 import {initOpenIntSDK} from '@openint/sdk'
 import {HTTPError, parseErrorInfo} from '../../packages/trpc/errors'
@@ -39,14 +39,14 @@ export async function scheduleSyncs({
   event,
 }: FunctionInput<'scheduler.requested'>) {
   console.log('[scheduleSyncs]', event)
+  const jwt = makeJwtClient({secretOrPublicKey: envRequired.JWT_SECRET})
   const openint = initOpenIntSDK({
-    headers: {
-      // Support system wide authentication here
-    },
+    headers: {authorization: `Bearer ${jwt.signViewer({role: 'system'})}`},
     // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
     // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
     // development
     links: [createAppHandler()],
+    baseUrl: 'http://localhost:4000/api/v0',
   })
 
   // TODO: Deal with pagination
@@ -140,11 +140,11 @@ export async function syncConnection({
     .returning()
     .then((rows) => rows[0]!.id)
 
+  const jwt = makeJwtClient({secretOrPublicKey: envRequired.JWT_SECRET})
+
   const byos = initOpenIntSDK({
     headers: {
-      // 'x-customer-id': customer_id, // This relies on customer-id mapping 1:1 to connection_id
-      // 'x-provider-name': provider_name, // This relies on provider_config_key mapping 1:1 to provider-name
-      'x-apikey': process.env['API_KEY'],
+      authorization: `Bearer ${jwt.signViewer({role: 'system'})}`,
       'x-resource-id': resource_id as `reso_${string}`,
     },
     // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
