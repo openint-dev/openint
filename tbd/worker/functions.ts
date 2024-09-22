@@ -1,6 +1,7 @@
-import {and, eq, sql} from 'drizzle-orm'
+import {eq, sql} from 'drizzle-orm'
 import type {SendEventPayload} from 'inngest/helpers/types'
 import {createAppHandler} from '@openint/api'
+import {CATEGORY_BY_KEY} from '@openint/cdk'
 import {
   db,
   dbUpsert,
@@ -38,10 +39,11 @@ export async function scheduleSyncs({
   event,
 }: FunctionInput<'scheduler.requested'>) {
   console.log('[scheduleSyncs]', event)
-  const byos = initOpenIntSDK({
+  const openint = initOpenIntSDK({
     headers: {
-      'x-api-key': env.SUPAGLUE_API_KEY,
-      'x-nango-secret-key': env.NANGO_SECRET_KEY,
+      // 'x-api-key': env.SUPAGLUE_API_KEY,
+      // 'x-nango-secret-key': env.NANGO_SECRET_KEY,
+      // Support system wide authentication here
     },
     // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
     // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
@@ -49,40 +51,25 @@ export async function scheduleSyncs({
     links: [createAppHandler()],
   })
 
-  const [syncConfigs, customers] = await Promise.all([
-    byos.GET('/sync_configs').then((r) => r.data),
-    byos.GET('/customers').then((r) => r.data),
-  ])
-  const connections = await Promise.all(
-    customers.map((c) =>
-      byos
-        .GET('/customers/{customer_id}/connections', {
-          params: {path: {customer_id: c.customer_id}},
-        })
-        .then((r) => r.data),
-    ),
-  ).then((nestedArr) => nestedArr.flat())
+  // TODO: Deal with pagination
+  const resources = await openint.GET('/core/resource').then((r) => r.data)
 
-  const events = connections
-    .map((c) => {
-      if (!event.data.provider_names.includes(c.provider_name)) {
+  const events = resources
+    .map((r) => {
+      if (!event.data.connector_names.includes(r.connectorName)) {
         // Only sync these for now...
         return null
       }
-      console.log(
-        `[scheduleSyncs] Will sendEvent for ${c.customer_id}:${c.provider_name}`,
-      )
-      const syncConfig = syncConfigs.find(
-        (sc) => sc.provider_name === c.provider_name,
-      )
+      console.log(`[scheduleSyncs] Will sendEvent for ${r.id}`)
+
+      const category = CATEGORY_BY_KEY[event.data.vertical]
+
       return {
         name: 'sync.requested',
         data: {
-          customer_id: c.customer_id,
-          provider_name: c.provider_name,
+          resource_id: r.id,
           vertical: event.data.vertical,
-          unified_objects: syncConfig?.unified_objects?.map((o) => o.object),
-          standard_objects: syncConfig?.standard_objects?.map((o) => o.object),
+          unified_objects: category.objects,
           destination_schema: env.DESTINATION_SCHEMA,
           sync_mode: event.data.sync_mode,
         },
@@ -91,16 +78,14 @@ export async function scheduleSyncs({
     .filter((c): c is NonNullable<typeof c> => !!c)
 
   console.log('[scheduleSyncs] Metrics', {
-    num_customers: customers.length,
-    num_connections: connections.length,
-    num_connections_to_sync: events.length,
+    num_resources: resources.length,
+    num_resources_to_sync: events.length,
   })
 
   await step.sendEvent('emit-connection-sync-events', events)
   // make it easier to see...
   return events.map((e) => ({
-    customer_id: e.data.customer_id,
-    provider_name: e.data.provider_name,
+    customer_id: e.data.resource_id,
   }))
 }
 
@@ -114,20 +99,16 @@ export async function syncConnection({
 }: FunctionInput<'sync.requested'>) {
   const {
     data: {
-      customer_id,
-      provider_name,
+      resource_id,
       vertical,
       unified_objects = [],
       sync_mode = 'incremental',
       destination_schema,
       page_size,
-      custom_objects = [],
-      standard_objects = [],
     },
   } = event
   console.log('[syncConnection] Start', {
-    customer_id,
-    provider_name,
+    resource_id,
     eventId: event.id,
     sync_mode,
     vertical,
@@ -137,10 +118,7 @@ export async function syncConnection({
   // This can probably be done via an upsert returning...
   const syncState = await db.query.sync_state
     .findFirst({
-      where: and(
-        eq(schema.sync_state.customer_id, customer_id),
-        eq(schema.sync_state.provider_name, provider_name),
-      ),
+      where: eq(schema.sync_state.resource_id, resource_id),
     })
     .then(
       (ss) =>
@@ -148,11 +126,7 @@ export async function syncConnection({
         // eslint-disable-next-line promise/no-nesting
         db
           .insert(schema.sync_state)
-          .values({
-            customer_id,
-            provider_name,
-            state: sql`${{}}::jsonb`,
-          })
+          .values({resource_id, state: sql`${{}}::jsonb`})
           .returning()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           .then((rows) => rows[0]!),
@@ -175,7 +149,7 @@ export async function syncConnection({
       // 'x-customer-id': customer_id, // This relies on customer-id mapping 1:1 to connection_id
       // 'x-provider-name': provider_name, // This relies on provider_config_key mapping 1:1 to provider-name
       'x-apikey': process.env['API_KEY'],
-      'x-resource-id': process.env['RESOURCE_ID'] as `reso_${string}`,
+      'x-resource-id': resource_id as `reso_${string}`,
     },
     // Bypass the normal fetch link http round-tripping back to our server and handle the BYOS request directly!
     // Though we are losing the ability to debug using Proxyman and others... So maybe make this configurable in
@@ -222,28 +196,17 @@ export async function syncConnection({
           table,
           res.data.items.map(({raw_data, ...item}) => ({
             // Primary keys
-            _supaglue_application_id: env.SUPAGLUE_APPLICATION_ID,
-            _supaglue_customer_id: customer_id, //  '$YOUR_CUSTOMER_ID',
-            _supaglue_provider_name: provider_name,
+            source_id: resource_id,
             id: item.id,
             // Other columns
             created_at: sqlNow,
             updated_at: sqlNow,
-            _supaglue_emitted_at: sqlNow,
-            last_modified_at: sqlNow, // TODO: Fix me...
             is_deleted: false,
             // Workaround jsonb support issue... https://github.com/drizzle-team/drizzle-orm/issues/724
             raw_data: sql`${stripNullByte(raw_data) ?? null}::jsonb`,
-            _supaglue_unified_data: sql`${stripNullByte(item)}::jsonb`,
+            unified: sql`${stripNullByte(item)}::jsonb`,
           })),
-          {
-            insertOnlyColumns: ['created_at'],
-            noDiffColumns: [
-              '_supaglue_emitted_at',
-              'last_modified_at',
-              'updated_at',
-            ],
-          },
+          {insertOnlyColumns: ['created_at'], noDiffColumns: ['updated_at']},
         )
       }
       return {
@@ -256,7 +219,7 @@ export async function syncConnection({
         // NOTE: vercel doesn't understand console.warn unfortunately... so this will show up as error
         // https://vercel.com/docs/observability/runtime-logs#level
         console.warn(
-          `[sync progress] ${provider_name} does not implement ${stream}`,
+          `[sync progress] ${resource_id} does not implement ${stream}`,
         )
         return {has_next_page: false, next_cursor: null}
       }
@@ -359,15 +322,12 @@ export async function syncConnection({
   await step.sendEvent('sync.completed', {
     name: 'sync.completed',
     data: {
-      customer_id,
-      provider_name,
+      resource_id,
       vertical,
       unified_objects,
       sync_mode,
       destination_schema,
       page_size,
-      custom_objects,
-      standard_objects,
       //
       request_event_id: event.id,
       run_id: syncRunId,
@@ -377,8 +337,7 @@ export async function syncConnection({
     },
   })
   console.log(`[syncConnection] Complete ${status}`, {
-    customer_id,
-    provider_name,
+    resource_id,
     status,
     event_id: event.id,
     metrics,

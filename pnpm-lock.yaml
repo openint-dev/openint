@@ -1379,9 +1379,6 @@ importers:
       '@opensdks/sdk-nango':
         specifier: 0.0.6
         version: 0.0.6
-      '@opensdks/sdk-supaglue':
-        specifier: 0.0.3
-        version: 0.0.3
       '@opensdks/util-zod':
         specifier: 0.0.15
         version: 0.0.15
@@ -1512,9 +1509,6 @@ importers:
       '@openint/events':
         specifier: workspace:*
         version: link:../../tbd/events
-      '@openint/mgmt':
-        specifier: workspace:*
-        version: link:../../tbd/mgmt
       '@openint/trpc':
         specifier: workspace:*
         version: link:../trpc
@@ -2040,42 +2034,14 @@ importers:
         specifier: ^3.16.0
         version: 3.16.0(typescript@5.6.2)
 
-  tbd/mgmt:
-    dependencies:
-      '@openint/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
-      '@openint/db':
-        specifier: workspace:*
-        version: link:../db
-      '@openint/env':
-        specifier: workspace:*
-        version: link:../../packages/env
-      '@openint/events':
-        specifier: workspace:*
-        version: link:../events
-      '@openint/vdk':
-        specifier: workspace:*
-        version: link:../../kits/vdk
-      '@opensdks/sdk-nango':
-        specifier: 0.0.6
-        version: 0.0.6
-      '@opensdks/sdk-supaglue':
-        specifier: 0.0.3
-        version: 0.0.3
-      cookie:
-        specifier: ^0.6.0
-        version: 0.6.0
-    devDependencies:
-      '@types/cookie':
-        specifier: ^0.6.0
-        version: 0.6.0
-
   tbd/worker:
     dependencies:
       '@openint/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@openint/cdk':
+        specifier: workspace:*
+        version: link:../../kits/cdk
       '@openint/db':
         specifier: workspace:*
         version: link:../db
@@ -4480,9 +4446,6 @@ packages:
   '@types/cookie@0.4.1':
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
 
-  '@types/cookie@0.6.0':
-    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
-
   '@types/cors@2.8.16':
     resolution: {integrity: sha512-Trx5or1Nyg1Fq138PCuWqoApzvoSLWzZ25ORBiHMbbUT42g578lH1GT4TwYDbiUOLFuDsCkfLneT2105fsFWGg==}
 
@@ -5801,10 +5764,6 @@ packages:
 
   cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
-    engines: {node: '>= 0.6'}
-
-  cookie@0.6.0:
-    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
 
   cookies-next@4.0.0:
@@ -15714,8 +15673,6 @@ snapshots:
 
   '@types/cookie@0.4.1': {}
 
-  '@types/cookie@0.6.0': {}
-
   '@types/cors@2.8.16':
     dependencies:
       '@types/node': 18.11.18
@@ -17188,8 +17145,6 @@ snapshots:
   cookie@0.4.2: {}
 
   cookie@0.5.0: {}
-
-  cookie@0.6.0: {}
 
   cookies-next@4.0.0:
     dependencies:

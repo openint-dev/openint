@@ -1,8 +1,8 @@
 // Inngest related exports
-import type {Events} from '@openint/events'
-import {eventsMap, inngest} from '@openint/events'
 import type {ServeHandlerOptions} from 'inngest'
 import {serve} from 'inngest/next'
+import type {Events} from '@openint/events'
+import {eventsMap, inngest} from '@openint/events'
 import * as functions from './functions'
 
 // TODO: add metadata to functions or otherwise generate inngestFunctions from functions
@@ -16,7 +16,7 @@ export const inngestFunctions = [
       step.sendEvent('scheduler.requested', {
         name: 'scheduler.requested',
         data: {
-          provider_names: [
+          connector_names: [
             'salesforce',
             'hubspot',
             'pipedrive',
@@ -38,7 +38,11 @@ export const inngestFunctions = [
     ({step}) =>
       step.sendEvent('scheduler.requested', {
         name: 'scheduler.requested',
-        data: {provider_names: ['hubspot'], vertical: 'crm', sync_mode: 'full'},
+        data: {
+          connector_names: ['hubspot'],
+          vertical: 'crm',
+          sync_mode: 'full',
+        },
       }),
   ),
   inngest.createFunction(

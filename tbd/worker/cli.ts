@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {parseArgs} from 'node:util'
-import {and, db, desc, eq, pgClient, schema} from '@openint/db'
+import {db, desc, eq, pgClient, schema} from '@openint/db'
 import {testEnv} from '@openint/env'
 import type {Events} from '@openint/events'
 import * as routines from './functions'
@@ -30,8 +30,7 @@ switch (cmd) {
       event: {
         name: 'sync.completed',
         data: {
-          customer_id: testEnv['CUSTOMER_ID']!,
-          provider_name: testEnv['PROVIDER_NAME']!,
+          resource_id: testEnv['RESOURCE_ID']!,
         },
       },
       step,
@@ -43,8 +42,8 @@ switch (cmd) {
         event: {
           name: 'scheduler.requested',
           data: {
-            provider_names: testEnv.PROVIDER_NAME
-              ? [testEnv.PROVIDER_NAME]
+            connector_names: testEnv.CONNECTOR_NAME
+              ? [testEnv.CONNECTOR_NAME]
               : ['hubspot', 'salesforce'],
             sync_mode: testEnv.SYNC_MODE ?? 'incremental',
             vertical: testEnv.VERTICAL ?? 'crm',
@@ -60,9 +59,7 @@ switch (cmd) {
         event: {
           name: 'sync.requested',
           data: {
-            // customer_id: 'outreach1', provider_name: 'outreach'
-            customer_id: testEnv['CUSTOMER_ID']!,
-            provider_name: testEnv['PROVIDER_NAME']!,
+            resource_id: testEnv['RESOURCE_ID']!,
             vertical: testEnv['VERTICAL']! as 'crm',
             unified_objects: testEnv['UNIFIED_OBJECT']
               ? [testEnv['UNIFIED_OBJECT']]
@@ -91,8 +88,8 @@ async function runBackfill() {
   await routines.scheduleSyncs({
     event: {
       data: {
-        provider_names: testEnv.PROVIDER_NAME
-          ? [testEnv.PROVIDER_NAME]
+        connector_names: testEnv.CONNECTOR_NAME
+          ? [testEnv.CONNECTOR_NAME]
           : ['hubspot', 'salesforce'],
         sync_mode: testEnv.SYNC_MODE ?? 'incremental',
         vertical: testEnv.VERTICAL ?? 'crm',
@@ -117,17 +114,14 @@ async function runBackfill() {
   for (const event of syncEvents) {
     i++
     const lastRun = await db.query.sync_run.findFirst({
-      where: and(
-        eq(schema.sync_run.customer_id, event.data.customer_id),
-        eq(schema.sync_run.provider_name, event.data.provider_name),
-      ),
+      where: eq(schema.sync_run.resource_id, event.data.resource_id),
       orderBy: desc(schema.sync_run.started_at),
     })
     // Should we handle timeout and other things?
     console.log('Backfill', i, 'of', syncEvents.length, event.data)
     if (
       (lastRun?.status === 'SUCCESS' || lastRun?.status === 'USER_ERROR') &&
-      event.data.provider_name !== 'hubspot' // Need to redo hubspot unfortunately...
+      event.data.resource_id !== 'hubspot' // Need to redo hubspot unfortunately...
     ) {
       console.log(
         'Skipping backfill',

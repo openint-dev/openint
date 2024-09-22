@@ -10,6 +10,7 @@
     "@openint/env": "workspace:*",
     "@openint/events": "workspace:*",
     "@openint/sdk": "workspace:*",
+    "@openint/cdk": "workspace:*",
     "@openint/sync": "workspace:*",
     "@openint/unified-etl": "workspace:*",
     "@opensdks/sdk-supaglue": "0.0.3",

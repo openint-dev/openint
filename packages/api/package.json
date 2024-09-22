@@ -17,7 +17,6 @@
     "@openint/engine-backend": "workspace:*",
     "@openint/env": "workspace:*",
     "@openint/events": "workspace:*",
-    "@openint/mgmt": "workspace:*",
     "@openint/trpc": "workspace:*",
     "@openint/unified-accounting": "workspace:*",
     "@openint/unified-ats": "workspace:*",

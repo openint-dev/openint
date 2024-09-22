@@ -5,7 +5,6 @@ export * from './nangoProxyLink'
 export * from './oauthConnector'
 export * from './openIntProxyLink'
 export * from './remote-procedure'
-export * from './supaglueProxyLink'
 // codegen:end
 
 export {initNangoSDK} from '@opensdks/sdk-nango'

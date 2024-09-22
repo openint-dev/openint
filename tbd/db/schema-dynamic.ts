@@ -48,32 +48,31 @@ export function getCommonObjectTable<TName extends string>(
   const table = (schema ? schema.table : pgTable)(
     tableName,
     {
-      _supaglue_application_id: text('_supaglue_application_id').notNull(),
-      _supaglue_provider_name: text('_supaglue_provider_name').notNull(),
-      _supaglue_customer_id: text('_supaglue_customer_id').notNull(),
-      _supaglue_emitted_at: timestamp('_supaglue_emitted_at', {
-        precision: 3,
-        mode: 'string',
-      }).notNull(),
+      source_id: text('source_id').notNull(),
+      // end_user_id
+      // integration_id
+      // connector_name
+      // these are all derived
       id: text('id').notNull(),
-      created_at: timestamp('created_at', {precision: 3, mode: 'string'}),
-      updated_at: timestamp('updated_at', {precision: 3, mode: 'string'}),
-      is_deleted: boolean('is_deleted').default(false).notNull(),
-      last_modified_at: timestamp('last_modified_at', {
+      created_at: timestamp('created_at', {
         precision: 3,
         mode: 'string',
-      }).notNull(),
-      raw_data: jsonb('raw_data'),
-      _supaglue_unified_data: jsonb('_supaglue_unified_data'),
+      })
+        .defaultNow()
+        .notNull(),
+      updated_at: timestamp('updated_at', {
+        precision: 3,
+        mode: 'string',
+      })
+        .defaultNow()
+        .notNull(),
+      is_deleted: boolean('is_deleted').default(false).notNull(),
+      raw: jsonb('raw'),
+      unified: jsonb('unified'),
     },
     (table) => ({
       primaryKey: primaryKey({
-        columns: [
-          table._supaglue_application_id,
-          table._supaglue_provider_name,
-          table._supaglue_customer_id,
-          table.id,
-        ],
+        columns: [table.source_id, table.id],
         name: `${tableName}_pkey`,
       }),
     }),
@@ -85,71 +84,19 @@ export function getCommonObjectTable<TName extends string>(
   const extension = {
     createIfNotExistsSql: () => sql`
       CREATE TABLE IF NOT EXISTS ${_schema}"${_table}" (
-        "_supaglue_application_id" text NOT NULL,
-        "_supaglue_provider_name" text NOT NULL,
-        "_supaglue_customer_id" text NOT NULL,
-        "_supaglue_emitted_at" timestamp(3) NOT NULL,
+        "source_id" text NOT NULL,
         "id" text NOT NULL,
-        "created_at" timestamp(3),
-        "updated_at" timestamp(3),
+        "created_at" timestamp with time zone DEFAULT now() NOT NULL,
+        "updated_at" timestamp with time zone DEFAULT now() NOT NULL,
         "is_deleted" boolean DEFAULT false NOT NULL,
-        "last_modified_at" timestamp(3) NOT NULL,
-        "raw_data" jsonb,
-        "_supaglue_unified_data" jsonb,
-        CONSTRAINT "${_table}_pkey" PRIMARY KEY("_supaglue_application_id","_supaglue_provider_name","_supaglue_customer_id","id")
+        "raw" jsonb,
+        "unified" jsonb,
+        CONSTRAINT "${_table}_pkey" PRIMARY KEY("source_id","id")
       );
     `,
   }
   Object.assign(table, extension)
   return table as typeof table & typeof extension
-}
-
-/** e.g. salesforce_contact, also `custom_objects` too...  */
-export function getProviderObjectTable<TName extends string>(
-  _tableName: TName,
-  opts: {custom?: boolean; schema?: string} = {},
-) {
-  const schema = opts.schema ? pgSchema(opts.schema) : undefined
-  // Supaglue put all custom objects into a single table... so we need to handle that too...
-  const tableName = opts.custom ? 'custom_objects' : _tableName
-  const table = (schema ? schema.table : pgTable)(
-    tableName,
-    {
-      _supaglue_application_id: text('_supaglue_application_id').notNull(),
-      _supaglue_provider_name: text('_supaglue_provider_name').notNull(),
-      _supaglue_customer_id: text('_supaglue_customer_id').notNull(),
-      _supaglue_id: text('_supaglue_id').notNull(),
-      _supaglue_emitted_at: timestamp('_supaglue_emitted_at', {
-        precision: 3,
-        mode: 'string',
-      }).notNull(),
-      _supaglue_last_modified_at: timestamp('_supaglue_last_modified_at', {
-        precision: 3,
-        mode: 'string',
-      }).notNull(),
-      _supaglue_is_deleted: boolean('_supaglue_is_deleted')
-        .default(false)
-        .notNull(),
-      _supaglue_raw_data: jsonb('_supaglue_raw_data'),
-      _supaglue_mapped_data: jsonb('_supaglue_mapped_data'),
-      // e.g. salesforce_product_gaps_c , or hubspot_productgaps
-      ...(opts?.custom && {
-        _supaglue_object_name: text('_supaglue_object_name').notNull(),
-      }),
-    },
-    (table) => ({
-      primaryKey: primaryKey({
-        columns: [
-          table._supaglue_application_id,
-          table._supaglue_provider_name,
-          table._supaglue_customer_id,
-          table._supaglue_id,
-        ],
-        name: `${tableName}_pkey`,
-      }),
-    }),
-  )
-  return table
 }
 
 // NOTE: the following tables are dynamically generated and depends on the incoming data, and in this case they are only used as sample fo copy & pasting
@@ -163,7 +110,3 @@ export function getProviderObjectTable<TName extends string>(
 
 export const crm_account = getCommonObjectTable('crm_account')
 export const engagement_sequence = getCommonObjectTable('engagement_sequence')
-export const salesforce_account = getProviderObjectTable('salesforce_account')
-export const custom_objects = getProviderObjectTable('hubspot_productgaps', {
-  custom: true,
-})

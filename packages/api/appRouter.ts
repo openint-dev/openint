@@ -6,7 +6,6 @@ import type {
 import {generateOpenApiDocument} from '@lilyrose2798/trpc-openapi/dist/generator'
 import {getServerUrl} from '@openint/app-config/constants'
 import {flatRouter, outgoingWebhookEventMap} from '@openint/engine-backend'
-import {mgmtRouter} from '@openint/mgmt'
 import accountingRouter from '@openint/unified-accounting'
 import atsRouter from '@openint/unified-ats'
 import bankingRouter from '@openint/unified-banking'
@@ -28,8 +27,6 @@ export const publicRouter = trpc.router({
 
 export const _appRouter = trpc.router({
   public: publicRouter,
-  // Can't get rid of mgmt api just yet
-  mgmt: mgmtRouter,
   // Verticals
   salesEngagement: salesEngagementRouter,
   crm: crmRouter,

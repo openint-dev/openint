@@ -2,7 +2,6 @@ import {z} from '@opensdks/util-zod'
 import {createEnv} from '@t3-oss/env-nextjs'
 import {proxyRequired} from './proxyRequired'
 
-export const MGMT_PROVIDER_NAME = z.enum(['supaglue', 'nango'])
 export const testEnv = createEnv({
   server: {
     // MARK: - Actually used
@@ -14,19 +13,6 @@ export const testEnv = createEnv({
     // Core env vars
     POSTGRES_URL: z.string().default('postgres://localhost:5432/postgres'),
     NANGO_SECRET_KEY: z.string().optional(),
-    SUPAGLUE_API_KEY: z.string().optional(),
-    SUPAGLUE_APPLICATION_ID: z.string().default('byos'),
-    MGMT_PROVIDER_NAME: MGMT_PROVIDER_NAME.default('nango').describe(
-      'Default management provider (csutomers, credentials)',
-    ),
-
-    NANGO_NO_ID_PREFIX: z
-      .string()
-      .optional()
-      .describe(
-        'When true, we will not add cus_ or ccfg_ to the id when converting to & from Nango. ' +
-          'This is useful if you already have a nango instance with existing IDs in it that is hard to migrate',
-      ),
 
     // For sync
     CONFIG_SCHEMA: z.string().optional(),
@@ -41,8 +27,8 @@ export const testEnv = createEnv({
     WEBHOOK_SECRET: z.string().optional(),
 
     // Used for scripts / cli only, maybe we should rename them to all _ prefixed to be clear?
-    PROVIDER_NAME: z.string().optional(),
-    CUSTOMER_ID: z.string().optional(),
+    RESOURCE_ID: z.string().optional(),
+    CONNECTOR_NAME: z.string().optional(),
     // Redundant with NEXT_PUBLIC_SERVER_URL, but shorter and for script only
     BYOS_URL: z.string().optional(),
     SFDC_INSTANCE_URL: z.string().optional(),
@@ -76,16 +62,14 @@ export const testEnv = createEnv({
     NEXT_PUBLIC_PORT: z.string().optional(),
   },
   runtimeEnv: {
+    RESOURCE_ID: process.env['RESOURCE_ID'],
     BYOS_URL: process.env['BYOS_URL'],
     CONFIG_SCHEMA: process.env['CONFIG_SCHEMA'],
     CONNECTION_ID: process.env['CONNECTION_ID'],
-    CUSTOMER_ID: process.env['CUSTOMER_ID'],
     DEBUG: process.env['DEBUG'],
     DESTINATION_SCHEMA: process.env['DESTINATION_SCHEMA'],
     INNGEST_EVENT_KEY: process.env['INNGEST_EVENT_KEY'],
     INNGEST_SIGNING_KEY: process.env['INNGEST_SIGNING_KEY'],
-    MGMT_PROVIDER_NAME: process.env['MGMT_PROVIDER_NAME'],
-    NANGO_NO_ID_PREFIX: process.env['NANGO_NO_ID_PREFIX'],
     NANGO_SECRET_KEY: process.env['NANGO_SECRET_KEY'],
     NEXT_PUBLIC_NANGO_PUBLIC_KEY: process.env['NEXT_PUBLIC_NANGO_PUBLIC_KEY'],
     NEXT_PUBLIC_PORT: process.env['NEXT_PUBLIC_PORT'],
@@ -93,11 +77,9 @@ export const testEnv = createEnv({
     PAGE_SIZE: process.env['PAGE_SIZE'],
     POSTGRES_URL: process.env['POSTGRES_URL'],
     PROVIDER_CONFIG_KEY: process.env['PROVIDER_CONFIG_KEY'],
-    PROVIDER_NAME: process.env['PROVIDER_NAME'],
+    CONNECTOR_NAME: process.env['CONNECTOR_NAME'],
     SFDC_ACCESS_TOKEN: process.env['SFDC_ACCESS_TOKEN'],
     SFDC_INSTANCE_URL: process.env['SFDC_INSTANCE_URL'],
-    SUPAGLUE_API_KEY: process.env['SUPAGLUE_API_KEY'],
-    SUPAGLUE_APPLICATION_ID: process.env['SUPAGLUE_APPLICATION_ID'],
     SYNC_MODE: process.env['SYNC_MODE'],
     UNIFIED_OBJECT: process.env['UNIFIED_OBJECT'],
     VERCEL_URL: process.env['VERCEL_URL'],

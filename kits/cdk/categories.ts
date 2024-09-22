@@ -4,15 +4,22 @@ import {objectKeys, R, titleCase} from '@openint/util'
 interface CategoryInfo {
   name?: string
   description?: string
+  objects?: string[]
 }
 
 // TODO: Should this correspond to the list of unified apis we have actually implemented?
 // Doesn't seem quite right otherwise...
+// Also maybe should be distributed in a metadata file associated with each unified api
+// impl.
 const _CATEGORY_BY_KEY = {
   banking: {},
   accounting: {},
-  crm: {},
+  crm: {
+    name: 'CRM',
+    objects: ['account', 'contact', 'opportunity', 'lead', 'user'],
+  },
   'sales-engagement': {},
+  'engagement': {}, // TODO: merge me
   commerce: {},
   'expense-management': {},
   enrichment: {},
@@ -31,6 +38,7 @@ const _CATEGORY_BY_KEY = {
                 integrating with your payroll. Only users who are invited to the
                 platform can access this information, and the integration is
                 one-way with no impact on original data.`,
+    objects: ['job', 'offer', 'candidate'],
   },
 } satisfies Record<string, CategoryInfo>
 

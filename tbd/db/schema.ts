@@ -5,7 +5,6 @@ import {
   jsonb,
   pgSchema,
   pgTable,
-  primaryKey,
   text,
   timestamp,
   varchar,
@@ -45,6 +44,7 @@ const schema = env['POSTGRES_SCHEMA'] ? pgSchema(env['POSTGRES_SCHEMA']) : null
 
 const table = schema?.table ?? pgTable
 
+/** Not currently used. Maybe better to have customer rather than end_user? */
 export const customer = table('customer', {
   // Standard cols
   id: text('id')
@@ -104,47 +104,30 @@ export const sync_run = table(
       'varchar',
       "CASE WHEN error_type IS NOT NULL THEN error_type WHEN completed_at IS NOT NULL THEN 'SUCCESS' ELSE 'PENDING' END",
     ),
-    customer_id: generated(
-      'customer_id',
+
+    resource_id: generated(
+      'resource_id',
       'varchar',
-      "input_event#>>'{data,customer_id}'",
-    ),
-    provider_name: generated(
-      'provider_name',
-      'varchar',
-      "input_event#>>'{data,provider_name}'",
+      "input_event#>>'{data,resource_id}'",
     ),
     error_detail: text('error_detail'),
     /** zErrorType. But we don't want to use postgres enum */
     error_type: varchar('error_type'),
   },
   (table) => ({
-    idx_customer_id_provider_name: index('idx_customer_id_provider_name').on(
-      table.customer_id,
-      table.provider_name,
-    ),
+    idx_resource_id: index('idx_resource_id').on(table.resource_id),
   }),
 )
 
-export const sync_state = table(
-  'sync_state',
-  {
-    customer_id: text('customer_id').notNull(),
-    provider_name: text('provider_name').notNull(),
-    state: jsonb('state'),
-    created_at: timestamp('created_at', {
-      precision: 3,
-      mode: 'string',
-    }).defaultNow(),
-    updated_at: timestamp('updated_at', {
-      precision: 3,
-      mode: 'string',
-    }).defaultNow(),
-  },
-  (table) => ({
-    primaryKey: primaryKey({
-      columns: [table.customer_id, table.provider_name],
-      name: 'sync_state_pkey',
-    }),
-  }),
-)
+export const sync_state = table('sync_state', {
+  resource_id: text('resource_id').primaryKey(),
+  state: jsonb('state'),
+  created_at: timestamp('created_at', {
+    precision: 3,
+    mode: 'string',
+  }).defaultNow(),
+  updated_at: timestamp('updated_at', {
+    precision: 3,
+    mode: 'string',
+  }).defaultNow(),
+})

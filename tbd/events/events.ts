@@ -15,15 +15,9 @@ export const zResult = z.enum([
 ])
 
 const syncRequestedData = z.object({
-  customer_id: z.string(),
-  provider_name: z.string(),
+  resource_id: z.string(),
   vertical: z.enum(['crm', 'engagement', 'ats']),
   unified_objects: z.array(z.string()).optional(),
-  /** Not implemented yet */
-  standard_objects: z.array(z.string()).optional(),
-  /** Not implemented yet */
-  custom_objects: z.array(z.string()).optional(),
-  /** How data will be replicated from source to destination. */
   sync_mode: z
     .enum(['full', 'incremental'])
     .optional()
@@ -37,7 +31,7 @@ const syncRequestedData = z.object({
 export const eventsMap = {
   'scheduler.requested': {
     data: z.object({
-      provider_names: z.array(z.string()),
+      connector_names: z.array(z.string()),
       vertical: z.enum(['crm', 'engagement', 'ats']),
       sync_mode: z.enum(['full', 'incremental']),
     }),
@@ -56,8 +50,8 @@ export const eventsMap = {
   },
   'connection.created': {
     data: z.object({
-      customer_id: z.string(),
-      provider_name: z.string(),
+      end_user_id: z.string(),
+      resource_id: z.string(),
       // TODO: Add more fields later...
       // connection_id: z.string(),
       // result: zResult,
