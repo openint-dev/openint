@@ -10,7 +10,9 @@ export const metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
+    // TODO Fix hydration error rather than suppress warning
+    // https://nextjs.org/docs/messages/react-hydration-error#solution-3-using-suppresshydrationwarning
+    <html lang="en" suppressHydrationWarning>
       <head></head>
       <body>{children}</body>
     </html>

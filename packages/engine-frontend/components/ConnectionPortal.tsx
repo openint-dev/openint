@@ -107,7 +107,8 @@ const NewConnectionCard = ({
       {category.name} data accurate.
     </p>
     <ConnectButton
-      className="bg-purple-400 hover:bg-purple-500"
+      // className="bg-purple-400 hover:bg-purple-500"
+      className="bg-[#8192FF] hover:bg-purple-500"
       connectorConfigFilters={{verticalKey: category.key}}></ConnectButton>
   </Card>
 )

@@ -45,7 +45,7 @@ export default async function PortalPage({
   }
 
   return (
-    <div className="h-screen w-screen p-6">
+    <div className="h-screen w-screen p-6 bg-[#FDF7FE]">
       <ClientRoot accessToken={viewer.accessToken} authStatus="success">
         <SuperHydrate dehydratedState={getDehydratedState()}>
           <ConnectionPortal />

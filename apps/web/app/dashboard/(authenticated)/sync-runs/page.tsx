@@ -29,10 +29,10 @@ export default function SyncRunsPage() {
           {accessorKey: 'resource_id'},
           {accessorKey: 'status'},
           {accessorKey: 'duration'},
-          {accessorKey: 'input_event'},
+          // {accessorKey: 'input_event'}, // TODO: Handle json
           {accessorKey: 'error_type'},
           {accessorKey: 'error_details'},
-          {accessorKey: 'metrics'},
+          // {accessorKey: 'metrics'}, // TODO: Handle json
           {accessorKey: 'created_at'},
           {accessorKey: 'updated_at'},
         ]}
