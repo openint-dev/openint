@@ -9,6 +9,7 @@ import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
 import {ConnectButton} from './ConnectButton'
+import {OrgThemeWrapper} from './OrgThemeWrapper'
 import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -85,8 +86,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
       }}
     </WithConnectConfig>
   )
-  // Does this actually belong inside the component?
-  return <div className="h-screen w-screen bg-[#FDF7FE]">{inner}</div>
+  return <OrgThemeWrapper>{inner}</OrgThemeWrapper>
 }
 
 const NewConnectionCard = ({
