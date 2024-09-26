@@ -119,7 +119,11 @@ export const zRaw = {
       config: z.record(z.unknown()).nullish(),
       orgId: zId('org'),
       displayName: z.string().nullish(),
-      disabled: z.boolean().optional(),
+      disabled: z.boolean().optional().openapi({
+        title: 'Disabled',
+        description:
+          'When disabled it will not be used for connection portal. Essentially a reversible soft-delete',
+      }),
 
       /** Could be full object later */
       defaultPipeOut: z

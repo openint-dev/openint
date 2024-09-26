@@ -157,12 +157,12 @@ export const makePostgresMetaService = zFunction(
           pool.any(
             sql`SELECT id, env_name, display_name FROM connector_config ${
               id && connectorName
-                ? sql`WHERE id = ${id} AND connector_name = ${connectorName}`
+                ? sql`WHERE id = ${id} AND connector_name = ${connectorName} AND disabled = FALSE`
                 : id
-                  ? sql`WHERE id = ${id}`
+                  ? sql`WHERE id = ${id} AND disabled = FALSE`
                   : connectorName
-                    ? sql`WHERE connector_name = ${connectorName}`
-                    : sql``
+                    ? sql`WHERE connector_name = ${connectorName} AND disabled = FALSE`
+                    : sql`WHERE disabled = FALSE`
             }`,
           ),
         )

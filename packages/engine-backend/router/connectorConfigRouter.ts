@@ -38,6 +38,7 @@ export const connectorConfigRouter = trpc.router({
           displayName: true,
           defaultPipeOut: true,
           defaultPipeIn: true,
+          disabled: true,
         })
         .partial()
         // Due to insert on conflict update it appears that orgId is actually required
@@ -75,7 +76,7 @@ export const connectorConfigRouter = trpc.router({
           oauthBaseSchema.connectorConfig.parse(input.config),
         )
       }
-      console.log('saving connector config', id, input)
+      // console.log('saving connector config', id, input)
 
       return ctx.services.patchReturning('connector_config', id, input)
     }),
@@ -97,9 +98,10 @@ export const connectorConfigRouter = trpc.router({
       }),
     )
     .output(zRaw.connector_config)
-    .mutation(async ({input: {id, ...input}, ctx}) =>
-      ctx.services.patchReturning('connector_config', id, input),
-    ),
+    .mutation(async ({input: {id, ...input}, ctx}) => {
+      // console.log('updating connector config', id, input)
+      return ctx.services.patchReturning('connector_config', id, input)
+    }),
 
   // Need a tuple for some reason... otherwise seems to not work in practice.
   adminDeleteConnectorConfig: adminProcedure
@@ -144,7 +146,13 @@ export const connectorConfigRouter = trpc.router({
 
   listConnectorConfigInfos: protectedProcedure
     .meta({
-      openapi: {method: 'GET', path: '/core/connector_config_info', tags},
+      openapi: {
+        method: 'GET',
+        path: '/core/connector_config_info',
+        tags,
+        description:
+          'For end user authentication and list a limited set of non private data',
+      },
     })
     .input(
       z.object({
@@ -170,12 +178,11 @@ export const connectorConfigRouter = trpc.router({
       ),
     )
     .query(async ({input: {type, id, connectorName}, ctx}) => {
-      const intInfos = await ctx.services.metaService.listConnectorConfigInfos({
-        id,
-        connectorName,
-      })
+      const ccfgInfos = await ctx.services.metaService.listConnectorConfigInfos(
+        {id, connectorName},
+      )
 
-      return intInfos
+      return ccfgInfos
         .map(({id, envName, displayName}) => {
           const connector = ctx.connectorMap[extractId(id)[1]]
           return connector

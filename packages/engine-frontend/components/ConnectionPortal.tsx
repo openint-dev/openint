@@ -1,7 +1,7 @@
 'use client'
 
 import {AlertTriangle} from 'lucide-react'
-import type {Vertical, Id} from '@openint/cdk'
+import type {Id, Vertical} from '@openint/cdk'
 import type {UIPropsNoChildren} from '@openint/ui'
 import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
@@ -22,7 +22,7 @@ export interface ConnectionPortalProps extends UIPropsNoChildren {
 // based on calls to useQuery so it doesn't need to be separately handled again on the client...
 export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
-  return (
+  const inner = (
     <WithConnectConfig>
       {({ccfgs, verticals: categories}) => {
         if (!ccfgs.length) {
@@ -85,6 +85,8 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
       }}
     </WithConnectConfig>
   )
+  // Does this actually belong inside the component?
+  return <div className="h-screen w-screen bg-[#FDF7FE]">{inner}</div>
 }
 
 const NewConnectionCard = ({

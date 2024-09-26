@@ -34,16 +34,16 @@ export default function ConnectorConfigsPage() {
       )}
       {connectorConfigsRes.data ? (
         <div className="flex flex-wrap">
-          {connectorConfigsRes.data.map((int) => {
-            const connector = catalog.data[int.connectorName]!
+          {connectorConfigsRes.data.map((ccfg) => {
+            const connector = catalog.data[ccfg.connectorName]!
             if (!connector) return
             return (
               <ConnectorConfigCard
-                key={int.id}
+                key={ccfg.id}
                 connector={connector}
-                connectorConfig={int}>
+                connectorConfig={ccfg}>
                 <ConnectorConfigSheet
-                  connectorConfig={int}
+                  connectorConfig={ccfg}
                   connectorName={connector.name}
                 />
               </ConnectorConfigCard>
