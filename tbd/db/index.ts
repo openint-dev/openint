@@ -14,16 +14,15 @@ export {schema}
 
 export function getDb<
   TSchema extends Record<string, unknown> = Record<string, never>,
->(url: string, config?: DrizzleConfig<TSchema>) {
-  const pg = postgres(url)
+>(urlString: string, config?: DrizzleConfig<TSchema>) {
+  const pg = postgres(urlString)
   const db = drizzle(pg, {logger: !!env['DEBUG'], ...config})
 
+  const url = new URL(urlString)
+  if (env.DEBUG) {
+    console.log('[db] host', url.host)
+  }
   return {db, pg}
-}
-
-const url = new URL(env.POSTGRES_URL)
-if (env.DEBUG) {
-  console.log('[config db] host', url.host)
 }
 
 export const {pg: configPg, db: configDb} = getDb(env.POSTGRES_URL, {schema})
