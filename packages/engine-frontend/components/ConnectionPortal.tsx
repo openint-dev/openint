@@ -9,7 +9,6 @@ import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
 import {ConnectButton} from './ConnectButton'
-import {OrgThemeWrapper} from './OrgThemeWrapper'
 import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -23,7 +22,7 @@ export interface ConnectionPortalProps extends UIPropsNoChildren {
 // based on calls to useQuery so it doesn't need to be separately handled again on the client...
 export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
-  const inner = (
+  return (
     <WithConnectConfig>
       {({ccfgs, verticals: categories}) => {
         if (!ccfgs.length) {
@@ -86,7 +85,6 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
       }}
     </WithConnectConfig>
   )
-  return <OrgThemeWrapper>{inner}</OrgThemeWrapper>
 }
 
 const NewConnectionCard = ({
