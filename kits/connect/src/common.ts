@@ -15,22 +15,20 @@ export type FrameMessage = z.infer<typeof zFrameMessage>
 export const defaultHost = 'https://openint.dev'
 
 export interface GetIFrameProps {
-  deploymentUrl?: string | null
+  baseUrl?: string | null
   params?: {token?: string; displayName?: string}
 }
 
 export const getIFrameUrl = ({
-  deploymentUrl = defaultHost,
+  baseUrl = defaultHost,
   params = {},
 }: GetIFrameProps) => {
   const placeholder = 'https://placeholder'
-  const url = new URL('/connect/portal', deploymentUrl ?? placeholder)
+  const url = new URL('/connect/portal', baseUrl ?? placeholder)
   Object.entries(params).forEach(([key, value]) => {
     if (value) {
-      url.searchParams.append(key, value)
+      url.searchParams.set(key, value)
     }
   })
-  return deploymentUrl
-    ? url.toString()
-    : url.toString().replace(placeholder, '')
+  return baseUrl ? url.toString() : url.toString().replace(placeholder, '')
 }

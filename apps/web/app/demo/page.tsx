@@ -15,11 +15,11 @@ function DemoInner() {
         <OpenIntConnectEmbed
           className="flex-1"
           params={{token}}
-          deploymentUrl={null}
+          baseUrl={null}
         />
       ) : (
         <p>
-          Please pass a valid venice connect token in the url as query param
+          Please pass a valid OpenInt connect token in the url as query param
           `?token=`
         </p>
       )}

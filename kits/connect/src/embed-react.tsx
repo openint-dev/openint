@@ -10,10 +10,10 @@ export interface OpenIntConnectEmbedProps
 
 export const OpenIntConnectEmbed = React.forwardRef(
   (
-    {deploymentUrl, params, onReady, ...iframeProps}: OpenIntConnectEmbedProps,
+    {baseUrl, params, onReady, ...iframeProps}: OpenIntConnectEmbedProps,
     forwardedRef: React.ForwardedRef<HTMLIFrameElement>,
   ) => {
-    const url = getIFrameUrl({deploymentUrl, params})
+    const url = getIFrameUrl({baseUrl, params})
     const [loading, setLoading] = React.useState(true)
 
     // Add a more reliable way to know iframe has fully finished loading
