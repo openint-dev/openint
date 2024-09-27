@@ -4,16 +4,25 @@ import {Search} from 'lucide-react'
 import React from 'react'
 import {Input, IntegrationCard} from '@openint/ui'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
+import type {ConnectEventType} from '../hocs/WithConnectorConnect'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {_trpcReact} from '../providers/TRPCProvider'
 
 export function IntegrationSearch({
   className,
   connectorConfigs,
+  onEvent,
 }: {
   className?: string
   /** TODO: Make this optional so it is easier to use it as a standalone component */
   connectorConfigs: ConnectorConfig[]
+  onEvent?: (event: {
+    integration: {
+      connectorConfigId: string
+      id: string
+    }
+    type: ConnectEventType
+  }) => void
 }) {
   const [searchText, setSearchText] = React.useState('')
 
@@ -52,11 +61,17 @@ export function IntegrationSearch({
               id: int.connector_config_id,
               connector: int.ccfg.connector,
             }}
-            // TODO: pre-select a single integration when possible
-            // onEvent={(e) => {
-            //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-            // }}
-          >
+            // pre-select a single integration when possible
+            // ^ don't remember what this comment means
+            onEvent={(e) => {
+              onEvent?.({
+                type: e.type,
+                integration: {
+                  connectorConfigId: int.connector_config_id,
+                  id: int.id,
+                },
+              })
+            }}>
             {({openConnect}) => (
               // <DialogTrigger asChild>
               <IntegrationCard

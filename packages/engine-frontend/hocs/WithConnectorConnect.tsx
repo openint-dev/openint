@@ -26,7 +26,7 @@ import {
 } from '../providers/OpenIntConnectProvider'
 import {_trpcReact} from '../providers/TRPCProvider'
 
-type ConnectEventType = 'open' | 'close' | 'error'
+export type ConnectEventType = 'open' | 'close' | 'error'
 
 type Resource = RouterOutput['listConnections'][number]
 
@@ -41,6 +41,7 @@ const __DEBUG__ = Boolean(
 export const WithConnectorConnect = ({
   connectorConfig: ccfg,
   resource,
+  onEvent,
   children,
 }: {
   connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
@@ -105,6 +106,7 @@ export const WithConnectorConnect = ({
     // one mutation, starting to feel a bit confusing...
     async (input?: RouterInput['createResource']) => {
       // For postgres and various connectors that does not require client side JS
+
       if (input) {
         return createResource.mutateAsync(input)
       }
@@ -142,6 +144,7 @@ export const WithConnectorConnect = ({
           })
         }
         setOpen(false)
+        onEvent?.({type: 'close'})
       },
       onError: (err) => {
         if (err === CANCELLATION_TOKEN) {
@@ -152,6 +155,7 @@ export const WithConnectorConnect = ({
           description: `${err}`,
           variant: 'destructive',
         })
+        onEvent?.({type: 'error'})
       },
     },
   )
@@ -161,6 +165,11 @@ export const WithConnectorConnect = ({
 
   // console.log('ccfg', int.id, 'open', open)
   const {debug} = useOptionalOpenIntConnectContext()
+
+  // TODO: Refactor Dialog logic to introduce `UserInputDialog` that lets you ask user needed
+  // information by providing a schema and asynchronously return result via a Promise
+  // such a dialog should be globally mounted and not be part of the current component tree
+  // to avoid issue of being dismissed unintentionally when component is unmounted
   return (
     // non modal dialog do not add pointer events none to the body
     // which workaround issue with multiple portals (dropdown, dialog) conflicting
@@ -169,6 +178,7 @@ export const WithConnectorConnect = ({
       {children({
         // Children is responsible for rendering dialog triggers as needed
         openConnect: () => {
+          onEvent?.({type: 'open'})
           // noop, allow the dialog to open instead via Trigger?
           if (!connectFn) {
             // The whole dialog trigger thing is a bit funky to work with
@@ -187,7 +197,7 @@ export const WithConnectorConnect = ({
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Connect to {ccfg.connector.name}</DialogTitle>
+          <DialogTitle>Connect to {ccfg.connector.displayName}</DialogTitle>
           {debug && (
             <DialogDescription>
               Using connector config ID: {ccfg.id}

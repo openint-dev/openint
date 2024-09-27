@@ -109,7 +109,19 @@ function MultipleConnectButton({
   const [open, setOpen] = React.useState(false)
 
   // Unconditional render to avoid delay when dialog is opened
-  const content = <IntegrationSearch connectorConfigs={connectorConfigs} />
+  const content = (
+    <IntegrationSearch
+      connectorConfigs={connectorConfigs}
+      onEvent={(e) => {
+        if (e.type === 'close' || e.type === 'error') {
+          // Cannot close during open event otherwise whole thing becomes unmounted
+          // and we end up closing the connect dialog itself...
+          // Once we have a global UserInputDialog
+          setOpen(false)
+        }
+      }}
+    />
+  )
 
   return (
     // non modal dialog do not add pointer events none to the body
