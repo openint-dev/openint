@@ -13,7 +13,7 @@ export const greenhouseDef = {
   name: 'greenhouse',
   schemas: greenhouseSchema,
   metadata: {
-    displayName: 'greenhouse',
+    displayName: 'Greenhouse',
     stage: 'beta',
     verticals: ['ats'],
     logoUrl: '/_assets/logo-greenhouse.png',

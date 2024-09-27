@@ -56,11 +56,11 @@ export function ResourceDropdownMenu(
   const deleteResource = _trpcReact.deleteResource.useMutation({
     onSuccess: () => {
       setOpen(false)
-      toast({title: 'Resource deleted', variant: 'success'})
+      toast({title: 'Connection deleted', variant: 'success'})
     },
     onError: (err) => {
       toast({
-        title: 'Failed to delete resource',
+        title: 'Failed to delete connection',
         description: `${err.message}`,
         variant: 'destructive',
       })

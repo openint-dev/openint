@@ -25,10 +25,6 @@ export function IntegrationSearch({
     ...int,
     ccfg: connectorConfigs.find((ccfg) => ccfg.id === int.connector_config_id)!,
   }))
-  // TODO: implement loading state here...
-  if (!ints) {
-    return null
-  }
 
   return (
     <div className={className}>
@@ -49,7 +45,7 @@ export function IntegrationSearch({
       </div>
       {/* Search results */}
       <div className="flex flex-wrap gap-4">
-        {ints.map((int) => (
+        {ints?.map((int) => (
           <WithConnectorConnect
             key={int.id}
             connectorConfig={{

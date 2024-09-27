@@ -108,6 +108,9 @@ function MultipleConnectButton({
 } & ConnectButtonCommonProps) {
   const [open, setOpen] = React.useState(false)
 
+  // Unconditional render to avoid delay when dialog is opened
+  const content = <IntegrationSearch connectorConfigs={connectorConfigs} />
+
   return (
     // non modal dialog do not add pointer events none to the body
     // which workaround issue with multiple portals (dropdown, dialog) conflicting
@@ -131,7 +134,7 @@ function MultipleConnectButton({
             <p>{category.description}</p>
           </>
         )}
-        <IntegrationSearch connectorConfigs={connectorConfigs} />
+        {content}
 
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
       </DialogContent>
