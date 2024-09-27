@@ -52,7 +52,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
             {/* Listing by categories */}
             {categoriesWithConnections.map((category) => (
               <div key={category.key}>
-                <h3 className="mb-4 ml-4 text-xl font-semibold tracking-tight">
+                <h3 className="mb-4 text-xl font-semibold tracking-tight">
                   {category.name}
                 </h3>
                 {category.connections.map((conn) => (
@@ -95,7 +95,7 @@ const NewConnectionCard = ({
   hasExisting: boolean
 }) => (
   <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
-    <AlertTriangle className="text-orange-500" />
+    <AlertTriangle className="size-8 text-orange-500" />
     <h3 className="text-black-dark mb-5 text-[24px] font-semibold leading-[36px] tracking-[-0.01em] antialiased">
       {hasExisting
         ? `Connect another ${category.name} integration`
