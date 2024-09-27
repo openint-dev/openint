@@ -121,7 +121,9 @@ export function makeDBService({
     }
     const table: MetaTable = metaService.tables[tableName]
     if (table.patch) {
-      await table.patch(id, zRaw[tableName].deepPartial().parse(_patch))
+      const dataToPatch = zRaw[tableName].deepPartial().parse(_patch)
+      // console.log(`[patch] Will patch`, {id, _patch, dataToPatch})
+      await table.patch(id, dataToPatch)
     } else {
       const data = await table.get(id)
 

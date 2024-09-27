@@ -12,7 +12,11 @@ function DemoInner() {
   return (
     <div className="flex h-screen w-screen flex-col">
       {token ? (
-        <OpenIntConnectEmbed className="flex-1" params={{token}} />
+        <OpenIntConnectEmbed
+          className="flex-1"
+          params={{token}}
+          deploymentUrl={null}
+        />
       ) : (
         <p>
           Please pass a valid venice connect token in the url as query param

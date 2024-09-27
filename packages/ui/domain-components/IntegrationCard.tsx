@@ -1,3 +1,4 @@
+import {Landmark} from 'lucide-react'
 import React from 'react'
 import type {Id} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
@@ -102,6 +103,9 @@ const IntegrationLogoTemp = ({
     />
   ) : (
     <div className={cn('flex flex-col items-center justify-center', className)}>
-      <span>{int.name}</span>
+      {/* <span>{int.name}</span> */}
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary">
+        <Landmark className="h-8 w-8 text-primary-foreground" />
+      </div>
     </div>
   )

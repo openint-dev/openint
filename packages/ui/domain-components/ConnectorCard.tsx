@@ -1,6 +1,7 @@
 import React from 'react'
 import type {Id} from '@openint/cdk'
 import type {RouterOutput} from '@openint/engine-backend'
+import {R} from '@openint/util'
 import {Badge, Card} from '../shadcn'
 import {cn} from '../utils'
 
@@ -35,12 +36,13 @@ export const ConnectorConfigCard = ({
     connectorName: string
     config?: Record<string, unknown> | null
     envName?: string | null
+    disabled?: boolean
   }
 }) => (
   <ConnectorCard
     {...props}
     showName={false}
-    labels={ccfg.envName ? [ccfg.envName] : []}
+    labels={R.compact([ccfg.envName, ccfg.disabled && 'disabled'])}
   />
 )
 

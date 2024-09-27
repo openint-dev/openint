@@ -12,22 +12,25 @@ export const zFrameMessage = z.discriminatedUnion('type', [
 ])
 export type FrameMessage = z.infer<typeof zFrameMessage>
 
-export const defaultVeniceHost = 'https://app.venice.is'
+export const defaultHost = 'https://openint.dev'
 
 export interface GetIFrameProps {
-  deploymentUrl?: string
+  deploymentUrl?: string | null
   params?: {token?: string; displayName?: string}
 }
 
 export const getIFrameUrl = ({
-  deploymentUrl = defaultVeniceHost,
+  deploymentUrl = defaultHost,
   params = {},
 }: GetIFrameProps) => {
-  const url = new URL('/connect', deploymentUrl)
+  const placeholder = 'https://placeholder'
+  const url = new URL('/connect/portal', deploymentUrl ?? placeholder)
   Object.entries(params).forEach(([key, value]) => {
     if (value) {
       url.searchParams.append(key, value)
     }
   })
-  return url.toString()
+  return deploymentUrl
+    ? url.toString()
+    : url.toString().replace(placeholder, '')
 }

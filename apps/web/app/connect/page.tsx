@@ -16,7 +16,7 @@ import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
 import {SetCookieAndRedirect} from './(oauth)/redirect/SetCookieAndRedirect'
-import ConnectPage from './ConnectPage'
+import ConnectPage from './page.client'
 import {kConnectSession, type ConnectSession} from './shared'
 
 export const metadata = {
