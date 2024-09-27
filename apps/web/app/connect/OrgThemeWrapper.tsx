@@ -4,10 +4,10 @@ export function OrgThemeWrapper({children}: {children: React.ReactNode}) {
   // TODO: we need to sanitize the theme value as they are from user
   // however it should affect only one's own account so damage scope is limited
   const themeVariables = {
-    '--background': 'transparent',
+    // '--background': 'transparent',
     // '--body-background': 'transparent',
     // Temp workaround for not having a --body-background variable just yet...
-    '--inner-background': '0 0% 100%',
+    // '--inner-background': '0 0% 100%',
   }
 
   return (
@@ -23,7 +23,7 @@ export function OrgThemeWrapper({children}: {children: React.ReactNode}) {
             )}
           }
           .org-theme-wrapper {
-            --background: var(--inner-background);
+
           }
         `,
         }}

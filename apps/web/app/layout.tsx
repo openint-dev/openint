@@ -22,7 +22,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       // }}
     >
       <head></head>
-      <body className='bg-'>{children}</body>
+      <body className="bg-transparent">{children}</body>
     </html>
   )
 }
