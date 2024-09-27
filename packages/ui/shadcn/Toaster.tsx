@@ -2,7 +2,6 @@
 
 import {Loader2} from 'lucide-react'
 import React from 'react'
-
 import {cn} from '../utils'
 // MARK: - useToast
 import type {ToastActionElement} from './Toast'
@@ -52,7 +51,7 @@ export function Toaster() {
 }
 
 const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+const TOAST_REMOVE_DELAY = 5 * 1000
 
 type ToasterToast = ToastProps & {
   id: string

@@ -17,6 +17,7 @@ import {
 } from '@openint/ui'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
+import {useOptionalOpenIntConnectContext} from '../providers/OpenIntConnectProvider'
 import {_trpcReact} from '../providers/TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -36,6 +37,8 @@ export function ResourceDropdownMenu(
 ) {
   const {toast} = useToast()
   const [open, setOpen] = React.useState(false)
+
+  const {debug} = useOptionalOpenIntConnectContext()
 
   // Add me when we introduce displayName field
   // const updateResource = trpcReact.updateResource.useMutation({
@@ -101,27 +104,31 @@ export function ResourceDropdownMenu(
             <Button variant="ghost">Options</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>{props.resource.id}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onSelect={() => {
-                  // Need to explicitly close dropdown menu
-                  // otherwise pointer:none will remain on the body for some reason
-                  // if a dialog inside opens immediately... (e.g. editing postgres)
-                  setOpen(false)
-                  connectProps.openConnect()
-                }}>
-                <Link2 className="mr-2 h-4 w-4" />
-                <span>{connectProps.label}</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => syncResourceMutate()}>
-                <RefreshCw className="mr-2 h-4 w-4" />
-                <span>Sync</span>
-              </DropdownMenuItem>
-              {/* Rename */}
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            {debug && (
+              <>
+                <DropdownMenuLabel>{props.resource.id}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    onSelect={(e) => {
+                      // Need to explicitly close dropdown menu
+                      // otherwise pointer:none will remain on the body for some reason
+                      // if a dialog inside opens immediately... (e.g. editing postgres)
+                      // setOpen(false)
+                      connectProps.openConnect()
+                      e.preventDefault()
+                    }}>
+                    <Link2 className="mr-2 h-4 w-4" />
+                    <span>{connectProps.label}</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => syncResourceMutate()}>
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    <span>Sync</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+              </>
+            )}
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onSelect={() => deleteResource.mutate({id: props.resource.id})}>

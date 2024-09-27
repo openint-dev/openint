@@ -46,18 +46,23 @@ export const ResourceCard = ({
             resource.connectorConfigId ||
             '<TODO>'}
         </h4>
-        <Badge
-          variant="secondary"
-          className={cn(
-            resource.status === 'healthy' && 'bg-green-200',
-            resource.status === 'manual' && 'bg-blue-200',
-            (resource.status === 'error' ||
-              resource.status === 'disconnected') &&
-              'bg-pink-200',
-          )}>
-          {/* TODO: Fix me */}
-          {resource.syncInProgress ? 'Syncing' : resource.status || 'Primary'}
-        </Badge>
+        {(resource.syncInProgress || resource.status) && (
+          <Badge
+            variant="secondary"
+            className={cn(
+              resource.status === 'healthy' && 'bg-green-200',
+              resource.status === 'manual' && 'bg-blue-200',
+              (resource.status === 'error' ||
+                resource.status === 'disconnected') &&
+                'bg-pink-200',
+            )}>
+            {
+              resource.syncInProgress ? 'Syncing' : resource.status
+              // TODO: Implement the concept of a primary resource
+              // || 'Primary'
+            }
+          </Badge>
+        )}
       </div>
       <div className="text-black-mid truncate text-sm tracking-[-0.01em] antialiased">
         {resource.syncInProgress ? (

@@ -20,7 +20,10 @@ import {
   useToast,
 } from '@openint/ui'
 import {z} from '@openint/util'
-import {useOpenIntConnectContext} from '../providers/OpenIntConnectProvider'
+import {
+  useOpenIntConnectContext,
+  useOptionalOpenIntConnectContext,
+} from '../providers/OpenIntConnectProvider'
 import {_trpcReact} from '../providers/TRPCProvider'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -157,6 +160,7 @@ export const WithConnectorConnect = ({
   const formRef = React.useRef<SchemaFormElement>(null)
 
   // console.log('ccfg', int.id, 'open', open)
+  const {debug} = useOptionalOpenIntConnectContext()
   return (
     // non modal dialog do not add pointer events none to the body
     // which workaround issue with multiple portals (dropdown, dialog) conflicting
@@ -184,9 +188,11 @@ export const WithConnectorConnect = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Connect to {ccfg.connector.name}</DialogTitle>
-          <DialogDescription>
-            Using connector config ID: {ccfg.id}
-          </DialogDescription>
+          {debug && (
+            <DialogDescription>
+              Using connector config ID: {ccfg.id}
+            </DialogDescription>
+          )}
         </DialogHeader>
         <SchemaForm
           ref={formRef}

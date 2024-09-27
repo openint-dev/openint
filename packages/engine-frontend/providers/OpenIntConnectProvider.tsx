@@ -3,6 +3,7 @@ import type {ConnectorClient} from '@openint/cdk'
 
 type OpenIntConnectContext = {
   clientConnectors: Record<string, ConnectorClient>
+  debug?: boolean
 }
 
 const OpenIntConnectContext = React.createContext<OpenIntConnectContext | null>(
@@ -23,6 +24,10 @@ export const useOpenIntConnectContext = () => {
   if (!ctx) {
     throw new Error('useClientConnectors must be used within a OpenIntProvider')
   }
-
   return ctx
+}
+
+export const useOptionalOpenIntConnectContext = () => {
+  const ctx = React.useContext(OpenIntConnectContext)
+  return {...ctx}
 }
