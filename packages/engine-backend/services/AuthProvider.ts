@@ -1,6 +1,9 @@
 import {z} from '@opensdks/util-zod'
-import {kApikeyMetadata} from '@openint/app-config/constants'
 import {zId} from '@openint/cdk'
+
+// TODO: Move this somewhere that is guaranteed to be safe for import from client...
+
+export const kApikeyMetadata = 'apikey' as const
 
 const zPostgresUrl = z
   .string()
@@ -30,14 +33,24 @@ export const zOrganization = z.object({
         'Events like sync.completed and connection.created can be sent to url of your choosing',
     }),
   }),
-  privateMetadata: z.object({
-    [kApikeyMetadata]: z.string().optional(),
-  }),
+  privateMetadata: z
+    .object({
+      [kApikeyMetadata]: z.string().optional(),
+    })
+    .optional(),
 })
+
+export type Organization = z.infer<typeof zOrganization>
 
 export const zUser = z.object({
   id: zId('user'),
-  publicMetadata: z.object({}),
-  privateMetadata: z.object({}),
-  unsafeMetadata: z.object({}),
+  publicMetadata: z.object({}).passthrough().optional(),
+  privateMetadata: z.object({}).passthrough().optional(),
+  unsafeMetadata: z.object({}).passthrough().optional(),
 })
+export type User = z.infer<typeof zUser>
+
+export interface AuthProvider {
+  getOrganization(id: string): Promise<Organization>
+  getUser(id: string): Promise<User>
+}

@@ -16,3 +16,4 @@ export * from './types'
 
 export * from './services/metaService'
 export * from './services/kvStore'
+export * from './services/AuthProvider'

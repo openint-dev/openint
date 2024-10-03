@@ -13,6 +13,7 @@ import {TRPCError} from '@openint/trpc'
 import {R} from '@openint/util'
 import type {Env} from '../../apps/app-config/env'
 import {makeServices as _makeServices} from './services'
+import type {AuthProvider} from './services/AuthProvider'
 // Should we actually do this hmm
 import type {_ConnectorConfig} from './services/dbService'
 import type {MetaService} from './services/metaService'
@@ -66,6 +67,8 @@ export interface ContextFactoryOptions<
 
   /** Used to store metadata & configurations */
   getMetaService: (viewer: Viewer) => MetaService
+
+  authProvider: AuthProvider
 }
 
 export function getContextFactory<
@@ -84,7 +87,12 @@ export function getContextFactory<
   const jwt = makeJwtClient({secretOrPublicKey: jwtSecret})
 
   const getServices = (viewer: Viewer) =>
-    _makeServices({metaService: getMetaService(viewer), connectorMap, env})
+    _makeServices({
+      metaService: getMetaService(viewer),
+      connectorMap,
+      env,
+      authProvider: config.authProvider,
+    })
 
   function fromViewer(viewer: Viewer): Omit<RouterContext, 'remoteResourceId'> {
     return {

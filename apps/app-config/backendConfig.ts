@@ -1,4 +1,8 @@
 import {clerkClient} from '@clerk/nextjs/server'
+import {
+  getOrganizationOmitPrivateMeta,
+  getUserOmitPrivateMeta,
+} from '@openint/api/authRouter'
 import type {LinkFactory} from '@openint/cdk'
 import {logLink, renameAccountLink} from '@openint/cdk'
 import type {PipelineInput} from '@openint/engine-backend'
@@ -58,4 +62,8 @@ export const contextFactory = getContextFactory({
     log: logLink,
   },
   clerk: clerkClient,
+  authProvider: {
+    getOrganization: (orgId) => getOrganizationOmitPrivateMeta(orgId),
+    getUser: (userId) => getUserOmitPrivateMeta(userId),
+  },
 })

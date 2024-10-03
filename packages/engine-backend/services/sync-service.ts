@@ -12,9 +12,10 @@ import type {
 } from '@openint/cdk'
 import {bankingLink, logLink, makeId, sync} from '@openint/cdk'
 import type {z} from '@openint/util'
-import {makeUlid, rxjs} from '@openint/util'
+import {rxjs} from '@openint/util'
 import {inngest} from '../events'
 import type {zSyncOptions} from '../types'
+import type {AuthProvider} from './AuthProvider'
 import type {
   _ConnectorConfig,
   _PipelineExpanded,
@@ -30,6 +31,7 @@ export function makeSyncService({
   getPipelineExpandedOrFail,
   getResourceExpandedOrFail,
   getFetchLinks,
+  authProvider,
 }: {
   metaService: MetaService
   metaLinks: ReturnType<typeof makeMetaLinks>
@@ -40,24 +42,42 @@ export function makeSyncService({
     typeof makeDBService
   >['getResourceExpandedOrFail']
   getFetchLinks: (reso: _ResourceExpanded) => FetchLink[]
+  authProvider: AuthProvider
 }) {
   async function ensurePipelinesForResource(resoId: Id['reso']) {
-    // Cancelled
-    if ('true' === 'true') {
-      // No longer use the previous logic
-      return
-    }
+    console.log('[ensurePipelinesForResource]', resoId)
     const pipelines = await metaService.findPipelines({resourceIds: [resoId]})
     const reso = await getResourceExpandedOrFail(resoId)
     const createdIds: Array<Id['pipe']> = []
-    const defaultDestId = reso.connectorConfig?.defaultPipeOut?.destination_id
-
+    let defaultDestId = reso.connectorConfig?.defaultPipeOut?.destination_id
+    if (!defaultDestId) {
+      const org = await authProvider.getOrganization(reso.connectorConfig.orgId)
+      if (org.publicMetadata.database_url) {
+        const dCcfgId = makeId('ccfg', 'postgres', 'default_' + org.id)
+        defaultDestId = makeId('reso', 'postgres', 'default_' + org.id)
+        await metaLinks.patch('connector_config', dCcfgId, {
+          orgId: org.id,
+          // Defaulting to disabled to not show up for end users as we don't have another way to filter them out for now
+          // Though technically incorrect as we will later pause syncing for disabled connectors
+          disabled: true,
+          displayName: 'Default Postgres Connector for sync',
+        })
+        console.log('Created default connector config', dCcfgId)
+        // Do we actually need to store this?
+        await metaLinks.patch('resource', defaultDestId, {
+          connectorConfigId: dCcfgId,
+          // Should always snake_case here. This is also not typesafe...
+          settings: {databaseUrl: org.publicMetadata.database_url},
+        })
+        console.log('Created default resource', defaultDestId)
+      }
+    }
 
     if (
       defaultDestId &&
       !pipelines.some((p) => p.destinationId === defaultDestId)
     ) {
-      const pipelineId = makeId('pipe', makeUlid())
+      const pipelineId = makeId('pipe', 'default_out_' + reso.id)
       createdIds.push(pipelineId)
       console.log(
         `[sync-serivce] Creating default outgoing pipeline ${pipelineId} for ${resoId} to ${defaultDestId}`,
@@ -71,7 +91,7 @@ export function makeSyncService({
 
     const defaultSrcId = reso.connectorConfig?.defaultPipeIn?.source_id
     if (defaultSrcId && !pipelines.some((p) => p.sourceId === defaultSrcId)) {
-      const pipelineId = makeId('pipe', makeUlid())
+      const pipelineId = makeId('pipe', 'default_in_' + reso.id)
       createdIds.push(pipelineId)
       console.log(
         `[sync-serivce] Creating default incoming pipeline ${pipelineId} for ${resoId} from ${defaultSrcId}`,
@@ -292,7 +312,10 @@ export function makeSyncService({
       src,
       state: pipe.sourceState,
       endUser,
-      streams: pipeline.streams ?? undefined,
+      streams:
+        pipeline.streams ??
+        pipeline.source.connectorConfig.defaultPipeOut?.streams ??
+        undefined,
     })
 
     const source$ = opts.source$

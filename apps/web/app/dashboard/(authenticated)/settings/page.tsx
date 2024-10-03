@@ -1,7 +1,7 @@
 'use client'
 
 import type {AppRouter} from '@openint/api'
-import {zOrganization} from '@openint/api/platform-models'
+import {zOrganization} from '@openint/engine-backend/services/AuthProvider'
 import type {TRPCReact} from '@openint/engine-frontend'
 import {_trpcReact, useMutationToast} from '@openint/engine-frontend'
 import {SchemaForm} from '@openint/ui'

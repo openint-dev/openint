@@ -135,7 +135,9 @@ export const zRaw = {
             .describe(
               'Array of transformations that the data gets piped through on the way out. Typically used for things like unification / normalization.',
             ),
-          destination_id: zId('reso'),
+          destination_id: zId('reso').optional().openapi({
+            description: 'Defaults to the org-wide postgres',
+          }),
         })
         .nullish()
         .describe(
