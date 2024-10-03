@@ -6,7 +6,7 @@
   "scripts": {},
   "dependencies": {
     "@opensdks/util-zod": "0.0.15",
-    "inngest": "^3.16.0"
+    "inngest": "^3.22.13"
   },
   "devDependencies": {}
 }

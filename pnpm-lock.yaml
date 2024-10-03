@@ -558,8 +558,8 @@ importers:
         specifier: 1.18.1
         version: 1.18.1
       inngest:
-        specifier: ^3.16.0
-        version: 3.16.0(typescript@5.6.2)
+        specifier: ^3.22.13
+        version: 3.22.13(h3@1.8.2)(next@14.2.13(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.6.2)
       lucide-react:
         specifier: 0.192.0
         version: 0.192.0(react@18.3.1)
@@ -1576,8 +1576,8 @@ importers:
         specifier: ^0.29.3
         version: 0.29.5(@types/pg@8.6.5)(@types/react@18.0.27)(pg@8.8.0(pg-native@3.0.1))(postgres@3.4.4)(react@18.3.1)
       inngest:
-        specifier: ^3.16.0
-        version: 3.16.0(typescript@5.6.2)
+        specifier: ^3.22.13
+        version: 3.22.13(h3@1.8.2)(next@14.2.13(@babel/core@7.23.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.6.2)
       zod-openapi:
         specifier: 2.14.0
         version: 2.14.0(zod@3.22.4)
@@ -2037,8 +2037,8 @@ importers:
         specifier: 0.0.15
         version: 0.0.15
       inngest:
-        specifier: ^3.16.0
-        version: 3.16.0(typescript@5.6.2)
+        specifier: ^3.22.13
+        version: 3.22.13(h3@1.8.2)(next@14.2.13(@babel/core@7.23.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.6.2)
 
   tbd/worker:
     dependencies:
@@ -2070,8 +2070,8 @@ importers:
         specifier: ^0.29.3
         version: 0.29.5(@types/pg@8.6.5)(@types/react@18.0.27)(pg@8.8.0(pg-native@3.0.1))(postgres@3.4.4)(react@18.3.1)
       inngest:
-        specifier: ^3.12.0
-        version: 3.16.0(typescript@5.6.2)
+        specifier: ^3.22.13
+        version: 3.22.13(h3@1.8.2)(next@14.2.13(@babel/core@7.23.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.6.2)
       postgres:
         specifier: ^3.4.3
         version: 3.4.4
@@ -7663,11 +7663,41 @@ packages:
   inline-style-prefixer@6.0.4:
     resolution: {integrity: sha512-FwXmZC2zbeeS7NzGjJ6pAiqRhXR0ugUShSNb6GApMl6da0/XGc4MOJsoWAywia52EEWbXNSy0pzkwz/+Y+swSg==}
 
-  inngest@3.16.0:
-    resolution: {integrity: sha512-JWQsB2DQbWIlGGvQfEujXjebDbtq5jOHloO9AyEoT9SDvmNYQj/k549ZW6gKprhUlZKdiHX1xQ+vWbzxEuQSxw==}
+  inngest@3.22.13:
+    resolution: {integrity: sha512-IBF0wgw3hfYyl59RX6xilKYQFbI+8kOLi78jIoi1zRheVoUAW4MMZEPOFpQVn3at1XtZehwSffctqZ4TjijtCQ==}
     engines: {node: '>=14'}
     peerDependencies:
+      '@sveltejs/kit': '>=1.27.3'
+      '@vercel/node': '>=2.15.9'
+      aws-lambda: '>=1.0.7'
+      express: '>=4.19.2'
+      fastify: '>=4.21.0'
+      h3: '>=1.8.1'
+      hono: '>=4.2.7'
+      koa: '>=2.14.2'
+      next: '>=12.0.0'
       typescript: '>=4.7.2'
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      '@vercel/node':
+        optional: true
+      aws-lambda:
+        optional: true
+      express:
+        optional: true
+      fastify:
+        optional: true
+      h3:
+        optional: true
+      hono:
+        optional: true
+      koa:
+        optional: true
+      next:
+        optional: true
+      typescript:
+        optional: true
 
   inquirer@7.3.3:
     resolution: {integrity: sha512-JG3eIAj5V9CwcGvuOmoo6LB9kbAYT8HXffUl6memuszlwDC/qvFAJw49XJ5NROSFNPxp3iQg1GqkFhaY/CR0IA==}
@@ -19702,21 +19732,44 @@ snapshots:
       css-in-js-utils: 3.1.0
       fast-loops: 1.1.3
 
-  inngest@3.16.0(typescript@5.6.2):
+  inngest@3.22.13(h3@1.8.2)(next@14.2.13(@babel/core@7.23.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.6.2):
     dependencies:
       '@types/debug': 4.1.12
       canonicalize: 1.0.8
       chalk: 4.1.2
       cross-fetch: 4.0.0
       debug: 4.3.4
-      h3: 1.8.2
       hash.js: 1.1.7
       json-stringify-safe: 5.0.1
       ms: 2.1.3
       serialize-error-cjs: 0.1.3
       strip-ansi: 5.2.0
-      typescript: 5.6.2
       zod: 3.22.4
+    optionalDependencies:
+      h3: 1.8.2
+      next: 14.2.13(@babel/core@7.23.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      typescript: 5.6.2
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  inngest@3.22.13(h3@1.8.2)(next@14.2.13(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.6.2):
+    dependencies:
+      '@types/debug': 4.1.12
+      canonicalize: 1.0.8
+      chalk: 4.1.2
+      cross-fetch: 4.0.0
+      debug: 4.3.4
+      hash.js: 1.1.7
+      json-stringify-safe: 5.0.1
+      ms: 2.1.3
+      serialize-error-cjs: 0.1.3
+      strip-ansi: 5.2.0
+      zod: 3.22.4
+    optionalDependencies:
+      h3: 1.8.2
+      next: 14.2.13(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      typescript: 5.6.2
     transitivePeerDependencies:
       - encoding
       - supports-color
