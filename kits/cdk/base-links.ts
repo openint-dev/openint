@@ -7,6 +7,7 @@ import type {
 } from '@openint/sync'
 import type {WritableDraft} from '@openint/util'
 import {produce, R, Rx, rxjs} from '@openint/util'
+import type {Id} from './id.types'
 
 type Data = AnyEntityPayload
 type OperationType = SyncOperation['type']
@@ -91,6 +92,23 @@ export function mergeReady<T extends AnyEntityPayload>(len: number): Link<T> {
         console.log(`[mergeReady] Overall ready from ${len} systems`)
       }
     }
+    return rxjs.of(op)
+  })
+}
+
+export function prefixConnectorNameLink(ctx: {
+  source: {
+    id: Id['reso']
+    connectorConfig: {connectorName: string}
+    metadata?: unknown
+  }
+}): Link<AnyEntityPayload, AnyEntityPayload> {
+  return Rx.mergeMap((op) => {
+    if (op.type !== 'data') {
+      return rxjs.of(op)
+    }
+
+    op.data.entityName = `${ctx.source.connectorConfig.connectorName}_${op.data.entityName}`
     return rxjs.of(op)
   })
 }

@@ -10,7 +10,13 @@ import type {
   StreamsV1,
   StreamsV2,
 } from '@openint/cdk'
-import {bankingLink, logLink, makeId, sync} from '@openint/cdk'
+import {
+  bankingLink,
+  logLink,
+  makeId,
+  prefixConnectorNameLink,
+  sync,
+} from '@openint/cdk'
 import type {z} from '@openint/util'
 import {rxjs} from '@openint/util'
 import {inngest} from '../events'
@@ -135,6 +141,8 @@ export function makeSyncService({
         switch (l) {
           case 'banking':
             return bankingLink({source})
+          case 'prefix_connector_name':
+            return prefixConnectorNameLink({source})
           default:
             throw new Error(`Unknown link ${l}`)
         }
