@@ -44,16 +44,16 @@ export interface ConnectorSchemas {
 
   // MARK: @deprecated. Use the etl vertical instead
 
-  /** @deprecated. Use the etl vertical instead */
+  /** Will soon be deprecated @deprecated. Use the etl vertical instead */
   sourceState?: z.ZodTypeAny
 
-  /** @deprecated. Use the etl vertical instead */
+  /** @deprecated. Use sourceOutputEntities */
   sourceOutputEntity?: z.ZodTypeAny
-  /** @deprecated. Use the etl vertical instead */
+  /** Will soon be deprecated @deprecated. Use the etl vertical instead */
   sourceOutputEntities?: Record<string, z.ZodTypeAny>
-  /** @deprecated. Use the etl vertical instead */
+  /** Will soon be deprecated @deprecated. Use the etl vertical instead */
   destinationState?: z.ZodTypeAny
-  /** @deprecated. Use the etl vertical instead */
+  /** Will soon be deprecated @deprecated. Use the etl vertical instead */
   destinationInputEntity?: z.ZodTypeAny
 }
 

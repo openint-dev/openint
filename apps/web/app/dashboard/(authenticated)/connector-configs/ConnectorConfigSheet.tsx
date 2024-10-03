@@ -94,9 +94,9 @@ export function ConnectorConfigSheet({
                 links: zRaw.connector_config.shape.defaultPipeOut
                   .unwrap()
                   .unwrap().shape.links,
-                destination_id: zRaw.connector_config.shape.defaultPipeOut
-                  .unwrap()
-                  .unwrap().shape.destination_id,
+                destination_id: zResoId.optional().openapi({
+                  description: 'Defaults to the org-wide postgres',
+                }),
               })
               .openapi({title: 'Enabled'}),
           ])
@@ -114,9 +114,7 @@ export function ConnectorConfigSheet({
                 links: zRaw.connector_config.shape.defaultPipeIn
                   .unwrap()
                   .unwrap().shape.links,
-                source_id: zRaw.connector_config.shape.defaultPipeIn
-                  .unwrap()
-                  .unwrap().shape.source_id,
+                source_id: zResoId,
               })
               .openapi({title: 'Enabled'}),
           ])
