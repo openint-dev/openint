@@ -1,14 +1,15 @@
 import {clerkClient} from '@clerk/nextjs/server'
-import {
-  getOrganizationOmitPrivateMeta,
-  getUserOmitPrivateMeta,
-} from '@openint/api/authRouter'
 import type {LinkFactory} from '@openint/cdk'
 import {logLink, renameAccountLink} from '@openint/cdk'
 import type {PipelineInput} from '@openint/engine-backend'
 import {getContextFactory} from '@openint/engine-backend'
 import {makePostgresMetaService} from '@openint/meta-service-postgres'
 import {joinPath} from '@openint/util'
+// TODO: This is a mess. We need to clarify the dependency graph again
+import {
+  getOrganizationOmitPrivateMeta,
+  getUserOmitPrivateMeta,
+} from '../../packages/api/authRouter'
 import {mergedConnectors} from './connectors/connectors.merged'
 import {getServerUrl} from './constants'
 import {env, envRequired} from './env'

@@ -1,7 +1,0 @@
-{
-  "name": "@openint/examples-cjs",
-  "type": "commonjs",
-  "dependencies": {
-    "@opensdks/sdk-openint": "0.0.9"
-  }
-}

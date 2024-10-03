@@ -1,7 +1,0 @@
-{
-  "name": "@openint/examples-esm",
-  "type": "module",
-  "dependencies": {
-    "@opensdks/sdk-openint": "0.0.9"
-  }
-}
