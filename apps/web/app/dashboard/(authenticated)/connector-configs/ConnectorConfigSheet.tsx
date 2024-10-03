@@ -94,12 +94,14 @@ export function ConnectorConfigSheet({
                 links: zRaw.connector_config.shape.defaultPipeOut
                   .unwrap()
                   .unwrap().shape.links,
-                destination_id: zResoId,
+                destination_id: zResoId.optional().openapi({
+                  description: 'Defaults to the org-wide postgres',
+                }),
               })
               .openapi({title: 'Enabled'}),
           ])
           .openapi({
-            title: 'Default outgoing pipeline',
+            title: 'Sync settings',
             description: zRaw.connector_config.shape.defaultPipeOut.description,
           }),
       }),
@@ -117,7 +119,7 @@ export function ConnectorConfigSheet({
               .openapi({title: 'Enabled'}),
           ])
           .openapi({
-            title: 'Default incoming pipeline',
+            title: 'Reverse sync settings',
             description: zRaw.connector_config.shape.defaultPipeIn.description,
           }),
       }),

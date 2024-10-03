@@ -154,14 +154,14 @@ export function makeDBService({
     })
 
   const getConnectorConfigOrFail = (id: Id['ccfg']) =>
-    metaService.tables.connector_config.get(id).then((_int) => {
-      if (!_int) {
+    metaService.tables.connector_config.get(id).then((_ccfg) => {
+      if (!_ccfg) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: `ccfg not found: ${id}`,
         })
       }
-      const int = zRaw.connector_config.parse(_int)
+      const int = zRaw.connector_config.parse(_ccfg)
       const connector = getConnectorOrFail(int.id)
       const config: {} = connector.schemas.connectorConfig?.parse(int.config)
       return {...int, connector, config}

@@ -1,4 +1,4 @@
-import type {ResourceUpdate, ZRaw} from '@openint/cdk'
+import type {Id, ResourceUpdate, ZRaw} from '@openint/cdk'
 import {
   extractId,
   getRemoteContext,
@@ -12,6 +12,7 @@ import {
 } from '@openint/cdk'
 import {TRPCError} from '@openint/trpc'
 import {joinPath, makeUlid, R, Rx, rxjs, z} from '@openint/util'
+import {getOrganization} from '../../api/authRouter'
 import {inngest} from '../events'
 import {parseWebhookRequest} from '../parseWebhookRequest'
 import {zSyncOptions} from '../types'
@@ -321,6 +322,33 @@ export const resourceRouter = trpc.router({
           }),
         })
         return
+      }
+
+      const org = await getOrganization(reso.connectorConfig.orgId)
+      // Default pipeline
+      if (org.publicMetadata.database_url) {
+        const dCcfgId = makeId('ccfg', 'postgres', 'default_' + org.id)
+        const destResoId = makeId('reso', 'postgres', 'default_' + org.id)
+        const pipelineId = makeId('pipe', 'default_' + reso.id)
+        console.log('syncResource', {ccfgId: dCcfgId, destResoId, pipelineId})
+        await ctx.asOrgIfNeeded.metaLinks.patch('connector_config', dCcfgId, {
+          orgId: org.id as Id['org'],
+        })
+        console.log('Created default connector config', dCcfgId)
+        // Do we actually need to store this?
+        await ctx.asOrgIfNeeded.metaLinks.patch('resource', destResoId, {
+          connectorConfigId: dCcfgId,
+          // Should always snake_case here
+          settings: {databaseUrl: org.publicMetadata.database_url},
+        })
+        console.log('Created default resource', destResoId)
+        await ctx.asOrgIfNeeded.metaLinks.patch('pipeline', pipelineId, {
+          sourceId: resoId,
+          destinationId: destResoId,
+          //How do we get this to be all streams?
+          streams: {account: {}},
+        })
+        console.log('Created default pipeline', pipelineId)
       }
 
       // TODO: Figure how to handle situations where resource does not exist yet

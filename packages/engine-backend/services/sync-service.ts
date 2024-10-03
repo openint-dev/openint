@@ -42,10 +42,16 @@ export function makeSyncService({
   getFetchLinks: (reso: _ResourceExpanded) => FetchLink[]
 }) {
   async function ensurePipelinesForResource(resoId: Id['reso']) {
+    // Cancelled
+    if ('true' === 'true') {
+      // No longer use the previous logic
+      return
+    }
     const pipelines = await metaService.findPipelines({resourceIds: [resoId]})
     const reso = await getResourceExpandedOrFail(resoId)
     const createdIds: Array<Id['pipe']> = []
     const defaultDestId = reso.connectorConfig?.defaultPipeOut?.destination_id
+
 
     if (
       defaultDestId &&

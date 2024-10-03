@@ -74,7 +74,7 @@ export const authRouter = trpc.router({
     }),
 })
 
-async function getOrganization(organizationId: string) {
+export async function getOrganization(organizationId: string) {
   const org = await clerkClient.organizations.getOrganization({organizationId})
   return {
     ...R.pick(org, [

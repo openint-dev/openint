@@ -11,14 +11,12 @@ export type GreenhouseObjectType = GreenhouseTypes['components']['schemas']
 export const greenhouseServer = {
   newInstance: ({settings}) => {
     const greenhouse = initGreenhouseSDK({
-      auth: {
-        basic: {
-          username: settings.apiKey,
-          password: '',
-        },
-      },
+      auth: {basic: {username: settings.apiKey, password: ''}},
     })
     return greenhouse
+  },
+  sourceSync: ({instance: greenhouse}) => {
+    throw new Error('Not implemented')
   },
 } satisfies ConnectorServer<
   typeof greenhouseSchema,

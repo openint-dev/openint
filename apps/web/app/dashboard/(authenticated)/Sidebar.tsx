@@ -45,11 +45,11 @@ const sectionedLinks: Array<{
         href: '/dashboard/end-users',
         icon: 'Users',
       },
-      // {
-      //   title: 'Pipelines',
-      //   href: '/dashboard/pipelines',
-      //   icon: 'ArrowLeftRight',
-      // },
+      {
+        title: 'Pipelines',
+        href: '/dashboard/pipelines',
+        icon: 'ArrowLeftRight',
+      },
       {
         title: 'Sync Runs',
         href: '/dashboard/sync-runs',
