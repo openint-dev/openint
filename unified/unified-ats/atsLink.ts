@@ -37,21 +37,7 @@ export function atsLink(ctx: {
       return rxjs.EMPTY
     }
 
-    let mapper
-    switch (entityName) {
-      case 'job':
-        mapper = adapter.mappers.job
-        break
-      case 'candidate':
-        mapper = adapter.mappers.candidate
-        break
-      case 'offer':
-        mapper = adapter.mappers.offer
-        break
-      default:
-        console.warn(`Unsupported entity type: ${entityName}`)
-        return rxjs.EMPTY
-    }
+    let mapper = adapter.mappers[entityName]
 
     if (!mapper) {
       console.warn(`No mapper found for entity type: ${entityName}`)
