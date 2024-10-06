@@ -2103,9 +2103,6 @@ importers:
 
   unified/unified-ats:
     dependencies:
-      '@openint/cdk':
-        specifier: workspace:*
-        version: link:../../kits/cdk
       '@openint/connector-greenhouse':
         specifier: workspace:*
         version: link:../../connectors/connector-greenhouse
