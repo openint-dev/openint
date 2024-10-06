@@ -1,7 +1,6 @@
 {
   "name": "@openint/unified-ats",
   "dependencies": {
-    "@openint/cdk": "workspace:*",
     "@openint/connector-greenhouse": "workspace:*",
     "@openint/connector-lever": "workspace:*",
     "@openint/connector-postgres": "workspace:*",
