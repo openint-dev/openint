@@ -19,7 +19,7 @@ export const envConfig = {
     INNGEST_EVENT_KEY: z.string().optional(),
 
     // Optional
-    SENTRY_CRON_MONITOR_ID: z.string().optional(),
+    SENTRY_CRON_MONITOR_URL: z.string().optional(),
 
     // Turn on debug output, including drizzle. Should be a boolean tho
     DEBUG: z.string().optional(),
@@ -60,7 +60,7 @@ export const envConfig = {
     JWT_SECRET: process.env['JWT_SECRET'],
     CLERK_SECRET_KEY: process.env['CLERK_SECRET_KEY'],
     NANGO_SECRET_KEY: process.env['NANGO_SECRET_KEY'],
-    SENTRY_CRON_MONITOR_ID: process.env['SENTRY_CRON_MONITOR_ID'],
+    SENTRY_CRON_MONITOR_URL: process.env['SENTRY_CRON_MONITOR_URL'],
     VERCEL_ENV: process.env['VERCEL_ENV'],
     POSTGRES_SCHEMA: process.env['POSTGRES_SCHEMA'],
     INNGEST_EVENT_KEY: process.env['INNGEST_EVENT_KEY'],
