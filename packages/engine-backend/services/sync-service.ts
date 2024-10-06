@@ -15,6 +15,7 @@ import {
   logLink,
   makeId,
   prefixConnectorNameLink,
+  singleTableLink,
   sync,
 } from '@openint/cdk'
 import type {z} from '@openint/util'
@@ -147,6 +148,8 @@ export function makeSyncService({
             return prefixConnectorNameLink({source})
           case 'ats':
             return atsLink({source})
+          case 'single_table':
+            return singleTableLink({source})
           default:
             throw new Error(`Unknown link ${l}`)
         }

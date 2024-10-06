@@ -85,10 +85,17 @@ export function ConnectorConfigSheet({
               .object({
                 ...(connectorMeta?.sourceStreams?.length && {
                   streams: z
-                    .record(
-                      z.enum(connectorMeta.sourceStreams as [string]),
-                      z.boolean(),
+                    .object(
+                      Object.fromEntries(
+                        (connectorMeta.sourceStreams as [string]).map((s) => [
+                          s,
+                          z.boolean(),
+                        ]),
+                      ),
+                      // z.enum(connectorMeta.sourceStreams as [string]),
+                      // z.boolean(),
                     )
+                    .passthrough()
                     .openapi({description: 'Entities to sync'}),
                 }),
                 links: zRaw.connector_config.shape.defaultPipeOut
