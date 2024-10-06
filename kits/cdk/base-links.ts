@@ -113,7 +113,7 @@ export function prefixConnectorNameLink(ctx: {
   })
 }
 
-export function singleTableLink(ctx: {
+export function singleTableLink(_ctx: {
   source: {
     id: Id['reso']
     connectorConfig: {connectorName: string}
