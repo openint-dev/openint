@@ -30,6 +30,8 @@ export const QBO_ENTITY_NAME: EnumOf<QBO['EntityName']> = {
   Customer: 'Customer',
   Item: 'Item',
   CompanyInfo: 'CompanyInfo',
+  BalanceSheet: 'BalanceSheet',
+  ProfitAndLoss: 'ProfitAndLoss',
 }
 
 export const zConfig = oauthBaseSchema.connectorConfig.extend({

@@ -23,6 +23,16 @@ const mappers = {
     name: 'DisplayName',
     url: 'domain',
   }),
+  balanceSheet: mapper(zCast<QBO['BalanceSheet']>(), unified.balanceSheet, {
+    currency: 'Header.Currency',
+    startPeriod: 'Header.StartPeriod',
+    endPeriod: 'Header.EndPeriod',
+  }),
+  profitAndLoss: mapper(zCast<QBO['ProfitAndLoss']>(), unified.profitAndLoss, {
+    currency: 'Header.Currency',
+    startPeriod: 'Header.StartPeriod',
+    endPeriod: 'Header.EndPeriod',
+  }),
 }
 
 export const qboAdapter = {
