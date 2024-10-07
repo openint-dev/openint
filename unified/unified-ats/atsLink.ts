@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as rxjs from 'rxjs'
 import * as Rx from 'rxjs/operators'
 import type {AnyEntityPayload, Id, Link} from '@openint/cdk'
@@ -28,7 +30,7 @@ export function atsLink(ctx: {
         : leverMapper
 
     const entityName = op.data.entityName
-    // @ts-ignore
+    // @ts-expect-error for now
     const mapper = mappers[entityName]
     if (!mapper) {
       console.warn(
