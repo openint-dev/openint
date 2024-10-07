@@ -3,7 +3,8 @@ import * as Rx from 'rxjs/operators'
 import type {AnyEntityPayload, Id, Link} from '@openint/cdk'
 import type {postgresHelpers} from '@openint/connector-postgres'
 import {applyMapper} from '@openint/vdk'
-import * as adapters from './adapters'
+import {mappers as greenhouseMapper} from './adapters/greenhouse-adapter/mappers'
+import {mappers as leverMapper} from './adapters/lever-adapter/mappers'
 
 type PostgresInputPayload =
   (typeof postgresHelpers)['_types']['destinationInputEntity']
@@ -15,32 +16,25 @@ export function atsLink(ctx: {
     metadata?: unknown
   }
 }): Link<AnyEntityPayload, PostgresInputPayload> {
-  const categories: Record<string, boolean> =
-    (ctx.source.metadata as any)?.categories ?? {}
-
   return Rx.mergeMap((op) => {
     if (op.type !== 'data') {
       return rxjs.of(op)
     }
 
-    // @ts-ignore this should just work
-    const adapter = adapters[ctx.source.connectorConfig.connectorName]
-    if (!adapter) {
-      throw new Error(
-        `Unsupported ATS: ${ctx.source.connectorConfig.connectorName}`,
-      )
-    }
+    // TODO; generalize
+    const mappers =
+      ctx.source.connectorConfig.connectorName === 'greenhouse'
+        ? greenhouseMapper
+        : leverMapper
 
     const entityName = op.data.entityName
-    if (!categories[entityName]) {
-      console.warn(`Unsupported ATS entity type: ${entityName}`)
-      return rxjs.EMPTY
-    }
-
-    let mapper = adapter.mappers[entityName]
-
+    // @ts-ignore
+    const mapper = mappers[entityName]
     if (!mapper) {
-      console.warn(`No mapper found for entity type: ${entityName}`)
+      console.warn(
+        `No ${entityName} entity mapper found for connector: ${ctx.source.connectorConfig.connectorName}`,
+        JSON.stringify(mappers),
+      )
       return rxjs.EMPTY
     }
 
