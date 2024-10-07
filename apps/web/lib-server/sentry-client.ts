@@ -1,15 +1,7 @@
-import {createHTTPClient} from '@openint/util'
-
 export function makeSentryClient(opts: {dsn: string}) {
   if (!opts.dsn) {
     console.warn('Sentry DSN missing, sentry calls will be noop')
   }
-
-  // @see https://docs.sentry.io/product/crons/getting-started/
-  const sentry = createHTTPClient({
-    baseURL: 'https://sentry.io/api/0',
-    headers: {Authorization: `DSN ${opts.dsn}`},
-  })
 
   interface Checkin {
     /** Required. The status of your job execution and whether it was completed successfully or unsuccessfully. The values accepted are in_progress, ok or error. */

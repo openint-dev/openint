@@ -146,6 +146,8 @@ export function makeSyncService({
             return bankingLink({source})
           case 'prefix_connector_name':
             return prefixConnectorNameLink({source})
+          case 'ats':
+            return atsLink({source})
           case 'single_table':
             return singleTableLink({source})
           default:
