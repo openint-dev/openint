@@ -576,8 +576,8 @@ importers:
         specifier: 0.1.9
         version: 0.1.9
       posthog-js:
-        specifier: 1.51.5
-        version: 1.51.5
+        specifier: ^1.166.1
+        version: 1.166.1
       posthog-node:
         specifier: 2.5.4
         version: 2.5.4
@@ -10381,8 +10381,8 @@ packages:
     resolution: {integrity: sha512-IbyN+9KslkqcXa8AO9fxpk97PA4pzewvpi2B3Dwy9u4zpV32QicaEdgmF3eSQUzdRk7ttDHQejNgAEr4XoeH4A==}
     engines: {node: '>=12'}
 
-  posthog-js@1.51.5:
-    resolution: {integrity: sha512-hhOreF51vvg97iKFZ4GFF4lwQVq1WWJXOJ59NbQVsXj+bVxDcX4vog0Yx40rfp4uWNnE/xRWQQEOwlKM2WkcjQ==}
+  posthog-js@1.166.1:
+    resolution: {integrity: sha512-K8IpV8FJTCdwhsXFSbKj5vZ6IXNV079lukpG3cRtst2q5vMmUXRQiks7W3lOZLrjWyuJLKZDUiCeeDIUFORRuQ==}
 
   posthog-node@2.5.4:
     resolution: {integrity: sha512-CdywlVh0CZU05/3MrBc0qY/zsLdU2X9XSz/yL1qMRhbyZhD8lrnuGlI69G2cpzZtli6S/nu64wcmULz/mFFA5w==}
@@ -10395,6 +10395,9 @@ packages:
   postman-url-encoder@3.0.5:
     resolution: {integrity: sha512-jOrdVvzUXBC7C+9gkIkpDJ3HIxOHTIqjpQ4C1EMt1ZGeMvSEpbFCKq23DEfgsj46vMnDgyQf+1ZLp2Wm+bKSsA==}
     engines: {node: '>=10'}
+
+  preact@10.24.2:
+    resolution: {integrity: sha512-1cSoF0aCC8uaARATfrlz4VCBqE8LwZwRfLgkxJOQwAlQt6ayTmi0D9OF7nXid1POI5SZidFuG9CnlXbDfLqY/Q==}
 
   prebuild-install@7.1.1:
     resolution: {integrity: sha512-jAXscXWMcCK8GgCoHOfIr0ODh5ai8mj63L2nWrjuAgXE6tDyYGnx4/8o/rCgU+B4JSyZBKbeZqzhtwtC3ovxjw==}
@@ -11093,9 +11096,6 @@ packages:
     resolution: {integrity: sha512-GVsDdsbJzzy4S/v3dqWPJ7EfvZJfCHiDqe80IyrF59LYuP+e6U1LJoUqeuqRbwAWoMNoXivMNeNAOf5E22VA1w==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
-
-  rrweb-snapshot@1.1.14:
-    resolution: {integrity: sha512-eP5pirNjP5+GewQfcOQY4uBiDnpqxNRc65yKPW0eSoU1XamDfc4M8oqpXGMyUyvLyxFDB0q0+DChuxxiU2FXBQ==}
 
   rsvp@4.8.5:
     resolution: {integrity: sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==}
@@ -12465,6 +12465,9 @@ packages:
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
+
+  web-vitals@4.2.3:
+    resolution: {integrity: sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -23460,10 +23463,11 @@ snapshots:
 
   postgres@3.4.4: {}
 
-  posthog-js@1.51.5:
+  posthog-js@1.166.1:
     dependencies:
       fflate: 0.4.8
-      rrweb-snapshot: 1.1.14
+      preact: 10.24.2
+      web-vitals: 4.2.3
 
   posthog-node@2.5.4:
     dependencies:
@@ -23488,6 +23492,8 @@ snapshots:
   postman-url-encoder@3.0.5:
     dependencies:
       punycode: 2.1.1
+
+  preact@10.24.2: {}
 
   prebuild-install@7.1.1:
     dependencies:
@@ -24304,8 +24310,6 @@ snapshots:
   rollup@3.29.5:
     optionalDependencies:
       fsevents: 2.3.2
-
-  rrweb-snapshot@1.1.14: {}
 
   rsvp@4.8.5: {}
 
@@ -25937,6 +25941,8 @@ snapshots:
       defaults: 1.0.4
 
   web-namespaces@2.0.1: {}
+
+  web-vitals@4.2.3: {}
 
   webidl-conversions@3.0.1: {}
 
