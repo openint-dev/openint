@@ -1,10 +1,10 @@
-import type {components} from '@opensdks/sdk-qbo/qbo.oas.types'
+import type {qboOasTypes} from '@opensdks/sdk-qbo/types'
 import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
 import {connHelpers, oauthBaseSchema, zEntityPayload} from '@openint/cdk'
 import type {EnumOf} from '@openint/util'
 import {R, z} from '@openint/util'
 
-export type QBO = components['schemas']
+export type QBO = qboOasTypes['components']['schemas']
 
 export type TransactionTypeName = Extract<
   QBO['EntityName'],
