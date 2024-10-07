@@ -20,3 +20,16 @@ export const vendor = z.object({
   url: z.string(),
 })
 // .openapi({format: 'prefix:ven'}),
+
+// TODO: expand
+export const balanceSheet = z.object({
+  currency: z.string(),
+  startPeriod: z.string(),
+  endPeriod: z.string(),
+})
+// TODO: expand
+export const profitAndLoss = z.object({
+  currency: z.string(),
+  startPeriod: z.string(),
+  endPeriod: z.string(),
+})
