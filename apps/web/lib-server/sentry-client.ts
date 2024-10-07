@@ -22,43 +22,40 @@ export function makeSentryClient(opts: {dsn: string}) {
   }
 
   const client = {
-    createCheckin: async (monitorId: string, data: Checkin) =>
-      sentry
-        .post<{id: string}>(`/monitors/${monitorId}/checkins/`, data)
-        .then((r) => r.data),
-    updateCheckin: async (
-      monitorId: string,
-      checkinId: string,
-      data: Checkin,
-    ) =>
-      sentry
-        .put<Required<Checkin>>(
-          `/monitors/${monitorId}/checkins/${checkinId}/`,
-          data,
-        )
-        .then((r) => r.data),
+    cronCheckin: async (urlStr: string, data: Checkin) => {
+      const url = new URL(urlStr)
+      Object.entries(data).forEach(([k, v]) => {
+        url.searchParams.append(k, String(v))
+      })
+      await fetch(url)
+    },
   }
   return {
     ...client,
     withCheckin: async <T>(
-      monitorId: string | undefined,
-      fn: (checkinId: string | undefined) => T | Promise<T>,
+      urlStr: string | undefined,
+      fn: () => T | Promise<T>,
     ): Promise<T> => {
-      if (!monitorId || !opts.dsn) {
+      if (!urlStr) {
         // if (process.env['VERCEL_ENV'] === 'production') {
         //   throw new Error('monitorId missing for withCheckin')
         // }
-        return fn(undefined)
+        return fn()
       }
-      const {id: checkinId} = await client.createCheckin(monitorId, {
-        status: 'in_progress',
+      await client.cronCheckin(urlStr, {status: 'in_progress'}).catch((err) => {
+        console.error('Failed to checkin (in_progress)', err)
       })
+
       try {
-        const ret = await fn(checkinId)
-        await client.updateCheckin(monitorId, checkinId, {status: 'ok'})
+        const ret = await fn()
+        await client.cronCheckin(urlStr, {status: 'ok'}).catch((err) => {
+          console.error('Failed to checkin (ok)', err)
+        })
         return ret
       } catch (err) {
-        await client.updateCheckin(monitorId, checkinId, {status: 'error'})
+        await client.cronCheckin(urlStr, {status: 'error'}).catch((err) => {
+          console.error('Failed to checkin (error)', err)
+        })
         throw err
       }
     },
