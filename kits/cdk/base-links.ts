@@ -65,7 +65,7 @@ export function logLink<T extends Data>(
         `[logLink #${i}]`,
         opts.prefix && `${opts.prefix}:`,
         `type=${op.type}`,
-        op.type === 'data' && `entityId=${op.data.id}`,
+        op.type === 'data' && `${op.data.entityName}/${op.data.id}`,
         op.type === 'resoUpdate' && `op.id=${op.id}`,
       ]).join(' '),
     )
@@ -109,6 +109,24 @@ export function prefixConnectorNameLink(ctx: {
     }
 
     op.data.entityName = `${ctx.source.connectorConfig.connectorName}_${op.data.entityName}`
+    return rxjs.of(op)
+  })
+}
+
+export function singleTableLink(_ctx: {
+  source: {
+    id: Id['reso']
+    connectorConfig: {connectorName: string}
+    metadata?: unknown
+  }
+}): Link<AnyEntityPayload, AnyEntityPayload> {
+  return Rx.mergeMap((op) => {
+    if (op.type !== 'data') {
+      return rxjs.of(op)
+    }
+
+    op.data.id = `${op.data.entityName}_${op.data.id}`
+    op.data.entityName = 'synced_data'
     return rxjs.of(op)
   })
 }

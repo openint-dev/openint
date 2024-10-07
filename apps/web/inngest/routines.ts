@@ -29,42 +29,39 @@ type SingleNoArray<T> = T extends Array<infer U> ? U : T
 export type EventPayload = SingleNoArray<SendEventPayload<Events>>
 
 export async function scheduleSyncs({step}: FunctionInput<never>) {
-  await sentry.withCheckin(
-    backendEnv.SENTRY_CRON_MONITOR_ID,
-    async (checkinId) => {
-      await flatRouter
-        .createCaller({
-          ...contextFactory.fromViewer({role: 'system'}),
-          remoteResourceId: null,
-        })
-        .ensureDefaultPipelines()
+  await sentry.withCheckin(backendEnv.SENTRY_CRON_MONITOR_URL, async () => {
+    await flatRouter
+      .createCaller({
+        ...contextFactory.fromViewer({role: 'system'}),
+        remoteResourceId: null,
+      })
+      .ensureDefaultPipelines()
 
-      const pipelines = await contextFactory.config
-        .getMetaService({role: 'system'})
-        // Every hour
-        .findPipelines({secondsSinceLastSync: 1 * 60 * 60})
-      console.log(`Found ${pipelines.length} pipelines needing to sync`)
+    const pipelines = await contextFactory.config
+      .getMetaService({role: 'system'})
+      // Every hour
+      .findPipelines({secondsSinceLastSync: 1 * 60 * 60})
+    console.log(`Found ${pipelines.length} pipelines needing to sync`)
 
-      if (pipelines.length > 0) {
-        await step.sendEvent(
-          'sync/pipeline-requested',
-          pipelines.map((pipe) => ({
-            name: 'sync/pipeline-requested',
-            data: {pipelineId: pipe.id},
-          })),
-        )
-        // https://discord.com/channels/842170679536517141/845000011040555018/1068696979284164638
-        // We can use the built in de-dupe to ensure that we never schedule two pipeline syncs automatically within an hour...
-        console.log(`Scheduled ${pipelines.length} pipeline syncs`)
-      }
-      return {
-        scheduledCount: pipelines.length,
-        // For debugging
-        sentryCheckinId: checkinId,
-        sentryMonitorId: backendEnv.SENTRY_CRON_MONITOR_ID,
-      }
-    },
-  )
+    if (pipelines.length > 0) {
+      await step.sendEvent(
+        'sync/pipeline-requested',
+        pipelines.map((pipe) => ({
+          name: 'sync/pipeline-requested',
+          data: {pipelineId: pipe.id},
+        })),
+      )
+      // https://discord.com/channels/842170679536517141/845000011040555018/1068696979284164638
+      // We can use the built in de-dupe to ensure that we never schedule two pipeline syncs automatically within an hour...
+      console.log(`Scheduled ${pipelines.length} pipeline syncs`)
+    }
+    return {
+      scheduledCount: pipelines.length,
+      // For debugging
+      // sentryCheckinId: checkinId,
+      // sentryMonitorId: backendEnv.SENTRY_CRON_MONITOR_ID,
+    }
+  })
 }
 
 // Consider automatic inngest function from every trpc function?

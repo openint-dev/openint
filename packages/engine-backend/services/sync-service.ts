@@ -15,10 +15,13 @@ import {
   logLink,
   makeId,
   prefixConnectorNameLink,
+  singleTableLink,
   sync,
 } from '@openint/cdk'
 import type {z} from '@openint/util'
 import {rxjs} from '@openint/util'
+// Amadeo Q: how do I make the atsLink part of the openint/cdk? is there some sort of release process?
+import {atsLink} from '../../../unified/unified-ats'
 import {inngest} from '../events'
 import type {zSyncOptions} from '../types'
 import type {AuthProvider} from './AuthProvider'
@@ -143,6 +146,10 @@ export function makeSyncService({
             return bankingLink({source})
           case 'prefix_connector_name':
             return prefixConnectorNameLink({source})
+          case 'ats':
+            return atsLink({source})
+          case 'single_table':
+            return singleTableLink({source})
           default:
             throw new Error(`Unknown link ${l}`)
         }

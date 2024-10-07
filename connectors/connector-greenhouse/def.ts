@@ -2,7 +2,12 @@ import type {ConnectorDef, ConnectorSchemas} from '@openint/cdk'
 import {connHelpers} from '@openint/cdk'
 import {R, z} from '@openint/util'
 
-export const GREENHOUSE_ENTITY_NAMES = ['job'] as const
+export const GREENHOUSE_ENTITY_NAMES = [
+  'job', // Opening is on the job itself
+  'application',
+  'offer',
+  'candidate',
+] as const
 
 export const greenhouseSchema = {
   name: z.literal('greenhouse'),

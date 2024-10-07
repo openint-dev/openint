@@ -110,7 +110,7 @@ export type StreamsV1 = z.infer<typeof zStreamsV1>
 
 /** TODO: Add other links / gather the schema from various links here */
 export const zLink = z
-  .enum(['banking', 'prefix_connector_name'])
+  .enum(['banking', 'prefix_connector_name', 'single_table', 'ats'])
   .openapi({ref: 'Link'})
 
 export const zRaw = {
