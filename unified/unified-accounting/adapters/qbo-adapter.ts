@@ -29,45 +29,52 @@ const mappers = {
     endPeriod: (e) => e?.data?.Header?.EndPeriod ?? '',
     currency: (e) => e?.data?.Header?.Currency ?? 'USD',
     accountingStandard: (e) =>
-      e?.data?.Header?.Option?.find(
-        (opt: any) => opt.Name === 'AccountingStandard',
-      )?.Value ?? '',
+      e?.data?.Header?.Option?.find((opt) => opt.Name === 'AccountingStandard')
+        ?.Value ?? '',
     totalCurrentAssets: (e) =>
-      parseFloat(
+      Number.parseFloat(
         e?.data?.Rows?.Row[0]?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0',
       ),
     totalFixedAssets: (e) =>
-      parseFloat(
+      Number.parseFloat(
         e?.data?.Rows?.Row[0]?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
       ),
     totalAssets: (e) =>
-      parseFloat(e?.data?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0',
+      ),
     totalCurrentLiabilities: (e) =>
-      parseFloat(
+      Number.parseFloat(
         e?.data?.Rows?.Row[1]?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0',
       ),
     totalLongTermLiabilities: (e) =>
-      parseFloat(
+      Number.parseFloat(
         e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
       ),
     totalLiabilities: (e) =>
-      parseFloat(e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
+      ),
     openingBalanceEquity: (e) =>
-      parseFloat(
+      Number.parseFloat(
+        // @ts-expect-error fix the `Row: Record<string, never>[]` typing inside opensdks
         e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Rows?.Row[0]?.ColData[1]?.value ||
           '0',
       ),
     netIncome: (e) =>
-      parseFloat(
+      Number.parseFloat(
+        // @ts-expect-error fix the `Row: Record<string, never>[]` typing inside opensdks
         e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Rows?.Row[2]?.ColData[1]?.value ||
           '0',
       ),
     totalEquity: (e) =>
-      parseFloat(
+      Number.parseFloat(
         e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
       ),
     totalLiabilitiesAndEquity: (e) =>
-      parseFloat(e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
+      ),
   }),
 
   profitAndLoss: mapper(zCast<{data: QBO['Report']}>(), unified.profitAndLoss, {
@@ -80,15 +87,25 @@ const mappers = {
         (opt: any) => opt.Name === 'AccountingStandard',
       )?.Value ?? '',
     totalIncome: (e) =>
-      parseFloat(e?.data?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0',
+      ),
     grossProfit: (e) =>
-      parseFloat(e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
+      ),
     totalExpenses: (e) =>
-      parseFloat(e?.data?.Rows?.Row[2]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[2]?.Summary?.ColData[1]?.value || '0',
+      ),
     netOperatingIncome: (e) =>
-      parseFloat(e?.data?.Rows?.Row[3]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[3]?.Summary?.ColData[1]?.value || '0',
+      ),
     netIncome: (e) =>
-      parseFloat(e?.data?.Rows?.Row[4]?.Summary?.ColData[1]?.value || '0'),
+      Number.parseFloat(
+        e?.data?.Rows?.Row[4]?.Summary?.ColData[1]?.value || '0',
+      ),
   }),
 }
 
