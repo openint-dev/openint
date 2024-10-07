@@ -107,7 +107,7 @@ export const resourceRouter = trpc.router({
 
       // Should throw if not working..
       const resoUpdate = {
-        triggerDefaultSync: false,
+        triggerDefaultSync: true,
         // TODO: Should no longer depend on external ID
         resourceExternalId: _extId,
         settings,
