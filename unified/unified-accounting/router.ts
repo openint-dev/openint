@@ -38,13 +38,13 @@ export const accountingRouter = trpc.router({
   getBalanceSheet: procedure
     .meta(oapi({method: 'GET', path: '/balance-sheet'}))
     // TBD how we want this API?
-    // .input(z.object({startDate: z.string(), endDate: z.string()}))
+    .input(zPaginationParams.nullish())
     .output(unified.balanceSheet)
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   getProfitAndLoss: procedure
     .meta(oapi({method: 'GET', path: '/profit-and-loss'}))
     // TBD how we want this API?
-    // .input(z.object({startDate: z.string(), endDate: z.string()}))
+    .input(zPaginationParams.nullish())
     .output(unified.profitAndLoss)
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })

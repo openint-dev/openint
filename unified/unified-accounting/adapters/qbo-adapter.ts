@@ -23,15 +23,72 @@ const mappers = {
     name: 'DisplayName',
     url: 'domain',
   }),
-  balanceSheet: mapper(zCast<QBO['BalanceSheet']>(), unified.balanceSheet, {
-    currency: 'Header.Currency',
-    startPeriod: 'Header.StartPeriod',
-    endPeriod: 'Header.EndPeriod',
+  balanceSheet: mapper(zCast<{data: QBO['Report']}>(), unified.balanceSheet, {
+    reportName: (e) => e?.data?.Header?.ReportName ?? '',
+    startPeriod: (e) => e?.data?.Header?.StartPeriod ?? '',
+    endPeriod: (e) => e?.data?.Header?.EndPeriod ?? '',
+    currency: (e) => e?.data?.Header?.Currency ?? 'USD',
+    accountingStandard: (e) =>
+      e?.data?.Header?.Option?.find(
+        (opt: any) => opt.Name === 'AccountingStandard',
+      )?.Value ?? '',
+    totalCurrentAssets: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[0]?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0',
+      ),
+    totalFixedAssets: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[0]?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
+      ),
+    totalAssets: (e) =>
+      parseFloat(e?.data?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0'),
+    totalCurrentLiabilities: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[1]?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0',
+      ),
+    totalLongTermLiabilities: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
+      ),
+    totalLiabilities: (e) =>
+      parseFloat(e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0'),
+    openingBalanceEquity: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Rows?.Row[0]?.ColData[1]?.value ||
+          '0',
+      ),
+    netIncome: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Rows?.Row[2]?.ColData[1]?.value ||
+          '0',
+      ),
+    totalEquity: (e) =>
+      parseFloat(
+        e?.data?.Rows?.Row[1]?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0',
+      ),
+    totalLiabilitiesAndEquity: (e) =>
+      parseFloat(e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0'),
   }),
-  profitAndLoss: mapper(zCast<QBO['ProfitAndLoss']>(), unified.profitAndLoss, {
-    currency: 'Header.Currency',
-    startPeriod: 'Header.StartPeriod',
-    endPeriod: 'Header.EndPeriod',
+
+  profitAndLoss: mapper(zCast<{data: QBO['Report']}>(), unified.profitAndLoss, {
+    reportName: (e) => e?.data?.Header?.ReportName ?? '',
+    startPeriod: (e) => e?.data?.Header?.StartPeriod ?? '',
+    endPeriod: (e) => e?.data?.Header?.EndPeriod ?? '',
+    currency: (e) => e?.data?.Header?.Currency ?? 'USD',
+    accountingStandard: (e) =>
+      e?.data?.Header?.Option?.find(
+        (opt: any) => opt.Name === 'AccountingStandard',
+      )?.Value ?? '',
+    totalIncome: (e) =>
+      parseFloat(e?.data?.Rows?.Row[0]?.Summary?.ColData[1]?.value || '0'),
+    grossProfit: (e) =>
+      parseFloat(e?.data?.Rows?.Row[1]?.Summary?.ColData[1]?.value || '0'),
+    totalExpenses: (e) =>
+      parseFloat(e?.data?.Rows?.Row[2]?.Summary?.ColData[1]?.value || '0'),
+    netOperatingIncome: (e) =>
+      parseFloat(e?.data?.Rows?.Row[3]?.Summary?.ColData[1]?.value || '0'),
+    netIncome: (e) =>
+      parseFloat(e?.data?.Rows?.Row[4]?.Summary?.ColData[1]?.value || '0'),
   }),
 }
 
@@ -56,5 +113,13 @@ export const qboAdapter = {
       has_next_page: true,
       items: res.value?.entities?.map(mappers.vendor) ?? [],
     }
+  },
+  getBalanceSheet: async ({instance}) => {
+    const res = await instance.GET('/reports/BalanceSheet')
+    return mappers.balanceSheet(res)
+  },
+  getProfitAndLoss: async ({instance}) => {
+    const res = await instance.GET('/reports/ProfitAndLoss')
+    return mappers.profitAndLoss(res)
   },
 } satisfies AccountingAdapter<QBOSDK>
