@@ -3,9 +3,10 @@
   "dependencies": {
     "@openint/connector-greenhouse": "workspace:*",
     "@openint/connector-lever": "workspace:*",
-    "@openint/connector-postgres": "workspace:*",
     "@openint/vdk": "workspace:*",
     "rxjs": "7.5.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@openint/connector-postgres": "workspace:*"
+  }
 }
