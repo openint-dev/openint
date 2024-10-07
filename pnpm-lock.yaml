@@ -1092,8 +1092,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@opensdks/sdk-qbo':
-        specifier: ^0.0.16
-        version: 0.0.16
+        specifier: ^0.0.17
+        version: 0.0.17
 
   connectors/connector-ramp:
     dependencies:
@@ -1414,8 +1414,8 @@ importers:
         specifier: 0.0.16
         version: 0.0.16
       '@opensdks/sdk-qbo':
-        specifier: 0.0.16
-        version: 0.0.16
+        specifier: ^0.0.17
+        version: 0.0.17
       '@types/jsonwebtoken':
         specifier: 9.0.2
         version: 9.0.2
@@ -3632,8 +3632,8 @@ packages:
   '@opensdks/sdk-plaid@0.0.14':
     resolution: {integrity: sha512-LcutnqPz94xXGjz9UhA/737tIoIbhoqgXJ0jB8qBJM4wBIfHFTmu1K9Jy6B0ixWIliv8IfDMpoHyxvg0bUgJ4Q==}
 
-  '@opensdks/sdk-qbo@0.0.16':
-    resolution: {integrity: sha512-FVQ57gWOTjW27humaFYIRR21mfKWG/pQVyYde1cdh2w1T4+y3r0YsN9igXknYNi4hGaxQcmm/NnDKZXvIF3IzA==}
+  '@opensdks/sdk-qbo@0.0.17':
+    resolution: {integrity: sha512-F24LkGhGy035G//mCgK6YomxBWf62eoJkWwF7oW6GkwoQFfubEx92GpU81dP9QqIFI5JQx5j4uSXabA5UWVy/A==}
 
   '@opensdks/sdk-revert@0.0.1':
     resolution: {integrity: sha512-r19UD+xs4w+7ezofeYEbuPPuILLnSleVKHpw2KZ7AChtB4X6mR5KGV2LggqBHzY4bdOjp07SheS9zIY+rgar7A==}
@@ -14876,7 +14876,7 @@ snapshots:
 
   '@opensdks/sdk-plaid@0.0.14': {}
 
-  '@opensdks/sdk-qbo@0.0.16': {}
+  '@opensdks/sdk-qbo@0.0.17': {}
 
   '@opensdks/sdk-revert@0.0.1': {}
 
