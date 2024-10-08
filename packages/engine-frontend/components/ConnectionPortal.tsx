@@ -29,7 +29,7 @@ export interface ConnectionPortalProps extends UIPropsNoChildren {
 // TODO: Wrap this in memo so it does not re-render as much as possible.
 // Also it would be nice if there was an easy way to automatically prefetch on the server side
 // based on calls to useQuery so it doesn't need to be separately handled again on the client...
-export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
+export function ConnectionPortal({className}: ConnectionPortalProps) {
   const {toast} = useToast()
   const ctx = _trpcReact.useContext()
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
@@ -95,7 +95,7 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
               ) : (
                 categoriesWithConnections.map((category) => (
                   <div key={category.name} className="flex flex-col space-y-4">
-                    {category.connections.map((conn, index) => (
+                    {category.connections.map((conn) => (
                       <>
                         <div
                           key={conn.id}

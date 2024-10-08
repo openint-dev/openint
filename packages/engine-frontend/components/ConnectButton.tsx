@@ -18,7 +18,6 @@ import type {
   ConnectorConfigFilters,
 } from '../hocs/WithConnectConfig'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
-import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {IntegrationSearch} from './IntegrationSearch'
 
 interface ConnectButtonCommonProps {
@@ -59,34 +58,6 @@ export function ConnectButton({
         )
       }}
     </WithConnectConfig>
-  )
-}
-
-function SingleConnectButton({
-  connectorConfig,
-  children,
-  className,
-}: {
-  connectorConfig: ConnectorConfig
-} & ConnectButtonCommonProps) {
-  return (
-    <WithConnectorConnect
-      connectorConfig={connectorConfig}
-      // onEvent={(e) => {
-      //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-      // }}
-    >
-      {({openConnect}) => (
-        // <DialogTrigger asChild>
-        <Button
-          onClick={() => openConnect()}
-          className={className}
-          variant="default">
-          {children ?? 'Connect'}
-        </Button>
-        // </DialogTrigger>
-      )}
-    </WithConnectorConnect>
   )
 }
 
