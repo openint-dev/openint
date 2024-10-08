@@ -57,9 +57,24 @@ const tag = mapper(zCast<LeverObjectType['tag']>(), unified.department, {
   name: 'text',
 })
 
+const offer = mapper(zCast<LeverObjectType['offer']>(), unified.offer, {
+  id: (record) => String(record.id),
+  created_at: (record) => String(record.createdAt),
+  // setting the same as created at as they don't have an updated at field
+  modified_at: (record) => String(record.createdAt),
+  // @ts-expect-error the object does not link to an application. How do we handle these?
+  application: '',
+  closed_at: (record) => String(record['resolvedAt']),
+  sent_at: (record) => String(record['sentAt']),
+  // @ts-expect-error the object does not have a start date
+  start_date: 'startDate',
+  status: 'status',
+})
+
 export const mappers = {
   contact,
   opportunity,
   posting,
   tag,
+  offer,
 }

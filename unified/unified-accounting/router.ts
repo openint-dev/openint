@@ -35,6 +35,18 @@ export const accountingRouter = trpc.router({
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.vendor)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getBalanceSheet: procedure
+    .meta(oapi({method: 'GET', path: '/balance-sheet'}))
+    // TBD how we want this API?
+    .input(zPaginationParams.nullish())
+    .output(unified.balanceSheet)
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getProfitAndLoss: procedure
+    .meta(oapi({method: 'GET', path: '/profit-and-loss'}))
+    // TBD how we want this API?
+    .input(zPaginationParams.nullish())
+    .output(unified.profitAndLoss)
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 
 export type AccountingAdapter<TInstance> = AdapterFromRouter<

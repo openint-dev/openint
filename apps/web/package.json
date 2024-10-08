@@ -7,7 +7,7 @@
     "build:migration": "if [ \"$VERCEL_ENV\" = production ] || [ \"$VERCEL_GIT_COMMIT_REF\" = main ]; then pnpm --dir ../../ migration up; else echo 'Skip non prod/staging migration'; fi",
     "build:next": "next build",
     "codegen:supabase": "supabase gen types typescript --linked --schema public > ./supabase/supabase.gen.d.ts",
-    "dev": "next dev -p 4000",
+    "dev": "next dev -p 4000 --turbo",
     "start": "next start"
   },
   "dependencies": {
@@ -39,10 +39,12 @@
     "http-proxy": "1.18.1",
     "inngest": "^3.22.13",
     "lucide-react": "0.192.0",
+    "mongodb": "4.9.1",
     "next": "14.2.13",
     "next-themes": "0.3.0",
     "nextjs-toploader": "1.4.2",
     "node-http-proxy-json": "0.1.9",
+    "pg": "8.8.0",
     "posthog-js": "^1.166.1",
     "posthog-node": "2.5.4",
     "react": "18.3.1",
