@@ -18,7 +18,6 @@ import type {
   ConnectorConfigFilters,
 } from '../hocs/WithConnectConfig'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
-import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {IntegrationSearch} from './IntegrationSearch'
 
 interface ConnectButtonCommonProps {
@@ -47,52 +46,18 @@ export function ConnectButton({
             </div>
           )
         }
-        if (rest.length === 0) {
-          // e.g. Plaid
-          return (
-            <SingleConnectButton {...commonProps} connectorConfig={first} />
-          )
-        }
         // Render dialog for MultiConnector scenarios
         // This would be the case for greenhouse + lever
         const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined
         return (
           <MultipleConnectButton
             {...commonProps}
-            connectorConfigs={ccfgs}
+            connectorConfigs={rest.length === 0 ? [first] : ccfgs}
             category={category}
           />
         )
       }}
     </WithConnectConfig>
-  )
-}
-
-function SingleConnectButton({
-  connectorConfig,
-  children,
-  className,
-}: {
-  connectorConfig: ConnectorConfig
-} & ConnectButtonCommonProps) {
-  return (
-    <WithConnectorConnect
-      connectorConfig={connectorConfig}
-      // onEvent={(e) => {
-      //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-      // }}
-    >
-      {({openConnect}) => (
-        // <DialogTrigger asChild>
-        <Button
-          onClick={() => openConnect()}
-          className={className}
-          variant="default">
-          {children ?? 'Connect'}
-        </Button>
-        // </DialogTrigger>
-      )}
-    </WithConnectorConnect>
   )
 }
 
