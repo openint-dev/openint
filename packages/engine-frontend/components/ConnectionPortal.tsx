@@ -11,6 +11,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  Separator,
   useToast,
 } from '@openint/ui'
 import {cn} from '@openint/ui/utils'
@@ -74,68 +75,81 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
           ),
         }))
         const connectionCount = connections.length
+        console.log({connectionCount})
 
         return (
           <div className={cn('gap-4 p-8', className)}>
             {/* Listing by categories */}
             <NewConnectionCard hasExisting={connectionCount > 0} />
-            <Card className="w-[500px] p-4">
+            <Card className="flex w-[500px] flex-col justify-between space-y-4 p-4">
               <h3 className="mb-4 text-xl font-semibold tracking-tight">
                 Connectors
               </h3>
-              {categoriesWithConnections.map((category) => (
-                <div key={category.name} className="flex flex-col space-y-4">
-                  {category.connections.map((conn) => (
-                    <div
-                      key={conn.id}
-                      className="flex flex-row justify-between gap-4">
-                      <div className="flex flex-row gap-4">
-                        <ConnectorLogo
-                          connector={conn.connectorConfig.connector}
-                          className="size-[64px] rounded-lg"
-                        />
-                        <div className="flex flex-col gap-2">
-                          <div className="flex flex-row gap-2">
-                            <h4 className="font-bold">
-                              {conn.connectorName.charAt(0).toUpperCase() +
-                                conn.connectorName.slice(1)}
-                            </h4>
-                            <Badge variant="secondary">{category.name}</Badge>
-                          </div>
-                          {conn.syncInProgress ? (
-                            <div className="flex flex-row items-center justify-start gap-2">
-                              <Loader className="size-5 animate-spin text-[#8A5DF6]" />
-                              <p className="font-semibold">Syncing...</p>
+              {listConnectionsRes.isLoading ? (
+                <Loader className="m-4 size-5 animate-spin text-[#8A5DF6]" />
+              ) : (
+                categoriesWithConnections.map((category) => (
+                  <div key={category.name} className="flex flex-col space-y-4">
+                    {category.connections.map((conn, index) => (
+                      <>
+                        <div
+                          key={conn.id}
+                          className="flex flex-row justify-between gap-4">
+                          <div className="flex flex-row gap-4">
+                            <ConnectorLogo
+                              connector={conn.connectorConfig.connector}
+                              className="size-[64px] rounded-lg"
+                            />
+                            <div className="flex flex-col gap-2">
+                              <div className="flex flex-row gap-2">
+                                <h4 className="font-bold">
+                                  {conn.connectorName.charAt(0).toUpperCase() +
+                                    conn.connectorName.slice(1)}
+                                </h4>
+                                <Badge variant="secondary">
+                                  {category.name}
+                                </Badge>
+                              </div>
+                              {conn.syncInProgress ? (
+                                <div className="flex flex-row items-center justify-start gap-2">
+                                  <Loader className="size-5 animate-spin text-[#8A5DF6]" />
+                                  <p className="font-semibold">Syncing...</p>
+                                </div>
+                              ) : (
+                                <p>Successfully synced</p>
+                              )}
                             </div>
-                          ) : (
-                            <p>Successfully synced</p>
-                          )}
+                          </div>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger>
+                              <Settings className="size-5 text-[#808080]" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="flex w-[80px] items-center justify-center">
+                              <DropdownMenuItem
+                                className="flex items-center justify-center"
+                                onSelect={() =>
+                                  deleteResource.mutate({id: conn.id})
+                                }>
+                                <span className="text-center font-medium text-red-500">
+                                  Delete
+                                </span>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
-                      </div>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Settings className="size-5 text-[#808080]" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="flex w-[80px] items-center justify-center">
-                          <DropdownMenuItem
-                            className="flex items-center justify-center"
-                            onSelect={() =>
-                              deleteResource.mutate({id: conn.id})
-                            }>
-                            <span className="text-center font-medium text-red-500">
-                              Delete
-                            </span>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  ))}
-                  <ConnectButton
-                    // className="bg-purple-400 hover:bg-purple-500"
-                    className="self-end bg-[#8A5DF6] hover:bg-[#A082E9]"
-                    connectorConfigFilters={{}}></ConnectButton>
-                </div>
-              ))}
+                        {/* TODO: Improve the condition to hide the separator for the last item, right now it iterates 
+                      over all categories and all connections, would be good to have a single array of connections with the category 
+                      information included already */}
+                        <Separator className="w-full" />
+                      </>
+                    ))}
+                  </div>
+                ))
+              )}
+              <ConnectButton
+                // className="bg-purple-400 hover:bg-purple-500"
+                className="self-end bg-[#8A5DF6] hover:bg-[#A082E9]"
+                connectorConfigFilters={{}}></ConnectButton>
             </Card>
           </div>
         )

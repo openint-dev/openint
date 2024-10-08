@@ -1,8 +1,8 @@
 'use client'
 
-import {Search} from 'lucide-react'
+import {Loader, Search} from 'lucide-react'
 import React from 'react'
-import {Input, IntegrationCard} from '@openint/ui'
+import {Card, cn, ConnectorLogo, Input} from '@openint/ui'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import type {ConnectEventType} from '../hocs/WithConnectorConnect'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
@@ -38,7 +38,7 @@ export function IntegrationSearch({
   return (
     <div className={className}>
       {/* Search integrations */}
-      <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="mb-2 bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <form>
           <div className="relative">
             {/* top-2.5 is not working for some reason due to tailwind setup */}
@@ -53,40 +53,46 @@ export function IntegrationSearch({
         </form>
       </div>
       {/* Search results */}
-      <div className="flex flex-wrap gap-4">
-        {ints?.map((int) => (
-          <WithConnectorConnect
-            key={int.id}
-            connectorConfig={{
-              id: int.connector_config_id,
-              connector: int.ccfg.connector,
-            }}
-            // pre-select a single integration when possible
-            // ^ don't remember what this comment means
-            onEvent={(e) => {
-              onEvent?.({
-                type: e.type,
-                integration: {
-                  connectorConfigId: int.connector_config_id,
-                  id: int.id,
-                },
-              })
-            }}>
-            {({openConnect}) => (
-              // <DialogTrigger asChild>
-              <IntegrationCard
-                // {...uiProps}
-                onClick={() => openConnect()}
-                integration={{
-                  ...int,
-                  connectorName: int.connector_name,
-                  // connectorConfigId: int.connector_config_id,
-                }}
-              />
-              // </DialogTrigger>
-            )}
-          </WithConnectorConnect>
-        ))}
+      <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {listIntegrationsRes.isLoading ? (
+          <Loader className="m-4 size-5 animate-spin text-[#8A5DF6]" />
+        ) : (
+          ints?.map((int) => (
+            <WithConnectorConnect
+              key={int.id}
+              connectorConfig={{
+                id: int.connector_config_id,
+                connector: int.ccfg.connector,
+              }}
+              onEvent={(e) => {
+                onEvent?.({
+                  type: e.type,
+                  integration: {
+                    connectorConfigId: int.connector_config_id,
+                    id: int.id,
+                  },
+                })
+              }}>
+              {({openConnect}) => (
+                <Card
+                  className={cn(
+                    'flex w-[150px] cursor-pointer flex-col items-center gap-2 rounded-lg p-4',
+                    'focus:outline-none focus:ring-2 focus:ring-indigo-600',
+                    'transition-transform duration-200 ease-in-out hover:scale-105',
+                  )}
+                  onClick={() => openConnect()}>
+                  <ConnectorLogo
+                    connector={int.ccfg.connector}
+                    className="size-[80px] rounded-lg"
+                  />
+                  <span className="mt-2 text-sm font-bold text-muted-foreground">
+                    {int.name}
+                  </span>
+                </Card>
+              )}
+            </WithConnectorConnect>
+          ))
+        )}
       </div>
     </div>
   )

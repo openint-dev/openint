@@ -47,19 +47,13 @@ export function ConnectButton({
             </div>
           )
         }
-        if (rest.length === 0) {
-          // e.g. Plaid
-          return (
-            <SingleConnectButton {...commonProps} connectorConfig={first} />
-          )
-        }
         // Render dialog for MultiConnector scenarios
         // This would be the case for greenhouse + lever
         const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined
         return (
           <MultipleConnectButton
             {...commonProps}
-            connectorConfigs={ccfgs}
+            connectorConfigs={rest.length === 0 ? [first] : ccfgs}
             category={category}
           />
         )
