@@ -53,11 +53,13 @@ export function IntegrationSearch({
         </form>
       </div>
       {/* Search results */}
-      <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {listIntegrationsRes.isLoading ? (
-          <Loader className="m-4 size-5 animate-spin text-[#8A5DF6]" />
-        ) : (
-          ints?.map((int) => (
+      {listIntegrationsRes.isLoading ? (
+        <div className="flex h-full items-center justify-center">
+          <Loader className="size-5 animate-spin text-[#8A5DF6]" />
+        </div>
+      ) : (
+        <div className="grid max-h-[388px] grid-cols-1 justify-items-center gap-4 overflow-y-auto py-4 sm:grid-cols-2 md:grid-cols-3">
+          {ints?.map((int) => (
             <WithConnectorConnect
               key={int.id}
               connectorConfig={{
@@ -85,15 +87,15 @@ export function IntegrationSearch({
                     connector={int.ccfg.connector}
                     className="size-[80px] rounded-lg"
                   />
-                  <span className="mt-2 text-sm font-bold text-muted-foreground">
+                  <span className="mt-2 text-center text-sm font-bold text-muted-foreground">
                     {int.name}
                   </span>
                 </Card>
               )}
             </WithConnectorConnect>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

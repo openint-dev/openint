@@ -82,11 +82,16 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
             {/* Listing by categories */}
             <NewConnectionCard hasExisting={connectionCount > 0} />
             <Card className="flex w-[500px] flex-col justify-between space-y-4 p-4">
-              <h3 className="mb-4 text-xl font-semibold tracking-tight">
-                Connectors
-              </h3>
+              <div className="flex flex-row items-center justify-start gap-2">
+                <Link className="size-6 text-[#8A5DF6]" />
+                <h3 className="text-xl font-semibold tracking-tight">
+                  Connectors
+                </h3>
+              </div>
               {listConnectionsRes.isLoading ? (
-                <Loader className="m-4 size-5 animate-spin text-[#8A5DF6]" />
+                <div className="flex h-full items-center justify-center">
+                  <Loader className="size-5 animate-spin text-[#8A5DF6]" />
+                </div>
               ) : (
                 categoriesWithConnections.map((category) => (
                   <div key={category.name} className="flex flex-col space-y-4">
@@ -160,18 +165,8 @@ export function ConnectionPortal({onEvent, className}: ConnectionPortalProps) {
 
 const NewConnectionCard = ({hasExisting}: {hasExisting: boolean}) => (
   <div className="mb-4 flex flex-col items-start justify-center space-y-3 text-center">
-    <div className="flex flex-row items-center justify-center gap-2">
-      <Link className="size-8 text-[#8A5DF6]" />
-      <h3 className="text-[24px] font-semibold">
-        {hasExisting
-          ? 'Connect another integration'
-          : 'No integration connected'}
-      </h3>
-    </div>
-
-    <p className="text-black-mid mb-3 text-sm font-semibold tracking-[-0.01em] antialiased">
-      Connect an integration here, this integration is needed to keep your data
-      accurate.
-    </p>
+    <h3 className="text-[24px] font-semibold">
+      {hasExisting ? 'Connect another integration' : 'No integration connected'}
+    </h3>
   </div>
 )
