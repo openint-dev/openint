@@ -50,7 +50,9 @@ export const foreceiptHelpers = connHelpers(foreceiptSchemas)
 export const foreceiptDef = {
   name: 'foreceipt',
   schemas: foreceiptSchemas,
-  metadata: {verticals: ['expense-management']},
+  metadata: {verticals: ['expense-management'],
+    logoUrl: '/_assets/logo-foreceipt.svg',
+  },
   standardMappers: {
     entity: {
       account: ({entity: a}) => ({

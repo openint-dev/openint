@@ -37,6 +37,9 @@ export const togglHelpers = connHelpers(togglSchemas)
 
 export const togglDef = {
   name: 'toggl',
+  metadata: {
+    logoUrl: '/_assets/logo-toggl.svg',
+  },
   schemas: togglSchemas,
   standardMappers: {
     entity: (data) => {
