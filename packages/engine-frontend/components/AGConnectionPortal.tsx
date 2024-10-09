@@ -13,17 +13,17 @@ import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
-export interface AutographConnectionPortalProps extends UIPropsNoChildren {
+export interface AGConnectionPortalProps extends UIPropsNoChildren {
   onEvent?: (event: {type: ConnectEventType; ccfgId: Id['ccfg']}) => void
 }
 
 // TODO: Wrap this in memo so it does not re-render as much as possible.
 // Also it would be nice if there was an easy way to automatically prefetch on the server side
 // based on calls to useQuery so it doesn't need to be separately handled again on the client...
-export function AutographConnectionPortal({
+export function AGConnectionPortal({
   onEvent,
   className,
-}: AutographConnectionPortalProps) {
+}: AGConnectionPortalProps) {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
   return (
     <WithConnectConfig>
