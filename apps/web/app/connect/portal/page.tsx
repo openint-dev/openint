@@ -1,7 +1,6 @@
 // import {clerkClient} from '@clerk/nextjs/server'
 // import Image from 'next/image'
 // import nextDynamic from 'next/dynamic'
-import {headers} from 'next/headers'
 import {kAccessToken} from '@openint/app-config/constants'
 import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
@@ -54,21 +53,14 @@ export default async function PortalPage({
     )
   }
 
-  const headersList = headers()
-  const referer = headersList.get('referer')
-
-  const shouldRenderAutographPortal =
+  const shouldRenderAG =
     viewer.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
     viewer.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
   return (
     <ClientRoot accessToken={viewer.accessToken} authStatus="success">
       <SuperHydrate dehydratedState={getDehydratedState()}>
-        {shouldRenderAutographPortal ? (
-          <AGConnectionPortal />
-        ) : (
-          <ConnectionPortal />
-        )}
+        {shouldRenderAG ? <AGConnectionPortal /> : <ConnectionPortal />}
       </SuperHydrate>
     </ClientRoot>
   )
