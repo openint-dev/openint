@@ -31,7 +31,7 @@ export const leverDef = {
     displayName: 'Lever',
     stage: 'beta',
     verticals: ['ats'],
-    logoUrl: '/_assets/logo-lever.png',
+    logoUrl: '/_assets/logo-lever.svg',
     nangoProvider: 'lever-sandbox', // TODO: make this support production!
     openapiSpec: {proxied: leverOas as unknown as OpenApiSpec},
   },

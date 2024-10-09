@@ -33,6 +33,7 @@ export const fsHelpers = connHelpers(fsSchemas)
 export const fsDef = {
   name: 'fs',
   metadata: {
+    logoUrl: '/_assets/logo-filesystem.svg',
     platforms: ['local'],
     displayName: 'File system',
     verticals: ['flat-files-and-spreadsheets'],
