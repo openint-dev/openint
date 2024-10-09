@@ -195,29 +195,31 @@ export const WithConnectorConnect = ({
         label: resource ? 'Reconnect' : 'Connect',
       })}
 
-      <DialogContent>
+      <DialogContent className="max-h-[600px] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             <div className="flex items-center">
-              <span className="mr-2">Connect to {ccfg.connector.displayName}</span>
+              <span className="mr-2">
+                Connect to {ccfg.connector.displayName}
+              </span>
               {ccfg.connector.name === 'greenhouse' && (
                 <div className="group relative inline-block">
-                <InfoIcon className="h-5 w-5 cursor-help text-gray-500" />
-                <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-gray-800 p-2 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100">
-                  <p className="italic">
-                    Generate a custom API key with{' '}
-                    <a
-                      href="https://support.greenhouse.io/hc/en-us/articles/202842799-Create-an-API-key-in-Greenhouse-Recruiting"
-                      className="font-bold underline"
-                      target="_blank"
-                      rel="noopener noreferrer">
-                      these instructions
-                    </a>{' '}
-                    and include all Harvest V3 permissions.
-                  </p>
+                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500" />
+                  <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-gray-800 p-2 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    <p className="italic">
+                      Generate a custom API key with{' '}
+                      <a
+                        href="https://support.greenhouse.io/hc/en-us/articles/202842799-Create-an-API-key-in-Greenhouse-Recruiting"
+                        className="font-bold underline"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        these instructions
+                      </a>{' '}
+                      and include all Harvest V3 permissions.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
           </DialogTitle>
           {debug && (
