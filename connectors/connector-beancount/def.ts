@@ -20,9 +20,16 @@ export const beancountSchemas = {
 export const beancountHelpers = connHelpers(beancountSchemas)
 
 export const beancountDef = {
-  name: 'beancount',
   schemas: beancountSchemas,
-  metadata: {verticals: ['personal-finance'], platforms: ['local']},
+  name: 'beancount',
+  metadata: {
+    verticals: [
+      'personal-finance',
+      // Add other relevant verticals if needed
+    ],
+    platforms: ['local'],
+    logoUrl: '/_assets/logo-beancount.svg',
+  },
 } satisfies ConnectorDef<typeof beancountSchemas>
 
 export default beancountDef
