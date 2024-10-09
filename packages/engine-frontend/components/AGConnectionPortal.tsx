@@ -13,17 +13,17 @@ import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
-export interface AutographConnectionPortalProps extends UIPropsNoChildren {
+export interface AGConnectionPortalProps extends UIPropsNoChildren {
   onEvent?: (event: {type: ConnectEventType; ccfgId: Id['ccfg']}) => void
 }
 
 // TODO: Wrap this in memo so it does not re-render as much as possible.
 // Also it would be nice if there was an easy way to automatically prefetch on the server side
 // based on calls to useQuery so it doesn't need to be separately handled again on the client...
-export function AutographConnectionPortal({
+export function AGConnectionPortal({
   onEvent,
   className,
-}: AutographConnectionPortalProps) {
+}: AGConnectionPortalProps) {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
   return (
     <WithConnectConfig>
@@ -97,21 +97,21 @@ const NewConnectionCard = ({
   category: Vertical
   hasExisting: boolean
 }) => (
-  <Card className="border-stroke bg-background-light drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-xl border p-6 text-center">
+  <Card className="drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-solid border-[#e0e0e5] bg-[#f8f8fc] p-6 text-center">
     <AlertTriangle className="size-8 text-orange-500" />
-    <h3 className="text-black-dark mb-5 text-[24px] font-semibold leading-[36px] tracking-[-0.01em] antialiased">
+    <h3 className="text-black-dark mb-2 text-[24px] font-semibold leading-[36px] tracking-tight antialiased">
       {hasExisting
         ? `Connect another ${category.name} integration`
         : `No ${category.name} integration connected`}
     </h3>
 
-    <p className="text-black-mid mb-3 text-sm font-semibold tracking-[-0.01em] antialiased">
+    <p className="text-black-mid mb-4 text-sm font-semibold antialiased">
       Connect an integration here ASAP. This integration is needed to keep your{' '}
       {category.name} data accurate.
     </p>
     <ConnectButton
       // className="bg-purple-400 hover:bg-purple-500"
-      className="bg-[#8192FF] hover:bg-purple-500"
+      className="rounded-md bg-[#8192FF] px-4 py-2 text-white hover:bg-purple-500"
       connectorConfigFilters={{verticalKey: category.key}}></ConnectButton>
   </Card>
 )
