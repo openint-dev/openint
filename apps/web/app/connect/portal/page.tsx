@@ -1,10 +1,14 @@
 // import {clerkClient} from '@clerk/nextjs/server'
 // import Image from 'next/image'
 // import nextDynamic from 'next/dynamic'
+import {headers} from 'next/headers'
 import {kAccessToken} from '@openint/app-config/constants'
 import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
-import {ConnectionPortal} from '@openint/engine-frontend'
+import {
+  AutographConnectionPortal,
+  ConnectionPortal,
+} from '@openint/engine-frontend'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
@@ -53,10 +57,24 @@ export default async function PortalPage({
     )
   }
 
+  const headersList = headers()
+  const referer = headersList.get('referer')
+
+  const shouldRenderAutographPortal =
+    viewer.userId === 'xxx' || // TODO for future?
+    referer?.includes('withautograph.com') ||
+    referer?.includes('https://current-owl-78.accounts.dev') ||
+    referer?.includes('ag-frontend-staging.onrender.com') ||
+    searchParams['autograph'] === 'true' // not sure if this will work
+
   return (
     <ClientRoot accessToken={viewer.accessToken} authStatus="success">
       <SuperHydrate dehydratedState={getDehydratedState()}>
-        <ConnectionPortal />
+        {shouldRenderAutographPortal ? (
+          <AutographConnectionPortal />
+        ) : (
+          <ConnectionPortal />
+        )}
       </SuperHydrate>
     </ClientRoot>
   )
