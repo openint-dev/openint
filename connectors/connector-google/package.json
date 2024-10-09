@@ -7,6 +7,6 @@
     "@openint/cdk": "workspace:*",
     "@openint/util": "workspace:*",
     "@opensdks/runtime": "^0.0.19",
-    "@opensdks/sdk-google": "^0.0.0"
+    "@opensdks/sdk-google": "^0.0.1"
   }
 }

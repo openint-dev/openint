@@ -845,8 +845,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@opensdks/sdk-google':
-        specifier: ^0.0.0
-        version: 0.0.0
+        specifier: ^0.0.1
+        version: 0.0.1
 
   connectors/connector-greenhouse:
     dependencies:
@@ -3609,8 +3609,8 @@ packages:
   '@opensdks/sdk-finch@0.0.4':
     resolution: {integrity: sha512-7CxSxCIE8POPBFrEGlovRdkziXNfbrh6GD7fPwIk6GPR2f2CKmLqPxOpLhBhzH/5Ol0nCyzCq8NDsvLbI5OvEQ==}
 
-  '@opensdks/sdk-google@0.0.0':
-    resolution: {integrity: sha512-/RTyBJrFGxLzos0+hRQ304PDGNyAbrnPmr0aM/4Gpo42y1S++Wl9D8GqfwlU/TkBqLvVAFb+Mq230zMopv+/3A==}
+  '@opensdks/sdk-google@0.0.1':
+    resolution: {integrity: sha512-Qn9r9Yew2RMiL5LK0jU4+BoP5/Q3o2u80SELymytWv+9sVFN0wrTyIPYQO6mnzM7JWQR8150KbcGEnXjt6gL/Q==}
 
   '@opensdks/sdk-greenhouse@0.0.6':
     resolution: {integrity: sha512-+ZpAp8Gca0Hta3ligCL49tbfiUwCEVZhTD4isVZRYOhvapORvuarApZROxWTDq8oJ0XNDDQrpPh0/Rq0QPM/XA==}
@@ -14874,7 +14874,7 @@ snapshots:
 
   '@opensdks/sdk-finch@0.0.4': {}
 
-  '@opensdks/sdk-google@0.0.0': {}
+  '@opensdks/sdk-google@0.0.1': {}
 
   '@opensdks/sdk-greenhouse@0.0.6':
     dependencies:
