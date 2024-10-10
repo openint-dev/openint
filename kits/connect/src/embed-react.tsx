@@ -41,6 +41,10 @@ export const OpenIntConnectEmbed = React.forwardRef(
             onReady?.()
           }}
           src={url}
+          height={700}
+          width="100%"
+          // Using style for minWidth since iframe props don't accept it.
+          style={{minWidth: '800px'}}
         />
 
         <style>{`
