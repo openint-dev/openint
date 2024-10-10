@@ -8,6 +8,8 @@ export interface OpenIntConnectEmbedProps
   onReady?: () => void
 }
 
+const DEFAULT_HEIGHT = 700
+
 export const OpenIntConnectEmbed = React.forwardRef(
   (
     {baseUrl, params, onReady, ...iframeProps}: OpenIntConnectEmbedProps,
@@ -15,6 +17,18 @@ export const OpenIntConnectEmbed = React.forwardRef(
   ) => {
     const url = getIFrameUrl({baseUrl, params})
     const [loading, setLoading] = React.useState(true)
+    if (
+      typeof iframeProps.height === 'number' &&
+      iframeProps.height < DEFAULT_HEIGHT
+    ) {
+      console.warn('Optimal height for Connect is 700px. Using 700px instead.')
+    }
+    const height =
+      typeof iframeProps.height === 'number'
+        ? iframeProps.height > DEFAULT_HEIGHT
+          ? iframeProps.height
+          : DEFAULT_HEIGHT
+        : iframeProps.height
 
     // Add a more reliable way to know iframe has fully finished loading
     // by sending message from iframe to parent when ready
@@ -34,6 +48,8 @@ export const OpenIntConnectEmbed = React.forwardRef(
           </div>
         )}
         <iframe
+          width="100%"
+          style={{minWidth: '800px'}}
           {...iframeProps}
           ref={forwardedRef}
           onLoad={() => {
@@ -41,10 +57,8 @@ export const OpenIntConnectEmbed = React.forwardRef(
             onReady?.()
           }}
           src={url}
-          height={700}
-          width="100%"
+          height={height}
           // Using style for minWidth since iframe props don't accept it.
-          style={{minWidth: '800px'}}
         />
 
         <style>{`
