@@ -115,7 +115,9 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                                   {category.name}
                                 </Badge>
                               </div>
-                              {conn.syncInProgress ? (
+                              {conn.pipelineIds.length === 0 ? (
+                                <div className="h-6" /> // Add empty space for vertical centering
+                              ) : conn.syncInProgress ? (
                                 <div className="flex flex-row items-center justify-start gap-2">
                                   <Loader className="size-5 animate-spin text-[#8A5DF6]" />
                                   <p className="font-semibold">Syncing...</p>
