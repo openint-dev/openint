@@ -1,6 +1,7 @@
 // import {clerkClient} from '@clerk/nextjs/server'
 // import Image from 'next/image'
 // import nextDynamic from 'next/dynamic'
+import {headers} from 'next/headers'
 import {kAccessToken} from '@openint/app-config/constants'
 import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
@@ -52,7 +53,6 @@ export default async function PortalPage({
       <div>Authenticated user only. Your role is {getViewerId(viewer)}</div>
     )
   }
-
   const shouldRenderAG =
     viewer.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
     viewer.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
