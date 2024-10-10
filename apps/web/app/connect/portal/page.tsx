@@ -4,7 +4,7 @@
 import {kAccessToken} from '@openint/app-config/constants'
 import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
-import {ConnectionPortal} from '@openint/engine-frontend'
+import {AGConnectionPortal, ConnectionPortal} from '@openint/engine-frontend'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
@@ -53,10 +53,14 @@ export default async function PortalPage({
     )
   }
 
+  const shouldRenderAG =
+    viewer.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
+    viewer.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
+
   return (
     <ClientRoot accessToken={viewer.accessToken} authStatus="success">
       <SuperHydrate dehydratedState={getDehydratedState()}>
-        <ConnectionPortal />
+        {shouldRenderAG ? <AGConnectionPortal /> : <ConnectionPortal />}
       </SuperHydrate>
     </ClientRoot>
   )
