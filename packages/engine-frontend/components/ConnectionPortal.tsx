@@ -105,8 +105,8 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                               connector={conn.connectorConfig.connector}
                               className="size-[64px] rounded-lg"
                             />
-                            <div className="flex flex-col gap-2">
-                              <div className="flex flex-row gap-2">
+                            <div className="flex flex-col h-full justify-center">
+                              <div className="flex flex-row gap-2 items-center">
                                 <h4 className="font-bold">
                                   {conn.connectorName.charAt(0).toUpperCase() +
                                     conn.connectorName.slice(1)}
@@ -115,13 +115,17 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                                   {category.name}
                                 </Badge>
                               </div>
-                              {conn.syncInProgress ? (
-                                <div className="flex flex-row items-center justify-start gap-2">
-                                  <Loader className="size-5 animate-spin text-[#8A5DF6]" />
-                                  <p className="font-semibold">Syncing...</p>
+                              {conn.pipelineIds.length > 0 && (
+                                <div className="mt-2">
+                                  {conn.syncInProgress ? (
+                                    <div className="flex flex-row items-center justify-start gap-2">
+                                      <Loader className="size-5 animate-spin text-[#8A5DF6]" />
+                                      <p className="font-semibold">Syncing...</p>
+                                    </div>
+                                  ) : (
+                                    <p>Successfully synced</p>
+                                  )}
                                 </div>
-                              ) : (
-                                <p>Successfully synced</p>
                               )}
                             </div>
                           </div>

@@ -5,10 +5,7 @@ import {headers} from 'next/headers'
 import {kAccessToken} from '@openint/app-config/constants'
 import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
-import {
-  AutographConnectionPortal,
-  ConnectionPortal,
-} from '@openint/engine-frontend'
+import {AGConnectionPortal, ConnectionPortal} from '@openint/engine-frontend'
 import {ClientRoot} from '@/components/ClientRoot'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
@@ -56,25 +53,14 @@ export default async function PortalPage({
       <div>Authenticated user only. Your role is {getViewerId(viewer)}</div>
     )
   }
-
-  const headersList = headers()
-  const referer = headersList.get('referer')
-
-  const shouldRenderAutographPortal =
-    viewer.userId === 'xxx' || // TODO for future?
-    referer?.includes('withautograph.com') ||
-    referer?.includes('https://current-owl-78.accounts.dev') ||
-    referer?.includes('ag-frontend-staging.onrender.com') ||
-    searchParams['autograph'] === 'true' // not sure if this will work
+  const shouldRenderAG =
+    viewer.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
+    viewer.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
   return (
     <ClientRoot accessToken={viewer.accessToken} authStatus="success">
       <SuperHydrate dehydratedState={getDehydratedState()}>
-        {shouldRenderAutographPortal ? (
-          <AutographConnectionPortal />
-        ) : (
-          <ConnectionPortal />
-        )}
+        {shouldRenderAG ? <AGConnectionPortal /> : <ConnectionPortal />}
       </SuperHydrate>
     </ClientRoot>
   )
