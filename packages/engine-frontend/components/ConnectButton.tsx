@@ -94,6 +94,8 @@ export function MultipleConnectButton({
         window.removeEventListener('message', handleMessage);
       };
     }
+    // to satisfy the linter
+    return () => {};
   }, [listenForOpen]);
   // Unconditional render to avoid delay when dialog is opened
   const content = (
