@@ -249,7 +249,7 @@ export const resourceRouter = trpc.router({
       
       console.log('[listResources] Refreshing tokens for all resources');
       const updatedResources = await Promise.all(resources.map(async (reso) => {
-        // @ts-ignore
+        // @ts-expect-error
         const expiresAt = reso?.settings?.['oauth']?.credentials?.raw?.expires_at
 
         if (expiresAt && (input.forceRefresh || new Date(expiresAt).getTime() <= Date.now())) {
@@ -269,7 +269,7 @@ export const resourceRouter = trpc.router({
       if (!input.refreshToken) {
         console.log('[listResources] Removing refresh_token from the response');
         resources = resources.map(reso => {
-          // @ts-ignore
+          // @ts-expect-error
           if (reso?.settings?.['oauth']?.credentials?.raw?.refresh_token) {
             return {
               ...reso,
@@ -278,12 +278,12 @@ export const resourceRouter = trpc.router({
                 oauth: {
                   ...reso.settings['oauth'],
                   credentials: {
-                    // @ts-ignore
+                    // @ts-expect-error
                     ...reso.settings['oauth']?.credentials,
                     raw: {
-                      // @ts-ignore
+                      // @ts-expect-error
                       ...reso.settings['oauth']?.credentials?.raw,
-                      // @ts-ignore
+                      // @ts-expect-error
                       refresh_token: undefined
                     }
                   }
@@ -325,12 +325,12 @@ export const resourceRouter = trpc.router({
       )
 
       // Handle forceRefresh and refreshToken
-      // @ts-ignore
+      // @ts-expect-error
       const expiresAt = reso?.settings?.['oauth']?.credentials?.raw?.expires_at
       
       if (expiresAt && (input.forceRefresh ||new Date(expiresAt).getTime() <= Date.now())) {
         console.log('[getResource] Refreshing token');
-        let resoCheck = await performResourceCheck(ctx, reso.id, {});
+        const resoCheck = await performResourceCheck(ctx, reso.id, {});
         if(!resoCheck) {
           console.warn(`[getResource] resourceCheck not implemented for ${reso.connectorName} which requires a refresh. Returning the stale resource.`);
         }
@@ -339,9 +339,9 @@ export const resourceRouter = trpc.router({
       
       if(!input.refreshToken) {
         // Remove refresh_token from the response for security reasons
-        // @ts-ignore
+        // @ts-expect-error
         if (reso?.settings?.['oauth']?.credentials?.raw?.refresh_token) {
-          // @ts-ignore
+          // @ts-expect-error
           delete reso.settings['oauth'].credentials.raw.refresh_token;
         }
       }
