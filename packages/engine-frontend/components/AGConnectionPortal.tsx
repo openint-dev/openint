@@ -112,6 +112,9 @@ const NewConnectionCard = ({
     <ConnectButton
       // className="bg-purple-400 hover:bg-purple-500"
       className="rounded-md bg-[#8192FF] px-4 py-2 text-white hover:bg-purple-500"
-      connectorConfigFilters={{verticalKey: category.key}}></ConnectButton>
+      connectorConfigFilters={{verticalKey: category.key}}
+      listenForOpen>
+      Connect
+    </ConnectButton>
   </Card>
 )

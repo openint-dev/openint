@@ -23,6 +23,7 @@ import {IntegrationSearch} from './IntegrationSearch'
 interface ConnectButtonCommonProps {
   className?: string
   children?: React.ReactNode
+  listenForOpen?: boolean
 }
 
 // TODO: Refactor WithOpenConnect out of ConnectButton
@@ -61,7 +62,8 @@ export function ConnectButton({
   )
 }
 
-function MultipleConnectButton({
+export function MultipleConnectButton({
+  listenForOpen,
   children,
   className,
   connectorConfigs,
@@ -73,6 +75,26 @@ function MultipleConnectButton({
 } & ConnectButtonCommonProps) {
   const [open, setOpen] = React.useState(false)
 
+  React.useEffect(() => {
+
+    // This can be called by the parent window like  
+    // const iframe = document.getElementById('openint-connect-iframeId');
+    // iframe?.contentWindow.postMessage({type: 'triggerConnectDialog', value: true },'*');
+
+    if (listenForOpen) {
+      const handleMessage = (event: MessageEvent) => {
+        if (event.data.type === 'triggerConnectDialog') {
+          setOpen(event.data.value);
+        }
+      };
+
+      window.addEventListener('message', handleMessage);
+
+      return () => {
+        window.removeEventListener('message', handleMessage);
+      };
+    }
+  }, [listenForOpen]);
   // Unconditional render to avoid delay when dialog is opened
   const content = (
     <IntegrationSearch
@@ -94,9 +116,11 @@ function MultipleConnectButton({
     // as well as other modals introduced by things like Plaid
     <Dialog open={open} onOpenChange={setOpen} modal={false}>
       <DialogTrigger asChild>
-        <Button className={className} variant="default">
-          {children ?? 'Connect'}
-        </Button>
+        {!listenForOpen && (
+          <Button className={className} variant="default">
+            {children ?? 'Connect'}
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="flex max-h-screen flex-col sm:max-w-2xl">
         <DialogHeader className="shrink-0">
