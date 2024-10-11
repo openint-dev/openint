@@ -12,14 +12,12 @@ import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 import React from 'react'
 import {VERTICAL_BY_KEY} from '@openint/cdk'
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@openint/ui'
 import type { ConnectorConfigFilters } from '../hocs/WithConnectConfig'
 import {IntegrationSearch} from './IntegrationSearch'
@@ -126,7 +124,6 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                   hasExisting={category.connections.length > 0}
                 />
                 {openDialog && <AgConnectDialog
-                  className="rounded-md bg-[#8192FF] px-4 py-2 text-white hover:bg-purple-500"
                   connectorConfigFilters={{verticalKey: category.key}}
                   open={openDialog}
                   setOpen={setOpenDialog}
@@ -167,12 +164,10 @@ const NewConnectionCard = ({
 
 function AgConnectDialog({
   connectorConfigFilters,
-  className,
   open,
   setOpen,
 }: {
   connectorConfigFilters: ConnectorConfigFilters
-  className?: string
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
