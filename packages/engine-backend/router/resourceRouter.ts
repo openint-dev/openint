@@ -283,7 +283,6 @@ export const resourceRouter = trpc.router({
                     raw: {
                       // @ts-expect-error
                       ...reso.settings['oauth']?.credentials?.raw,
-                      // @ts-expect-error
                       refresh_token: undefined
                     }
                   }
