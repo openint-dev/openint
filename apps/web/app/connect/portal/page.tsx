@@ -1,7 +1,6 @@
 // import {clerkClient} from '@clerk/nextjs/server'
 // import Image from 'next/image'
 // import nextDynamic from 'next/dynamic'
-import {headers} from 'next/headers'
 import {kAccessToken} from '@openint/app-config/constants'
 import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
