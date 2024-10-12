@@ -10,6 +10,15 @@ import type {postgresSchemas} from './def'
 import {postgresHelpers} from './def'
 import {makePostgresClient, upsertByIdQuery} from './makePostgresClient'
 
+// TODO: remove when we introduce dynamic column names 
+const agTableMappings = [
+  { from: 'integration_ats_job', to: 'IntegrationAtsJob' },
+  { from: 'integration_ats_candidate', to: 'IntegrationAtsCandidate' },
+  { from: 'integration_ats_job_opening', to: 'IntegrationAtsJobOpening' },
+  { from: 'integration_ats_offer', to: 'IntegrationAtsOffer' }
+];
+
+
 async function setupTable({
   pool,
   schema: _schema,
@@ -19,9 +28,12 @@ async function setupTable({
   schema?: string
   tableName: string
 }) {
+  
   const schema = snakeCase(_schema)
   const tableName = snakeCase(_tableName)
-  const table = sql.identifier(schema ? [schema, tableName] : [tableName])
+  // TODO: remove when we introduce dynamic column names 
+  const mappedTableName = agTableMappings.find(mapping => mapping.from === tableName)?.to || tableName;
+  const table = sql.identifier(schema ? [schema, mappedTableName] : [mappedTableName])
 
   await pool.query(sql`
     CREATE TABLE IF NOT EXISTS ${table} (
@@ -32,7 +44,7 @@ async function setupTable({
       "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
       connector_name VARCHAR GENERATED ALWAYS AS (split_part((connection_id)::text, '_'::text, 2)) STORED NOT NULL,
       CONSTRAINT ${sql.identifier([
-        `pk_${tableName}`,
+        `pk_${mappedTableName}`,
       ])} PRIMARY KEY ("connection_id", "id"),
       unified jsonb,
       raw jsonb DEFAULT '{}'::jsonb NOT NULL,
@@ -52,7 +64,7 @@ async function setupTable({
   ]) {
     await pool.query(sql`
       CREATE INDEX IF NOT EXISTS ${sql.identifier([
-        `${tableName}_${col}`,
+        `${mappedTableName}_${col}`,
       ])} ON ${table} (${sql.identifier([col])});
     `)
   }
@@ -240,22 +252,25 @@ export const postgresServer = {
               ),
               R.compact,
               R.map((query) => {
+
                 // TODO: remove when we introduce dynamic column names 
-                // Replace all instances inconsistent column names before execution
-               
-                const columnMappings = [
+                // Replace all instances inconsistent table and column names before execution
+                const agMappings = [
                   { from: 'client_id', to: 'clientId' },
                   { from: 'created_at', to: 'createdAt' },
                   { from: 'updated_at', to: 'updatedAt' },
-                  { from: 'is_open_int', to: 'isOpenInt' }
+                  { from: 'is_open_int', to: 'isOpenInt' },
+                  ...agTableMappings
                 ];
                 
                 let sqlQuery = query.sql;
-                // Use a for loop to replace all camelCase column names with snake_case
-                for (const mapping of columnMappings) {
+                // Use a for loop to replace all camelCase table and column names with snake_case
+                for (const mapping of agMappings) {
                   const regex = new RegExp(`"${mapping.from}"`, 'g');
                   sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`);
                 }
+            
+                console.log('sqlQuery', sqlQuery);
                 // Use the finalQuery for the database operation
                 return client.query({
                   sql: sqlQuery,
