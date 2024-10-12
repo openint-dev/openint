@@ -12,10 +12,10 @@ import {makePostgresClient, upsertByIdQuery} from './makePostgresClient'
 
 // TODO: remove when we introduce dynamic column names 
 const agTableMappings = [
-  { from: 'integration_ats_job', to: 'IntegrationAtsJob' },
-  { from: 'integration_ats_candidate', to: 'IntegrationAtsCandidate' },
-  { from: 'integration_ats_job_opening', to: 'IntegrationAtsJobOpening' },
-  { from: 'integration_ats_offer', to: 'IntegrationAtsOffer' }
+  { from: 'integration_ats_job', to: 'IntegrationATSJob' },
+  { from: 'integration_ats_candidate', to: 'IntegrationATSCandidate' },
+  { from: 'integration_ats_job_opening', to: 'IntegrationATSJobOpening' },
+  { from: 'integration_ats_offer', to: 'IntegrationATSOffer' }
 ];
 
 
