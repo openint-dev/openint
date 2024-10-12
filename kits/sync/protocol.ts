@@ -138,7 +138,7 @@ export type EntityPayloadWithRaw = z.infer<typeof zEntityPayloadWithRaw>
 export const zEntityPayloadWithRaw = zEntityPayload.extend({
   raw: z.unknown(),
   connectorName: z.string(),
-  sourceId: z.string().optional(),
+  connection_id: z.string().optional(),
 })
 
 export type StdSyncOperation<

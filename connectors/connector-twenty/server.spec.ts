@@ -24,7 +24,7 @@ maybeTest('destinationSync', async () => {
           name: 'sfdc',
         },
         entityName: 'company',
-        sourceId: 'reso_123',
+        connection_id: 'reso_123',
       },
       type: 'data',
     } satisfies SyncOperation<EntityPayloadWithRaw>,
