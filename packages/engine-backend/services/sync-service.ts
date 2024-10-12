@@ -11,6 +11,7 @@ import type {
   StreamsV2,
 } from '@openint/cdk'
 import {
+  agColumnRenameLink,
   bankingLink,
   logLink,
   makeId,
@@ -150,6 +151,8 @@ export function makeSyncService({
             return atsLink({source})
           case 'single_table':
             return singleTableLink({source})
+          case 'ag_column_rename':
+            return agColumnRenameLink({source})
           default:
             throw new Error(`Unknown link ${l}`)
         }

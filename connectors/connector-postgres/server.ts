@@ -269,9 +269,11 @@ export const postgresServer = {
                   const regex = new RegExp(`"${mapping.from}"`, 'g');
                   sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`);
                 }
-            
-                console.log('sqlQuery', sqlQuery);
-                // Use the finalQuery for the database operation
+  
+                // replace all instances of "Ats" with "ATS"
+                sqlQuery = sqlQuery.replace(/Ats/g, 'ATS');
+
+                // console.log('sqlQuery', sqlQuery);
                 return client.query({
                   sql: sqlQuery,
                   values: query.values,

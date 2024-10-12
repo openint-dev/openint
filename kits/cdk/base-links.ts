@@ -6,7 +6,7 @@ import type {
   SyncOperation,
 } from '@openint/sync'
 import type {WritableDraft} from '@openint/util'
-import {produce, R, Rx, rxjs} from '@openint/util'
+import {produce, R, Rx, rxjs, snakeCase} from '@openint/util'
 import type {Id} from './id.types'
 
 type Data = AnyEntityPayload
@@ -127,6 +127,31 @@ export function singleTableLink(_ctx: {
 
     op.data.id = `${op.data.entityName}_${op.data.id}`
     op.data.entityName = 'synced_data'
+    return rxjs.of(op)
+  })
+}
+
+export function agColumnRenameLink(_ctx: {
+  source: {
+    id: Id['reso']
+    connectorConfig: {connectorName: string}
+    metadata?: unknown
+  }
+}): Link<AnyEntityPayload, AnyEntityPayload> {
+  return Rx.mergeMap((op) => {
+    if (op.type !== 'data') {
+      return rxjs.of(op)
+    }
+
+    const entityMappings = {
+      job: 'IntegrationAtsJob',
+      candidate: 'IntegrationAtsCandidate',
+      job_opening: 'IntegrationAtsJobOpening',
+      offer: 'IntegrationAtsOffer',
+    }
+
+    op.data.entityName = entityMappings[snakeCase(op.data.entityName) as keyof typeof entityMappings] ?? op.data.entityName
+
     return rxjs.of(op)
   })
 }
