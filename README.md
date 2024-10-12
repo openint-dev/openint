@@ -76,3 +76,6 @@ pnpm --dir  kits/connect/ build
 pnpm --dir  kits/connect/ pub
 ```
 
+```bash
+NEXT_PUBLIC_SERVER_URL=https://openint.dev shdotenv -e .env.prod pnpm --dir ./kits/sdk gen
+```
