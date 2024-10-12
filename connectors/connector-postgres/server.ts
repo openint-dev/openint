@@ -10,14 +10,13 @@ import type {postgresSchemas} from './def'
 import {postgresHelpers} from './def'
 import {makePostgresClient, upsertByIdQuery} from './makePostgresClient'
 
-// TODO: remove when we introduce dynamic column names 
+// TODO: remove when we introduce dynamic column names
 const agTableMappings = [
-  { from: 'integration_ats_job', to: 'IntegrationATSJob' },
-  { from: 'integration_ats_candidate', to: 'IntegrationATSCandidate' },
-  { from: 'integration_ats_job_opening', to: 'IntegrationATSJobOpening' },
-  { from: 'integration_ats_offer', to: 'IntegrationATSOffer' }
-];
-
+  {from: 'integration_ats_job', to: 'IntegrationATSJob'},
+  {from: 'integration_ats_candidate', to: 'IntegrationATSCandidate'},
+  {from: 'integration_ats_job_opening', to: 'IntegrationATSJobOpening'},
+  {from: 'integration_ats_offer', to: 'IntegrationATSOffer'},
+]
 
 async function setupTable({
   pool,
@@ -28,27 +27,30 @@ async function setupTable({
   schema?: string
   tableName: string
 }) {
-  
   const schema = snakeCase(_schema)
   const tableName = snakeCase(_tableName)
-  // TODO: remove when we introduce dynamic column names 
-  const mappedTableName = agTableMappings.find(mapping => mapping.from === tableName)?.to || tableName;
-  const table = sql.identifier(schema ? [schema, mappedTableName] : [mappedTableName])
+  // TODO: remove when we introduce dynamic column names
+  const mappedTableName =
+    agTableMappings.find((mapping) => mapping.from === tableName)?.to ||
+    tableName
+  const table = sql.identifier(
+    schema ? [schema, mappedTableName] : [mappedTableName],
+  )
 
   await pool.query(sql`
     CREATE TABLE IF NOT EXISTS ${table} (
-      connection_id VARCHAR NOT NULL,
+      "connectionId" VARCHAR NOT NULL,
       id VARCHAR NOT NULL,
       "clientId" VARCHAR,
       "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
       "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
-      connector_name VARCHAR GENERATED ALWAYS AS (split_part((connection_id)::text, '_'::text, 2)) STORED NOT NULL,
-      CONSTRAINT ${sql.identifier([
-        `pk_${mappedTableName}`,
-      ])} PRIMARY KEY ("connection_id", "id"),
+      "connectorName" VARCHAR GENERATED ALWAYS AS (split_part(("connectionId")::text, '_'::text, 2)) STORED NOT NULL,
+      CONSTRAINT ${sql.identifier([`pk_${mappedTableName}`])} PRIMARY KEY (
+        -- "connectionId",  -- TODO: remove when we introduce dynamic column names
+        "id"),
       unified jsonb,
       raw jsonb DEFAULT '{}'::jsonb NOT NULL,
-      "isOpenInt" boolean DEFAULT true NOT NULL
+      "isOpenInt" boolean
     );
   `)
   // NOTE: Should we add org_id?
@@ -56,8 +58,8 @@ async function setupTable({
   // NOTE: add prefix check would be nice
   for (const col of [
     'id',
-    'connection_id',
-    'connector_name',
+    'connectionId',
+    // 'connectorName', // TODO: remove when we introduce dynamic column names
     'createdAt',
     'updatedAt',
     'clientId',
@@ -101,9 +103,9 @@ export const postgresServer = {
           id: string
           createdAt: string
           updatedAt: string
-          "clientId": string | null
+          clientId: string | null
           connector_name: string
-          connection_id: string | null
+          connectionId: string | null
           raw: any
           unified: any
         }>(
@@ -119,7 +121,7 @@ export const postgresServer = {
               raw: row.raw,
               id: row.id,
               connectorName: 'postgres',
-              connection_id: row.connection_id ?? undefined,
+              connection_id: row.connectionId ?? undefined,
             },
           }),
         )
@@ -212,7 +214,7 @@ export const postgresServer = {
         const batch = batches[tableName] ?? []
         batches[tableName] = batch
 
-        batch.push({
+        const rowToInsert: Record<string, unknown> = {
           // This is really not ideal. Maybe this should be a resource level seteting
           // about how we want to "normalize"?
           // Or be provided by the Operation itself?
@@ -223,8 +225,26 @@ export const postgresServer = {
             : {raw: data.entity}),
           id,
           clientId: endUser?.id ?? null,
-          connection_id: source?.id,
-        })
+          // connectionId: source?.id,
+          connectionId: 'cm23gmjli00sair7gj63rtxjh',
+          isOpenInt: true,
+        }
+
+        if (tableName === 'IntegrationAtsJob') {
+          rowToInsert['external_job_id'] = ''
+        } else if (tableName === 'IntegrationAtsCandidate') {
+          rowToInsert['opening_external_id'] = ''
+          rowToInsert['candidate_name'] = ''
+        } else if (tableName === 'IntegrationAtsJobOpening') {
+          rowToInsert['opening_external_id'] = ''
+          rowToInsert['job_id'] = ''
+        } else if (tableName === 'IntegrationAtsOffer') {
+          rowToInsert['opening_external_id'] = ''
+          rowToInsert['candidate_name'] = ''
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        batch.push(rowToInsert as any)
         return rxjs.of(op)
       },
       commit: async (op) => {
@@ -247,37 +267,41 @@ export const postgresServer = {
               R.toPairs,
               R.map(([eName, batch]) =>
                 upsertByIdQuery(eName, batch, {
-                  primaryKey: ['id', 'connection_id'],
+                  primaryKey: [
+                    'id',
+                    // TODO: remove when we introduce dynamic column names
+                    // 'connectionId'
+                  ],
                 }),
               ),
               R.compact,
               R.map((query) => {
-
-                // TODO: remove when we introduce dynamic column names 
+                // TODO: remove when we introduce dynamic column names
                 // Replace all instances inconsistent table and column names before execution
                 const agMappings = [
-                  { from: 'client_id', to: 'clientId' },
-                  { from: 'created_at', to: 'createdAt' },
-                  { from: 'updated_at', to: 'updatedAt' },
-                  { from: 'is_open_int', to: 'isOpenInt' },
-                  ...agTableMappings
-                ];
-                
-                let sqlQuery = query.sql;
+                  {from: 'client_id', to: 'clientId'},
+                  {from: 'created_at', to: 'createdAt'},
+                  {from: 'updated_at', to: 'updatedAt'},
+                  {from: 'is_open_int', to: 'isOpenInt'},
+                  {from: 'connection_id', to: 'connectionId'},
+                  ...agTableMappings,
+                ]
+
+                let sqlQuery = query.sql
                 // Use a for loop to replace all camelCase table and column names with snake_case
                 for (const mapping of agMappings) {
-                  const regex = new RegExp(`"${mapping.from}"`, 'g');
-                  sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`);
+                  const regex = new RegExp(`"${mapping.from}"`, 'g')
+                  sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`)
                 }
-  
+
                 // replace all instances of "Ats" with "ATS"
-                sqlQuery = sqlQuery.replace(/Ats/g, 'ATS');
+                sqlQuery = sqlQuery.replace(/Ats/g, 'ATS')
 
                 // console.log('sqlQuery', sqlQuery);
                 return client.query({
                   sql: sqlQuery,
                   values: query.values,
-                  type: query.type
+                  type: query.type,
                 })
               }),
             ),

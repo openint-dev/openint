@@ -135,12 +135,16 @@ export function makeSyncService({
     destination,
     links, // eslint-disable-next-line arrow-body-style
   }: _PipelineExpanded): Link[] => {
-    return [
+    const allLinks = [
       ...links,
       ...[
         ...(source.connectorConfig.defaultPipeOut?.links ?? []),
         ...(destination.connectorConfig.defaultPipeIn?.links ?? []),
-      ].map((l) => {
+      ],
+    ]
+    // console.log('getLinksForPipeline', {source, allLinks, destination})
+    return [
+      ...allLinks.map((l) => {
         // TODO: make me less hard-coded.
         switch (l) {
           case 'banking':
