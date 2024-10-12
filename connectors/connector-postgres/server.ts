@@ -231,15 +231,20 @@ export const postgresServer = {
         }
 
         if (tableName === 'IntegrationAtsJob') {
-          rowToInsert['external_job_id'] = ''
+          rowToInsert['external_job_id'] = data.entity?.raw?.id;
         } else if (tableName === 'IntegrationAtsCandidate') {
-          rowToInsert['opening_external_id'] = ''
-          rowToInsert['candidate_name'] = ''
+          rowToInsert['opening_external_id'] = data.entity?.raw?.id;
+          rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name;
         } else if (tableName === 'IntegrationAtsJobOpening') {
-          rowToInsert['opening_external_id'] = ''
-          rowToInsert['job_id'] = ''
+          rowToInsert['opening_external_id'] = data.entity?.raw?.id;
+          // NOTE Job openings are nested within Jobs and that o bject does not contain an id of the parent (job id)
+          // Depends on the implementation we may have to change this, leaving empty for now
+          // https://developers.greenhouse.io/harvest.html#the-job-object
+          rowToInsert['job_id'] = '';
         } else if (tableName === 'IntegrationAtsOffer') {
-          rowToInsert['opening_external_id'] = ''
+          // Note: These fields seemed duplicated from the nested objects
+          rowToInsert['opening_external_id'] = data.entity?.raw?.opening?.id;
+          // field does not exist in the offer object
           rowToInsert['candidate_name'] = ''
         }
 
