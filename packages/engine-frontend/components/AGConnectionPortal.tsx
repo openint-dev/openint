@@ -42,7 +42,7 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
 }) => {
   const listConnectionsRes = _trpcReact.listConnections.useQuery({})
 
-  const [openDialog, setOpenDialog] = React.useState(true)
+  const [openDialog, setOpenDialog] = React.useState(false)
 
   // This can be called by the same window like 
   // postMessage({ type: 'triggerConnectDialog', value: false }, '*');
