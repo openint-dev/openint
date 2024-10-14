@@ -19,7 +19,7 @@ export type OpHandlers<
 > = Partial<{
   [k in OperationType]: (
     op: Extract<SyncOperation<T, TResoUpdate, TStateUpdate>, {type: k}>,
-  ) => TRet
+  ) => TRet | Promise<TRet>
 }>
 
 /**
