@@ -244,9 +244,9 @@ export const postgresServer = {
           isOpenInt: true,
         }
 
-        const isAgInsert = true;
-          // endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
-          // endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
+        const isAgInsert =
+          endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
+          endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
         // TODO: Remove when we have support for links custom upserts
         if(isAgInsert) {
