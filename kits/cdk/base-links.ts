@@ -19,7 +19,7 @@ export type OpHandlers<
 > = Partial<{
   [k in OperationType]: (
     op: Extract<SyncOperation<T, TResoUpdate, TStateUpdate>, {type: k}>,
-  ) => TRet
+  ) => TRet | Promise<TRet>
 }>
 
 /**
@@ -41,6 +41,7 @@ export function handlersLink<
   // Order is important by default. mergeMap would result in `ready` being fired before
   // file has been written to disk as an example. Use mergeMap only if perf or a special
   // reason justifies it and order doesn't matter
+  // @ts-expect-error as it could return a promise which is natively handled by RxJS but not TS
   return Rx.concatMap((op) =>
     R.pipe(handlers[op.type], (h) =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument

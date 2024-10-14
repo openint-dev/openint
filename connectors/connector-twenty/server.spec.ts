@@ -10,9 +10,9 @@ const maybeTest = accessToken ? test : test.skip
 maybeTest('destinationSync', async () => {
   const destLink = twentyServer.destinationSync({
     config: {},
-    endUser: {id: 'esur_12' as EndUserId},
+    endUser: {id: 'esur_12' as EndUserId, orgId: 'org_123'},
     settings: {access_token: accessToken},
-    source: {id: 'reso_123'},
+    source: {id: 'reso_123', connectorName: 'salesforce'},
     state: {},
   })
   const src = rxjs.from([

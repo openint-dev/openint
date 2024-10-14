@@ -37,6 +37,19 @@ async function setupTable({
     schema ? [schema, mappedTableName] : [mappedTableName],
   )
 
+  // Note: Ideally we would create these for AG but we're not doing so as slonik does not support raw queries
+  // and also these tables are precreated in staging
+  // import { raw } from 'slonik-sql-tag-raw';
+  // const extraPerEntityColumns = {
+  //   'IntegrationATSJob': ['external_job_id VARCHAR'],
+  //   'IntegrationATSCandidate': ['opening_external_id VARCHAR', 'candidate_name VARCHAR'],
+  //   'IntegrationATSJobOpening': ['opening_external_id VARCHAR', 'job_id VARCHAR'],
+  //   'IntegrationATSOffer': ['opening_external_id VARCHAR', 'candidate_name VARCHAR'],
+  // }
+  // const extraColumns = extraPerEntityColumns[mappedTableName as keyof typeof extraPerEntityColumns]?.join(',\n      ') ?? ''
+  // this does not work... 
+  // const extraColumnsSql = extraColumns.length > 0 ? sql`, ${raw(extraColumns)}` : sql``;
+
   await pool.query(sql`
     CREATE TABLE IF NOT EXISTS ${table} (
       "connectionId" VARCHAR NOT NULL,
@@ -46,7 +59,6 @@ async function setupTable({
       "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
       "connectorName" VARCHAR GENERATED ALWAYS AS (split_part(("connectionId")::text, '_'::text, 2)) STORED NOT NULL,
       CONSTRAINT ${sql.identifier([`pk_${mappedTableName}`])} PRIMARY KEY (
-        -- "connectionId",  -- TODO: remove when we introduce dynamic column names
         "id"),
       unified jsonb,
       raw jsonb DEFAULT '{}'::jsonb NOT NULL,
@@ -205,8 +217,10 @@ export const postgresServer = {
       await setupTable({pool, tableName})
     }
 
+    let agConnectionCreatedForResource = false;
+
     return handlersLink({
-      data: (op) => {
+      data: async (op) => {
         const {
           data: {id, entityName, ...data},
         } = op
@@ -230,24 +244,48 @@ export const postgresServer = {
           isOpenInt: true,
         }
 
-        if (tableName === 'IntegrationAtsJob') {
-          rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
-        } else if (tableName === 'IntegrationAtsCandidate') {
-          rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
-          rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name || '';
-        } else if (tableName === 'IntegrationAtsJobOpening') {
-          rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
-          // NOTE Job openings are nested within Jobs and that o bject does not contain an id of the parent (job id)
-          // Depends on the implementation we may have to change this, leaving empty for now
-          // https://developers.greenhouse.io/harvest.html#the-job-object
-          rowToInsert['job_id'] = '';
-        } else if (tableName === 'IntegrationAtsOffer') {
-          // Note: These fields seemed duplicated from the nested objects
-          rowToInsert['opening_external_id'] = data.entity?.raw?.opening?.id || '';
-          // field does not exist in the offer object
-          rowToInsert['candidate_name'] = ''
-        }
+        const isAgInsert = true;
+          // endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
+          // endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
+        // TODO: Remove when we have support for links custom upserts
+        if(isAgInsert) {
+          if (tableName === 'IntegrationAtsJob') {
+            rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
+          } else if (tableName === 'IntegrationAtsCandidate') {
+            rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
+            rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name || '';
+          } else if (tableName === 'IntegrationAtsJobOpening') {
+            rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
+            // NOTE Job openings are nested within Jobs and that o bject does not contain an id of the parent (job id)
+            // Depends on the implementation we may have to change this, leaving empty for now
+            // https://developers.greenhouse.io/harvest.html#the-job-object
+            rowToInsert['job_id'] = '';
+          } else if (tableName === 'IntegrationAtsOffer') {
+            // Note: These fields seemed duplicated from the nested objects
+            rowToInsert['opening_external_id'] = data.entity?.raw?.opening?.id || '';
+            // field does not exist in the offer object
+            rowToInsert['candidate_name'] = ''
+          }
+
+          if(!agConnectionCreatedForResource) {
+            console.log('will create ag connection record for', entityName);
+            const integrationConnectionRecord = {
+              id: source?.id + '',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              clientId: endUser?.id,
+              source: 'OpenInt',
+              profile: 'Ats',
+              provider: source?.connectorName, // lever, greenhouse etc
+              label: source?.connectorName, // lever, greenhouse etc
+            }
+            await upsertByIdQuery('IntegrationConnection', [integrationConnectionRecord], {
+              primaryKey: ['id'],
+            })
+            agConnectionCreatedForResource = true;
+          } 
+        }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         batch.push(rowToInsert as any)
         return rxjs.of(op)

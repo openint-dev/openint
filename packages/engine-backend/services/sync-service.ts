@@ -349,8 +349,8 @@ export function makeSyncService({
     const destination$$ =
       opts.destination$$ ??
       dest.connectorConfig.connector.destinationSync?.({
-        source: {id: src.id},
-        endUser,
+        source: {id: src.id, connectorName: src.connectorConfig.connector.name},
+        endUser: {id: endUser?.id as EndUserId, orgId: pipeline.source.connectorConfig.orgId},
         config: dest.connectorConfig.config,
         settings: dest.settings,
         // Undefined causes crash in Plaid provider due to destructuring, Think about how to fix it for reals
