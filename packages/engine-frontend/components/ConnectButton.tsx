@@ -65,7 +65,6 @@ function MultipleConnectButton({
   children,
   className,
   connectorConfigs,
-  category,
 }: {
   connectorConfigs: ConnectorConfig[]
   /** Should correspond to connectorConfigs, but we can't guarantee that statically here... */
