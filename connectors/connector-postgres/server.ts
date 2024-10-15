@@ -16,6 +16,7 @@ const agTableMappings = [
   {from: 'integration_ats_candidate', to: 'IntegrationATSCandidate'},
   {from: 'integration_ats_job_opening', to: 'IntegrationATSJobOpening'},
   {from: 'integration_ats_offer', to: 'IntegrationATSOffer'},
+  {from: 'integration_connection', to: 'IntegrationConnection'}
 ]
 
 async function setupTable({
@@ -240,16 +241,17 @@ export const postgresServer = {
           id,
           clientId: endUser?.id ?? null,
           // connectionId: source?.id,
-          connectionId: 'cm23gmjli00sair7gj63rtxjh',
+          connectionId: source?.id + '',
           isOpenInt: true,
         }
 
-        const isAgInsert =
-          endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
-          endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
+        const isAgInsert = true;
+          // endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
+          // endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
         // TODO: Remove when we have support for links custom upserts
         if(isAgInsert) {
+          console.log('Inserting record for AG');
           if (tableName === 'IntegrationAtsJob') {
             rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
           } else if (tableName === 'IntegrationAtsCandidate') {
@@ -280,9 +282,37 @@ export const postgresServer = {
               provider: source?.connectorName, // lever, greenhouse etc
               label: source?.connectorName, // lever, greenhouse etc
             }
-            await upsertByIdQuery('IntegrationConnection', [integrationConnectionRecord], {
+            let query = await upsertByIdQuery('IntegrationConnection', [integrationConnectionRecord], {
               primaryKey: ['id'],
             })
+
+            if(!query) {
+              console.log('[destinationSync] Could not AG create integration connection record');
+              return;
+            }
+
+            // replace all instances of "Ats" with "ATS"
+            const agMappings = [
+              {from: 'client_id', to: 'clientId'},
+              {from: 'created_at', to: 'createdAt'},
+              {from: 'updated_at', to: 'updatedAt'},
+              {from: 'is_open_int', to: 'isOpenInt'},
+              {from: 'connection_id', to: 'connectionId'},
+              ...agTableMappings,
+            ]
+            let sqlQuery = query.sql
+            // Use a for loop to replace all camelCase table and column names with snake_case
+            for (const mapping of agMappings) {
+              const regex = new RegExp(`"${mapping.from}"`, 'g')
+              sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`)
+            }
+
+            const pool = await getPool();
+            await pool.query({
+              sql: sqlQuery,
+              values: query.values,
+              type: query.type,
+            });
             agConnectionCreatedForResource = true;
           } 
         }

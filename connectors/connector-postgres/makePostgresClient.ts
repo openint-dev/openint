@@ -115,6 +115,7 @@ export function upsertByIdQuery(
   const valueMaps = fromMaybeArray(_valueMaps)
   const firstVMap = valueMaps[0]
   if (!firstVMap) {
+    console.log('[upsertByIdQuery] No value maps provided')
     return null
   }
 
