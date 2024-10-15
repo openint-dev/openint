@@ -1,7 +1,6 @@
 import type {VariantProps} from 'class-variance-authority'
 import {cva} from 'class-variance-authority'
 import React from 'react'
-
 import {cn} from '../utils'
 
 const buttonVariants = cva(
@@ -9,7 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default: 'text-primary-foreground bg-[#8A5DF6] hover:bg-[#A082E9]',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
