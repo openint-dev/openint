@@ -282,7 +282,7 @@ export const postgresServer = {
               provider: source?.connectorName, // lever, greenhouse etc
               label: source?.connectorName, // lever, greenhouse etc
             }
-            let query = await upsertByIdQuery('IntegrationConnection', [integrationConnectionRecord], {
+            const query = await upsertByIdQuery('IntegrationConnection', [integrationConnectionRecord], {
               primaryKey: ['id'],
             })
 
