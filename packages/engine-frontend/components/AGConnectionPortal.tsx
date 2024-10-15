@@ -21,6 +21,7 @@ import {
 } from '@openint/ui'
 import type { ConnectorConfigFilters } from '../hocs/WithConnectConfig'
 import {IntegrationSearch} from './IntegrationSearch'
+import {ConnectButton} from './ConnectButton'
 
 
 type ConnectEventType = 'open' | 'close' | 'error'
