@@ -21,6 +21,7 @@ import {
 } from '@openint/ui'
 import type { ConnectorConfigFilters } from '../hocs/WithConnectConfig'
 import {IntegrationSearch} from './IntegrationSearch'
+import {ConnectButton} from './ConnectButton'
 
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -159,6 +160,10 @@ const NewConnectionCard = ({
       Connect an integration here ASAP. This integration is needed to keep your{' '}
       {category.name} data accurate.
     </p>
+    <ConnectButton
+      // className="bg-purple-400 hover:bg-purple-500"
+      className="rounded-md bg-[#8192FF] px-4 py-2 text-white hover:bg-[#6774CC]"
+      connectorConfigFilters={{verticalKey: category.key}}></ConnectButton>
   </Card>
 )
 

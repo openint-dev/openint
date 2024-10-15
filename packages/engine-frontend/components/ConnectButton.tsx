@@ -65,7 +65,6 @@ function MultipleConnectButton({
   children,
   className,
   connectorConfigs,
-  category,
 }: {
   connectorConfigs: ConnectorConfig[]
   /** Should correspond to connectorConfigs, but we can't guarantee that statically here... */
@@ -102,15 +101,9 @@ function MultipleConnectButton({
         <DialogHeader className="shrink-0">
           <DialogTitle>New connection</DialogTitle>
           <DialogDescription>
-            Choose a connector config to start
+            Select an integration to start
           </DialogDescription>
         </DialogHeader>
-        {category && (
-          <>
-            <h1>Select your first {category.name} integration</h1>
-            <p>{category.description}</p>
-          </>
-        )}
         {content}
 
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
