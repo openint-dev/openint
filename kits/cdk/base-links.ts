@@ -6,7 +6,7 @@ import type {
   SyncOperation,
 } from '@openint/sync'
 import type {WritableDraft} from '@openint/util'
-import {produce, R, Rx, rxjs} from '@openint/util'
+import {produce, R, Rx, rxjs, snakeCase} from '@openint/util'
 import type {Id} from './id.types'
 
 type Data = AnyEntityPayload
@@ -19,7 +19,7 @@ export type OpHandlers<
 > = Partial<{
   [k in OperationType]: (
     op: Extract<SyncOperation<T, TResoUpdate, TStateUpdate>, {type: k}>,
-  ) => TRet
+  ) => TRet | Promise<TRet>
 }>
 
 /**
@@ -41,6 +41,7 @@ export function handlersLink<
   // Order is important by default. mergeMap would result in `ready` being fired before
   // file has been written to disk as an example. Use mergeMap only if perf or a special
   // reason justifies it and order doesn't matter
+  // @ts-expect-error as it could return a promise which is natively handled by RxJS but not TS
   return Rx.concatMap((op) =>
     R.pipe(handlers[op.type], (h) =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
@@ -127,6 +128,31 @@ export function singleTableLink(_ctx: {
 
     op.data.id = `${op.data.entityName}_${op.data.id}`
     op.data.entityName = 'synced_data'
+    return rxjs.of(op)
+  })
+}
+
+export function agColumnRenameLink(_ctx: {
+  source: {
+    id: Id['reso']
+    connectorConfig: {connectorName: string}
+    metadata?: unknown
+  }
+}): Link<AnyEntityPayload, AnyEntityPayload> {
+  return Rx.mergeMap((op) => {
+    if (op.type !== 'data') {
+      return rxjs.of(op)
+    }
+
+    const entityMappings = {
+      job: 'IntegrationAtsJob',
+      candidate: 'IntegrationAtsCandidate',
+      job_opening: 'IntegrationAtsJobOpening',
+      offer: 'IntegrationAtsOffer',
+    }
+
+    op.data.entityName = entityMappings[snakeCase(op.data.entityName) as keyof typeof entityMappings] ?? op.data.entityName
+
     return rxjs.of(op)
   })
 }

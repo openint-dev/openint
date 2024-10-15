@@ -10,6 +10,15 @@ import type {postgresSchemas} from './def'
 import {postgresHelpers} from './def'
 import {makePostgresClient, upsertByIdQuery} from './makePostgresClient'
 
+// TODO: remove when we introduce dynamic column names
+const agTableMappings = [
+  {from: 'integration_ats_job', to: 'IntegrationATSJob'},
+  {from: 'integration_ats_candidate', to: 'IntegrationATSCandidate'},
+  {from: 'integration_ats_job_opening', to: 'IntegrationATSJobOpening'},
+  {from: 'integration_ats_offer', to: 'IntegrationATSOffer'},
+  {from: 'integration_connection', to: 'IntegrationConnection'}
+]
+
 async function setupTable({
   pool,
   schema: _schema,
@@ -21,21 +30,40 @@ async function setupTable({
 }) {
   const schema = snakeCase(_schema)
   const tableName = snakeCase(_tableName)
-  const table = sql.identifier(schema ? [schema, tableName] : [tableName])
+  // TODO: remove when we introduce dynamic column names
+  const mappedTableName =
+    agTableMappings.find((mapping) => mapping.from === tableName)?.to ||
+    tableName
+  const table = sql.identifier(
+    schema ? [schema, mappedTableName] : [mappedTableName],
+  )
+
+  // Note: Ideally we would create these for AG but we're not doing so as slonik does not support raw queries
+  // and also these tables are precreated in staging
+  // import { raw } from 'slonik-sql-tag-raw';
+  // const extraPerEntityColumns = {
+  //   'IntegrationATSJob': ['external_job_id VARCHAR'],
+  //   'IntegrationATSCandidate': ['opening_external_id VARCHAR', 'candidate_name VARCHAR'],
+  //   'IntegrationATSJobOpening': ['opening_external_id VARCHAR', 'job_id VARCHAR'],
+  //   'IntegrationATSOffer': ['opening_external_id VARCHAR', 'candidate_name VARCHAR'],
+  // }
+  // const extraColumns = extraPerEntityColumns[mappedTableName as keyof typeof extraPerEntityColumns]?.join(',\n      ') ?? ''
+  // this does not work... 
+  // const extraColumnsSql = extraColumns.length > 0 ? sql`, ${raw(extraColumns)}` : sql``;
 
   await pool.query(sql`
     CREATE TABLE IF NOT EXISTS ${table} (
-      source_id VARCHAR NOT NULL,
+      "connectionId" VARCHAR NOT NULL,
       id VARCHAR NOT NULL,
-      end_user_id VARCHAR,
-      created_at timestamp with time zone DEFAULT now() NOT NULL,
-      updated_at timestamp with time zone DEFAULT now() NOT NULL,
-      connector_name VARCHAR GENERATED ALWAYS AS (split_part((source_id)::text, '_'::text, 2)) STORED NOT NULL,
-      CONSTRAINT ${sql.identifier([
-        `pk_${tableName}`,
-      ])} PRIMARY KEY ("source_id", "id"),
+      "clientId" VARCHAR,
+      "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+      "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
+      "connectorName" VARCHAR GENERATED ALWAYS AS (split_part(("connectionId")::text, '_'::text, 2)) STORED NOT NULL,
+      CONSTRAINT ${sql.identifier([`pk_${mappedTableName}`])} PRIMARY KEY (
+        "id"),
       unified jsonb,
-      raw jsonb DEFAULT '{}'::jsonb NOT NULL
+      raw jsonb DEFAULT '{}'::jsonb NOT NULL,
+      "isOpenInt" boolean
     );
   `)
   // NOTE: Should we add org_id?
@@ -43,15 +71,15 @@ async function setupTable({
   // NOTE: add prefix check would be nice
   for (const col of [
     'id',
-    'source_id',
-    'connector_name',
-    'created_at',
-    'updated_at',
-    'end_user_id',
+    'connectionId',
+    // 'connectorName', // TODO: remove when we introduce dynamic column names
+    'createdAt',
+    'updatedAt',
+    'clientId',
   ]) {
     await pool.query(sql`
       CREATE INDEX IF NOT EXISTS ${sql.identifier([
-        `${tableName}_${col}`,
+        `${mappedTableName}_${col}`,
       ])} ON ${table} (${sql.identifier([col])});
     `)
   }
@@ -86,17 +114,17 @@ export const postgresServer = {
       for (const entityName of ['account', 'transaction'] as const) {
         const res = await pool.query<{
           id: string
-          created_at: string
-          updated_at: string
-          end_user_id: string | null
+          createdAt: string
+          updatedAt: string
+          clientId: string | null
           connector_name: string
-          source_id: string | null
+          connectionId: string | null
           raw: any
           unified: any
         }>(
           sql`SELECT * FROM ${sql.identifier([
             entityName,
-          ])} WHERE end_user_id = ${endUser?.id ?? null}`,
+          ])} WHERE "clientId" = ${endUser?.id ?? null}`,
         )
         yield res.rows.map((row) =>
           postgresHelpers._op('data', {
@@ -106,7 +134,7 @@ export const postgresServer = {
               raw: row.raw,
               id: row.id,
               connectorName: 'postgres',
-              sourceId: row.source_id ?? undefined,
+              connection_id: row.connectionId ?? undefined,
             },
           }),
         )
@@ -190,8 +218,10 @@ export const postgresServer = {
       await setupTable({pool, tableName})
     }
 
+    let agConnectionCreatedForResource = false;
+
     return handlersLink({
-      data: (op) => {
+      data: async (op) => {
         const {
           data: {id, entityName, ...data},
         } = op
@@ -199,7 +229,7 @@ export const postgresServer = {
         const batch = batches[tableName] ?? []
         batches[tableName] = batch
 
-        batch.push({
+        const rowToInsert: Record<string, unknown> = {
           // This is really not ideal. Maybe this should be a resource level seteting
           // about how we want to "normalize"?
           // Or be provided by the Operation itself?
@@ -209,9 +239,85 @@ export const postgresServer = {
             ? {...data.entity}
             : {raw: data.entity}),
           id,
-          end_user_id: endUser?.id ?? null,
-          source_id: source?.id,
-        })
+          clientId: endUser?.id ?? null,
+          // connectionId: source?.id,
+          connectionId: source?.id + '',
+          isOpenInt: true,
+        }
+
+        const isAgInsert =
+          endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
+          endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
+
+        // TODO: Remove when we have support for links custom upserts
+        if(isAgInsert) {
+          console.log('Inserting record for AG');
+          if (tableName === 'IntegrationAtsJob') {
+            rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
+          } else if (tableName === 'IntegrationAtsCandidate') {
+            rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
+            rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name || '';
+          } else if (tableName === 'IntegrationAtsJobOpening') {
+            rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
+            // NOTE Job openings are nested within Jobs and that o bject does not contain an id of the parent (job id)
+            // Depends on the implementation we may have to change this, leaving empty for now
+            // https://developers.greenhouse.io/harvest.html#the-job-object
+            rowToInsert['job_id'] = '';
+          } else if (tableName === 'IntegrationAtsOffer') {
+            // Note: These fields seemed duplicated from the nested objects
+            rowToInsert['opening_external_id'] = data.entity?.raw?.opening?.id || '';
+            // field does not exist in the offer object
+            rowToInsert['candidate_name'] = ''
+          }
+
+          if(!agConnectionCreatedForResource) {
+            console.log('will create ag connection record for', entityName);
+            const integrationConnectionRecord = {
+              id: source?.id + '',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              clientId: endUser?.id,
+              source: 'OpenInt',
+              profile: 'Ats',
+              provider: source?.connectorName, // lever, greenhouse etc
+              label: source?.connectorName, // lever, greenhouse etc
+            }
+            const query = await upsertByIdQuery('IntegrationConnection', [integrationConnectionRecord], {
+              primaryKey: ['id'],
+            })
+
+            if(!query) {
+              console.log('[destinationSync] Could not AG create integration connection record');
+              return;
+            }
+
+            // replace all instances of "Ats" with "ATS"
+            const agMappings = [
+              {from: 'client_id', to: 'clientId'},
+              {from: 'created_at', to: 'createdAt'},
+              {from: 'updated_at', to: 'updatedAt'},
+              {from: 'is_open_int', to: 'isOpenInt'},
+              {from: 'connection_id', to: 'connectionId'},
+              ...agTableMappings,
+            ]
+            let sqlQuery = query.sql
+            // Use a for loop to replace all camelCase table and column names with snake_case
+            for (const mapping of agMappings) {
+              const regex = new RegExp(`"${mapping.from}"`, 'g')
+              sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`)
+            }
+
+            const pool = await getPool();
+            await pool.query({
+              sql: sqlQuery,
+              values: query.values,
+              type: query.type,
+            });
+            agConnectionCreatedForResource = true;
+          } 
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        batch.push(rowToInsert as any)
         return rxjs.of(op)
       },
       commit: async (op) => {
@@ -234,11 +340,43 @@ export const postgresServer = {
               R.toPairs,
               R.map(([eName, batch]) =>
                 upsertByIdQuery(eName, batch, {
-                  primaryKey: ['id', 'source_id'],
+                  primaryKey: [
+                    'id',
+                    // TODO: remove when we introduce dynamic column names
+                    // 'connectionId'
+                  ],
                 }),
               ),
               R.compact,
-              R.map((query) => client.query(query)),
+              R.map((query) => {
+                // TODO: remove when we introduce dynamic column names
+                // Replace all instances inconsistent table and column names before execution
+                const agMappings = [
+                  {from: 'client_id', to: 'clientId'},
+                  {from: 'created_at', to: 'createdAt'},
+                  {from: 'updated_at', to: 'updatedAt'},
+                  {from: 'is_open_int', to: 'isOpenInt'},
+                  {from: 'connection_id', to: 'connectionId'},
+                  ...agTableMappings,
+                ]
+
+                let sqlQuery = query.sql
+                // Use a for loop to replace all camelCase table and column names with snake_case
+                for (const mapping of agMappings) {
+                  const regex = new RegExp(`"${mapping.from}"`, 'g')
+                  sqlQuery = sqlQuery.replace(regex, `"${mapping.to}"`)
+                }
+
+                // replace all instances of "Ats" with "ATS"
+                sqlQuery = sqlQuery.replace(/Ats/g, 'ATS')
+
+                // console.log('sqlQuery', sqlQuery);
+                return client.query({
+                  sql: sqlQuery,
+                  values: query.values,
+                  type: query.type,
+                })
+              }),
             ),
           ),
         )

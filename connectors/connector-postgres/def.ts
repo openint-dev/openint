@@ -41,8 +41,8 @@ export const postgresSchemas = {
     // Basically this should work with or without a link... And it's hard to abstract for now
     entity: z.object({
       // For now... in future we shall support arbitrary columns later
-      raw: z.unknown(),
-      unified: z.unknown(),
+      raw: z.any(),
+      unified: z.any(),
     }),
   }),
   sourceOutputEntity: zCast<EntityPayloadWithRaw>(),

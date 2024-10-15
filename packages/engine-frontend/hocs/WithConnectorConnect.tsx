@@ -195,7 +195,7 @@ export const WithConnectorConnect = ({
         label: resource ? 'Reconnect' : 'Connect',
       })}
 
-<DialogContent className="max-h-[600px] overflow-visible">
+      <DialogContent className="max-h-[600px] overflow-visible">
         <DialogHeader>
           <DialogTitle>
             <div className="flex items-center">

@@ -107,7 +107,9 @@ export function makeMetaLinks(metaBase: MetaService) {
           sourceState: R.keys(op.sourceState ?? {}),
           destinationState: R.keys(op.destinationState ?? {}),
         })
+        
         if (pipeline) {
+          console.log('[metaLink] stateUpdate pipeline', pipeline.id)
           // Workaround for default pipeline such as `conn_postgres` etc which
           // does not exist in the database...
           const sourceId =
