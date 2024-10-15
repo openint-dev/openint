@@ -195,7 +195,7 @@ export const WithConnectorConnect = ({
         label: resource ? 'Reconnect' : 'Connect',
       })}
 
-      <DialogContent className="max-h-[600px] overflow-y-auto">
+<DialogContent className="max-h-[600px] overflow-visible">
         <DialogHeader>
           <DialogTitle>
             <div className="flex items-center">
@@ -203,9 +203,9 @@ export const WithConnectorConnect = ({
                 Connect to {ccfg.connector.displayName}
               </span>
               {ccfg.connector.name === 'greenhouse' && (
-                <div className="group relative inline-block">
-                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500" />
-                  <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-gray-800 p-2 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="relative inline-block">
+                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500 peer" />
+                  <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-[#272731] p-2 text-sm text-white opacity-0 transition-opacity peer-hover:opacity-100 pointer-events-none">
                     <p className="italic">
                       Generate a custom API key with{' '}
                       <a
@@ -248,6 +248,7 @@ export const WithConnectorConnect = ({
           <Button
             disabled={connect.isLoading}
             onClick={() => formRef.current?.submit()}
+            className="bg-[#8192FF] hover:bg-[#6774CC]"
             type="submit">
             {connect.isLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
