@@ -115,15 +115,13 @@
   /* Aka sections */
   .schema-form fieldset > legend {
     /* Display block doesn't work for some reason. Does not fill parent width which is still a div, not sure why */
-    @apply mb-3 w-full border-b pb-1 pt-4 text-xl font-semibold;
+    @apply mb-3 w-full border-b pb-1 text-xl font-semibold;
   }
   .schema-form fieldset > div {
     /* Offset to indicate hierarchy */
-    @apply ml-3;
   }
   .schema-form fieldset#root {
     /* Compensate so the root form is not indented */
-    @apply -ml-3;
   }
   /* Label + component = group */
   .schema-form .form-group {
@@ -196,10 +194,10 @@
     @apply mx-1 rounded-md border p-2;
   }
   .schema-form .btn-danger {
-    @apply border-red-200;
+    @apply w-[80px] border-red-200 bg-red-500 text-white transition-colors duration-200 hover:bg-red-400;
   }
   .schema-form .btn-add {
-    @apply border-blue-200;
+    @apply w-[80px] border-blue-200;
   }
   .schema-form button[type='submit'].btn {
     @apply inline-flex items-center justify-center bg-primary px-4 text-primary-foreground hover:bg-primary/90;

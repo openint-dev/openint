@@ -27,17 +27,24 @@ export type SchemaFormProps<TSchema extends z.ZodTypeAny> = Omit<
 }
 
 function titleCase(str: string) {
-  return str
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  const words = str.split(/(?=[A-Z])|_/)
+
+  return words
+    .map((word) => word.charAt(0).toUpperCase() + word.toLowerCase().slice(1))
     .join(' ')
 }
 
+function isTypeObject(schema: RJSFSchema): boolean {
+  return (
+    schema.type === 'object' ||
+    (Array.isArray(schema.type) && schema.type.includes('object'))
+  )
+}
 // Add this function before the SchemaForm component
 function generateUiSchema(jsonSchema: RJSFSchema): UiSchema {
   const uiSchema: UiSchema = {}
 
-  if (jsonSchema.type === 'object' && jsonSchema.properties) {
+  if (isTypeObject(jsonSchema) && jsonSchema.properties) {
     for (const [key, value] of Object.entries(jsonSchema.properties)) {
       const friendlyLabel = titleCase(key)
       uiSchema[key] = {
@@ -45,18 +52,10 @@ function generateUiSchema(jsonSchema: RJSFSchema): UiSchema {
         'ui:classNames': 'pt-2 mr-2',
       }
 
-      if (typeof value === 'object' && value.type === 'object') {
+      if (typeof value === 'object' && isTypeObject(value)) {
         uiSchema[key] = {
           ...uiSchema[key],
           ...generateUiSchema(value as RJSFSchema),
-        }
-      } else if (typeof value === 'object' && value.type === 'array') {
-        uiSchema[key] = {
-          ...uiSchema[key],
-          'ui:options': {
-            addButtonClassName: 'w-[100px]',
-            removeButtonClassName: 'w-[100px]',
-          },
         }
       }
     }
