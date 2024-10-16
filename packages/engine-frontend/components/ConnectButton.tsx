@@ -28,16 +28,21 @@ interface ConnectButtonCommonProps {
 // TODO: Refactor WithOpenConnect out of ConnectButton
 // such that users can render their own trigger fully
 export function ConnectButton({
+  connectorNames = [],
   connectorConfigFilters,
   ...commonProps
 }: {
   connectorConfigFilters: ConnectorConfigFilters
+  connectorNames?: string[]
 } & ConnectButtonCommonProps) {
   const {verticalKey: categoryKey} = connectorConfigFilters
   return (
     <WithConnectConfig {...connectorConfigFilters}>
       {({ccfgs}) => {
-        const [first, ...rest] = ccfgs
+        const filteredCcfgs = ccfgs.filter(
+          (c) => !connectorNames.includes(c.connectorName),
+        )
+        const [first, ...rest] = filteredCcfgs
         if (!first) {
           return (
             <div>
