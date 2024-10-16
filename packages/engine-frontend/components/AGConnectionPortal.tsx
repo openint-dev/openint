@@ -1,28 +1,28 @@
 'use client'
 
 import {AlertTriangle} from 'lucide-react'
-import type {Id, Vertical} from '@openint/cdk'
-import type {UIPropsNoChildren} from '@openint/ui'
-import {Card, ResourceCard} from '@openint/ui'
-import {cn} from '@openint/ui/utils'
-import {R} from '@openint/util'
-import {WithConnectConfig} from '../hocs/WithConnectConfig'
-import {_trpcReact} from '../providers/TRPCProvider'
-import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 import React from 'react'
+import type {Id, Vertical} from '@openint/cdk'
 import {VERTICAL_BY_KEY} from '@openint/cdk'
+import type {UIPropsNoChildren} from '@openint/ui'
 import {
+  Card,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  ResourceCard,
 } from '@openint/ui'
-import type { ConnectorConfigFilters } from '../hocs/WithConnectConfig'
-import {IntegrationSearch} from './IntegrationSearch'
+import {cn} from '@openint/ui/utils'
+import {R} from '@openint/util'
+import {WithConnectConfig} from '../hocs/WithConnectConfig'
+import type {ConnectorConfigFilters} from '../hocs/WithConnectConfig'
+import {_trpcReact} from '../providers/TRPCProvider'
 import {ConnectButton} from './ConnectButton'
-
+import {IntegrationSearch} from './IntegrationSearch'
+import {ResourceDropdownMenu} from './ResourceDropdownMenu'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
@@ -31,10 +31,16 @@ export interface AGConnectionPortalProps extends UIPropsNoChildren {
 }
 
 // Custom comparison function for React.memo
-const areEqual = (prevProps: AGConnectionPortalProps, nextProps: AGConnectionPortalProps) => {
-  console.log('areEqual', prevProps, nextProps);
-  return prevProps.onEvent === nextProps.onEvent && prevProps.className === nextProps.className;
-};
+const areEqual = (
+  prevProps: AGConnectionPortalProps,
+  nextProps: AGConnectionPortalProps,
+) => {
+  console.log('areEqual', prevProps, nextProps)
+  return (
+    prevProps.onEvent === nextProps.onEvent &&
+    prevProps.className === nextProps.className
+  )
+}
 
 // Define the component as a functional component
 const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
@@ -45,29 +51,29 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
 
   const [openDialog, setOpenDialog] = React.useState(false)
 
-  // This can be called by the same window like 
+  // This can be called by the same window like
   // postMessage({ type: 'triggerConnectDialog', value: false }, '*');
-  // or by the parent window like  
+  // or by the parent window like
   // const iframe = document.getElementById('openint-connect-iframeId');
   // iframe?.contentWindow.postMessage({type: 'triggerConnectDialog', value: true },'*');
 
   const handleMessage = React.useCallback((event: MessageEvent) => {
     if (event.data.type === 'triggerConnectDialog') {
       console.log('triggerConnectDialog', event.data.value)
-      setOpenDialog(event.data.value || true);
+      setOpenDialog(event.data.value || true)
     }
-  }, []);
+  }, [])
 
   React.useEffect(() => {
-    console.log('Adding message event listener');
-    window.addEventListener('message', handleMessage);
+    console.log('Adding message event listener')
+    window.addEventListener('message', handleMessage)
     return () => {
-      console.log('Removing message event listener');
-      window.removeEventListener('message', handleMessage);
-    };
-  }, [handleMessage]);
+      console.log('Removing message event listener')
+      window.removeEventListener('message', handleMessage)
+    }
+  }, [handleMessage])
 
-  console.log('Render AGConnectionPortal, openDialog:', openDialog);
+  console.log('Render AGConnectionPortal, openDialog:', openDialog)
 
   return (
     <WithConnectConfig>
@@ -123,12 +129,17 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                 <NewConnectionCard
                   category={category}
                   hasExisting={category.connections.length > 0}
+                  connectorNames={category.connections.map(
+                    (c) => c.connectorName,
+                  )}
                 />
-                {openDialog && <AgConnectDialog
-                  connectorConfigFilters={{verticalKey: category.key}}
-                  open={openDialog}
-                  setOpen={setOpenDialog}
-                />}
+                {openDialog && (
+                  <AgConnectDialog
+                    connectorConfigFilters={{verticalKey: category.key}}
+                    open={openDialog}
+                    setOpen={setOpenDialog}
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -136,25 +147,32 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
       }}
     </WithConnectConfig>
   )
-};
+}
 
 // Export the component using React.memo
-export const AGConnectionPortal = React.memo(AGConnectionPortalComponent, areEqual);
+export const AGConnectionPortal = React.memo(
+  AGConnectionPortalComponent,
+  areEqual,
+)
 
 const NewConnectionCard = ({
   category,
   hasExisting,
+  connectorNames,
 }: {
   category: Vertical
   hasExisting: boolean
+  connectorNames: string[]
 }) => (
   <Card className="drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-solid border-[#e0e0e5] bg-[#f8f8fc] p-6 text-center">
-    <AlertTriangle className="size-8 text-orange-500" />
-    <h3 className="text-black-dark mb-2 text-[24px] font-semibold leading-[36px] tracking-tight antialiased">
-      {hasExisting
-        ? `Connect another ${category.name} integration`
-        : `No ${category.name} integration connected`}
-    </h3>
+    <div className="flex flex-row gap-2">
+      <AlertTriangle className="size-8 text-orange-300" />
+      <h3 className="text-black-dark mb-2 text-[24px] font-semibold leading-[36px] tracking-tight antialiased">
+        {hasExisting
+          ? `Connect another ${category.name} integration`
+          : `No ${category.name} integration connected`}
+      </h3>
+    </div>
 
     <p className="text-black-mid mb-4 text-sm font-semibold antialiased">
       Connect an integration here ASAP. This integration is needed to keep your{' '}
@@ -163,7 +181,10 @@ const NewConnectionCard = ({
     <ConnectButton
       // className="bg-purple-400 hover:bg-purple-500"
       className="rounded-md bg-[#8192FF] px-4 py-2 text-white hover:bg-[#6774CC]"
-      connectorConfigFilters={{verticalKey: category.key}}></ConnectButton>
+      connectorNames={connectorNames}
+      connectorConfigFilters={{
+        verticalKey: category.key,
+      }}></ConnectButton>
   </Card>
 )
 
@@ -176,7 +197,7 @@ function AgConnectDialog({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  console.log('AgConnectDialog', open);
+  console.log('AgConnectDialog', open)
   const {verticalKey: categoryKey} = connectorConfigFilters
 
   return (
@@ -204,10 +225,13 @@ function AgConnectDialog({
         )
 
         return (
-          <Dialog open={open} onOpenChange={(v) => {
-            console.log('onOpenChange', v);
-            setOpen(v);
-          }} modal={false}>
+          <Dialog
+            open={open}
+            onOpenChange={(v) => {
+              console.log('onOpenChange', v)
+              setOpen(v)
+            }}
+            modal={false}>
             {/* <DialogTrigger asChild>
             </DialogTrigger> */}
             <DialogContent className="flex max-h-screen flex-col sm:max-w-2xl">
@@ -224,7 +248,9 @@ function AgConnectDialog({
                 </>
               )}
               {content}
-              <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
+              <DialogFooter className="shrink-0">
+                {/* Cancel here */}
+              </DialogFooter>
             </DialogContent>
           </Dialog>
         )
