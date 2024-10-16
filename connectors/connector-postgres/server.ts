@@ -16,7 +16,8 @@ const agTableMappings = [
   {from: 'integration_ats_candidate', to: 'IntegrationATSCandidate'},
   {from: 'integration_ats_job_opening', to: 'IntegrationATSJobOpening'},
   {from: 'integration_ats_offer', to: 'IntegrationATSOffer'},
-  {from: 'integration_connection', to: 'IntegrationConnection'}
+  {from: 'integration_connection', to: 'IntegrationConnection'},
+  {from: 'integration_ats_opening', to: 'IntegrationATSOpening'},
 ]
 
 async function setupTable({
@@ -245,7 +246,7 @@ export const postgresServer = {
           isOpenInt: true,
         }
 
-        const isAgInsert =
+        const isAgInsert = 
           endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
           endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
@@ -258,11 +259,8 @@ export const postgresServer = {
             rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
             rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name || '';
           } else if (tableName === 'IntegrationAtsJobOpening') {
-            rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
-            // NOTE Job openings are nested within Jobs and that o bject does not contain an id of the parent (job id)
-            // Depends on the implementation we may have to change this, leaving empty for now
-            // https://developers.greenhouse.io/harvest.html#the-job-object
-            rowToInsert['job_id'] = '';
+            rowToInsert['opening_external_id'] = data.entity?.raw?.opening_id || '';
+            rowToInsert['job_id'] = data.entity?.raw?.job_id || '';
           } else if (tableName === 'IntegrationAtsOffer') {
             // Note: These fields seemed duplicated from the nested objects
             rowToInsert['opening_external_id'] = data.entity?.raw?.opening?.id || '';
