@@ -24,6 +24,11 @@ export const atsRouter = trpc.router({
     .input(zPaginationParams.nullish())
     .output(zPaginatedResult.extend({items: z.array(unified.job)}))
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  listJobOpenings: procedure
+    .meta(oapi({method: 'GET', path: '/job/{jobId}/opening'}))
+    .input(z.object({jobId: z.string()}).extend(zPaginationParams.shape).nullish())
+    .output(zPaginatedResult.extend({items: z.array(unified.opening)}))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   listOffers: procedure
     .meta(oapi({method: 'GET', path: '/offer'}))
     .input(zPaginationParams.nullish())
