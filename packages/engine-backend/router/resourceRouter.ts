@@ -235,7 +235,6 @@ export const resourceRouter = trpc.router({
           endUserId: zEndUserId.nullish(),
           connectorConfigId: zId('ccfg').nullish(),
           connectorName: z.string().nullish(),
-          refreshToken: z.boolean().optional(),
           forceRefresh: z.boolean().optional(),
         })
         .optional(),
@@ -265,35 +264,6 @@ export const resourceRouter = trpc.router({
 
       resources = updatedResources;
       
-      // Remove refresh_token from the response for security reasons if not explicitly requested
-      if (!input.refreshToken) {
-        console.log('[listResources] Removing refresh_token from the response');
-        resources = resources.map(reso => {
-          // @ts-expect-error
-          if (reso?.settings?.['oauth']?.credentials?.raw?.refresh_token) {
-            return {
-              ...reso,
-              settings: {
-                ...reso.settings,
-                oauth: {
-                  ...reso.settings['oauth'],
-                  credentials: {
-                    // @ts-expect-error
-                    ...reso.settings['oauth']?.credentials,
-                    raw: {
-                      // @ts-expect-error
-                      ...reso.settings['oauth']?.credentials?.raw,
-                      refresh_token: undefined
-                    }
-                  }
-                }
-              }
-            };
-          }
-          return reso;
-        });
-      }
-
       return resources as Array<ZRaw['resource']>
     }),
   getResource: protectedProcedure
@@ -303,8 +273,7 @@ export const resourceRouter = trpc.router({
     })
     .input(z.object({
       id: zId('reso'),
-      forceRefresh: z.boolean().optional(),
-      refreshToken: z.boolean().optional()
+      forceRefresh: z.boolean().optional()
     }))
     .output(
       // TODO: Should we expand this?
@@ -323,7 +292,7 @@ export const resourceRouter = trpc.router({
         reso.connectorConfigId
       )
 
-      // Handle forceRefresh and refreshToken
+      // Handle forceRefresh
       // @ts-expect-error
       const expiresAt = reso?.settings?.['oauth']?.credentials?.raw?.expires_at
       
@@ -334,15 +303,6 @@ export const resourceRouter = trpc.router({
           console.warn(`[getResource] resourceCheck not implemented for ${reso.connectorName} which requires a refresh. Returning the stale resource.`);
         }
         reso = resoCheck || reso;
-      }
-      
-      if(!input.refreshToken) {
-        // Remove refresh_token from the response for security reasons
-        // @ts-expect-error
-        if (reso?.settings?.['oauth']?.credentials?.raw?.refresh_token) {
-          // @ts-expect-error
-          delete reso.settings['oauth'].credentials.raw.refresh_token;
-        }
       }
 
       return {
