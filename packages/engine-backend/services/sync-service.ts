@@ -11,6 +11,7 @@ import type {
   StreamsV2,
 } from '@openint/cdk'
 import {
+  agColumnRenameLink,
   bankingLink,
   logLink,
   makeId,
@@ -134,12 +135,16 @@ export function makeSyncService({
     destination,
     links, // eslint-disable-next-line arrow-body-style
   }: _PipelineExpanded): Link[] => {
-    return [
+    const allLinks = [
       ...links,
       ...[
         ...(source.connectorConfig.defaultPipeOut?.links ?? []),
         ...(destination.connectorConfig.defaultPipeIn?.links ?? []),
-      ].map((l) => {
+      ],
+    ]
+    // console.log('getLinksForPipeline', {source, allLinks, destination})
+    return [
+      ...allLinks.map((l) => {
         // TODO: make me less hard-coded.
         switch (l) {
           case 'banking':
@@ -150,6 +155,8 @@ export function makeSyncService({
             return atsLink({source})
           case 'single_table':
             return singleTableLink({source})
+          case 'ag_column_rename':
+            return agColumnRenameLink({source})
           default:
             throw new Error(`Unknown link ${l}`)
         }
@@ -342,8 +349,8 @@ export function makeSyncService({
     const destination$$ =
       opts.destination$$ ??
       dest.connectorConfig.connector.destinationSync?.({
-        source: {id: src.id},
-        endUser,
+        source: {id: src.id, connectorName: src.connectorConfig.connector.name},
+        endUser: {id: endUser?.id as EndUserId, orgId: pipeline.source.connectorConfig.orgId},
         config: dest.connectorConfig.config,
         settings: dest.settings,
         // Undefined causes crash in Plaid provider due to destructuring, Think about how to fix it for reals

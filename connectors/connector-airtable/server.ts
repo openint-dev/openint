@@ -13,7 +13,7 @@ export const airtableServer = {
       // eslint-disable-next-line @typescript-eslint/require-await
       data: async (op) => {
         const {
-          data: {id, entityName, connectorName, sourceId = null, ...data},
+          data: {id, entityName, connectorName, connection_id: sourceId = null, ...data},
         } = op
 
         const transactionData = (

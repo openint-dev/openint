@@ -2,7 +2,7 @@
 
 import NangoFrontend from '@nangohq/frontend'
 import {useMutation} from '@tanstack/react-query'
-import {Loader2} from 'lucide-react'
+import {InfoIcon, Loader2} from 'lucide-react'
 import React from 'react'
 import type {Id} from '@openint/cdk'
 import {CANCELLATION_TOKEN, extractId, oauthConnect} from '@openint/cdk'
@@ -195,9 +195,33 @@ export const WithConnectorConnect = ({
         label: resource ? 'Reconnect' : 'Connect',
       })}
 
-      <DialogContent>
+      <DialogContent className="max-h-[600px] overflow-visible">
         <DialogHeader>
-          <DialogTitle>Connect to {ccfg.connector.displayName}</DialogTitle>
+          <DialogTitle>
+            <div className="flex items-center">
+              <span className="mr-2">
+                Connect to {ccfg.connector.displayName}
+              </span>
+              {ccfg.connector.name === 'greenhouse' && (
+                <div className="relative inline-block">
+                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500 peer" />
+                  <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-[#272731] p-2 text-sm text-white opacity-0 transition-opacity peer-hover:opacity-100 pointer-events-none">
+                    <p className="italic">
+                      Generate a custom API key with{' '}
+                      <a
+                        href="https://support.greenhouse.io/hc/en-us/articles/202842799-Create-an-API-key-in-Greenhouse-Recruiting"
+                        className="font-bold underline"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        these instructions
+                      </a>{' '}
+                      and include all Harvest V3 permissions.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </DialogTitle>
           {debug && (
             <DialogDescription>
               Using connector config ID: {ccfg.id}
@@ -224,6 +248,7 @@ export const WithConnectorConnect = ({
           <Button
             disabled={connect.isLoading}
             onClick={() => formRef.current?.submit()}
+            className="bg-[#8192FF] hover:bg-[#6774CC]"
             type="submit">
             {connect.isLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

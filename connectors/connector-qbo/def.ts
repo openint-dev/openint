@@ -73,7 +73,7 @@ export const qboDef = {
     displayName: 'Quickbooks Online',
     stage: 'beta',
     verticals: ['accounting'],
-    logoUrl: '/_assets/logo-qbo.svg',
+    logoUrl: '/_assets/logo-quickbooks.svg',
     nangoProvider: 'quickbooks',
   },
   streams: {

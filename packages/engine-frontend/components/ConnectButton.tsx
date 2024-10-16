@@ -18,7 +18,6 @@ import type {
   ConnectorConfigFilters,
 } from '../hocs/WithConnectConfig'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
-import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {IntegrationSearch} from './IntegrationSearch'
 
 interface ConnectButtonCommonProps {
@@ -29,16 +28,21 @@ interface ConnectButtonCommonProps {
 // TODO: Refactor WithOpenConnect out of ConnectButton
 // such that users can render their own trigger fully
 export function ConnectButton({
+  connectorNames = [],
   connectorConfigFilters,
   ...commonProps
 }: {
   connectorConfigFilters: ConnectorConfigFilters
+  connectorNames?: string[]
 } & ConnectButtonCommonProps) {
   const {verticalKey: categoryKey} = connectorConfigFilters
   return (
     <WithConnectConfig {...connectorConfigFilters}>
       {({ccfgs}) => {
-        const [first, ...rest] = ccfgs
+        const filteredCcfgs = ccfgs.filter(
+          (c) => !connectorNames.includes(c.connectorName),
+        )
+        const [first, ...rest] = filteredCcfgs
         if (!first) {
           return (
             <div>
@@ -47,19 +51,13 @@ export function ConnectButton({
             </div>
           )
         }
-        if (rest.length === 0) {
-          // e.g. Plaid
-          return (
-            <SingleConnectButton {...commonProps} connectorConfig={first} />
-          )
-        }
         // Render dialog for MultiConnector scenarios
         // This would be the case for greenhouse + lever
         const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined
         return (
           <MultipleConnectButton
             {...commonProps}
-            connectorConfigs={ccfgs}
+            connectorConfigs={rest.length === 0 ? [first] : ccfgs}
             category={category}
           />
         )
@@ -68,39 +66,10 @@ export function ConnectButton({
   )
 }
 
-function SingleConnectButton({
-  connectorConfig,
-  children,
-  className,
-}: {
-  connectorConfig: ConnectorConfig
-} & ConnectButtonCommonProps) {
-  return (
-    <WithConnectorConnect
-      connectorConfig={connectorConfig}
-      // onEvent={(e) => {
-      //   onEvent?.({type: e.type, ccfgId: int.connector_config_id})
-      // }}
-    >
-      {({openConnect}) => (
-        // <DialogTrigger asChild>
-        <Button
-          onClick={() => openConnect()}
-          className={className}
-          variant="default">
-          {children ?? 'Connect'}
-        </Button>
-        // </DialogTrigger>
-      )}
-    </WithConnectorConnect>
-  )
-}
-
 function MultipleConnectButton({
   children,
   className,
   connectorConfigs,
-  category,
 }: {
   connectorConfigs: ConnectorConfig[]
   /** Should correspond to connectorConfigs, but we can't guarantee that statically here... */
@@ -137,15 +106,9 @@ function MultipleConnectButton({
         <DialogHeader className="shrink-0">
           <DialogTitle>New connection</DialogTitle>
           <DialogDescription>
-            Choose a connector config to start
+            Select an integration to start
           </DialogDescription>
         </DialogHeader>
-        {category && (
-          <>
-            <h1>Select your first {category.name} integration</h1>
-            <p>{category.description}</p>
-          </>
-        )}
         {content}
 
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>

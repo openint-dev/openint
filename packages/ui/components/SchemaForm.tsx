@@ -1,6 +1,6 @@
 import type {default as Form, FormProps, ThemeProps} from '@rjsf/core'
 import {withTheme} from '@rjsf/core'
-import type {RJSFSchema} from '@rjsf/utils'
+import {type RJSFSchema, type UiSchema} from '@rjsf/utils'
 import validator from '@rjsf/validator-ajv8'
 import React from 'react'
 import type {z} from '@openint/util'
@@ -24,6 +24,44 @@ export type SchemaFormProps<TSchema extends z.ZodTypeAny> = Omit<
   hideSubmitButton?: boolean
   onSubmit?: (data: {formData: z.infer<TSchema>}) => void
   loading?: boolean
+}
+
+function titleCase(str: string) {
+  const words = str.split(/(?=[A-Z])|_/)
+
+  return words
+    .map((word) => word.charAt(0).toUpperCase() + word.toLowerCase().slice(1))
+    .join(' ')
+}
+
+function isTypeObject(schema: RJSFSchema): boolean {
+  return (
+    schema.type === 'object' ||
+    (Array.isArray(schema.type) && schema.type.includes('object'))
+  )
+}
+// Add this function before the SchemaForm component
+function generateUiSchema(jsonSchema: RJSFSchema): UiSchema {
+  const uiSchema: UiSchema = {}
+
+  if (isTypeObject(jsonSchema) && jsonSchema.properties) {
+    for (const [key, value] of Object.entries(jsonSchema.properties)) {
+      const friendlyLabel = titleCase(key)
+      uiSchema[key] = {
+        'ui:title': friendlyLabel,
+        'ui:classNames': 'pt-2 mr-2',
+      }
+
+      if (typeof value === 'object' && isTypeObject(value)) {
+        uiSchema[key] = {
+          ...uiSchema[key],
+          ...generateUiSchema(value as RJSFSchema),
+        }
+      }
+    }
+  }
+
+  return uiSchema
 }
 
 // Consider renaming this to zodSchemaForm
@@ -51,6 +89,7 @@ export const SchemaForm = React.forwardRef(function SchemaForm<
   // though this may sometimes cause stale data? Need to think more about it.
   const [formData, setFormData] = React.useState<z.infer<TSchema>>(_formData)
   // console.log('[SchemaForm] jsonSchema', jsonSchema)
+  const uiSchema = generateUiSchema(jsonSchema)
 
   return (
     <JsonSchemaForm<z.infer<TSchema>>
@@ -58,11 +97,17 @@ export const SchemaForm = React.forwardRef(function SchemaForm<
       {...props}
       ref={forwardedRef}
       formData={formData}
-      className={cn('schema-form', loading && 'loading', props.className)}
+      className={cn(
+        'schema-form',
+        loading && 'loading',
+        props.className,
+        'max-h-[450px] overflow-y-auto',
+      )}
       schema={jsonSchema}
       validator={validator}
       uiSchema={{
         ...(hideSubmitButton && {'ui:submitButtonOptions': {norender: true}}),
+        ...uiSchema,
         ...props.uiSchema,
       }}
       onSubmit={(data) => {
