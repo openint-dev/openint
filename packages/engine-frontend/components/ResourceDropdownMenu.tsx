@@ -97,54 +97,29 @@ export function ResourceDropdownMenu(
     // WithProviderConnect but also don't know of a better option
     <WithConnectorConnect {...props}>
       {(connectProps) => (
-        <DropdownMenu open={open} onOpenChange={setOpen}>
-          <DropdownMenuTrigger asChild>
+        <div className="flex flex-row items-center space-x-2">
+          {debug && (
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1 whitespace-nowrap group bg-transparent border border-[#EDEDED] rounded-lg h-9 py-2 px-3 transition-colors duration-200 ease-in-out
-                         hover:bg-[#F8F8F8] hover:border-[#8192FF]
-                         focus:outline-none focus:border-[#8192FF]
-                         active:bg-[#F8F8F8] active:border-[#8192FF]"
+              onClick={(e) => {
+                syncResourceMutate()
+                e.preventDefault()
+              }}
+              className="inline-flex items-center justify-center gap-1 whitespace-nowrap group border bg-white border-stroke enabled:active:bg-background-mid enabled:active:border-1 focus:border-1 hover:border-[#8192FF] enabled:hover:bg-background-mid disabled:bg-background-mid disabled:border-stroke disabled:cursor-not-allowed disabled:text-black-light disabled:opacity-50 h-9 py-2 px-3 rounded-lg"
             >
-              <MoreHorizontal className="w-4 h-4 text-[#A9ADAF] group-hover:text-[#8192FF]" />
-              <span className="text-[#8C9CFF] group-hover:text-[#4E5253] font-normal">Options</span>
+              <RefreshCw className="text-black-light w-5 h-5" />
+              <p className="antialiased text-sm tracking-[-0.01em] text-[#8192FF]">Update</p>
             </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            {debug && (
-              <>
-                <DropdownMenuLabel>{props.resource.id}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    onSelect={(e) => {
-                      // Need to explicitly close dropdown menu
-                      // otherwise pointer:none will remain on the body for some reason
-                      // if a dialog inside opens immediately... (e.g. editing postgres)
-                      // setOpen(false)
-                      connectProps.openConnect()
-                      e.preventDefault()
-                    }}>
-                    <Link2 className="mr-2 h-4 w-4" />
-                    <span>{connectProps.label}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => syncResourceMutate()}>
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    <span>Sync</span>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-              </>
-            )}
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onSelect={() => deleteResource.mutate({id: props.resource.id})}>
-                <Trash2 className="mr-2 h-4 w-4" />
-                <span>Delete</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          )}
+          <button
+            type="button"
+            onClick={() => deleteResource.mutate({id: props.resource.id})}
+            className="inline-flex items-center justify-center gap-1 whitespace-nowrap group border bg-white border-stroke enabled:active:bg-background-mid enabled:active:border-1 focus:border-1 hover:border-[#8192FF] enabled:hover:bg-background-mid disabled:bg-background-mid disabled:border-stroke disabled:cursor-not-allowed disabled:text-black-light disabled:opacity-50 h-9 py-2 px-3 rounded-lg"
+          >
+            <RefreshCw className="text-black-light w-5 h-5" />
+            <p className="antialiased text-sm tracking-[-0.01em] text-[#8192FF]">Disconnect</p>
+          </button>
+        </div>
       )}
     </WithConnectorConnect>
   )
