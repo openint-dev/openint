@@ -59,6 +59,7 @@ export function WithConnectConfig({
       connector: listConnectorsRes.data[ccfg.connectorName]!,
     }))
 
+
   const verticals = Object.values(VERTICAL_BY_KEY)
     .map((category) => {
       const categoryCcfgs = ccfgs.filter(
