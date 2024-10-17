@@ -1,6 +1,6 @@
 'use client'
 
-import {Link2, RefreshCw, Trash2} from 'lucide-react'
+import {Link2, RefreshCw, Trash2, RefreshCcw, MoreHorizontal} from 'lucide-react'
 import React from 'react'
 import type {RouterOutput} from '@openint/engine-backend'
 import type {UIProps} from '@openint/ui'
@@ -100,8 +100,16 @@ export function ResourceDropdownMenu(
       {(connectProps) => (
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
-            {/* TODO: use ... instead of Options */}
-            <Button variant="ghost">Options</Button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center gap-1 whitespace-nowrap group bg-transparent border border-[#EDEDED] rounded-lg h-9 py-2 px-3 transition-colors duration-200 ease-in-out
+                         hover:bg-[#F8F8F8] hover:border-[#8192FF]
+                         focus:outline-none focus:border-[#8192FF]
+                         active:bg-[#F8F8F8] active:border-[#8192FF]"
+            >
+              <MoreHorizontal className="w-4 h-4 text-[#A9ADAF] group-hover:text-[#8192FF]" />
+              <span className="text-[#8C9CFF] group-hover:text-[#4E5253] font-normal">Options</span>
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             {debug && (
