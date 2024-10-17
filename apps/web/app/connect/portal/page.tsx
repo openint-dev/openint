@@ -52,7 +52,6 @@ export default async function PortalPage({
       <div>Authenticated user only. Your role is {getViewerId(viewer)}</div>
     )
   }
-
   const shouldRenderAG =
     viewer.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
     viewer.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
