@@ -87,3 +87,18 @@ export const candidate = z
     ref: 'ats.candidate',
     description: 'A candidate for a job',
   })
+
+  
+  export const opening = z
+    .object({
+      id: z.string(),
+      created_at: z.string(),
+      modified_at: z.string(),
+      status: z.string(),
+      job_id: z.string(),
+      raw_data: z.record(z.unknown()).optional(),
+    })
+    .openapi({
+      ref: 'ats.opening',
+      description: 'An opening for a job',
+  })

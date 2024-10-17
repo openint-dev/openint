@@ -147,7 +147,7 @@ export function agColumnRenameLink(_ctx: {
     const entityMappings = {
       job: 'IntegrationAtsJob',
       candidate: 'IntegrationAtsCandidate',
-      job_opening: 'IntegrationAtsJobOpening',
+      opening: 'IntegrationAtsJobOpening',
       offer: 'IntegrationAtsOffer',
     }
 
