@@ -1,19 +1,8 @@
 'use client'
 
-import {Link2, RefreshCw, Trash2, MoreHorizontal} from 'lucide-react'
-import React from 'react'
+import { RefreshCw} from 'lucide-react'
 import type {RouterOutput} from '@openint/engine-backend'
-import type {UIProps} from '@openint/ui'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  useToast,
-} from '@openint/ui'
+import {useToast, type UIProps} from '@openint/ui'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {useOptionalOpenIntConnectContext} from '../providers/OpenIntConnectProvider'
@@ -27,7 +16,7 @@ type Resource = RouterOutput['listConnections'][number]
  * TODO: Add loading indicator when mutations are happening as a result of
  * selecting dropdown menu action
  */
-export function ResourceDropdownMenu(
+export function AgResourceRowActions(
   props: UIProps & {
     connectorConfig: ConnectorConfig
     resource: Resource
@@ -35,7 +24,6 @@ export function ResourceDropdownMenu(
   },
 ) {
   const {toast} = useToast()
-  const [open, setOpen] = React.useState(false)
 
   const {debug} = useOptionalOpenIntConnectContext()
 
@@ -57,7 +45,6 @@ export function ResourceDropdownMenu(
   const ctx = _trpcReact.useContext()
   const deleteResource = _trpcReact.deleteResource.useMutation({
     onSuccess: () => {
-      setOpen(false)
       toast({title: 'Connection deleted', variant: 'success'})
     },
     onError: (err) => {
@@ -73,7 +60,6 @@ export function ResourceDropdownMenu(
   })
   const syncResource = _trpcReact.dispatch.useMutation({
     onSuccess: () => {
-      setOpen(false)
       toast({title: 'Sync requested', variant: 'success'})
     },
     onError: (err) => {
@@ -96,7 +82,7 @@ export function ResourceDropdownMenu(
     // Not necessarily happy that we have to wrap the whole thing here inside
     // WithProviderConnect but also don't know of a better option
     <WithConnectorConnect {...props}>
-      {(connectProps) => (
+      {() => (
         <div className="flex flex-row items-center space-x-2">
           {debug && (
             <button

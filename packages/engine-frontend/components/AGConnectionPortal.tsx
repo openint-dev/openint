@@ -22,7 +22,7 @@ import type {ConnectorConfigFilters} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
 import {ConnectButton} from './ConnectButton'
 import {IntegrationSearch} from './IntegrationSearch'
-import {ResourceDropdownMenu} from './ResourceDropdownMenu'
+import {AgResourceRowActions} from './AgResourceRowActions'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
@@ -114,7 +114,7 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                     resource={conn}
                     connector={conn.connectorConfig.connector}
                     className="mb-4">
-                    <ResourceDropdownMenu
+                    <AgResourceRowActions
                       connectorConfig={conn.connectorConfig}
                       resource={conn}
                       onEvent={(e) => {
