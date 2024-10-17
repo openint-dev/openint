@@ -42,7 +42,10 @@ export async function getRemoteContext(ctx: ProtectedContext) {
         .GET('/connection/{connectionId}', {
           params: {
             path: {connectionId},
-            query: {provider_config_key: providerConfigKey},
+            query: {
+              provider_config_key: providerConfigKey,
+              force_refresh: true, // TODO: Conditionally call me, this is what makes it work
+            },
           },
         })
         .then((r) => nangoConnectionWithCredentials.parse(r.data)),

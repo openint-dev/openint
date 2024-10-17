@@ -121,7 +121,12 @@ export function makeOauthConnectorServer({
         .GET('/connection/{connectionId}', {
           params: {
             path: {connectionId: resoId},
-            query: {provider_config_key: ccfgId, refresh_token: true},
+            query: {
+              provider_config_key: ccfgId,
+              refresh_token: true,
+              // thought this would make forceRefresh work but wasn't called in the getResource code path
+              // force_refresh: true,
+            },
           },
         })
         .then((r) => r.data)
