@@ -192,7 +192,7 @@ export const postgresServer = {
         ),
       )
   },
-  destinationSync: ({endUser, source, settings: {databaseUrl}}) => {
+  destinationSync: ({endUser, source, settings: {databaseUrl, migrateTables}}) => {
     console.log('[destinationSync] Will makePostgresClient', {
       // databaseUrl,
       // migrationsPath: __dirname + '/migrations',
@@ -209,6 +209,10 @@ export const postgresServer = {
 
     const migrationRan: Record<string, boolean> = {}
     async function runMigration(pool: DatabasePool, tableName: string) {
+      if (!migrateTables) {
+        console.log('[destinationSync] Will not run migration for', tableName, 'as migrateTables is false');
+        return;
+      }
       console.log('will run migration for', tableName)
       if (migrationRan[tableName]) {
         return

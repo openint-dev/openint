@@ -11,6 +11,7 @@ export const zPgConfig = z.object({
   migrationsPath: z.string().optional(),
   migrationTableName: z.string().optional(),
   transformFieldNames: z.boolean().optional(),
+  avoidMigration: z.boolean().optional(),
 })
 
 export const postgresSchemas = {
