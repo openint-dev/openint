@@ -35,6 +35,11 @@ export async function getRemoteContext(ctx: ProtectedContext) {
   const nango = initNangoSDK({
     headers: {authorization: `Bearer ${ctx.env.NANGO_SECRET_KEY}`},
   })
+  
+  // @ts-expect-error oauth is conditionally present
+  const oauthCredentialsExpiryTime = new Date(resource.settings?.oauth?.credentials?.raw?.expires_at ?? new Date(new Date().getTime() + 1000));
+  const forceRefreshCredentials = oauthCredentialsExpiryTime < new Date();
+  
   const settings = {
     ...resource.settings,
     ...(resource.connectorConfig.connector.metadata?.nangoProvider && {
@@ -44,7 +49,7 @@ export async function getRemoteContext(ctx: ProtectedContext) {
             path: {connectionId},
             query: {
               provider_config_key: providerConfigKey,
-              force_refresh: true, // TODO: Conditionally call me, this is what makes it work
+              force_refresh: forceRefreshCredentials, // Conditionally call based on expiry
             },
           },
         })
