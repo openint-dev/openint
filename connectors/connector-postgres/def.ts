@@ -11,7 +11,7 @@ export const zPgConfig = z.object({
   migrationsPath: z.string().optional(),
   migrationTableName: z.string().optional(),
   transformFieldNames: z.boolean().optional(),
-  avoidMigration: z.boolean().optional(),
+  migrateTables: z.boolean().optional(),
 })
 
 export const postgresSchemas = {
@@ -20,7 +20,7 @@ export const postgresSchemas = {
   // if it's resourceSettings then it doesn't make as much sense to configure
   // in the list of integrations...
   // How do we create default resources for integrations that are basically single resource?
-  resourceSettings: zPgConfig.pick({databaseUrl: true}).extend({
+  resourceSettings: zPgConfig.pick({databaseUrl: true, migrateTables: true}).extend({
     // gotta make sourceQueries a Textarea
 
     sourceQueries: z
