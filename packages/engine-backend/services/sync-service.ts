@@ -428,7 +428,7 @@ export function makeSyncService({
     // TODO: This should be happening async
     if (!resoUpdate.source$ && !resoUpdate.triggerDefaultSync) {
       console.log(
-        '[_syncResourceUpdate] Returning early skip syncing pipelines',
+        `[_syncResourceUpdate] Returning early skip syncing pipelines for resoUpdate id ${resoUpdate.}`,
       )
       return id
     }

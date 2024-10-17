@@ -1,11 +1,13 @@
 import leverOas from '@opensdks/sdk-lever/lever.oas.json'
 import type {ConnectorDef, ConnectorSchemas, OpenApiSpec} from '@openint/cdk'
 import {connHelpers, oauthBaseSchema} from '@openint/cdk'
-import {z} from '@openint/util'
+import {R, z} from '@openint/util'
 
 export const zConfig = oauthBaseSchema.connectorConfig.extend({
   envName: z.enum(['sandbox', 'production']),
 })
+
+const LEVER_ENTITY_NAMES = ['posting'] as const
 
 /**
  * Full list of OAuth scopes: https://hire.lever.co/developer/documentation#scopes
@@ -20,6 +22,10 @@ export const leverSchemas = {
   connectorConfig: zConfig,
   resourceSettings: zSettings,
   connectOutput: oauthBaseSchema.connectOutput,
+  sourceOutputEntities: R.mapToObj(LEVER_ENTITY_NAMES, (e) => [
+    e,
+    z.unknown(),
+  ]),
 } satisfies ConnectorSchemas
 
 export const leverHelpers = connHelpers(leverSchemas)
