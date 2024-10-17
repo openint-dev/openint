@@ -1,11 +1,10 @@
 'use client'
 
-import {Link2, RefreshCw, Trash2, RefreshCcw, MoreHorizontal} from 'lucide-react'
+import {Link2, RefreshCw, Trash2, MoreHorizontal} from 'lucide-react'
 import React from 'react'
 import type {RouterOutput} from '@openint/engine-backend'
 import type {UIProps} from '@openint/ui'
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
