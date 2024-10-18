@@ -156,9 +156,14 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                 ))
               )}
               <ConnectDialog
-                // className="bg-purple-400 hover:bg-purple-500"
                 className="self-end bg-[#8A5DF6] hover:bg-[#A082E9]"
-                connectorConfigFilters={{}}></ConnectDialog>
+                connectorConfigFilters={{}}
+                onEvent={(event) => {
+                  if (event.type === 'close') {
+                    listConnectionsRes.refetch(); // Trigger refetch
+                  }
+                }}
+              ></ConnectDialog>
             </Card>
           </div>
         )

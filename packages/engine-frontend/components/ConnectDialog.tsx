@@ -32,12 +32,14 @@ export function ConnectDialog({
   connectorConfigFilters,
   open: controlledOpen,
   setOpen: controlledSetOpen,
+  onEvent,
   ...commonProps
 }: {
   connectorConfigFilters: ConnectorConfigFilters
   connectorNames?: string[]
   open?: boolean
   setOpen?: (open: boolean) => void
+  onEvent?: (event: any) => void
 } & ConnectDialogCommonProps) {
   const {verticalKey: categoryKey} = connectorConfigFilters
   return (
@@ -63,6 +65,7 @@ export function ConnectDialog({
             category={category}
             open={controlledOpen}
             setOpen={controlledSetOpen}
+            onEvent={onEvent}
           />
         )
       }}
@@ -76,11 +79,13 @@ function MultipleConnectButton({
   connectorConfigs,
   open: controlledOpen,
   setOpen: controlledSetOpen,
+  onEvent,
 }: {
   connectorConfigs: ConnectorConfig[]
   category?: Vertical
   open?: boolean
   setOpen?: (open: boolean) => void
+  onEvent?: (event: any) => void
 } & ConnectDialogCommonProps) {
   const [internalOpen, setInternalOpen] = React.useState(false)
 
@@ -94,10 +99,8 @@ function MultipleConnectButton({
     <IntegrationSearch
       connectorConfigs={connectorConfigs}
       onEvent={(e) => {
+        if (onEvent) onEvent(e);
         if (e.type === 'close' || e.type === 'error') {
-          // Cannot close during open event otherwise whole thing becomes unmounted
-          // and we end up closing the connect dialog itself...
-          // Once we have a global UserInputDialog
           setOpen(false)
         }
       }}

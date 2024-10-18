@@ -135,6 +135,11 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                     connectorConfigFilters={{verticalKey: category.key}}
                     open={openDialog}
                     setOpen={setOpenDialog}
+                    onEvent={(event) => {
+                      if (event.type === 'close') {
+                        listConnectionsRes.refetch(); // Trigger refetch
+                      }
+                    }}
                   />
                 )}
               </div>
