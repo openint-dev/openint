@@ -51,10 +51,19 @@ export function ConnectDialog({
         const [first, ...rest] = filteredCcfgs
         if (!first) {
           return (
-            <div>
-              No connectors configured for {categoryKey}. Please check your
-              settings
-            </div>
+            <Dialog open={true} onOpenChange={() => {}}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>No Integrations Available</DialogTitle>
+                  <DialogDescription>
+                    You have no further integrations available. If you believe this is an error, please contact support.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button onClick={() => {}}>Close</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           )
         }
         const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined

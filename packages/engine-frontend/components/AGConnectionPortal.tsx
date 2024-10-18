@@ -45,10 +45,14 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
   // const iframe = document.getElementById('openint-connect-iframeId');
   // iframe?.contentWindow.postMessage({type: 'triggerConnectDialog', value: true },'*');
 
-  const handleMessage = React.useCallback((event: MessageEvent) => {
+  const handleMessage = React.useCallback(async (event: MessageEvent) => {
     if (event.data.type === 'triggerConnectDialog') {
       console.log('triggerConnectDialog', event.data.value)
-      setOpenDialog(event.data.value)
+      if(event.data.value) {
+        await listConnectionsRes.refetch().then(() => {
+          setOpenDialog(event.data.value)
+        })
+      }
     }
   }, [])
 
@@ -135,11 +139,8 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                     connectorConfigFilters={{verticalKey: category.key}}
                     open={openDialog}
                     setOpen={setOpenDialog}
-                    onEvent={(event) => {
-                      if (event.type === 'close') {
-                        listConnectionsRes.refetch(); // Trigger refetch
-                      }
-                    }}
+                    // trigger refetch of connections
+                    onEvent={() => listConnectionsRes.refetch()}
                   />
                 )}
               </div>
