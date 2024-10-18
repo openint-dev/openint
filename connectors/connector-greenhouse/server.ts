@@ -71,23 +71,32 @@ const NextPageCursor: CursorParser<{next_page: number}> = {
 // TODO2: Implement low-code connector spec
 function greenhouseSource({sdk}: {sdk: GreenhouseSDK}): EtlSource<{
   job: GreenhouseObjectType['job']
-  // candidate: GreenhouseObjectType['candidate']
-  // application: GreenhouseObjectType['application']
-  // opening: GreenhouseObjectType['opening']
-  // offer: GreenhouseObjectType['offer']
+  candidate: GreenhouseObjectType['candidate']
+  application: GreenhouseObjectType['application']
+  opening: GreenhouseObjectType['opening']
+  offer: GreenhouseObjectType['offer']
 }> {
   return {
     // Perhaps allow cursor implementation to be passed in as a parameter
+    // @ts-expect-error ile greenhouse sdk is updated
     async listEntities(type, {cursor}) {
       const {next_page: page} = NextPageCursor.fromString(cursor)
+
+      const isOpening = type === 'opening'
+      if(isOpening) {
+        console.debug('[greenhouse] opening type detected, using job type instead')
+        type = 'job' as typeof type
+      }
       const res = await sdk.GET(`/v1/${type as 'job'}s`, {
         params: {query: {per_page: 50, page}},
       })
 
       return {
-        entities: res.data.map((j) => ({id: `${j.id}`, data: j})),
+        entities: isOpening ?
+          res.data.flatMap((j) => j.openings.map((o) => ({id: `${o.id}`, data: {job_id: j.id, ...o}}))) : 
+          res.data.map((j) => ({id: `${j.id}`, data: j})),
         next_cursor: NextPageCursor.toString({next_page: page + 1}),
-        // TODO: instead check for count / from respnose header
+        // TODO: instead check for count / from response header
         has_next_page: res.data.length === 0,
       }
     },

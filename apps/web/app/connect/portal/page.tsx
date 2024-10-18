@@ -6,6 +6,7 @@ import {getViewerId} from '@openint/cdk'
 import {zConnectPageParams} from '@openint/engine-backend/router/endUserRouter'
 import {AGConnectionPortal, ConnectionPortal} from '@openint/engine-frontend'
 import {ClientRoot} from '@/components/ClientRoot'
+import {ColorConfig} from '@/components/ColorConfig'
 import {SuperHydrate} from '@/components/SuperHydrate'
 import {createServerComponentHelpers} from '@/lib-server/server-component-helpers'
 
@@ -60,6 +61,7 @@ export default async function PortalPage({
   return (
     <ClientRoot accessToken={viewer.accessToken} authStatus="success">
       <SuperHydrate dehydratedState={getDehydratedState()}>
+        <ColorConfig />
         {shouldRenderAG ? <AGConnectionPortal /> : <ConnectionPortal />}
       </SuperHydrate>
     </ClientRoot>
