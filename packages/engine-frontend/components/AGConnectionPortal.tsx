@@ -2,26 +2,14 @@
 
 import {AlertTriangle} from 'lucide-react'
 import React from 'react'
-import type {Id, Vertical} from '@openint/cdk'
-import {VERTICAL_BY_KEY} from '@openint/cdk'
+import type {Id} from '@openint/cdk'
 import type {UIPropsNoChildren} from '@openint/ui'
-import {
-  Card,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  ResourceCard,
-} from '@openint/ui'
+import { Card, ResourceCard } from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
-import type {ConnectorConfigFilters} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
-import {ConnectButton} from './ConnectButton'
-import {IntegrationSearch} from './IntegrationSearch'
+import {ConnectDialog} from './ConnectDialog'
 import {AgResourceRowActions} from './AgResourceRowActions'
 
 type ConnectEventType = 'open' | 'close' | 'error'
@@ -60,7 +48,7 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
   const handleMessage = React.useCallback((event: MessageEvent) => {
     if (event.data.type === 'triggerConnectDialog') {
       console.log('triggerConnectDialog', event.data.value)
-      setOpenDialog(event.data.value || true)
+      setOpenDialog(event.data.value)
     }
   }, [])
 
@@ -100,6 +88,12 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
           ),
         }))
 
+        if (categoriesWithConnections.length > 1) {
+          console.warn(
+            'AG Connection Portal only currently supports 1 category being rendered via postMessage',
+          )
+        }
+
         return (
           <div className={cn('mb-4', className)}>
             {/* Listing by categories */}
@@ -126,15 +120,18 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                     />
                   </ResourceCard>
                 ))}
-                <NewConnectionCard
-                  category={category}
-                  hasExisting={category.connections.length > 0}
-                  connectorNames={category.connections.map(
-                    (c) => c.connectorName,
-                  )}
-                />
+                {category.connections.length === 0 && (
+                   <Card className="drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-solid border-[#e0e0e5] bg-[#f8f8fc] p-6 text-center">
+                    <div className="flex flex-row gap-2">
+                      <AlertTriangle className="size-8 text-[#C27B1A]" />
+                      <h3 className="text-black-dark mb-2 text-[24px] font-semibold leading-[36px] tracking-tight antialiased">
+                        {`No data source connected`}
+                      </h3>
+                   </div>
+                 </Card>
+                )}
                 {openDialog && (
-                  <AgConnectDialog
+                  <ConnectDialog
                     connectorConfigFilters={{verticalKey: category.key}}
                     open={openDialog}
                     setOpen={setOpenDialog}
@@ -154,107 +151,3 @@ export const AGConnectionPortal = React.memo(
   AGConnectionPortalComponent,
   areEqual,
 )
-
-const NewConnectionCard = ({
-  category,
-  hasExisting,
-  connectorNames,
-}: {
-  category: Vertical
-  hasExisting: boolean
-  connectorNames: string[]
-}) => (
-  <Card className="drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-solid border-[#e0e0e5] bg-[#f8f8fc] p-6 text-center">
-    <div className="flex flex-row gap-2">
-      <AlertTriangle className="size-8 text-orange-300" />
-      <h3 className="text-black-dark mb-2 text-[24px] font-semibold leading-[36px] tracking-tight antialiased">
-        {hasExisting
-          ? `Connect another ${category.name} integration`
-          : `No ${category.name} integration connected`}
-      </h3>
-    </div>
-
-    <p className="text-black-mid mb-4 text-sm font-semibold antialiased">
-      Connect an integration here ASAP. This integration is needed to keep your{' '}
-      {category.name} data accurate.
-    </p>
-    <ConnectButton
-      // className="bg-purple-400 hover:bg-purple-500"
-      className="rounded-md bg-[#8192FF] px-4 py-2 text-white hover:bg-[#6774CC]"
-      connectorNames={connectorNames}
-      connectorConfigFilters={{
-        verticalKey: category.key,
-      }}></ConnectButton>
-  </Card>
-)
-
-function AgConnectDialog({
-  connectorConfigFilters,
-  open,
-  setOpen,
-}: {
-  connectorConfigFilters: ConnectorConfigFilters
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) {
-  console.log('AgConnectDialog', open)
-  const {verticalKey: categoryKey} = connectorConfigFilters
-
-  return (
-    <WithConnectConfig {...connectorConfigFilters}>
-      {({ccfgs}) => {
-        const [first, ...rest] = ccfgs
-        if (!first) {
-          return (
-            <div>
-              No connectors configured for {categoryKey}. Please check your
-              settings
-            </div>
-          )
-        }
-        const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined
-        const content = (
-          <IntegrationSearch
-            connectorConfigs={rest.length === 0 ? [first] : ccfgs}
-            onEvent={(e) => {
-              if (e.type === 'close' || e.type === 'error') {
-                setOpen(false)
-              }
-            }}
-          />
-        )
-
-        return (
-          <Dialog
-            open={open}
-            onOpenChange={(v) => {
-              console.log('onOpenChange', v)
-              setOpen(v)
-            }}
-            modal={false}>
-            {/* <DialogTrigger asChild>
-            </DialogTrigger> */}
-            <DialogContent className="flex max-h-screen flex-col sm:max-w-2xl">
-              <DialogHeader className="shrink-0">
-                <DialogTitle>New connection</DialogTitle>
-                <DialogDescription>
-                  Choose a connector config to start
-                </DialogDescription>
-              </DialogHeader>
-              {category && (
-                <>
-                  <h1>Select your first {category.name} integration</h1>
-                  <p>{category.description}</p>
-                </>
-              )}
-              {content}
-              <DialogFooter className="shrink-0">
-                {/* Cancel here */}
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        )
-      }}
-    </WithConnectConfig>
-  )
-}

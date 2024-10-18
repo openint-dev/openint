@@ -20,21 +20,25 @@ import type {
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {IntegrationSearch} from './IntegrationSearch'
 
-interface ConnectButtonCommonProps {
+interface ConnectDialogCommonProps {
   className?: string
   children?: React.ReactNode
 }
 
 // TODO: Refactor WithOpenConnect out of ConnectButton
 // such that users can render their own trigger fully
-export function ConnectButton({
+export function ConnectDialog({
   connectorNames = [],
   connectorConfigFilters,
+  open: controlledOpen,
+  setOpen: controlledSetOpen,
   ...commonProps
 }: {
   connectorConfigFilters: ConnectorConfigFilters
   connectorNames?: string[]
-} & ConnectButtonCommonProps) {
+  open?: boolean
+  setOpen?: (open: boolean) => void
+} & ConnectDialogCommonProps) {
   const {verticalKey: categoryKey} = connectorConfigFilters
   return (
     <WithConnectConfig {...connectorConfigFilters}>
@@ -51,14 +55,14 @@ export function ConnectButton({
             </div>
           )
         }
-        // Render dialog for MultiConnector scenarios
-        // This would be the case for greenhouse + lever
         const category = categoryKey ? VERTICAL_BY_KEY[categoryKey] : undefined
         return (
           <MultipleConnectButton
             {...commonProps}
             connectorConfigs={rest.length === 0 ? [first] : ccfgs}
             category={category}
+            open={controlledOpen}
+            setOpen={controlledSetOpen}
           />
         )
       }}
@@ -70,12 +74,20 @@ function MultipleConnectButton({
   children,
   className,
   connectorConfigs,
+  open: controlledOpen,
+  setOpen: controlledSetOpen,
 }: {
   connectorConfigs: ConnectorConfig[]
-  /** Should correspond to connectorConfigs, but we can't guarantee that statically here... */
   category?: Vertical
-} & ConnectButtonCommonProps) {
-  const [open, setOpen] = React.useState(false)
+  open?: boolean
+  setOpen?: (open: boolean) => void
+} & ConnectDialogCommonProps) {
+  const [internalOpen, setInternalOpen] = React.useState(false)
+
+  // Determine if the component is controlled or uncontrolled
+  const isControlled = controlledOpen !== undefined && controlledSetOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+  const setOpen = isControlled ? controlledSetOpen : setInternalOpen
 
   // Unconditional render to avoid delay when dialog is opened
   const content = (
@@ -98,9 +110,11 @@ function MultipleConnectButton({
     // as well as other modals introduced by things like Plaid
     <Dialog open={open} onOpenChange={setOpen} modal={false}>
       <DialogTrigger asChild>
-        <Button className={className} variant="default">
-          {children ?? 'Connect'}
-        </Button>
+        {!isControlled && (
+          <Button className={className} variant="default">
+            {children ?? 'Connect'}
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="flex max-h-screen flex-col sm:max-w-2xl">
         <DialogHeader className="shrink-0">
@@ -110,7 +124,6 @@ function MultipleConnectButton({
           </DialogDescription>
         </DialogHeader>
         {content}
-
         <DialogFooter className="shrink-0">{/* Cancel here */}</DialogFooter>
       </DialogContent>
     </Dialog>

@@ -18,7 +18,7 @@ import {cn} from '@openint/ui/utils'
 import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
-import {ConnectButton} from './ConnectButton'
+import {ConnectDialog} from './ConnectDialog'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
@@ -155,10 +155,10 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                   </div>
                 ))
               )}
-              <ConnectButton
+              <ConnectDialog
                 // className="bg-purple-400 hover:bg-purple-500"
                 className="self-end bg-[#8A5DF6] hover:bg-[#A082E9]"
-                connectorConfigFilters={{}}></ConnectButton>
+                connectorConfigFilters={{}}></ConnectDialog>
             </Card>
           </div>
         )
