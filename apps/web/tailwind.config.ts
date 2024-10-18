@@ -1,6 +1,5 @@
 import type {Config} from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme'
-
 import {VeniceTheme} from './themes'
 
 export default {
@@ -83,6 +82,10 @@ export default {
       colors: {
         // --- Begin shadcn tailwind config
         border: 'hsl(var(--border))',
+        button: {
+          DEFAULT: 'var(--button)',
+          foreground: 'var(--button-foreground)',
+        },
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
