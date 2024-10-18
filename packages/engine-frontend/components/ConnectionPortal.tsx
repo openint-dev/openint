@@ -18,7 +18,7 @@ import {cn} from '@openint/ui/utils'
 import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
-import {ConnectButton} from './ConnectButton'
+import {ConnectDialog} from './ConnectDialog'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
@@ -100,11 +100,15 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                         Add a connection to get started
                       </p>
                     </div>
-                    <ConnectButton
-                      // className="bg-purple-400 hover:bg-purple-500"
-                      className="w-[80px] bg-[#8A5DF6] hover:bg-[#A082E9]"
+                    <ConnectDialog
+                      className="self-end bg-[#8A5DF6] hover:bg-[#A082E9]"
                       connectorConfigFilters={{}}
-                    />
+                      onEvent={(event) => {
+                        if (event.type === 'close') {
+                          listConnectionsRes.refetch(); // Trigger refetch
+                        }
+                            }}
+                    ></ConnectDialog>
                   </div>
                 ) : (
                   <div className="p-4">
@@ -194,11 +198,15 @@ export function ConnectionPortal({className}: ConnectionPortalProps) {
                       Choose a connector config to start
                     </p>
                   </div>
-                  <ConnectButton
-                    // className="bg-purple-400 hover:bg-purple-500"
-                    className="w-[80px] bg-[#8A5DF6] hover:bg-[#A082E9]"
+                  <ConnectDialog
+                    className="self-end bg-[#8A5DF6] hover:bg-[#A082E9]"
                     connectorConfigFilters={{}}
-                  />
+                    onEvent={(event) => {
+                      if (event.type === 'close') {
+                          listConnectionsRes.refetch(); // Trigger refetch
+                        }
+                      }}
+                ></ConnectDialog>
                 </div>
               </TabsContent>
             </Tabs>
