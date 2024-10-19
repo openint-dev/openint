@@ -857,8 +857,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19
       '@opensdks/sdk-greenhouse':
-        specifier: ^0.0.7
-        version: 0.0.7
+        specifier: ^0.0.8
+        version: 0.0.8
 
   connectors/connector-heron:
     dependencies:
@@ -3651,8 +3651,8 @@ packages:
   '@opensdks/sdk-finch@0.0.4':
     resolution: {integrity: sha512-7CxSxCIE8POPBFrEGlovRdkziXNfbrh6GD7fPwIk6GPR2f2CKmLqPxOpLhBhzH/5Ol0nCyzCq8NDsvLbI5OvEQ==}
 
-  '@opensdks/sdk-greenhouse@0.0.7':
-    resolution: {integrity: sha512-WgmMjMO8DXyjnSJ1fvnK1TrNabgUatUOIKHRhUu6WSFJFUzfryoMJfPR8zSWIUzMNrtNS5lthK2x+kY+w4NtBQ==}
+  '@opensdks/sdk-greenhouse@0.0.8':
+    resolution: {integrity: sha512-kIN0ckK36QmWUfUNbl7B6Fi8G63JQ/iCWKnY5Ozd+lTRQYQV+ub30FOZk0djiepNOcUkOFv3QSy9K1Sk8B4ADA==}
 
   '@opensdks/sdk-heron@0.0.1':
     resolution: {integrity: sha512-7DOFFlq5C8u060L9GJ6euwE/g8aqIClyZysio4jqYQ1W9rcYX/pZUsZ7NNPt6LQTX+coAz+8nieEi35ejiKbdg==}
@@ -15551,7 +15551,7 @@ snapshots:
 
   '@opensdks/sdk-finch@0.0.4': {}
 
-  '@opensdks/sdk-greenhouse@0.0.7':
+  '@opensdks/sdk-greenhouse@0.0.8':
     dependencies:
       '@opensdks/runtime': 0.0.20
 
@@ -20216,7 +20216,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@6.21.0(eslint@8.23.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.5.3)(eslint@8.23.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@6.21.0(eslint@8.23.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.5.3(eslint-plugin-import@2.29.0)(eslint@8.23.0))(eslint@8.23.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -20261,7 +20261,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.23.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.21.0(eslint@8.23.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.5.3)(eslint@8.23.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.21.0(eslint@8.23.0)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.5.3(eslint-plugin-import@2.29.0)(eslint@8.23.0))(eslint@8.23.0)
       hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3

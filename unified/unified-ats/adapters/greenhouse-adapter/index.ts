@@ -36,25 +36,25 @@ export const greenhouseAdapter = {
     if (!jobId) {
       throw new Error('jobId is required');
     }
-    // @ts-expect-error while greenhouse sdk is updated
-    const res = await instance.GET(`/v1/jobs/${jobId}/openings`, {
+    const res = await instance.GET(`/v1/jobs/{id}/openings`, {
       params: {
         query: {
           per_page: input?.page_size,
           page: cursor,
         },
+        path: {
+          id: jobId,
+        }
       },
     })
     let nextCursor = undefined
-    // @ts-expect-error while greenhouse sdk is updated
     if (input?.page_size && res.data?.length === input?.page_size) {
       nextCursor = (cursor || 0) + input.page_size
     }
     return {
       has_next_page: !!nextCursor,
       next_cursor: nextCursor ? String(nextCursor) : undefined,
-      // @ts-expect-error while greenhouse sdk is updated
-      items: res.data?.map((d) => applyMapper(mappers.jobOpening, d)) ?? [],
+      items: res.data?.map((d) => applyMapper(mappers.opening, {job_id: jobId, ...d})) ?? [],
     }
   },
   listOffers: async ({instance, input}) => {
