@@ -257,7 +257,7 @@ export const postgresServer = {
             rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
           } else if (tableName === 'IntegrationAtsCandidate') {
             rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
-            rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name || '';
+            rowToInsert['candidate_name'] = data.entity?.raw?.first_name + ' ' + data.entity?.raw?.last_name || '';
           } else if (tableName === 'IntegrationAtsJobOpening') {
             rowToInsert['opening_external_id'] = data.entity?.raw?.opening_id || '';
             rowToInsert['job_id'] = data.entity?.raw?.job_id || '';

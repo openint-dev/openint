@@ -138,8 +138,8 @@ export const WithConnectorConnect = ({
       onSuccess(msg) {
         if (msg) {
           toast({
-            title: `Success (${ccfg.connector.displayName})`,
-            description: `${msg}`,
+            title: `Successfully connected to ${ccfg.connector.displayName}`,
+            // description: `${msg}`,
             variant: 'success',
           })
         }
@@ -150,9 +150,10 @@ export const WithConnectorConnect = ({
         if (err === CANCELLATION_TOKEN) {
           return
         }
+        console.log(ccfg.connector.displayName + ' connection error:',err)
         toast({
           title: `Failed to connect to ${ccfg.connector.displayName}`,
-          description: `${err}`,
+          // description: `${err}`,
           variant: 'destructive',
         })
         onEvent?.({type: 'error'})

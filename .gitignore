@@ -54,3 +54,5 @@ temp/
 dist/
 
 *.play.*
+
+*storybook.log

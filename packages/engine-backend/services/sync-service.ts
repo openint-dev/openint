@@ -77,7 +77,7 @@ export function makeSyncService({
         await metaLinks.patch('resource', defaultDestId, {
           connectorConfigId: dCcfgId,
           // Should always snake_case here. This is also not typesafe...
-          settings: {databaseUrl: org.publicMetadata.database_url},
+          settings: {databaseUrl: org.publicMetadata.database_url, migrateTables: org.publicMetadata.migrate_tables},
         })
         console.log('Created default resource', defaultDestId)
       }

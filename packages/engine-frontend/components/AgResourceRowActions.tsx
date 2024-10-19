@@ -1,20 +1,8 @@
 'use client'
 
-import {Link2, RefreshCw, Trash2} from 'lucide-react'
-import React from 'react'
+import { RefreshCw} from 'lucide-react'
 import type {RouterOutput} from '@openint/engine-backend'
-import type {UIProps} from '@openint/ui'
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  useToast,
-} from '@openint/ui'
+import {useToast, type UIProps} from '@openint/ui'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
 import {useOptionalOpenIntConnectContext} from '../providers/OpenIntConnectProvider'
@@ -28,7 +16,7 @@ type Resource = RouterOutput['listConnections'][number]
  * TODO: Add loading indicator when mutations are happening as a result of
  * selecting dropdown menu action
  */
-export function ResourceDropdownMenu(
+export function AgResourceRowActions(
   props: UIProps & {
     connectorConfig: ConnectorConfig
     resource: Resource
@@ -36,7 +24,6 @@ export function ResourceDropdownMenu(
   },
 ) {
   const {toast} = useToast()
-  const [open, setOpen] = React.useState(false)
 
   const {debug} = useOptionalOpenIntConnectContext()
 
@@ -58,7 +45,6 @@ export function ResourceDropdownMenu(
   const ctx = _trpcReact.useContext()
   const deleteResource = _trpcReact.deleteResource.useMutation({
     onSuccess: () => {
-      setOpen(false)
       toast({title: 'Connection deleted', variant: 'success'})
     },
     onError: (err) => {
@@ -74,7 +60,6 @@ export function ResourceDropdownMenu(
   })
   const syncResource = _trpcReact.dispatch.useMutation({
     onSuccess: () => {
-      setOpen(false)
       toast({title: 'Sync requested', variant: 'success'})
     },
     onError: (err) => {
@@ -97,47 +82,30 @@ export function ResourceDropdownMenu(
     // Not necessarily happy that we have to wrap the whole thing here inside
     // WithProviderConnect but also don't know of a better option
     <WithConnectorConnect {...props}>
-      {(connectProps) => (
-        <DropdownMenu open={open} onOpenChange={setOpen}>
-          <DropdownMenuTrigger asChild>
-            {/* TODO: use ... instead of Options */}
-            <Button variant="ghost">Options</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            {debug && (
-              <>
-                <DropdownMenuLabel>{props.resource.id}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    onSelect={(e) => {
-                      // Need to explicitly close dropdown menu
-                      // otherwise pointer:none will remain on the body for some reason
-                      // if a dialog inside opens immediately... (e.g. editing postgres)
-                      // setOpen(false)
-                      connectProps.openConnect()
-                      e.preventDefault()
-                    }}>
-                    <Link2 className="mr-2 h-4 w-4" />
-                    <span>{connectProps.label}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => syncResourceMutate()}>
-                    <RefreshCw className="mr-2 h-4 w-4" />
-                    <span>Sync</span>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-              </>
-            )}
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                onSelect={() => deleteResource.mutate({id: props.resource.id})}>
-                <Trash2 className="mr-2 h-4 w-4" />
-                <span>Delete</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      {() => (
+        <div className="flex flex-row items-center space-x-2">
+          {debug && (
+            <button
+              type="button"
+              onClick={(e) => {
+                syncResourceMutate()
+                e.preventDefault()
+              }}
+              className="inline-flex items-center justify-center gap-1 whitespace-nowrap group border bg-white border-stroke enabled:active:bg-background-mid enabled:active:border-1 focus:border-1 hover:border-[#8192FF] enabled:hover:bg-background-mid disabled:bg-background-mid disabled:border-stroke disabled:cursor-not-allowed disabled:text-black-light disabled:opacity-50 h-9 py-2 px-3 rounded-lg"
+            >
+              <RefreshCw className="text-black-light w-5 h-5" />
+              <p className="antialiased text-sm tracking-[-0.01em] text-[#8192FF]">Update</p>
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => deleteResource.mutate({id: props.resource.id})}
+            className="inline-flex items-center justify-center gap-1 whitespace-nowrap group border bg-white border-stroke enabled:active:bg-background-mid enabled:active:border-1 focus:border-1 hover:border-[#8192FF] enabled:hover:bg-background-mid disabled:bg-background-mid disabled:border-stroke disabled:cursor-not-allowed disabled:text-black-light disabled:opacity-50 h-9 py-2 px-3 rounded-lg"
+          >
+            <RefreshCw className="text-black-light w-5 h-5" />
+            <p className="antialiased text-sm tracking-[-0.01em] text-[#8192FF]">Disconnect</p>
+          </button>
+        </div>
       )}
     </WithConnectorConnect>
   )
