@@ -52,3 +52,74 @@ export const profitAndLoss = z.object({
   netOperatingIncome: z.number().nullable(),
   netIncome: z.number().nullable(),
 })
+
+export const cashFlow = z.object({
+  reportName: z.string(),
+  startPeriod: z.string().openapi({format: 'date'}),
+  endPeriod: z.string().openapi({format: 'date'}),
+  currency: z.string(),
+  netIncome: z.number().nullable(),
+  totalOperatingAdjustments: z.number().nullable(),
+  netCashFromOperatingActivities: z.number().nullable(),
+  netCashFromFinancingActivities: z.number().nullable(),
+  netCashIncrease: z.number().nullable(),
+  endingCash: z.number().nullable(),
+})
+
+const transactionSchema = z.object({
+  date: z.string(),
+  transactionType: z.string(),
+  documentNumber: z.string().optional(),
+  posting: z.string().optional(),
+  name: z.string().optional(),
+  department: z.string().optional(),
+  memo: z.string().optional(),
+  account: z.string().optional(),
+  split: z.string().optional(),
+  amount: z.number(),
+});
+
+export const transactionList = z.object({
+  reportName: z.string(),
+  startPeriod: z.string(),
+  endPeriod: z.string(),
+  currency: z.string(),
+  transactions: z.array(transactionSchema),
+});
+
+const customerBalanceEntrySchema = z.object({
+  customerId: z.string(),
+  customerName: z.string(),
+  balance: z.number(),
+});
+
+export const customerBalance = z.object({
+  reportName: z.string(),
+  reportDate: z.string(),
+  currency: z.string(),
+  entries: z.array(customerBalanceEntrySchema),
+  totalBalance: z.number(),
+});
+
+const customerIncomeEntrySchema = z.object({
+  customerId: z.string(),
+  customerName: z.string(),
+  totalIncome: z.number(),
+  totalExpenses: z.number(),
+  netIncome: z.number(),
+});
+
+export const customerIncome = z.object({
+  reportName: z.string(),
+  startPeriod: z.string(),
+  endPeriod: z.string(),
+  currency: z.string(),
+  entries: z.array(customerIncomeEntrySchema),
+  totalIncome: z.number(),
+  totalExpenses: z.number(),
+  netIncome: z.number(),
+});
+
+
+
+
