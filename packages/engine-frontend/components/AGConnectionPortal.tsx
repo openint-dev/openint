@@ -103,9 +103,6 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
             {/* Listing by categories */}
             {categoriesWithConnections.map((category) => (
               <div key={category.key}>
-                <h3 className="mb-4 text-xl font-semibold tracking-tight">
-                  {category.name}
-                </h3>
                 {category.connections.map((conn) => (
                   <ResourceCard
                     key={conn.id}
