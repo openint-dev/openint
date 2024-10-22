@@ -2,6 +2,7 @@ import {type QBOSDK, type QBOSDKTypes} from '@openint/connector-qbo'
 import {mapper, zCast} from '@openint/vdk'
 import type {AccountingAdapter} from '../router'
 import * as unified from '../unifiedModels'
+import {makeUlid} from '@openint/util'
 
 type QBO = QBOSDKTypes['oas']['components']['schemas']
 
@@ -249,5 +250,39 @@ export const qboAdapter = {
   getCustomerIncome: async ({instance}) => {
     const res = await instance.GET('/reports/CustomerIncome')
     return mappers.customerIncome(res)
+  },
+  // @ts-expect-error we can tighten up the types here after opensdks support qbo v4
+  getBankAccounts: async ({instance, input}) => {
+    // https://developer.intuit.com/app/developer/qbpayments/docs/api/resources/all-entities/bankaccounts#get-a-list-of-bank-accounts
+    const baseUrl = instance.clientOptions?.baseUrl?.replace(/intuit\.com.*/, "/quickbooks/v4/customers/{customer}/bank-accounts");
+    const res = await instance.request('GET', baseUrl ?? '', {
+      params: {
+        query: {
+          customer: input.customer
+        }
+      },
+      headers: {
+        'Accept': 'application/json',
+        "request-Id": makeUlid()
+      }
+    })
+    return res.data;
+  },
+  // @ts-expect-error we can tighten up the types here after opensdks support qbo v4
+  getPaymentReceipt: async ({instance, input}) => {
+     // https://developer.intuit.com/app/developer/qbpayments/docs/api/resources/all-entities/paymentreceipt
+     const baseUrl = instance.clientOptions?.baseUrl?.replace(/intuit\.com.*/, `/quickbooks/v4/payments/receipt/{customer_transaction_id}`);
+      const res = await instance.request('GET', baseUrl ?? '', {
+        params: {
+          query: {
+            customer_transaction_id: input.customer_transaction_id
+          }
+        },
+        headers: {
+          'Accept': 'application/pdf, application/json',
+          "request-Id": makeUlid()
+        }
+      })
+      return res.data;
   },
 } satisfies AccountingAdapter<QBOSDK>

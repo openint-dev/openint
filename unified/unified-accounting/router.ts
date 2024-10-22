@@ -85,6 +85,16 @@ export const accountingRouter = trpc.router({
     }))
     .output(unified.customerIncome)
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getBankAccounts: procedure
+    .meta(oapi({method: 'GET', path: '/bank-accounts'}))
+    .input(z.object({customer: z.string()}))
+    .output(z.array(unified.usBankAccount))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getPaymentReceipts: procedure
+    .meta(oapi({method: 'GET', path: '/payment-receipt'}))
+    .input(z.object({customer_transaction_id: z.string()}))
+    .output(z.instanceof(Buffer))
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 
 export type AccountingAdapter<TInstance> = AdapterFromRouter<
