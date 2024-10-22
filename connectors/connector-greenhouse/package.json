@@ -7,7 +7,7 @@
     "@openint/cdk": "workspace:*",
     "@openint/util": "workspace:*",
     "@opensdks/runtime": "^0.0.19",
-    "@opensdks/sdk-greenhouse": "^0.0.6"
+    "@opensdks/sdk-greenhouse": "^0.0.8"
   },
   "devDependencies": {}
 }

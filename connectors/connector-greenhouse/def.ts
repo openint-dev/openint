@@ -7,6 +7,7 @@ export const GREENHOUSE_ENTITY_NAMES = [
   'application',
   'offer',
   'candidate',
+  'opening',
 ] as const
 
 export const greenhouseSchema = {

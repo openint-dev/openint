@@ -38,7 +38,7 @@ const _VERTICAL_BY_KEY = {
                 integrating with your payroll. Only users who are invited to the
                 platform can access this information, and the integration is
                 one-way with no impact on original data.`,
-    objects: ['job', 'offer', 'candidate'],
+    objects: ['job', 'offer', 'candidate', 'opening'],
   },
 } satisfies Record<string, VerticalInfo>
 

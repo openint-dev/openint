@@ -32,6 +32,11 @@ export const zOrganization = z.object({
       description:
         'Events like sync.completed and connection.created can be sent to url of your choosing',
     }),
+    migrate_tables: z.boolean().optional().openapi({
+      title: 'Migrate Tables',
+      description: 'If enabled, table migrations will be run if needed when entities are persisted',
+      default: true,
+    }),
   }),
   privateMetadata: z
     .object({

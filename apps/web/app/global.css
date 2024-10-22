@@ -39,6 +39,9 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+
+    --button: #8a5df6;
+    --button-foreground: #ffffff;
   }
 
   .dark {

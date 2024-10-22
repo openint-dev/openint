@@ -65,9 +65,20 @@ const offer = mapper(zCast<GreenhouseObjectType['offer']>(), unified.offer, {
   status: 'status',
 })
 
+const opening = mapper(zCast<GreenhouseObjectType['opening'] & {job_id: string}>(), unified.opening, {
+  id: (record) => String(record.id),
+  created_at: 'opened_at',
+  // Greenhouse doesn't provide a separate 'updated_at' field for job openings so we can used the greater of created or closed at.
+  modified_at: (record) => record.closed_at || record.opened_at, 
+  status: 'status',
+  job_id: 'job_id',
+})
+
+
 export const mappers = {
   candidate,
   department,
   job,
   offer,
+  opening
 }

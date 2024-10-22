@@ -4,6 +4,10 @@
   "private": true,
   "sideEffects": false,
   "module": "./index.ts",
+  "scripts": {
+    "build-storybook": "storybook build",
+    "storybook": "storybook dev -p 6006"
+  },
   "dependencies": {
     "@glideapps/glide-data-grid": "5.2.1",
     "@monaco-editor/react": "4.4.6",
@@ -37,10 +41,22 @@
     "tailwind-merge": "1.6.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.9.0",
     "@openint/cdk": "workspace:*",
     "@openint/engine-backend": "workspace:*",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-interactions": "^8.3.5",
+    "@storybook/addon-links": "^8.3.5",
+    "@storybook/addon-onboarding": "^8.3.5",
+    "@storybook/blocks": "^8.3.5",
+    "@storybook/react": "^8.3.5",
+    "@storybook/react-vite": "^8.3.5",
+    "@storybook/test": "^8.3.5",
     "@tanstack/react-query": "*",
-    "@types/react": "*"
+    "@types/react": "*",
+    "prop-types": "^15.8.1",
+    "storybook": "^8.3.5",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "peerDependencies": {
     "react": "*",

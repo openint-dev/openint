@@ -22,6 +22,52 @@ export {type inferProcedureInput} from '@openint/trpc'
 
 const tags = ['Core']
 
+async function performResourceCheck(
+  ctx: any,
+  resoId: string,
+  opts: any,
+) {
+  const remoteCtx = await getRemoteContext({
+    ...ctx,
+    remoteResourceId: resoId,
+  })
+  const {connectorConfig: int, ...reso} =
+    await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
+
+  const resoUpdate = await int.connector.checkResource?.({
+    settings: remoteCtx.remote.settings,
+    config: int.config,
+    options: opts ?? {},
+    instance: remoteCtx.remote.instance,
+    context: {
+      webhookBaseUrl: joinPath(
+        ctx.apiUrl,
+        parseWebhookRequest.pathOf(int.id),
+      ),
+    },
+  })
+  if (resoUpdate || opts?.import !== false) {
+    /** Do not update the `endUserId` here... */
+    await ctx.asOrgIfNeeded._syncResourceUpdate(int, {
+      ...(opts?.import && {
+        endUserId: reso.endUserId ?? undefined,
+      }),
+      ...resoUpdate,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      settings: {
+        ...(opts?.import && remoteCtx.remote.settings),
+        ...resoUpdate?.settings,
+      },
+      resourceExternalId:
+        resoUpdate?.resourceExternalId ?? extractId(reso.id)[2],
+    })
+  }
+  if (!int.connector.checkResource) {
+    return resoUpdate;
+  }
+  return resoUpdate
+}
+
 export const resourceRouter = trpc.router({
   // TODO: maybe we should allow resourceId to be part of the path rather than only in the headers
 
@@ -189,13 +235,35 @@ export const resourceRouter = trpc.router({
           endUserId: zEndUserId.nullish(),
           connectorConfigId: zId('ccfg').nullish(),
           connectorName: z.string().nullish(),
+          forceRefresh: z.boolean().optional(),
         })
         .optional(),
     )
     .output(z.array(zRaw.resource))
     .query(async ({input = {}, ctx}) => {
-      const resources =
+      let resources =
         await ctx.services.metaService.tables.resource.list(input)
+
+      // Handle forceRefresh for each resource
+      
+      console.log('[listResources] Refreshing tokens for all resources');
+      const updatedResources = await Promise.all(resources.map(async (reso) => {
+        // @ts-expect-error
+        const expiresAt = reso?.settings?.['oauth']?.credentials?.raw?.expires_at
+
+        if (expiresAt && (input.forceRefresh || new Date(expiresAt).getTime() <= Date.now())) {
+          console.log(`[listResources] Refreshing token for resource ${reso.connectorName}`);
+          const resoCheck = await performResourceCheck(ctx, reso.id, {});
+          if(!resoCheck) {
+            console.warn(`[listResources] resourceCheck not implemented for ${reso.connectorName} which requires a refresh. Returning the stale resource.`);
+          }
+          return resoCheck || reso;
+        }
+        return reso;
+      }));
+
+      resources = updatedResources;
+      
       return resources as Array<ZRaw['resource']>
     }),
   getResource: protectedProcedure
@@ -203,7 +271,10 @@ export const resourceRouter = trpc.router({
       description: 'Not automatically called, used for debugging for now',
       openapi: {method: 'GET', path: '/core/resource/{id}', tags},
     })
-    .input(z.object({id: zId('reso')}))
+    .input(z.object({
+      id: zId('reso'),
+      forceRefresh: z.boolean().optional()
+    }))
     .output(
       // TODO: Should we expand this?
       zRaw.resource.extend({
@@ -216,10 +287,24 @@ export const resourceRouter = trpc.router({
     )
     .query(async ({input, ctx}) => {
       // do not expand for now otherwise permission issues..
-      const reso = await ctx.services.getResourceOrFail(input.id)
+      let reso = await ctx.services.getResourceOrFail(input.id)
       const ccfg = await ctx.services.getConnectorConfigOrFail(
-        reso.connectorConfigId,
+        reso.connectorConfigId
       )
+
+      // Handle forceRefresh
+      // @ts-expect-error
+      const expiresAt = reso?.settings?.['oauth']?.credentials?.raw?.expires_at
+      
+      if (expiresAt && (input.forceRefresh ||new Date(expiresAt).getTime() <= Date.now())) {
+        console.log('[getResource] Refreshing token');
+        const resoCheck = await performResourceCheck(ctx, reso.id, {});
+        if(!resoCheck) {
+          console.warn(`[getResource] resourceCheck not implemented for ${reso.connectorName} which requires a refresh. Returning the stale resource.`);
+        }
+        reso = resoCheck || reso;
+      }
+
       return {
         ...reso,
         connector_config: R.pick(ccfg, ['id', 'orgId', 'connectorName']),
@@ -236,46 +321,11 @@ export const resourceRouter = trpc.router({
       if (ctx.viewer.role === 'end_user') {
         await ctx.services.getResourceOrFail(resoId)
       }
-      const remoteCtx = await getRemoteContext({
-        ...ctx,
-        remoteResourceId: resoId,
-      })
-      const {connectorConfig: int, ...reso} =
-        await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
-
-      // console.log('checkResource', {settings, connectorConfig, ...conn}, opts)
-      const resoUpdate = await int.connector.checkResource?.({
-        settings: remoteCtx.remote.settings,
-        config: int.config,
-        options: opts ?? {},
-        instance: remoteCtx.remote.instance,
-        context: {
-          webhookBaseUrl: joinPath(
-            ctx.apiUrl,
-            parseWebhookRequest.pathOf(int.id),
-          ),
-        },
-      })
-      if (resoUpdate || opts?.import !== false) {
-        /** Do not update the `endUserId` here... */
-        await ctx.asOrgIfNeeded._syncResourceUpdate(int, {
-          ...(opts?.import && {
-            endUserId: reso.endUserId ?? undefined,
-          }),
-          ...resoUpdate,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          settings: {
-            ...(opts?.import && remoteCtx.remote.settings),
-            ...resoUpdate?.settings,
-          },
-          resourceExternalId:
-            resoUpdate?.resourceExternalId ?? extractId(reso.id)[2],
-        })
+      const resourceCheck = await performResourceCheck(ctx, resoId, opts);
+      if(!resourceCheck) {
+        return `Resource check not implemented for ${resoId}`;
       }
-      if (!int.connector.checkResource) {
-        return `Not implemented in ${int.connector.name}`
-      }
-      return resoUpdate
+      return resourceCheck;
     }),
 
   // MARK: - Sync
@@ -296,7 +346,6 @@ export const resourceRouter = trpc.router({
         return
       }
       const reso = await ctx.asOrgIfNeeded.getResourceExpandedOrFail(resoId)
-      console.log('[syncResource]', reso, opts)
       // No need to checkResource here as sourceSync should take care of it
 
       if (opts?.metaOnly) {

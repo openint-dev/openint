@@ -8,8 +8,8 @@ export function OrgThemeWrapper({children}: {children: React.ReactNode}) {
     // '--body-background': 'transparent',
     // Temp workaround for not having a --body-background variable just yet...
     // '--inner-background': '0 0% 100%',
-    '--foreground': '192 5.32% 31.57%',
-    '--card-foreground': '192 5.32% 31.57%',
+    // '--foreground': '192 5.32% 31.57%',
+    // '--card-foreground': '192 5.32% 31.57%',
   }
 
   return (
