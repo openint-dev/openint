@@ -1,5 +1,5 @@
 import {initLeverSDK, type leverTypes} from '@opensdks/sdk-lever'
-import type {ConnectorServer} from '@openint/cdk'
+import {nangoProxyLink, type ConnectorServer} from '@openint/cdk'
 import {type leverSchemas} from './def'
 import {EtlSource, NextPageCursor, observableFromEtlSource} from '../connector-common'
 
@@ -10,12 +10,25 @@ export type LeverTypes = leverTypes
 export type LeverObjectType = LeverTypes['components']['schemas']
 
 export const leverServer = {
-  newInstance: ({config, settings}) => {
+  newInstance: ({config, settings, fetchLinks}) => {
     const lever = initLeverSDK({
       headers: {
         authorization: `Bearer ${settings.oauth.credentials.access_token}`,
       },
       envName: config.envName,
+      links: (defaultLinks) => [
+        (req, next) => {
+          if (lever.clientOptions.baseUrl) {
+            req.headers.set(
+              nangoProxyLink.kBaseUrlOverride,
+              lever.clientOptions.baseUrl,
+            )
+          }
+          return next(req)
+        },
+        ...fetchLinks,
+        ...defaultLinks
+      ],
     })
     return lever
   },
@@ -43,6 +56,9 @@ function leverSource({sdk}: {sdk: LeverSDK}): EtlSource<{
       const {next_page: page} = NextPageCursor.fromString(cursor)
       const res = await sdk.GET(`/${type as 'posting'}s`, {
         params: {query: {limit: 50, offset: cursor ?? undefined}},
+        links: {
+          
+        }
       })
 
       return {
