@@ -1,4 +1,4 @@
-import {initSDK, modifyRequest, modifyUrl} from '@opensdks/runtime'
+import {initSDK, modifyRequest} from '@opensdks/runtime'
 import type {QBOSDKTypes} from '@opensdks/sdk-qbo'
 import {qboSdkDef} from '@opensdks/sdk-qbo'
 import type {ConnectorServer} from '@openint/cdk'
