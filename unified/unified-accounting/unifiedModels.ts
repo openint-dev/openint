@@ -120,6 +120,15 @@ export const customerIncome = z.object({
   netIncome: z.number(),
 });
 
-
-
-
+export const usBankAccount = z.object({
+  updated: z.string(),
+  name: z.string(),
+  accountNumber: z.string(),
+  default: z.boolean(),
+  created: z.string(),
+  inputType: z.string(),
+  phone: z.string(),
+  accountType: z.string(),
+  routingNumber: z.string(),
+  id: z.string(),
+});
