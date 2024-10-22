@@ -60,6 +60,10 @@ export const qboServer = {
       // TODO: Inplement incremental sync...
       console.log('[qbo] Starting sync', streams)
       for (const type of Object.values(QBO_ENTITY_NAME)) {
+        if(type === 'BalanceSheet' || type === 'ProfitAndLoss') {
+          // skip syncing balance sheet and profit and loss
+          continue;
+        }
         if (!streams[type]) {
           continue
         }
