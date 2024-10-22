@@ -1,4 +1,4 @@
-import {initSDK} from '@opensdks/runtime'
+import {initSDK, modifyRequest, modifyUrl} from '@opensdks/runtime'
 import type {QBOSDKTypes} from '@opensdks/sdk-qbo'
 import {qboSdkDef} from '@opensdks/sdk-qbo'
 import type {ConnectorServer} from '@openint/cdk'
@@ -17,7 +17,7 @@ export type QBOSDK = ReturnType<typeof initQBOSdk>
 
 export const qboServer = {
   newInstance: ({config, settings, fetchLinks}) => {
-    const qbo = initQBOSdk({
+    const qbo = initQBOSdk({      
       envName: config.envName,
       realmId: settings.oauth.connection_config.realmId,
       // Access token may be out of date, we are relying on fetchLinks to contain a middleware to
@@ -34,11 +34,24 @@ export const qboServer = {
           }
           return next(req)
         },
+        (req, next) => {
+          if(req.url.includes('/bank-accounts') || req.url.includes('/payment-receipts')) {
+            const param = req.url.split("/").pop();
+            const newUrl = req.url.includes('/bank-accounts') ? 
+              req.url?.replace(/intuit\.com.*/, `intuit.com/quickbooks/v4/customers/${param}/bank-accounts`) : 
+              req.url?.replace(/intuit\.com.*/, `intuit.com/quickbooks/v4/payments/receipt/${param}`);
+            const newRes = modifyRequest(req, {
+              url: newUrl
+            });
+            return next(newRes);
+          }
+          return next(req);
+        },
         ...fetchLinks,
-        ...defaultLinks,
+        ...defaultLinks
       ],
     })
-    return qbo
+    return qbo;
   },
 
   sourceSync: ({instance: qbo, streams}) => {

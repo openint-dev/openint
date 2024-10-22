@@ -252,15 +252,9 @@ export const qboAdapter = {
     return mappers.customerIncome(res)
   },
   // @ts-expect-error we can tighten up the types here after opensdks support qbo v4
-  getBankAccounts: async ({instance, input}) => {
+  getBankAccounts: async ({instance, input, env}) => {
     // https://developer.intuit.com/app/developer/qbpayments/docs/api/resources/all-entities/bankaccounts#get-a-list-of-bank-accounts
-    const baseUrl = instance.clientOptions?.baseUrl?.replace(/intuit\.com.*/, "/quickbooks/v4/customers/{customer}/bank-accounts");
-    const res = await instance.request('GET', baseUrl ?? '', {
-      params: {
-        query: {
-          customer: input.customer
-        }
-      },
+    const res = await instance.request('GET', `/bank-accounts/${input.customer}`, {
       headers: {
         'Accept': 'application/json',
         "request-Id": makeUlid()
@@ -271,13 +265,7 @@ export const qboAdapter = {
   // @ts-expect-error we can tighten up the types here after opensdks support qbo v4
   getPaymentReceipt: async ({instance, input}) => {
      // https://developer.intuit.com/app/developer/qbpayments/docs/api/resources/all-entities/paymentreceipt
-     const baseUrl = instance.clientOptions?.baseUrl?.replace(/intuit\.com.*/, `/quickbooks/v4/payments/receipt/{customer_transaction_id}`);
-      const res = await instance.request('GET', baseUrl ?? '', {
-        params: {
-          query: {
-            customer_transaction_id: input.customer_transaction_id
-          }
-        },
+      const res = await instance.request('GET', `/payment-receipts/${input.customer_transaction_id}`, {
         headers: {
           'Accept': 'application/pdf, application/json',
           "request-Id": makeUlid()
