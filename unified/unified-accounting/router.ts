@@ -18,6 +18,16 @@ function oapi(meta: NonNullable<RouterMeta['openapi']>): RouterMeta {
 
 const procedure = verticalProcedure(adapters)
 
+// Define base query parameters common to most reports
+const baseReportQueryParams = z.object({
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+  sort_order: z.string().optional(),
+  customer: z.string().optional(),
+  department: z.string().optional(),
+  date_macro: z.string().optional(),
+})
+
 export const accountingRouter = trpc.router({
   // MARK: - Account
   listAccounts: procedure
@@ -37,15 +47,43 @@ export const accountingRouter = trpc.router({
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   getBalanceSheet: procedure
     .meta(oapi({method: 'GET', path: '/balance-sheet'}))
-    // TBD how we want this API?
-    .input(zPaginationParams.nullish())
+    .input(baseReportQueryParams.extend({
+      summarize_by: z.string().optional(),
+    }))
     .output(unified.balanceSheet)
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
   getProfitAndLoss: procedure
     .meta(oapi({method: 'GET', path: '/profit-and-loss'}))
-    // TBD how we want this API?
-    .input(zPaginationParams.nullish())
+    .input(baseReportQueryParams.extend({}))
     .output(unified.profitAndLoss)
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getCashFlow: procedure
+    .meta(oapi({method: 'GET', path: '/cash-flow'}))
+    .input(baseReportQueryParams.extend({
+      summarize_by: z.string().optional(),
+    }))
+    .output(unified.cashFlow)
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getTransactionList: procedure
+    .meta(oapi({method: 'GET', path: '/transaction-list'}))
+    .input(baseReportQueryParams.extend({
+      // leaving open not to create too specific of an API
+    }))
+    .output(unified.transactionList)
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getCustomerBalance: procedure
+    .meta(oapi({method: 'GET', path: '/customer-balance'}))
+    .input(baseReportQueryParams.extend({
+      summarize_by: z.string().optional(),
+    }))
+    .output(unified.customerBalance)
+    .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
+  getCustomerIncome: procedure
+    .meta(oapi({method: 'GET', path: '/customer-income'}))
+    .input(baseReportQueryParams.extend({
+      summarize_by: z.string().optional(),
+    }))
+    .output(unified.customerIncome)
     .query(async ({input, ctx}) => proxyCallAdapter({input, ctx})),
 })
 

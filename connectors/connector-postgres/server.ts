@@ -193,7 +193,7 @@ export const postgresServer = {
         ),
       )
   },
-  destinationSync: ({endUser, source, settings: {databaseUrl, migrateTables}}) => {
+  destinationSync: ({endUser, source, settings: {databaseUrl}}) => {
     console.log('[destinationSync] Will makePostgresClient', {
       // databaseUrl,
       // migrationsPath: __dirname + '/migrations',
@@ -210,10 +210,6 @@ export const postgresServer = {
 
     const migrationRan: Record<string, boolean> = {}
     async function runMigration(pool: DatabasePool, tableName: string) {
-      if (!migrateTables) {
-        console.log('[destinationSync] Will not run migration for', tableName, 'as migrateTables is false');
-        return;
-      }
       console.log('will run migration for', tableName)
       if (migrationRan[tableName]) {
         return
@@ -261,7 +257,7 @@ export const postgresServer = {
             rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
           } else if (tableName === 'IntegrationAtsCandidate') {
             rowToInsert['opening_external_id'] = data.entity?.raw?.id || '';
-            rowToInsert['candidate_name'] = data.entity?.raw?.name + ' ' + data.entity?.raw?.last_name || '';
+            rowToInsert['candidate_name'] = data.entity?.raw?.first_name + ' ' + data.entity?.raw?.last_name || '';
           } else if (tableName === 'IntegrationAtsJobOpening') {
             rowToInsert['opening_external_id'] = data.entity?.raw?.opening_id || '';
             rowToInsert['job_id'] = data.entity?.raw?.job_id || '';

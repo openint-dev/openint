@@ -5,6 +5,8 @@ import {useState} from 'react'
 interface ThemeColors {
   background: string
   border: string
+  button: string
+  buttonForeground: string
   foreground: string
   primary: string
   primaryForeground: string
@@ -14,7 +16,7 @@ interface ThemeColors {
   cardForeground: string
 }
 
-const defaultThemeColors: ThemeColors = {
+const defaultThemeColors: Partial<ThemeColors> = {
   background: '0 0% 100%',
   border: '214.3 31.8% 91.4%',
   card: '0 0% 100%',
