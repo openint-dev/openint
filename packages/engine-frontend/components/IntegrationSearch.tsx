@@ -49,7 +49,7 @@ export function IntegrationSearch({
   return (
     <div className={className}>
       {/* Search integrations */}
-      <div className="mb-2 bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="mb-2 bg-background/95 pt-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <form>
           <div className="relative">
             {/* top-2.5 is not working for some reason due to tailwind setup */}
