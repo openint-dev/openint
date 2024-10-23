@@ -55,6 +55,7 @@ function leverSource({sdk}: {sdk: LeverSDK}): EtlSource<{
   // Add other entity types as needed
 }> {
   return {
+    // @ts-expect-error discuss with tony 
     async listEntities(type, {cursor}) {
       const {next_page: page} = NextPageCursor.fromString(cursor)
       
@@ -69,7 +70,6 @@ function leverSource({sdk}: {sdk: LeverSDK}): EtlSource<{
             params: {path: {id: opportunity.id}}
           })
 
-          // @ts-expect-error
           allOffers.push(...offersRes.data.data.map((e) => ({id: `${e.id}`, data: e})))
         }
 
