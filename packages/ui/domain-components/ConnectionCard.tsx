@@ -18,11 +18,11 @@ export function ConnectionCard({
       className="relative h-[120px] w-[120px] cursor-pointer rounded-lg border border-gray-300 bg-white p-0 transition-colors duration-300 ease-in-out hover:border-[#8A7DFF] hover:bg-[#F8F7FF]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      <CardContent className="flex h-full flex-col items-center justify-center pt-6">
+      <CardContent
+        className="flex h-full flex-col items-center justify-center pt-6"
+        onClick={onClick}>
         {isHovered ? (
-          <div
-            className="flex h-full flex-col items-center justify-center"
-            onClick={onClick}>
+          <div className="flex h-full flex-col items-center justify-center">
             <Plus color="#8A7DFF" size={24} />
             <span className="mt-2 font-sans text-[14px] font-semibold text-[#8A7DFF]">
               Add
