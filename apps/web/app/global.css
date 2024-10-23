@@ -27,7 +27,7 @@
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: #ffffff;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --accent: 210 40% 96.1%;
@@ -42,6 +42,11 @@
 
     --button: #8a5df6;
     --button-foreground: #ffffff;
+    --button-hover: #a082e9;
+    --button-stroke: #6947bb;
+    --button-secondary: #ffffff;
+    --button-secondary-stroke: #e6e6e6;
+    --button-secondary-hover: #efefef;
   }
 
   .dark {
