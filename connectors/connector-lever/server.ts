@@ -49,16 +49,41 @@ export default leverServer
 // TODO2: Implement low-code connector spec
 function leverSource({sdk}: {sdk: LeverSDK}): EtlSource<{
   posting: LeverObjectType['posting']
+  // contact: LeverObjectType['contact']
+  opportunity: LeverObjectType['opportunity']
+  offer: LeverObjectType['offer']
   // Add other entity types as needed
 }> {
   return {
     async listEntities(type, {cursor}) {
       const {next_page: page} = NextPageCursor.fromString(cursor)
-      const res = await sdk.GET(`/${type as 'posting'}s`, {
-        params: {query: {limit: 50, offset: cursor ?? undefined}},
-        links: {
-          
+      
+      if (type === 'offer') {
+        const opportunitiesRes = await sdk.GET('/opportunities', {
+          params: {query: {limit: 50, offset: cursor ?? undefined}}
+        })
+
+        const allOffers = []
+        for (const opportunity of opportunitiesRes.data.data) {
+          const offersRes = await sdk.GET(`/opportunities/{id}/offers`, {
+            params: {path: {id: opportunity.id}}
+          })
+
+          // @ts-expect-error
+          allOffers.push(...offersRes.data.data.map((e) => ({id: `${e.id}`, data: e})))
         }
+
+        return {
+          entities: allOffers,
+          next_cursor: NextPageCursor.toString({next_page: page + 1}),
+          has_next_page: opportunitiesRes.data.hasNext ?? false,
+        }
+      }
+      // for opportunity or posting
+      const pluralizeType = (type: string) => type === 'opportunity' ? 'opportunities' : `${type}s`;
+      
+      const res = await sdk.GET(`/${pluralizeType(type) as 'postings' | 'opportunities'}`, {
+        params: {query: {limit: 50, offset: cursor ?? undefined}}
       })
 
       return {

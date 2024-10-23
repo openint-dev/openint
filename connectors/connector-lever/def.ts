@@ -7,7 +7,7 @@ export const zConfig = oauthBaseSchema.connectorConfig.extend({
   envName: z.enum(['sandbox', 'production']),
 })
 
-const LEVER_ENTITY_NAMES = ['posting'] as const
+const LEVER_ENTITY_NAMES = ['posting', 'opportunity', 'offer'] as const
 
 /**
  * Full list of OAuth scopes: https://hire.lever.co/developer/documentation#scopes
