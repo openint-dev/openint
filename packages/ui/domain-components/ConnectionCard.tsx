@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import {
-  Card,
-  CardContent,
-} from '../shadcn'
-import { Plus } from 'lucide-react'
+import {Plus} from 'lucide-react'
+import {useState} from 'react'
+import {Card, CardContent} from '../shadcn'
 
 export function ConnectionCard({
   logo,
   name,
+  onClick,
 }: {
   logo: string
   name: string
+  onClick: () => void
 }) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
     <Card
-      className="w-[120px] h-[120px] p-0 relative cursor-pointer border border-gray-300 rounded-lg bg-white transition-colors duration-300 ease-in-out hover:bg-[#F8F7FF] hover:border-[#8A7DFF]"
+      className="relative h-[120px] w-[120px] cursor-pointer rounded-lg border border-gray-300 bg-white p-0 transition-colors duration-300 ease-in-out hover:border-[#8A7DFF] hover:bg-[#F8F7FF]"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <CardContent className="flex flex-col justify-center items-center h-full pt-6">
+      onMouseLeave={() => setIsHovered(false)}>
+      <CardContent className="flex h-full flex-col items-center justify-center pt-6">
         {isHovered ? (
-          <div className="flex flex-col justify-center items-center h-full">
+          <div
+            className="flex h-full flex-col items-center justify-center"
+            onClick={onClick}>
             <Plus color="#8A7DFF" size={24} />
-            <span className="text-[#8A7DFF] font-semibold text-[14px] font-sans mt-2">Add</span> {/* Set to 14px and semibold */}
+            <span className="mt-2 font-sans text-[14px] font-semibold text-[#8A7DFF]">
+              Add
+            </span>{' '}
+            {/* Set to 14px and semibold */}
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center h-full">
-            <img src={logo} alt={`${name} logo`} className="w-8 h-8" style={{ marginBottom: '10px' }} /> {/* 32x32 logo with 10px padding */}
-            <p className="m-0 text-sm font-semibold font-sans text-center mb-2">{name}</p> {/* Changed to font-semibold */}
+          <div className="flex h-full flex-col items-center justify-center">
+            <img
+              src={logo}
+              alt={`${name} logo`}
+              className="h-8 w-8"
+              style={{marginBottom: '10px'}}
+            />{' '}
+            <p className="m-0 mb-2 text-center font-sans text-sm font-semibold">
+              {name}
+            </p>{' '}
           </div>
         )}
       </CardContent>
