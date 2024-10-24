@@ -74,10 +74,15 @@ export function IntegrationSearch({
             ([category, categoryInts]) => (
               <div key={category}>
                 <h3 className="mb-2 text-lg font-semibold">
-                  {category
-                    .split('-')
-                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')}
+                  {category.length < 5
+                    ? category.toUpperCase()
+                    : category
+                        .split('-')
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() + word.slice(1),
+                        )
+                        .join(' ')}
                 </h3>
                 <div className="flex flex-row gap-4">
                   {categoryInts.map((int) => (
