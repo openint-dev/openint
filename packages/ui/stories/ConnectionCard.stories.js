@@ -1,6 +1,7 @@
 import {fn} from '@storybook/test'
+import logoGreenhouse from '../../../apps/web/public/_assets/logo-greenhouse.svg'
 import {ConnectionCard} from '../domain-components/ConnectionCard'
-import logoGreenhouse from '../../../apps/web/public/_assets/logo-greenhouse.svg';
+
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
   title: 'Example/ConnectionCard',
@@ -21,5 +22,5 @@ export default {
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary = {
-  args: { logo: logoGreenhouse, name: 'Greenhouse' },
-};
+  args: {logo: logoGreenhouse, name: 'Greenhouse'},
+}

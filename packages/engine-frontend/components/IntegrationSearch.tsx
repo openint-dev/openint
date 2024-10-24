@@ -2,7 +2,8 @@
 
 import {Loader, Search} from 'lucide-react'
 import React from 'react'
-import {Card, cn, ConnectorLogo, Input} from '@openint/ui'
+import {Input} from '@openint/ui'
+import {ConnectionCard} from '@openint/ui/domain-components/ConnectionCard'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import type {ConnectEventType} from '../hocs/WithConnectorConnect'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
@@ -35,10 +36,20 @@ export function IntegrationSearch({
     ccfg: connectorConfigs.find((ccfg) => ccfg.id === int.connector_config_id)!,
   }))
 
+  const intsByCategory = ints?.reduce(
+    (acc, int) => {
+      int.ccfg.verticals.forEach((vertical) => {
+        acc[vertical] = (acc[vertical] || []).concat(int)
+      })
+      return acc
+    },
+    {} as Record<string, typeof ints>,
+  )
+
   return (
     <div className={className}>
       {/* Search integrations */}
-      <div className="mb-2 bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="mb-2 bg-background/95 pt-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <form>
           <div className="relative">
             {/* top-2.5 is not working for some reason due to tailwind setup */}
@@ -58,42 +69,51 @@ export function IntegrationSearch({
           <Loader className="size-5 animate-spin text-[#8A5DF6]" />
         </div>
       ) : (
-        <div className="grid max-h-[388px] grid-cols-1 justify-items-center gap-4 overflow-y-auto py-4 sm:grid-cols-2 md:grid-cols-3">
-          {ints?.map((int) => (
-            <WithConnectorConnect
-              key={int.id}
-              connectorConfig={{
-                id: int.connector_config_id,
-                connector: int.ccfg.connector,
-              }}
-              onEvent={(e) => {
-                onEvent?.({
-                  type: e.type,
-                  integration: {
-                    connectorConfigId: int.connector_config_id,
-                    id: int.id,
-                  },
-                })
-              }}>
-              {({openConnect}) => (
-                <Card
-                  className={cn(
-                    'flex w-[150px] cursor-pointer flex-col items-center gap-2 rounded-lg p-4',
-                    'focus:outline-none focus:ring-2 focus:ring-indigo-600',
-                    'transition-transform duration-200 ease-in-out hover:scale-105',
-                  )}
-                  onClick={() => openConnect()}>
-                  <ConnectorLogo
-                    connector={int.ccfg.connector}
-                    className="size-[80px] rounded-lg"
-                  />
-                  <span className="mt-2 text-center text-sm font-bold text-muted-foreground">
-                    {int.name}
-                  </span>
-                </Card>
-              )}
-            </WithConnectorConnect>
-          ))}
+        <div className="space-y-6 overflow-y-auto py-4">
+          {Object.entries(intsByCategory ?? {}).map(
+            ([category, categoryInts]) => (
+              <div key={category}>
+                <h3 className="mb-2 text-lg font-semibold">
+                  {category.length < 5
+                    ? category.toUpperCase()
+                    : category
+                        .split('-')
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() + word.slice(1),
+                        )
+                        .join(' ')}
+                </h3>
+                <div className="flex flex-row gap-4">
+                  {categoryInts.map((int) => (
+                    <WithConnectorConnect
+                      key={int.id}
+                      connectorConfig={{
+                        id: int.connector_config_id,
+                        connector: int.ccfg.connector,
+                      }}
+                      onEvent={(e) => {
+                        onEvent?.({
+                          type: e.type,
+                          integration: {
+                            connectorConfigId: int.connector_config_id,
+                            id: int.id,
+                          },
+                        })
+                      }}>
+                      {({openConnect}) => (
+                        <ConnectionCard
+                          onClick={openConnect}
+                          logo={int.ccfg.connector.logoUrl ?? ''}
+                          name={int.name}
+                        />
+                      )}
+                    </WithConnectorConnect>
+                  ))}
+                </div>
+              </div>
+            ),
+          )}
         </div>
       )}
     </div>
