@@ -54,7 +54,8 @@ export default async function PortalPage({
     )
   }
 
-  const shouldRenderAG =
+  const isAgMode =
+    viewer.orgId = 'org_2nJZrA4Dk8i3wszhm6PsP3M2Vwy' ||
     viewer.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
     viewer.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
@@ -62,7 +63,7 @@ export default async function PortalPage({
     <ClientRoot accessToken={viewer.accessToken} authStatus="success">
       <SuperHydrate dehydratedState={getDehydratedState()}>
         <ColorConfig />
-        {shouldRenderAG ? <AGConnectionPortal /> : <ConnectionPortal />}
+        {isAgMode ? <AGConnectionPortal /> : <ConnectionPortal />}
       </SuperHydrate>
     </ClientRoot>
   )

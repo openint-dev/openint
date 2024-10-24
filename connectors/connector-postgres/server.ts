@@ -246,12 +246,13 @@ export const postgresServer = {
           isOpenInt: true,
         }
 
-        const isAgInsert = 
+        const isAgMode = 
+          endUser?.orgId === 'org_2nJZrA4Dk8i3wszhm6PsP3M2Vwy' ||
           endUser?.orgId === 'org_2lcCCimyICKI8cpPNQt195h5zrP' ||
           endUser?.orgId === 'org_2ms9FdeczlbrDIHJLcwGdpv3dTx'
 
         // TODO: Remove when we have support for links custom upserts
-        if(isAgInsert) {
+        if(isAgMode) {
           console.log('Inserting record for AG');
           if (tableName === 'IntegrationAtsJob') {
             rowToInsert['external_job_id'] = data.entity?.raw?.id || '';
