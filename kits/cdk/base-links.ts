@@ -145,10 +145,23 @@ export function agColumnRenameLink(_ctx: {
     }
 
     const entityMappings = {
+      // Greenhouse
       job: 'IntegrationAtsJob',
       candidate: 'IntegrationAtsCandidate',
       opening: 'IntegrationAtsJobOpening',
       offer: 'IntegrationAtsOffer',
+      // Lever
+      // already mapped above, same relation name
+      // offer: 'IntegrationAtsOffer',
+
+      // there's no list contacts endpoint in lever
+      // contact: 'IntegrationAtsCandidate',
+
+      // maybe we should not sync opportunities at all as we're mapping it to the same candidate table
+      opportunity: 'IntegrationAtsCandidate',
+      
+      posting: 'IntegrationAtsJob',
+      // TODO, perhaps map requisitions to IntegrationAtsJobOpening?
     }
 
     op.data.entityName = entityMappings[snakeCase(op.data.entityName) as keyof typeof entityMappings] ?? op.data.entityName

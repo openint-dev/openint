@@ -1,4 +1,4 @@
-import {type LeverSDKType} from '@openint/connector-lever'
+import {type LeverSDK} from '@openint/connector-lever'
 import {applyMapper} from '@openint/vdk'
 import type {ATSAdapter} from '../../router'
 import {mappers} from './mappers'
@@ -90,4 +90,4 @@ export const leverAdapter = {
     }
     return resp
   },
-} satisfies ATSAdapter<LeverSDKType>
+} satisfies ATSAdapter<LeverSDK>
