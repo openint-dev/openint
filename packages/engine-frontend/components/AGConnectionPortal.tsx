@@ -4,13 +4,13 @@ import {AlertTriangle} from 'lucide-react'
 import React from 'react'
 import type {Id} from '@openint/cdk'
 import type {UIPropsNoChildren} from '@openint/ui'
-import { Card, ResourceCard } from '@openint/ui'
+import {Card, ResourceCard} from '@openint/ui'
 import {cn} from '@openint/ui/utils'
 import {R} from '@openint/util'
 import {WithConnectConfig} from '../hocs/WithConnectConfig'
 import {_trpcReact} from '../providers/TRPCProvider'
-import {ConnectDialog} from './ConnectDialog'
 import {AgResourceRowActions} from './AgResourceRowActions'
+import {ConnectDialog} from './ConnectDialog'
 
 type ConnectEventType = 'open' | 'close' | 'error'
 
@@ -48,7 +48,7 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
   const handleMessage = React.useCallback(async (event: MessageEvent) => {
     if (event.data.type === 'triggerConnectDialog') {
       console.log('triggerConnectDialog', event.data.value)
-      if(event.data.value) {
+      if (event.data.value) {
         await listConnectionsRes.refetch().then(() => {
           setOpenDialog(event.data.value)
         })
@@ -122,20 +122,23 @@ const AGConnectionPortalComponent: React.FC<AGConnectionPortalProps> = ({
                   </ResourceCard>
                 ))}
                 {category.connections.length === 0 && (
-                   <Card className="drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-solid border-[#e0e0e5] bg-[#f8f8fc] p-6 text-center">
+                  <Card className="drop-shadow-small flex w-full flex-col items-center justify-center space-y-3 rounded-lg border border-solid border-[#e0e0e5] bg-[#f8f8fc] p-6 text-center">
                     <div className="flex flex-row gap-2">
                       <AlertTriangle className="size-8 text-[#C27B1A]" />
                       <h3 className="text-black-dark mb-2 text-[24px] font-semibold leading-[36px] tracking-tight antialiased">
                         {`No data source connected`}
                       </h3>
-                   </div>
-                 </Card>
+                    </div>
+                  </Card>
                 )}
                 {openDialog && (
                   <ConnectDialog
                     connectorConfigFilters={{verticalKey: category.key}}
                     open={openDialog}
                     setOpen={setOpenDialog}
+                    connectorNames={category.connections.map(
+                      (c) => c.connectorName,
+                    )}
                     // trigger refetch of connections
                     onEvent={() => listConnectionsRes.refetch()}
                   />
