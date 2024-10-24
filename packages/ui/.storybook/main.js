@@ -1,4 +1,5 @@
-const { dirname, join } = require('path')
+const {dirname, join} = require('path')
+const {default: svgr} = require('vite-plugin-svgr')
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -25,26 +26,12 @@ const config = {
     name: getAbsolutePath('@storybook/react-vite'),
     options: {},
   },
-  // Add the following configuration to support SVGs
-  viteFinal: async (config) => {
-    // Ensure plugins array is initialized
-    if (!config.plugins) {
-      config.plugins = [];
-    }
 
-    config.plugins.push({
-      name: 'svgr',
-      transform: (code, id) => {
-        if (/\.svg$/.test(id)) {
-          return {
-            code: `import { ReactComponent as Icon } from '${id}'; export default Icon;`,
-            map: null,
-          };
-        }
-        return null;
-      },
-    });
-    return config;
+  async viteFinal(config, {configType}) {
+    config.plugins = config.plugins || []
+    config.plugins.push(svgr())
+
+    return config
   },
 }
 

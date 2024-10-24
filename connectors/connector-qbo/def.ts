@@ -61,7 +61,14 @@ export const qboSchemas = {
   resourceSettings: zSettings,
   connectOutput: oauthBaseSchema.connectOutput,
   sourceOutputEntity: zEntityPayload,
-  sourceOutputEntities: R.mapValues(QBO_ENTITY_NAME, () => z.unknown()),
+  sourceOutputEntities: R.mapValues(
+    Object.fromEntries(
+      Object.entries(QBO_ENTITY_NAME).filter(
+        ([key]) => key !== 'BalanceSheet' && key !== 'ProfitAndLoss'
+      )
+    ),
+    () => z.unknown()
+  ),
 } satisfies ConnectorSchemas
 
 export const qboHelpers = connHelpers(qboSchemas)
