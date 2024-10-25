@@ -1,8 +1,9 @@
 'use client'
 
 import {Loader, Search} from 'lucide-react'
-import React from 'react'
-import {Input} from '@openint/ui'
+import React, {useState} from 'react'
+import {Input, parseCategory} from '@openint/ui'
+import {CheckboxFilter} from '@openint/ui/components/CheckboxFilter'
 import {ConnectionCard} from '@openint/ui/domain-components/ConnectionCard'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import type {ConnectEventType} from '../hocs/WithConnectorConnect'
@@ -25,7 +26,8 @@ export function IntegrationSearch({
     type: ConnectEventType
   }) => void
 }) {
-  const [searchText, setSearchText] = React.useState('')
+  const [searchText, setSearchText] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState<string[]>([])
 
   const listIntegrationsRes = _trpcReact.listConfiguredIntegrations.useQuery({
     connector_config_ids: connectorConfigs.map((ccfg) => ccfg.id),
@@ -36,24 +38,34 @@ export function IntegrationSearch({
     ccfg: connectorConfigs.find((ccfg) => ccfg.id === int.connector_config_id)!,
   }))
 
+  const categories = Array.from(
+    new Set(connectorConfigs.flatMap((ccfg) => ccfg.verticals)),
+  )
+
   const intsByCategory = ints?.reduce(
     (acc, int) => {
       int.ccfg.verticals.forEach((vertical) => {
-        acc[vertical] = (acc[vertical] || []).concat(int)
+        if (categoryFilter.length === 0 || categoryFilter.includes(vertical)) {
+          acc[vertical] = (acc[vertical] || []).concat(int)
+        }
       })
       return acc
     },
     {} as Record<string, typeof ints>,
   )
 
+  const onApplyFilter = (selected: string[]) => {
+    setCategoryFilter(selected)
+  }
+
   return (
     <div className={className}>
       {/* Search integrations */}
       <div className="mb-2 bg-background/95 pt-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <form>
-          <div className="relative">
+        <div className="flex flex-row gap-2">
+          <div className="relative w-[450px]">
             {/* top-2.5 is not working for some reason due to tailwind setup */}
-            <Search className="absolute left-2 top-2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search"
               className="pl-8"
@@ -61,7 +73,8 @@ export function IntegrationSearch({
               onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
-        </form>
+          <CheckboxFilter options={categories} onApply={onApplyFilter} />
+        </div>
       </div>
       {/* Search results */}
       {listIntegrationsRes.isLoading ? (
@@ -76,15 +89,7 @@ export function IntegrationSearch({
               ([category, categoryInts]) => (
                 <div key={category}>
                   <h3 className="mb-2 text-lg font-semibold">
-                    {category.length < 5
-                      ? category.toUpperCase()
-                      : category
-                          .split('-')
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1),
-                          )
-                          .join(' ')}
+                    {parseCategory(category)}
                   </h3>
                   <div className="flex flex-row gap-4">
                     {categoryInts.map((int) => (
