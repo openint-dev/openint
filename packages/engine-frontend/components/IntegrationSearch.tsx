@@ -104,7 +104,9 @@ export function IntegrationSearch({
                       {({openConnect}) => (
                         <ConnectionCard
                           onClick={openConnect}
-                          logo={int.ccfg.connector.logoUrl ?? ''}
+                          logo={
+                            int.logo_url ?? int.ccfg.connector.logoUrl ?? ''
+                          }
                           name={int.name}
                         />
                       )}

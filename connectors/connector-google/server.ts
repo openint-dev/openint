@@ -31,6 +31,37 @@ export const googleServer = {
   //     params: {query: input.query},
   //     body: JSON.stringify(input.body),
   //   }),
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async listIntegrations() {
+    return {
+      has_next_page: false,
+      items: [
+        {
+          id: 'google-drive',
+          name: 'Google Drive',
+          // TODO: Differ oauth scope use in Connect based on which integration
+          raw_data: {} as any,
+          updated_at: new Date().toISOString(),
+          logo_url: '/_assets/logo-google-drive.svg',
+        },
+        {
+          id: 'google-gmail',
+          name: 'Gmail',
+          raw_data: {} as any,
+          updated_at: new Date().toISOString(),
+          logo_url: '/_assets/logo-google-gmail.svg',
+        },
+        {
+          id: 'google-calendar',
+          name: 'Google Calendar',
+          raw_data: {} as any,
+          updated_at: new Date().toISOString(),
+          logo_url: '/_assets/logo-google-calendar.svg',
+        },
+      ],
+      next_cursor: null,
+    }
+  },
 } satisfies ConnectorServer<typeof googleSchemas>
 
 export default googleServer
