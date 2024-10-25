@@ -65,54 +65,64 @@ export function IntegrationSearch({
       </div>
       {/* Search results */}
       {listIntegrationsRes.isLoading ? (
-        <div className="flex h-full items-center justify-center">
+        <div className="flex h-full min-h-[500px] items-center justify-center">
           <Loader className="size-5 animate-spin text-[#8A5DF6]" />
         </div>
       ) : (
         <div className="space-y-6 overflow-y-auto py-4">
-          {Object.entries(intsByCategory ?? {}).map(
-            ([category, categoryInts]) => (
-              <div key={category}>
-                <h3 className="mb-2 text-lg font-semibold">
-                  {category.length < 5
-                    ? category.toUpperCase()
-                    : category
-                        .split('-')
-                        .map(
-                          (word) =>
-                            word.charAt(0).toUpperCase() + word.slice(1),
-                        )
-                        .join(' ')}
-                </h3>
-                <div className="flex flex-row gap-4">
-                  {categoryInts.map((int) => (
-                    <WithConnectorConnect
-                      key={int.id}
-                      connectorConfig={{
-                        id: int.connector_config_id,
-                        connector: int.ccfg.connector,
-                      }}
-                      onEvent={(e) => {
-                        onEvent?.({
-                          type: e.type,
-                          integration: {
-                            connectorConfigId: int.connector_config_id,
-                            id: int.id,
-                          },
-                        })
-                      }}>
-                      {({openConnect}) => (
-                        <ConnectionCard
-                          onClick={openConnect}
-                          logo={int.ccfg.connector.logoUrl ?? ''}
-                          name={int.name}
-                        />
-                      )}
-                    </WithConnectorConnect>
-                  ))}
+          {(ints && ints.length > 0) ||
+          Object.keys(intsByCategory ?? {}).length > 0 ? (
+            Object.entries(intsByCategory ?? {}).map(
+              ([category, categoryInts]) => (
+                <div key={category}>
+                  <h3 className="mb-2 text-lg font-semibold">
+                    {category.length < 5
+                      ? category.toUpperCase()
+                      : category
+                          .split('-')
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1),
+                          )
+                          .join(' ')}
+                  </h3>
+                  <div className="flex flex-row gap-4">
+                    {categoryInts.map((int) => (
+                      <WithConnectorConnect
+                        key={int.id}
+                        connectorConfig={{
+                          id: int.connector_config_id,
+                          connector: int.ccfg.connector,
+                        }}
+                        onEvent={(e) => {
+                          onEvent?.({
+                            type: e.type,
+                            integration: {
+                              connectorConfigId: int.connector_config_id,
+                              id: int.id,
+                            },
+                          })
+                        }}>
+                        {({openConnect}) => (
+                          <ConnectionCard
+                            onClick={openConnect}
+                            logo={int.ccfg.connector.logoUrl ?? ''}
+                            name={int.name}
+                          />
+                        )}
+                      </WithConnectorConnect>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ),
+              ),
+            )
+          ) : (
+            <div>
+              <p className="text-lg font-semibold">
+                No available connectors, please check that you have configured
+                connectors available or review your filter values.
+              </p>
+            </div>
           )}
         </div>
       )}
