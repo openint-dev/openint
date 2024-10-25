@@ -43,7 +43,8 @@ export function CheckboxFilter({
             <div
               key={option}
               className="flex w-full cursor-pointer items-center justify-start space-x-2"
-              onClick={() => handleCheckboxChange(option)}>
+              // onClick={() => handleCheckboxChange(option)}
+            >
               <Checkbox
                 id={option}
                 checked={checkedState[option]}
