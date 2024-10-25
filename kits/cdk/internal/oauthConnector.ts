@@ -91,6 +91,13 @@ export function oauthConnect({
     .auth(
       connectorConfigId,
       resourceId ?? makeId('reso', connectorName, makeUlid()),
+      {
+        params: {},
+        authorization_params: {
+          // TODO: Add integration specific scope right here...
+          scope: 'https://www.googleapis.com/auth/drive.readonly',
+        },
+      },
     )
     .then((r) => oauthBaseSchema.connectOutput.parse(r))
     .catch((err) => {
