@@ -1,7 +1,7 @@
 'use client'
 
 import {Loader, Search} from 'lucide-react'
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {Input, parseCategory} from '@openint/ui'
 import {CheckboxFilter} from '@openint/ui/components/CheckboxFilter'
 import {ConnectionCard} from '@openint/ui/domain-components/ConnectionCard'
