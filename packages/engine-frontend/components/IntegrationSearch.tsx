@@ -73,7 +73,9 @@ export function IntegrationSearch({
               onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
-          <CheckboxFilter options={categories} onApply={onApplyFilter} />
+          {categories.length > 1 && (
+            <CheckboxFilter options={categories} onApply={onApplyFilter} />
+          )}
         </div>
       </div>
       {/* Search results */}
