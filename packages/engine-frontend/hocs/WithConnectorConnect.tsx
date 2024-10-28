@@ -150,7 +150,7 @@ export const WithConnectorConnect = ({
         if (err === CANCELLATION_TOKEN) {
           return
         }
-        console.log(ccfg.connector.displayName + ' connection error:',err)
+        console.log(ccfg.connector.displayName + ' connection error:', err)
         toast({
           title: `Failed to connect to ${ccfg.connector.displayName}`,
           // description: `${err}`,
@@ -204,9 +204,10 @@ export const WithConnectorConnect = ({
                 Connect to {ccfg.connector.displayName}
               </span>
               {ccfg.connector.name === 'greenhouse' && (
-                <div className="relative inline-block">
-                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500 peer" />
-                  <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-[#272731] p-2 text-sm text-white opacity-0 transition-opacity peer-hover:opacity-100 pointer-events-none">
+                <div className="group relative inline-block">
+                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500" />
+                  <div className="invisible absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-[#272731] p-2 text-sm text-white opacity-0 transition-opacity group-hover:visible group-hover:opacity-100">
+                    <div className="absolute bottom-[-8px] left-0 h-2 w-full" />
                     <p className="italic">
                       Generate a custom API key with{' '}
                       <a
