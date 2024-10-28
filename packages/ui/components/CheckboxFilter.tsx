@@ -3,13 +3,14 @@ import {useState} from 'react'
 import {Button} from '../shadcn/Button'
 import {Checkbox} from '../shadcn/Checkbox'
 import {Popover, PopoverContent, PopoverTrigger} from '../shadcn/Popover'
+import {parseCategory} from '../utils'
 
 export function CheckboxFilter({
   options,
   onApply,
 }: {
   options: string[]
-  onApply: () => void
+  onApply: (selected: string[]) => void
 }) {
   const [checkedState, setCheckedState] = useState<Record<string, boolean>>(
     options.reduce(
@@ -37,7 +38,7 @@ export function CheckboxFilter({
           <span className="ml-2">Category</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-40 bg-white">
+      <PopoverContent className="w-48 bg-white">
         <div className="flex flex-col gap-2">
           {options.map((option) => (
             <div
@@ -58,7 +59,7 @@ export function CheckboxFilter({
                 <span
                   className={`block h-4 w-4 rounded-sm ${
                     checkedState[option]
-                      ? 'bg-[#8A7DFF] text-white'
+                      ? 'bg-button text-button-foreground'
                       : 'bg-transparent'
                   }`}>
                   {checkedState[option] && (
@@ -80,14 +81,37 @@ export function CheckboxFilter({
                 htmlFor={option}
                 className="cursor-pointer text-sm font-semibold">
                 {' '}
-                {option}
+                {parseCategory(option)}
               </label>
             </div>
           ))}
           {/* Added a visible divider here */}
           <div className="my-2 w-full border-t border-[#E6E6E6]" />
-          <div className="col-span-3 flex justify-end">
-            <Button onClick={onApply} size="sm">
+          <div className="col-span-3 flex justify-end gap-2">
+            <Button
+              onClick={() => {
+                setCheckedState(
+                  options.reduce(
+                    (acc, option) => {
+                      acc[option] = false
+                      return acc
+                    },
+                    {} as Record<string, boolean>,
+                  ),
+                )
+                onApply([])
+              }}
+              size="sm"
+              variant="secondary">
+              Clear
+            </Button>
+            <Button
+              onClick={() =>
+                onApply(
+                  Object.keys(checkedState).filter((key) => checkedState[key]),
+                )
+              }
+              size="sm">
               Apply
             </Button>
           </div>
