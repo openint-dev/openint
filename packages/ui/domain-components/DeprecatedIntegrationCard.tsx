@@ -27,7 +27,7 @@ interface UIProps extends UIPropsNoChildren {
 
 type Integration = RouterOutput['listConfiguredIntegrations']['items'][number]
 
-export const IntegrationCard = ({
+export const DeprecatedIntegrationCard = ({
   integration: int,
   className,
   children,
