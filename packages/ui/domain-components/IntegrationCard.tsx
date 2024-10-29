@@ -2,7 +2,7 @@ import {Plus} from 'lucide-react'
 import {useState} from 'react'
 import {Card, CardContent} from '../shadcn'
 
-export function ConnectionCard({
+export function IntegrationCard({
   logo,
   name,
   onClick,
