@@ -4,7 +4,7 @@ import {Loader, Search} from 'lucide-react'
 import {useState} from 'react'
 import {Input, parseCategory} from '@openint/ui'
 import {CheckboxFilter} from '@openint/ui/components/CheckboxFilter'
-import {ConnectionCard} from '@openint/ui/domain-components/ConnectionCard'
+import {IntegrationCard} from '@openint/ui/domain-components/IntegrationCard'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
 import type {ConnectEventType} from '../hocs/WithConnectorConnect'
 import {WithConnectorConnect} from '../hocs/WithConnectorConnect'
@@ -111,7 +111,7 @@ export function IntegrationSearch({
                           })
                         }}>
                         {({openConnect}) => (
-                          <ConnectionCard
+                          <IntegrationCard
                             onClick={openConnect}
                             logo={int.ccfg.connector.logoUrl ?? ''}
                             name={int.name}
