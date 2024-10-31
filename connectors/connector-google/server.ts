@@ -50,7 +50,7 @@ export const googleServer = {
         },
       }
     }
-    if (context.integrationExternalId === 'drive') {
+    if (context.integrationExternalId === 'gmail') {
       return {
         authorization_params: {
           scope: 'https://www.googleapis.com/auth/gmail.readonly',
@@ -71,6 +71,7 @@ export const googleServer = {
           name: 'Google Drive',
           // TODO: Differ oauth scope use in Connect based on which integration
           raw_data: {} as any,
+          verticals: ['file-storage'],
           updated_at: new Date().toISOString(),
           logo_url: '/_assets/logo-google-drive.svg',
         },
@@ -78,6 +79,7 @@ export const googleServer = {
           id: 'gmail',
           name: 'Gmail',
           raw_data: {} as any,
+          verticals: ['email'],
           updated_at: new Date().toISOString(),
           logo_url: '/_assets/logo-google-gmail.svg',
         },
@@ -85,6 +87,7 @@ export const googleServer = {
           id: 'calendar',
           name: 'Google Calendar',
           raw_data: {} as any,
+          verticals: ['calendar'],
           updated_at: new Date().toISOString(),
           logo_url: '/_assets/logo-google-calendar.svg',
         },

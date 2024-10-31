@@ -39,7 +39,7 @@ export function IntegrationSearch({
 
   const intsByCategory = ints?.reduce(
     (acc, int) => {
-      int.ccfg.verticals.forEach((vertical) => {
+      ;(int.verticals ?? int.ccfg.verticals).forEach((vertical) => {
         acc[vertical] = (acc[vertical] || []).concat(int)
       })
       return acc
