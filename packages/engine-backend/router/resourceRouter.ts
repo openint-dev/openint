@@ -244,8 +244,8 @@ export const resourceRouter = trpc.router({
       console.log('[listResources] Refreshing tokens for all resources')
       const updatedResources = await Promise.all(
         resources.map(async (reso) => {
-          // @ts-expect-error
           const expiresAt =
+            // @ts-expect-error
             reso?.settings?.['oauth']?.credentials?.raw?.expires_at
 
           if (
