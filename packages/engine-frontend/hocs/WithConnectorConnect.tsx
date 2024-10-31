@@ -40,11 +40,15 @@ const __DEBUG__ = Boolean(
 
 export const WithConnectorConnect = ({
   connectorConfig: ccfg,
+  integration,
   resource,
   onEvent,
   children,
 }: {
   connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
+  integration?: {
+    id: Id['int']
+  }
   resource?: Resource
   onEvent?: (event: {type: ConnectEventType}) => void
   children: (props: {
@@ -77,7 +81,7 @@ export const WithConnectorConnect = ({
       openDialog: () => {},
     }) ??
     (nangoProvider
-      ? (_, {connectorConfigId}) => {
+      ? (connInput, {connectorConfigId}) => {
           if (!nangoFrontend) {
             throw new Error('Missing nango public key')
           }
@@ -85,15 +89,20 @@ export const WithConnectorConnect = ({
             connectorConfigId,
             nangoFrontend,
             connectorName: ccfg.connector.name,
+            resourceId: resource?.id,
+            authOptions: connInput,
           })
         }
       : undefined)
 
   const resourceExternalId = resource ? extractId(resource.id)[2] : undefined
+  const integrationExternalId = integration
+    ? extractId(integration.id)[2]
+    : undefined
 
   // TODO: Handle preConnectInput schema and such... for example for Plaid
   const preConnect = _trpcReact.preConnect.useQuery(
-    [ccfg.id, {resourceExternalId}, {}],
+    [ccfg.id, {resourceExternalId, integrationExternalId}, {}],
     {enabled: ccfg.connector.hasPreConnect},
   )
   const postConnect = _trpcReact.postConnect.useMutation()
@@ -150,7 +159,7 @@ export const WithConnectorConnect = ({
         if (err === CANCELLATION_TOKEN) {
           return
         }
-        console.log(ccfg.connector.displayName + ' connection error:',err)
+        console.log(ccfg.connector.displayName + ' connection error:', err)
         toast({
           title: `Failed to connect to ${ccfg.connector.displayName}`,
           // description: `${err}`,
@@ -205,8 +214,8 @@ export const WithConnectorConnect = ({
               </span>
               {ccfg.connector.name === 'greenhouse' && (
                 <div className="relative inline-block">
-                  <InfoIcon className="h-5 w-5 cursor-help text-gray-500 peer" />
-                  <div className="absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-[#272731] p-2 text-sm text-white opacity-0 transition-opacity peer-hover:opacity-100 pointer-events-none">
+                  <InfoIcon className="peer h-5 w-5 cursor-help text-gray-500" />
+                  <div className="pointer-events-none absolute bottom-full left-1/2 mb-2 w-64 -translate-x-1/2 rounded-md bg-[#272731] p-2 text-sm text-white opacity-0 transition-opacity peer-hover:opacity-100">
                     <p className="italic">
                       Generate a custom API key with{' '}
                       <a

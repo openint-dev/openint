@@ -2,6 +2,7 @@
 
 import {Loader, Search} from 'lucide-react'
 import React from 'react'
+import {Id} from '@openint/cdk'
 import {Input} from '@openint/ui'
 import {ConnectionCard} from '@openint/ui/domain-components/ConnectionCard'
 import type {ConnectorConfig} from '../hocs/WithConnectConfig'
@@ -92,6 +93,7 @@ export function IntegrationSearch({
                         id: int.connector_config_id,
                         connector: int.ccfg.connector,
                       }}
+                      integration={{id: int.id as Id['int']}}
                       onEvent={(e) => {
                         onEvent?.({
                           type: e.type,
