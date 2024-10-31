@@ -2,6 +2,7 @@
 
 import {Loader, Search} from 'lucide-react'
 import {useState} from 'react'
+import type {Id} from '@openint/cdk'
 import {Input, parseCategory} from '@openint/ui'
 import {CheckboxFilter} from '@openint/ui/components/CheckboxFilter'
 import {IntegrationCard} from '@openint/ui/domain-components/IntegrationCard'
@@ -44,7 +45,7 @@ export function IntegrationSearch({
 
   const intsByCategory = ints?.reduce(
     (acc, int) => {
-      int.ccfg.verticals.forEach((vertical) => {
+      ;(int.verticals ?? int.ccfg.verticals).forEach((vertical) => {
         if (categoryFilter.length === 0 || categoryFilter.includes(vertical)) {
           acc[vertical] = (acc[vertical] || []).concat(int)
         }
@@ -101,6 +102,7 @@ export function IntegrationSearch({
                           id: int.connector_config_id,
                           connector: int.ccfg.connector,
                         }}
+                        integration={{id: int.id as Id['int']}}
                         onEvent={(e) => {
                           onEvent?.({
                             type: e.type,
@@ -113,7 +115,9 @@ export function IntegrationSearch({
                         {({openConnect}) => (
                           <IntegrationCard
                             onClick={openConnect}
-                            logo={int.ccfg.connector.logoUrl ?? ''}
+                            logo={
+                              int.logo_url ?? int.ccfg.connector.logoUrl ?? ''
+                            }
                             name={int.name}
                           />
                         )}

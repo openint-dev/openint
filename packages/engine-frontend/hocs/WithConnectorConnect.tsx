@@ -40,11 +40,15 @@ const __DEBUG__ = Boolean(
 
 export const WithConnectorConnect = ({
   connectorConfig: ccfg,
+  integration,
   resource,
   onEvent,
   children,
 }: {
   connectorConfig: {id: Id['ccfg']; connector: ConnectorMeta}
+  integration?: {
+    id: Id['int']
+  }
   resource?: Resource
   onEvent?: (event: {type: ConnectEventType}) => void
   children: (props: {
@@ -77,7 +81,7 @@ export const WithConnectorConnect = ({
       openDialog: () => {},
     }) ??
     (nangoProvider
-      ? (_, {connectorConfigId}) => {
+      ? (connInput, {connectorConfigId}) => {
           if (!nangoFrontend) {
             throw new Error('Missing nango public key')
           }
@@ -85,15 +89,20 @@ export const WithConnectorConnect = ({
             connectorConfigId,
             nangoFrontend,
             connectorName: ccfg.connector.name,
+            resourceId: resource?.id,
+            authOptions: connInput,
           })
         }
       : undefined)
 
   const resourceExternalId = resource ? extractId(resource.id)[2] : undefined
+  const integrationExternalId = integration
+    ? extractId(integration.id)[2]
+    : undefined
 
   // TODO: Handle preConnectInput schema and such... for example for Plaid
   const preConnect = _trpcReact.preConnect.useQuery(
-    [ccfg.id, {resourceExternalId}, {}],
+    [ccfg.id, {resourceExternalId, integrationExternalId}, {}],
     {enabled: ccfg.connector.hasPreConnect},
   )
   const postConnect = _trpcReact.postConnect.useMutation()
